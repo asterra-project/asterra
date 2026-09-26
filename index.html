@@ -1,137 +1,913 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASTERRA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASTERRA — Virtual Land Ownership</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #05070b;
-      color: #ffffff;
-      min-height: 100vh;
-    }
+:root{
+  --bg:#05070c;
+  --panel:#0b1019;
+  --panel2:#101722;
+  --line:#202a38;
+  --text:#f4f7fb;
+  --muted:#8e9aaa;
+  --accent:#7c9cff;
+  --accent2:#a98cff;
+  --green:#55d6a5;
+  --gold:#e5c46b;
+}
 
-    header {
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      border-bottom: 1px solid #20242d;
-      background: #080b11;
-    }
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 50% 0%,#17233a 0,#080c14 38%,#05070c 75%);
+  color:var(--text);
+  min-height:100vh;
+}
 
-    .logo {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: 4px;
-    }
+button{font:inherit}
 
-    nav {
-      display: flex;
-      gap: 28px;
-    }
+header{
+  height:72px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 42px;
+  background:rgba(5,7,12,.82);
+  backdrop-filter:blur(16px);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
 
-    nav a {
-      color: #b8bec9;
-      text-decoration: none;
-      font-size: 14px;
-    }
+.logo{
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:6px;
+}
 
-    nav a:hover {
-      color: #ffffff;
-    }
+nav{
+  display:flex;
+  gap:28px;
+}
 
-    main {
-      min-height: calc(100vh - 72px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-      background:
-        radial-gradient(circle at center, #182131 0%, #080b11 45%, #05070b 75%);
-    }
+nav button{
+  background:none;
+  border:0;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:13px;
+  letter-spacing:1px;
+}
 
-    .hero {
-      max-width: 850px;
-    }
+nav button:hover{color:white}
 
-    .hero h1 {
-      font-size: clamp(48px, 9vw, 100px);
-      letter-spacing: 12px;
-      margin-bottom: 24px;
-    }
+main{max-width:1400px;margin:auto;padding:34px 34px 70px}
 
-    .hero p {
-      color: #aeb6c3;
-      font-size: 20px;
-      line-height: 1.6;
-      margin-bottom: 38px;
-    }
+.hero{
+  padding:55px 0 35px;
+  text-align:center;
+}
 
-    .button {
-      display: inline-block;
-      padding: 15px 32px;
-      border: 1px solid #ffffff;
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 2px;
-      transition: 0.2s;
-    }
+.eyebrow{
+  color:var(--accent);
+  letter-spacing:4px;
+  font-size:11px;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
 
-    .button:hover {
-      background: #ffffff;
-      color: #05070b;
-    }
+.hero h1{
+  font-size:clamp(48px,8vw,92px);
+  letter-spacing:13px;
+  margin-bottom:18px;
+}
 
-    .status {
-      margin-top: 50px;
-      color: #68717e;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-  </style>
+.hero p{
+  max-width:680px;
+  margin:auto;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.7;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:32px 0;
+}
+
+.stat{
+  background:rgba(12,17,27,.8);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+}
+
+.stat span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  margin-bottom:9px;
+}
+
+.stat strong{font-size:23px}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin:45px 0 18px;
+}
+
+.section-title h2{font-size:25px}
+.section-title p{color:var(--muted);font-size:13px}
+
+.planets{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.planet{
+  min-height:285px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:25px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,#0d1420,#080c14);
+  transition:.25s;
+}
+
+.planet:hover{
+  transform:translateY(-4px);
+  border-color:#465575;
+}
+
+.planet-orb{
+  position:absolute;
+  width:145px;
+  height:145px;
+  border-radius:50%;
+  right:-25px;
+  top:-25px;
+  opacity:.65;
+  box-shadow:inset -25px -20px 45px rgba(0,0,0,.6),0 0 50px rgba(100,130,255,.12);
+}
+
+.mars{background:radial-gradient(circle at 35% 30%,#d98d68,#8f3e2e 55%,#351511)}
+.moon{background:radial-gradient(circle at 35% 30%,#d7dbe1,#777d88 55%,#2d3239)}
+.europa{background:radial-gradient(circle at 35% 30%,#e7d9b4,#927b55 48%,#302719)}
+
+.planet small{
+  color:var(--muted);
+  letter-spacing:2px;
+  font-size:10px;
+  position:relative;
+}
+
+.planet h3{
+  font-size:31px;
+  margin:9px 0 12px;
+  position:relative;
+}
+
+.planet .description{
+  color:var(--muted);
+  line-height:1.55;
+  max-width:330px;
+  position:relative;
+}
+
+.planet-footer{
+  position:absolute;
+  bottom:22px;
+  left:25px;
+  right:25px;
+  display:flex;
+  justify-content:space-between;
+  color:#c8cfda;
+  font-size:12px;
+}
+
+.market{
+  background:rgba(8,12,19,.82);
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.market-head{
+  padding:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+}
+
+.market-head h3{font-size:18px}
+.market-head span{color:var(--muted);font-size:12px}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.table th,.table td{
+  padding:16px 20px;
+  border-bottom:1px solid #18212d;
+  text-align:left;
+  font-size:13px;
+}
+
+.table th{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+}
+
+.table tr:last-child td{border-bottom:0}
+
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:6px;
+  background:#12251f;
+  color:var(--green);
+  font-size:10px;
+}
+
+.explore{
+  margin-top:55px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 50% 0%,#1a2742,transparent 55%),
+    #090e16;
+  padding:45px 25px;
+  text-align:center;
+}
+
+.explore h2{
+  font-size:34px;
+  margin-bottom:12px;
+}
+
+.explore p{
+  color:var(--muted);
+  max-width:650px;
+  margin:0 auto 25px;
+  line-height:1.7;
+}
+
+.primary{
+  background:white;
+  color:#05070c;
+  border:0;
+  padding:14px 25px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.primary:hover{background:#dce4ff}
+
+footer{
+  border-top:1px solid var(--line);
+  margin-top:70px;
+  padding:28px 0;
+  color:#596576;
+  font-size:11px;
+  text-align:center;
+  letter-spacing:1px;
+}
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(9px);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.open{display:flex}
+
+.modal-box{
+  width:min(760px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#0b1019;
+  border:1px solid #2a3546;
+  border-radius:20px;
+  box-shadow:0 30px 100px rgba(0,0,0,.6);
+}
+
+.modal-top{
+  padding:23px 25px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+}
+
+.close{
+  border:0;
+  background:none;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:25px;
+}
+
+.modal-content{padding:25px}
+
+.property{
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:20px;
+  margin-bottom:18px;
+  background:#0e141e;
+}
+
+.property-id{
+  color:var(--accent);
+  font-size:11px;
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
+
+.property h3{font-size:27px;margin-bottom:6px}
+
+.price{
+  font-size:30px;
+  font-weight:700;
+  margin:18px 0;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.info{
+  background:#090d14;
+  padding:12px;
+  border-radius:8px;
+}
+
+.info span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:5px;
+  text-transform:uppercase;
+}
+
+.info strong{font-size:13px}
+
+.history{
+  margin-top:20px;
+}
+
+.history h4{
+  margin-bottom:12px;
+  font-size:14px;
+}
+
+.tx{
+  display:flex;
+  justify-content:space-between;
+  padding:12px 0;
+  border-bottom:1px solid #1b2430;
+  font-size:12px;
+}
+
+.tx span{color:var(--muted)}
+
+.buy{
+  width:100%;
+  margin-top:20px;
+}
+
+.toast{
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:#edf2ff;
+  color:#05070c;
+  padding:14px 20px;
+  border-radius:9px;
+  font-size:13px;
+  opacity:0;
+  transition:.3s;
+  z-index:200;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+@media(max-width:800px){
+  header{padding:0 20px}
+  nav{gap:12px}
+  nav button{font-size:10px}
+  main{padding:20px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .planets{grid-template-columns:1fr}
+  .table{font-size:11px}
+  .table th,.table td{padding:12px 9px}
+}
+
+@media(max-width:500px){
+  .logo{font-size:20px;letter-spacing:4px}
+  nav button:nth-child(2),
+  nav button:nth-child(3){display:none}
+  .hero h1{letter-spacing:7px}
+  .stats{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">ASTERRA</div>
+<header>
+  <div class="logo">ASTERRA</div>
 
-    <nav>
-      <a href="#">EXPLORE</a>
-      <a href="#">PROPERTIES</a>
-      <a href="#">HISTORY</a>
-    </nav>
-  </header>
+  <nav>
+    <button onclick="scrollToSection('explore')">EXPLORE</button>
+    <button onclick="scrollToSection('properties')">PROPERTIES</button>
+    <button onclick="scrollToSection('history')">HISTORY</button>
+  </nav>
+</header>
 
-  <main>
-    <section class="hero">
-      <h1>ASTERRA</h1>
+<main>
 
-      <p>
-        Virtual land ownership and trading<br>
-        across planets and moons.
+<section class="hero">
+  <div class="eyebrow">THE DIGITAL FRONTIER</div>
+  <h1>ASTERRA</h1>
+  <p>
+    A persistent virtual land universe where planets,
+    regions and properties have defined supply, ownership
+    and transparent transaction history.
+  </p>
+</section>
+
+<section class="stats">
+  <div class="stat">
+    <span>Planets & Moons</span>
+    <strong>3</strong>
+  </div>
+
+  <div class="stat">
+    <span>Total Properties</span>
+    <strong>1,000,000</strong>
+  </div>
+
+  <div class="stat">
+    <span>Available</span>
+    <strong>847,291</strong>
+  </div>
+
+  <div class="stat">
+    <span>Universe Status</span>
+    <strong>ACTIVE</strong>
+  </div>
+</section>
+
+<section id="explore">
+
+  <div class="section-title">
+    <div>
+      <h2>Explore the Universe</h2>
+      <p>Choose a world to discover its available regions.</p>
+    </div>
+  </div>
+
+  <div class="planets">
+
+    <div class="planet" onclick="openPlanet('MARS')">
+      <div class="planet-orb mars"></div>
+      <small>PLANET 01</small>
+      <h3>Mars</h3>
+      <div class="description">
+        A red frontier divided into finite regions and
+        permanent virtual properties.
+      </div>
+
+      <div class="planet-footer">
+        <span>500,000 plots</span>
+        <span>312,842 available</span>
+      </div>
+    </div>
+
+    <div class="planet" onclick="openPlanet('MOON')">
+      <div class="planet-orb moon"></div>
+      <small>MOON 01</small>
+      <h3>Moon</h3>
+      <div class="description">
+        Earth's nearest celestial neighbour with a limited
+        inventory of virtual land.
+      </div>
+
+      <div class="planet-footer">
+        <span>300,000 plots</span>
+        <span>241,907 available</span>
+      </div>
+    </div>
+
+    <div class="planet" onclick="openPlanet('EUROPA')">
+      <div class="planet-orb europa"></div>
+      <small>MOON 02</small>
+      <h3>Europa</h3>
+      <div class="description">
+        An icy world with scarce property inventory and
+        future regional expansion.
+      </div>
+
+      <div class="planet-footer">
+        <span>200,000 plots</span>
+        <span>192,542 available</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="properties">
+
+  <div class="section-title">
+    <div>
+      <h2>Featured Properties</h2>
+      <p>Every property has a permanent identity and transaction history.</p>
+    </div>
+  </div>
+
+  <div class="market">
+
+    <div class="market-head">
+      <h3>Current Properties</h3>
+      <span>LIVE DEMO INVENTORY</span>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>World</th>
+          <th>Size</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr onclick="openProperty('MRS-001847')">
+          <td>MRS-001847</td>
+          <td>Mars</td>
+          <td>1 Basic Plot</td>
+          <td>$249</td>
+          <td><span class="badge">AVAILABLE</span></td>
+        </tr>
+
+        <tr onclick="openProperty('MRS-014521')">
+          <td>MRS-014521</td>
+          <td>Mars</td>
+          <td>1 Basic Plot</td>
+          <td>$399</td>
+          <td><span class="badge">AVAILABLE</span></td>
+        </tr>
+
+        <tr onclick="openProperty('MON-008421')">
+          <td>MON-008421</td>
+          <td>Moon</td>
+          <td>1 Basic Plot</td>
+          <td>$349</td>
+          <td><span class="badge">AVAILABLE</span></td>
+        </tr>
+
+        <tr onclick="openProperty('EUR-000731')">
+          <td>EUR-000731</td>
+          <td>Europa</td>
+          <td>1 Basic Plot</td>
+          <td>$499</td>
+          <td><span class="badge">AVAILABLE</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</section>
+
+<section id="history" class="explore">
+
+  <h2>Transparent Ownership</h2>
+
+  <p>
+    Each property keeps its permanent identity and transaction
+    history. Purchases, resales, price increases and price
+    decreases remain part of the property's visible history.
+  </p>
+
+  <button class="primary" onclick="openProperty('MRS-001847')">
+    VIEW PROPERTY HISTORY
+  </button>
+
+</section>
+
+<footer>
+  ASTERRA © 2026 · VIRTUAL LAND OWNERSHIP · FIXED INVENTORY
+</footer>
+
+</main>
+
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-top">
+      <strong id="modalTitle">PROPERTY</strong>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+
+    <div class="modal-content" id="modalContent"></div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast">
+  Demo action completed.
+</div>
+
+<script>
+
+const properties = {
+
+  "MRS-001847":{
+    world:"Mars",
+    region:"Olympus Region",
+    price:"$249",
+    owner:"Available",
+    size:"1 Basic Plot",
+    supply:"500,000",
+    remaining:"312,842",
+    history:[
+      ["Initial release","$199","2026-09-01"],
+      ["Current price","$249","2026-09-26"]
+    ]
+  },
+
+  "MRS-014521":{
+    world:"Mars",
+    region:"Valles Region",
+    price:"$399",
+    owner:"Available",
+    size:"1 Basic Plot",
+    supply:"500,000",
+    remaining:"312,842",
+    history:[
+      ["Initial release","$299","2026-09-01"],
+      ["Price update","$349","2026-09-14"],
+      ["Current price","$399","2026-09-26"]
+    ]
+  },
+
+  "MON-008421":{
+    world:"Moon",
+    region:"Lunar North",
+    price:"$349",
+    owner:"Available",
+    size:"1 Basic Plot",
+    supply:"300,000",
+    remaining:"241,907",
+    history:[
+      ["Initial release","$249","2026-09-03"],
+      ["Current price","$349","2026-09-26"]
+    ]
+  },
+
+  "EUR-000731":{
+    world:"Europa",
+    region:"Europa Prime",
+    price:"$499",
+    owner:"Available",
+    size:"1 Basic Plot",
+    supply:"200,000",
+    remaining:"192,542",
+    history:[
+      ["Initial release","$399","2026-09-10"],
+      ["Current price","$499","2026-09-26"]
+    ]
+  }
+
+};
+
+function openProperty(id){
+
+  const p=properties[id];
+
+  let historyHTML="";
+
+  p.history.forEach(item=>{
+    historyHTML+=`
+      <div class="tx">
+        <span>${item[0]} · ${item[2]}</span>
+        <strong>${item[1]}</strong>
+      </div>
+    `;
+  });
+
+  document.getElementById("modalTitle").innerText="PROPERTY "+id;
+
+  document.getElementById("modalContent").innerHTML=`
+
+    <div class="property">
+
+      <div class="property-id">${id}</div>
+
+      <h3>${p.world}</h3>
+
+      <div style="color:#8e9aaa">${p.region}</div>
+
+      <div class="price">${p.price}</div>
+
+      <div class="info-grid">
+
+        <div class="info">
+          <span>Property size</span>
+          <strong>${p.size}</strong>
+        </div>
+
+        <div class="info">
+          <span>Owner</span>
+          <strong>${p.owner}</strong>
+        </div>
+
+        <div class="info">
+          <span>Total supply</span>
+          <strong>${p.supply}</strong>
+        </div>
+
+        <div class="info">
+          <span>Remaining supply</span>
+          <strong>${p.remaining}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="history">
+
+      <h4>PERMANENT TRANSACTION HISTORY</h4>
+
+      ${historyHTML}
+
+    </div>
+
+    <button class="primary buy" onclick="buyProperty('${id}')">
+      ACQUIRE PROPERTY — ${p.price}
+    </button>
+
+  `;
+
+  document.getElementById("modal").classList.add("open");
+}
+
+function openPlanet(name){
+
+  const worldData={
+
+    MARS:{
+      title:"Mars",
+      total:"500,000",
+      remaining:"312,842",
+      price:"from $249"
+    },
+
+    MOON:{
+      title:"Moon",
+      total:"300,000",
+      remaining:"241,907",
+      price:"from $349"
+    },
+
+    EUROPA:{
+      title:"Europa",
+      total:"200,000",
+      remaining:"192,542",
+      price:"from $499"
+    }
+
+  };
+
+  const w=worldData[name];
+
+  document.getElementById("modalTitle").innerText=w.title.toUpperCase();
+
+  document.getElementById("modalContent").innerHTML=`
+
+    <div class="property">
+
+      <div class="property-id">WORLD EXPLORATION</div>
+
+      <h3>${w.title}</h3>
+
+      <p style="color:#8e9aaa;line-height:1.6;margin-top:8px">
+        This world has a predefined finite inventory.
+        Once a Basic Plot is sold, no additional Basic Plot
+        is created in the same inventory.
       </p>
 
-      <a href="#" class="button">EXPLORE THE UNIVERSE</a>
+      <div class="price">${w.price}</div>
 
-      <div class="status">
-        The universe is waiting.
+      <div class="info-grid">
+
+        <div class="info">
+          <span>Total supply</span>
+          <strong>${w.total}</strong>
+        </div>
+
+        <div class="info">
+          <span>Remaining supply</span>
+          <strong>${w.remaining}</strong>
+        </div>
+
       </div>
-    </section>
-  </main>
+
+    </div>
+
+    <button class="primary buy"
+      onclick="closeModal();document.getElementById('properties').scrollIntoView({behavior:'smooth'})">
+      EXPLORE AVAILABLE PROPERTIES
+    </button>
+
+  `;
+
+  document.getElementById("modal").classList.add("open");
+}
+
+function buyProperty(id){
+
+  closeModal();
+
+  showToast(
+    "Demo purchase selected for "+id+". Real payments will be connected later."
+  );
+}
+
+function closeModal(){
+  document.getElementById("modal").classList.remove("open");
+}
+
+function showToast(message){
+
+  const toast=document.getElementById("toast");
+
+  toast.innerText=message;
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  },3500);
+}
+
+function scrollToSection(id){
+
+  document.getElementById(id).scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+document.getElementById("modal").addEventListener("click",function(e){
+
+  if(e.target===this){
+    closeModal();
+  }
+
+});
+
+</script>
 
 </body>
 </html>
