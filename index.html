@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASTERRA</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #05070b;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    header {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      border-bottom: 1px solid #20242d;
+      background: #080b11;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 4px;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: #b8bec9;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    main {
+      min-height: calc(100vh - 72px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      background:
+        radial-gradient(circle at center, #182131 0%, #080b11 45%, #05070b 75%);
+    }
+
+    .hero {
+      max-width: 850px;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 9vw, 100px);
+      letter-spacing: 12px;
+      margin-bottom: 24px;
+    }
+
+    .hero p {
+      color: #aeb6c3;
+      font-size: 20px;
+      line-height: 1.6;
+      margin-bottom: 38px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 32px;
+      border: 1px solid #ffffff;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 2px;
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      background: #ffffff;
+      color: #05070b;
+    }
+
+    .status {
+      margin-top: 50px;
+      color: #68717e;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">ASTERRA</div>
+
+    <nav>
+      <a href="#">EXPLORE</a>
+      <a href="#">PROPERTIES</a>
+      <a href="#">HISTORY</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>ASTERRA</h1>
+
+      <p>
+        Virtual land ownership and trading<br>
+        across planets and moons.
+      </p>
+
+      <a href="#" class="button">EXPLORE THE UNIVERSE</a>
+
+      <div class="status">
+        The universe is waiting.
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
