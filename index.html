@@ -1063,37 +1063,11 @@ let currentWorld = "moon";
 
 let planet;
 
-/*
- * Existing visual textures.
- * These remain the main color textures.
- */
 let moonTexture =
     "https://threejs.org/examples/textures/planets/moon_1024.jpg";
 
 let marsTexture =
     "https://threejs.org/examples/textures/planets/mars_1k_color.jpg";
-
-
-/*
- * NASA GLOBAL TERRAIN / ELEVATION MAPS
- *
- * Moon:
- * NASA LOLA global elevation.
- *
- * Mars:
- * NASA MOLA global topography.
- *
- * These are used as bump maps so the existing
- * ASTERRA visual style remains intact while
- * real NASA elevation data adds surface relief.
- */
-
-const moonTerrainTexture =
-    "https://svs.gsfc.nasa.gov/vis/a030000/a030300/a030326/ldem_3_8bit.jpg";
-
-const marsTerrainTexture =
-    "https://svs.gsfc.nasa.gov/vis/a004000/a004400/a004436/mars_cyl_topo2.jpg";
-
 
 const textureLoader =
     new THREE.TextureLoader();
@@ -1385,88 +1359,47 @@ function createPlots(){
     }
 }
 
+createPlots();
+
 
 /* =========================================================
    PLANET
 ========================================================= */
 
-function disposeTexture(texture){
+function createPlanet(){
 
-    if(texture){
-        texture.dispose();
-    }
-}
+    if(planet){
 
-function disposePlanet(){
-
-    if(!planet)
-        return;
-
-    planetGroup.remove(planet);
-
-    if(planet.geometry)
+        planetGroup.remove(planet);
         planet.geometry.dispose();
 
-    if(planet.material){
-
         if(planet.material.map)
-            disposeTexture(planet.material.map);
-
-        if(planet.material.bumpMap)
-            disposeTexture(planet.material.bumpMap);
+            planet.material.map.dispose();
 
         planet.material.dispose();
     }
 
-    planet = null;
-}
+    const texture =
+        textureLoader.load(
+            currentWorld === "moon"
+            ? moonTexture
+            : marsTexture
+        );
 
+    texture.encoding =
+        THREE.sRGBEncoding;
 
-function createPlanet(){
-
-    /*
-     * Remove previous planet safely.
-     */
-    disposePlanet();
-
-
-    /*
-     * Base surface texture.
-     */
-    const surfaceUrl =
-        currentWorld === "moon"
-        ? moonTexture
-        : marsTexture;
-
-
-    /*
-     * NASA terrain texture.
-     */
-    const terrainUrl =
-        currentWorld === "moon"
-        ? moonTerrainTexture
-        : marsTerrainTexture;
-
-
-    /*
-     * High-resolution sphere geometry.
-     * The existing 145 radius and 96x96
-     * subdivision are preserved.
-     */
     const geometry =
         new THREE.SphereGeometry(
             145,
-            128,
-            128
+            96,
+            96
         );
 
-
-    /*
-     * Start with the existing ASTERRA
-     * visual surface.
-     */
     const material =
         new THREE.MeshStandardMaterial({
+
+            map:texture,
 
             roughness:
                 currentWorld === "moon"
@@ -1476,14 +1409,6 @@ function createPlanet(){
             metalness:0
         });
 
-
-    /*
-     * Create planet immediately.
-     *
-     * This is important:
-     * NASA assets load asynchronously and can
-     * never prevent the planet from appearing.
-     */
     planet =
         new THREE.Mesh(
             geometry,
@@ -1492,135 +1417,12 @@ function createPlanet(){
 
     planetGroup.add(planet);
 
-
-    /*
-     * Keep the original ASTERRA orientation.
-     */
     planetGroup.rotation.set(
         0.05,
         -0.55,
         0
     );
 
-
-    /*
-     * Load the existing color texture.
-     */
-    textureLoader.load(
-
-        surfaceUrl,
-
-        function(texture){
-
-            /*
-             * Only apply it if this planet is
-             * still the active planet.
-             */
-            if(!planet)
-                return;
-
-            texture.encoding =
-                THREE.sRGBEncoding;
-
-            texture.anisotropy =
-                renderer.capabilities.getMaxAnisotropy();
-
-            material.map = texture;
-            material.needsUpdate = true;
-        },
-
-        undefined,
-
-        function(){
-
-            /*
-             * If the original texture fails,
-             * the planet remains visible.
-             */
-            console.warn(
-                "ASTERRA: surface texture failed to load."
-            );
-        }
-    );
-
-
-    /*
-     * Load NASA global elevation.
-     *
-     * The map becomes a real surface-height
-     * relief layer rather than replacing the
-     * existing ASTERRA planet appearance.
-     */
-    const planetReference = planet;
-
-    textureLoader.load(
-
-        terrainUrl,
-
-        function(terrainTexture){
-
-            /*
-             * Do not apply an old Moon terrain
-             * texture to a newly selected Mars,
-             * or vice versa.
-             */
-            if(
-                !planet ||
-                planet !== planetReference
-            ){
-
-                terrainTexture.dispose();
-                return;
-            }
-
-
-            /*
-             * NASA elevation map.
-             */
-            terrainTexture.wrapS =
-                THREE.RepeatWrapping;
-
-            terrainTexture.wrapT =
-                THREE.ClampToEdgeWrapping;
-
-
-            /*
-             * Use NASA terrain as physical-looking
-             * bump relief.
-             *
-             * Moon gets stronger relief because
-             * lunar craters are visually prominent.
-             */
-            material.bumpMap =
-                terrainTexture;
-
-            material.bumpScale =
-                currentWorld === "moon"
-                ? 2.15
-                : 1.75;
-
-            material.needsUpdate = true;
-
-        },
-
-        undefined,
-
-        function(){
-
-            /*
-             * NASA failure must NEVER break
-             * the ASTERRA planet.
-             */
-            console.warn(
-                "ASTERRA: NASA terrain texture failed to load."
-            );
-        }
-    );
-
-
-    /*
-     * Preserve plot system.
-     */
     createPlots();
 }
 
