@@ -8,19 +8,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#020305;
-  --text:#f5f7fa;
-  --muted:#87909d;
-  --line:rgba(255,255,255,.10);
-  --panel:rgba(7,10,15,.76);
-  --panel2:rgba(10,13,19,.64);
-  --accent:#ffffff;
-}
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -31,8 +21,8 @@ html,body{
   width:100%;
   height:100%;
   overflow:hidden;
-  background:#020305;
-  color:var(--text);
+  background:#020308;
+  color:#fff;
   font-family:Inter,Arial,sans-serif;
 }
 
@@ -40,483 +30,544 @@ body{
   position:relative;
 }
 
-#space{
-  position:fixed;
-  inset:0;
+#app{
+  width:100%;
+  height:100%;
+  position:relative;
   overflow:hidden;
   background:
-    radial-gradient(circle at 68% 42%,rgba(52,70,95,.10),transparent 24%),
-    radial-gradient(circle at 18% 80%,rgba(84,57,38,.07),transparent 28%),
-    #020305;
+    radial-gradient(circle at 76% 48%,rgba(65,76,115,.12),transparent 26%),
+    radial-gradient(circle at 18% 20%,rgba(90,70,150,.07),transparent 28%),
+    #020308;
+}
+
+/* ---------- BACKGROUND ---------- */
+
+#stars{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
 }
 
 .nebula{
   position:absolute;
+  inset:-20%;
   pointer-events:none;
-  filter:blur(40px);
+  z-index:1;
   opacity:.42;
+  filter:blur(35px);
 }
 
 .nebula.one{
-  width:55vw;
-  height:45vw;
-  left:-20vw;
-  top:35vh;
-  background:radial-gradient(ellipse,rgba(67,87,116,.09),transparent 65%);
+  background:
+    radial-gradient(ellipse at 70% 40%,rgba(80,95,150,.10),transparent 32%),
+    radial-gradient(ellipse at 30% 65%,rgba(110,65,150,.07),transparent 30%);
 }
 
 .nebula.two{
-  width:65vw;
-  height:45vw;
-  right:-20vw;
-  top:-15vh;
-  background:radial-gradient(ellipse,rgba(120,74,44,.07),transparent 65%);
+  background:
+    radial-gradient(ellipse at 60% 20%,rgba(255,255,255,.025),transparent 20%),
+    radial-gradient(ellipse at 10% 80%,rgba(70,100,180,.05),transparent 30%);
 }
 
-.nebula.three{
-  width:45vw;
-  height:40vw;
-  left:30vw;
-  bottom:-25vw;
-  background:radial-gradient(ellipse,rgba(54,69,95,.08),transparent 65%);
-}
+/* ---------- HEADER ---------- */
 
-#starfield{
+header{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:1;
-}
-
-#scene{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  pointer-events:none;
-}
-
-.topbar{
-  position:absolute;
-  z-index:10;
-  left:34px;
-  right:34px;
-  top:26px;
-  height:52px;
+  top:0;
+  left:0;
+  right:0;
+  z-index:20;
+  height:84px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  pointer-events:none;
+  padding:0 34px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  background:linear-gradient(
+    to bottom,
+    rgba(1,2,7,.82),
+    rgba(1,2,7,.25),
+    transparent
+  );
+  backdrop-filter:blur(7px);
 }
 
-.brand{
+.logo{
+  font-family:Orbitron,Arial,sans-serif;
+  font-size:20px;
+  letter-spacing:7px;
+  font-weight:600;
+  white-space:nowrap;
+}
+
+.logo span{
+  color:#9ea8bb;
+}
+
+.header-right{
   display:flex;
   align-items:center;
-  gap:15px;
+  gap:22px;
 }
 
-.brand-mark{
-  width:28px;
-  height:28px;
-  border:1px solid rgba(255,255,255,.38);
-  border-radius:50%;
-  position:relative;
-  box-shadow:0 0 30px rgba(255,255,255,.05);
-}
-
-.brand-mark:before{
-  content:"";
-  position:absolute;
-  left:5px;
-  right:5px;
-  top:13px;
-  height:1px;
-  background:rgba(255,255,255,.5);
-  transform:rotate(-24deg);
-}
-
-.brand-name{
-  font-family:Manrope,sans-serif;
-  font-weight:800;
-  letter-spacing:.22em;
-  font-size:15px;
-}
-
-.brand-sub{
-  margin-top:3px;
-  color:#727b87;
-  font-size:8px;
-  letter-spacing:.26em;
-}
-
-.system{
+.header-status{
   display:flex;
   align-items:center;
-  gap:9px;
-  color:#69727d;
-  font-size:8px;
-  letter-spacing:.19em;
+  gap:8px;
+  font-size:10px;
+  letter-spacing:2px;
   text-transform:uppercase;
+  color:#8791a6;
 }
 
-.system-dot{
+.status-dot{
   width:6px;
   height:6px;
   border-radius:50%;
-  background:#a9b2bc;
-  box-shadow:0 0 12px rgba(255,255,255,.5);
+  background:#91a7ff;
+  box-shadow:0 0 12px rgba(145,167,255,.9);
 }
+
+/* ---------- LEFT CONTENT ---------- */
 
 .hero{
   position:absolute;
-  z-index:8;
-  left:8.5vw;
-  top:24vh;
-  width:470px;
-  pointer-events:none;
+  left:6vw;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:15;
+  width:min(430px,42vw);
 }
 
 .kicker{
   font-size:10px;
-  letter-spacing:.30em;
-  color:#7d8793;
+  letter-spacing:4px;
   text-transform:uppercase;
-  margin-bottom:22px;
+  color:#8994a9;
+  margin-bottom:18px;
 }
 
 h1{
-  font-family:Manrope,sans-serif;
-  font-size:clamp(55px,6.5vw,94px);
-  line-height:.89;
-  letter-spacing:-.055em;
-  font-weight:700;
+  font-family:Orbitron,Arial,sans-serif;
+  font-size:clamp(40px,5vw,74px);
+  line-height:.98;
+  font-weight:600;
+  letter-spacing:-2px;
+  margin-bottom:22px;
 }
 
-.hero p{
-  margin-top:27px;
-  max-width:410px;
-  color:#89919c;
-  font-size:13px;
-  line-height:1.75;
+.hero-description{
+  color:#9da6b8;
+  line-height:1.7;
+  font-size:14px;
+  max-width:390px;
+  margin-bottom:28px;
 }
 
-.actions{
+.world-tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:24px;
+}
+
+.world-tab{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.035);
+  color:#8993a6;
+  padding:11px 18px;
+  cursor:pointer;
+  font-family:Inter,Arial,sans-serif;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  transition:.25s ease;
+}
+
+.world-tab:hover{
+  border-color:rgba(255,255,255,.28);
+  color:#fff;
+}
+
+.world-tab.active{
+  color:#fff;
+  border-color:rgba(255,255,255,.42);
+  background:rgba(255,255,255,.09);
+}
+
+.world-info{
+  border-left:1px solid rgba(255,255,255,.16);
+  padding-left:17px;
+  margin-bottom:28px;
+}
+
+.world-name{
+  font-family:Orbitron,Arial,sans-serif;
+  font-size:15px;
+  letter-spacing:3px;
+  margin-bottom:8px;
+}
+
+.world-desc{
+  font-size:11px;
+  line-height:1.7;
+  color:#778195;
+  max-width:350px;
+}
+
+.hero-actions{
   display:flex;
   gap:10px;
-  margin-top:30px;
-  pointer-events:auto;
-}
-
-button{
-  font-family:Inter,sans-serif;
+  flex-wrap:wrap;
 }
 
 .btn{
-  height:43px;
-  padding:0 18px;
+  appearance:none;
   border:1px solid rgba(255,255,255,.17);
-  background:rgba(255,255,255,.035);
-  color:#e9edf1;
-  font-size:9px;
-  letter-spacing:.18em;
+  background:rgba(255,255,255,.055);
+  color:#fff;
+  padding:13px 18px;
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
   cursor:pointer;
   transition:.25s ease;
 }
 
 .btn:hover{
-  background:rgba(255,255,255,.10);
-  border-color:rgba(255,255,255,.32);
+  background:rgba(255,255,255,.11);
+  border-color:rgba(255,255,255,.35);
+  transform:translateY(-1px);
 }
 
 .btn.primary{
-  background:#f1f3f5;
-  color:#050608;
-  border-color:#f1f3f5;
+  background:#fff;
+  color:#05060a;
+  border-color:#fff;
 }
 
 .btn.primary:hover{
-  background:#fff;
+  background:#e7eaf0;
 }
 
-.world-panel{
+/* ---------- PLANET AREA ---------- */
+
+#scene{
   position:absolute;
-  z-index:9;
-  right:34px;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
+}
+
+#scene canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:auto;
+  touch-action:none;
+}
+
+/* ---------- PLANET LABEL ---------- */
+
+.planet-label{
+  position:absolute;
+  right:5.5vw;
+  bottom:12vh;
+  z-index:16;
+  text-align:right;
+  pointer-events:none;
+}
+
+.planet-label .small{
+  font-size:9px;
+  letter-spacing:3px;
+  color:#707a8d;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+
+.planet-label .large{
+  font-family:Orbitron,Arial,sans-serif;
+  font-size:15px;
+  letter-spacing:4px;
+}
+
+/* ---------- PROPERTY PANEL ---------- */
+
+.property-panel{
+  position:absolute;
+  right:30px;
   top:50%;
   transform:translateY(-50%);
-  width:285px;
-  border:1px solid var(--line);
-  background:linear-gradient(180deg,rgba(9,12,17,.78),rgba(5,7,10,.60));
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
+  width:245px;
+  z-index:18;
+  padding:18px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(3,5,11,.76);
+  backdrop-filter:blur(14px);
+  opacity:0;
+  pointer-events:none;
+  transition:.3s ease;
+}
+
+.property-panel.visible{
+  opacity:1;
   pointer-events:auto;
 }
 
-.panel-head{
-  padding:18px 19px 15px;
-  border-bottom:1px solid var(--line);
-}
-
-.panel-label{
-  font-size:8px;
-  letter-spacing:.25em;
-  color:#68717d;
-  text-transform:uppercase;
-  margin-bottom:11px;
-}
-
-.world-tabs{
+.property-top{
   display:flex;
-  gap:5px;
-}
-
-.world-tab{
-  flex:1;
-  height:35px;
-  border:1px solid transparent;
-  background:rgba(255,255,255,.025);
-  color:#68717d;
-  cursor:pointer;
-  font-size:9px;
-  letter-spacing:.18em;
-}
-
-.world-tab.active{
-  color:#f2f4f6;
-  border-color:rgba(255,255,255,.17);
-  background:rgba(255,255,255,.06);
-}
-
-.panel-body{
-  padding:18px 19px 20px;
-}
-
-.world-title{
-  display:flex;
-  align-items:end;
   justify-content:space-between;
+  align-items:center;
+  margin-bottom:17px;
 }
 
-.world-name{
-  font-family:Manrope,sans-serif;
-  font-size:28px;
-  font-weight:700;
-  letter-spacing:-.03em;
+.property-title{
+  font-size:9px;
+  letter-spacing:2px;
+  color:#778196;
+  text-transform:uppercase;
 }
 
-.world-price{
-  font-family:Manrope,sans-serif;
-  font-size:20px;
-  font-weight:700;
+.property-close{
+  border:0;
+  background:none;
+  color:#687286;
+  cursor:pointer;
+  font-size:16px;
 }
 
-.world-desc{
-  margin-top:8px;
-  color:#6f7883;
+.property-id{
+  font-family:Orbitron,Arial,sans-serif;
+  font-size:18px;
+  letter-spacing:2px;
+  margin-bottom:12px;
+}
+
+.property-location{
+  color:#7e899d;
   font-size:10px;
   line-height:1.6;
+  margin-bottom:15px;
 }
 
-.stat-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:17px;
+.property-price{
+  font-family:Orbitron,Arial,sans-serif;
+  font-size:25px;
+  margin-bottom:15px;
+}
+
+.property-status{
+  display:inline-block;
+  padding:6px 9px;
+  border:1px solid rgba(150,170,255,.2);
+  color:#98a7d4;
+  font-size:8px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+/* ---------- BOTTOM ---------- */
+
+.bottom-bar{
+  position:absolute;
+  left:34px;
+  right:34px;
+  bottom:25px;
+  z-index:18;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  pointer-events:none;
+}
+
+.bottom-stat{
+  display:flex;
+  gap:28px;
 }
 
 .stat{
-  padding:11px;
-  border:1px solid rgba(255,255,255,.075);
-  background:rgba(255,255,255,.018);
+  min-width:90px;
 }
 
 .stat-label{
-  color:#626b76;
-  font-size:7px;
-  letter-spacing:.19em;
+  color:#596477;
+  font-size:8px;
+  letter-spacing:2px;
   text-transform:uppercase;
+  margin-bottom:6px;
 }
 
 .stat-value{
-  margin-top:6px;
-  font-family:Manrope,sans-serif;
-  font-size:14px;
-  font-weight:700;
+  font-family:Orbitron,Arial,sans-serif;
+  font-size:13px;
+  letter-spacing:1px;
 }
 
-.panel-button{
-  width:100%;
-  margin-top:14px;
-}
+/* ---------- NASA CREDIT ---------- */
 
-.plot-panel{
-  display:none;
-  margin-top:12px;
-  padding-top:14px;
-  border-top:1px solid var(--line);
-}
-
-.plot-panel.visible{
-  display:block;
-}
-
-.plot-id{
-  font-size:9px;
-  letter-spacing:.16em;
-  color:#818a95;
-}
-
-.plot-price{
-  font-family:Manrope,sans-serif;
-  font-size:25px;
-  font-weight:700;
-  margin-top:5px;
-}
-
-.plot-meta{
-  margin-top:7px;
-  color:#67707c;
-  font-size:8px;
-  line-height:1.6;
-}
-
-.bottom-left{
+.nasa-credit{
   position:absolute;
   left:34px;
-  bottom:26px;
-  z-index:8;
-  color:#5e6772;
+  bottom:76px;
+  z-index:18;
+  color:#4f596a;
   font-size:8px;
-  letter-spacing:.17em;
-  text-transform:uppercase;
-}
-
-.bottom-right{
-  position:absolute;
-  right:34px;
-  bottom:26px;
-  z-index:8;
-  display:flex;
-  gap:27px;
-  color:#626b76;
-  font-size:8px;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-}
-
-.metric strong{
-  color:#b5bcc5;
-  font-size:9px;
-  font-weight:600;
-  margin-left:5px;
-}
-
-#planetHint{
-  position:absolute;
-  z-index:7;
-  left:50%;
-  bottom:12%;
-  transform:translateX(-50%);
-  color:#555e69;
-  font-size:8px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
+  letter-spacing:1px;
+  max-width:260px;
+  line-height:1.6;
   pointer-events:none;
-  transition:opacity .3s;
 }
 
-.loading{
+/* ---------- LOADING ---------- */
+
+#loading{
   position:absolute;
-  z-index:30;
   inset:0;
+  z-index:100;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  background:#020305;
-  color:#69727e;
-  font-size:9px;
-  letter-spacing:.25em;
-  text-transform:uppercase;
-  transition:opacity .5s ease;
-  pointer-events:none;
+  background:#020308;
+  transition:opacity .6s ease,visibility .6s ease;
 }
 
-.loading.hide{
+#loading.hidden{
   opacity:0;
-}
-
-.credit{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  z-index:3;
-  color:rgba(255,255,255,.035);
-  font-size:90px;
-  font-weight:800;
-  letter-spacing:.08em;
+  visibility:hidden;
   pointer-events:none;
-  white-space:nowrap;
 }
 
-@media(max-width:1000px){
+.loading-logo{
+  font-family:Orbitron,Arial,sans-serif;
+  letter-spacing:7px;
+  font-size:17px;
+  margin-bottom:18px;
+}
+
+.loading-text{
+  color:#626d80;
+  font-size:9px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+.loading-line{
+  width:180px;
+  height:1px;
+  background:rgba(255,255,255,.12);
+  margin-top:18px;
+  overflow:hidden;
+}
+
+.loading-line::after{
+  content:"";
+  display:block;
+  height:100%;
+  width:40%;
+  background:#d9deea;
+  animation:loadingMove 1.2s infinite ease-in-out;
+}
+
+@keyframes loadingMove{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(350%)}
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:900px){
   .hero{
-    left:6vw;
-    top:19vh;
+    left:28px;
+    top:auto;
+    bottom:100px;
+    transform:none;
     width:390px;
   }
 
-  .hero p{
-    max-width:350px;
+  .planet-label{
+    right:25px;
+    top:110px;
+    bottom:auto;
   }
 
-  .world-panel{
-    right:20px;
-    width:260px;
+  .property-panel{
+    right:15px;
+    top:auto;
+    bottom:18px;
+    transform:none;
   }
 }
 
-@media(max-width:760px){
-  .topbar{
-    left:18px;
-    right:18px;
-    top:18px;
+@media(max-width:650px){
+  header{
+    padding:0 18px;
+    height:70px;
   }
 
-  .system{
+  .logo{
+    font-size:15px;
+    letter-spacing:5px;
+  }
+
+  .header-status{
     display:none;
   }
 
   .hero{
-    left:22px;
-    top:110px;
-    width:calc(100% - 44px);
+    left:18px;
+    right:18px;
+    bottom:82px;
+    width:auto;
   }
 
   h1{
-    font-size:55px;
+    font-size:40px;
   }
 
-  .hero p{
+  .hero-description{
+    font-size:12px;
     max-width:330px;
   }
 
-  .world-panel{
-    left:22px;
-    right:22px;
-    top:auto;
-    bottom:20px;
-    width:auto;
-    transform:none;
+  .world-info{
+    margin-bottom:18px;
   }
 
-  .bottom-left,
-  .bottom-right{
+  .bottom-bar{
+    left:18px;
+    right:18px;
+    bottom:15px;
+  }
+
+  .bottom-stat{
+    gap:15px;
+  }
+
+  .stat{
+    min-width:auto;
+  }
+
+  .stat-label{
+    font-size:7px;
+  }
+
+  .stat-value{
+    font-size:10px;
+  }
+
+  .nasa-credit{
     display:none;
   }
 
-  .credit{
-    font-size:42px;
+  .property-panel{
+    left:18px;
+    right:18px;
+    width:auto;
+    bottom:15px;
   }
 }
 </style>
@@ -524,121 +575,113 @@ button{
 
 <body>
 
-<div id="space">
+<div id="app">
+
+  <canvas id="stars"></canvas>
+
   <div class="nebula one"></div>
   <div class="nebula two"></div>
-  <div class="nebula three"></div>
 
-  <canvas id="starfield"></canvas>
+  <header>
+    <div class="logo">ASTERRA <span>01</span></div>
 
-  <div class="credit">ASTERRA</div>
+    <div class="header-right">
+      <div class="header-status">
+        <div class="status-dot"></div>
+        SURFACE DATA ONLINE
+      </div>
+    </div>
+  </header>
+
+  <main class="hero">
+
+    <div class="kicker">Digital universe · surface collection</div>
+
+    <h1>Explore<br>the universe.</h1>
+
+    <div class="hero-description">
+      Discover virtual locations mapped across real planetary geography.
+      Explore the surface, select a location and build your collection.
+    </div>
+
+    <div class="world-tabs">
+      <button class="world-tab active" data-world="moon">Moon</button>
+      <button class="world-tab" data-world="mars">Mars</button>
+    </div>
+
+    <div class="world-info">
+      <div class="world-name" id="worldName">MOON</div>
+      <div class="world-desc" id="worldDesc">
+        Lunar surface based on NASA LROC imagery and LOLA elevation data.
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <button class="btn primary" id="discoverBtn">Discover surface</button>
+      <button class="btn" id="randomBtn">Random location</button>
+    </div>
+
+  </main>
 
   <div id="scene"></div>
 
-  <div class="topbar">
-    <div class="brand">
-      <div class="brand-mark"></div>
-      <div>
-        <div class="brand-name">ASTERRA</div>
-        <div class="brand-sub">OWN YOUR WORLD.</div>
+  <div class="planet-label">
+    <div class="small">Current world</div>
+    <div class="large" id="planetLabel">MOON</div>
+  </div>
+
+  <div class="property-panel" id="propertyPanel">
+
+    <div class="property-top">
+      <div class="property-title">Selected location</div>
+      <button class="property-close" id="propertyClose">×</button>
+    </div>
+
+    <div class="property-id" id="propertyId">LUNA-0001</div>
+
+    <div class="property-location" id="propertyLocation">
+      Coordinates unavailable
+    </div>
+
+    <div class="property-price" id="propertyPrice">$11</div>
+
+    <div class="property-status">AVAILABLE</div>
+
+  </div>
+
+  <div class="nasa-credit">
+    SURFACE DATA: NASA / LRO / LROC / LOLA / MOLA
+  </div>
+
+  <div class="bottom-bar">
+
+    <div class="bottom-stat">
+      <div class="stat">
+        <div class="stat-label">World</div>
+        <div class="stat-value" id="bottomWorld">MOON</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Supply</div>
+        <div class="stat-value" id="bottomSupply">248,731</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">From</div>
+        <div class="stat-value" id="bottomPrice">$11</div>
       </div>
     </div>
 
-    <div class="system">
-      <span class="system-dot"></span>
-      SYSTEM ONLINE
+  </div>
+
+  <div id="loading">
+    <div class="loading-logo">ASTERRA</div>
+    <div class="loading-text" id="loadingText">
+      Initializing planetary surface
     </div>
+    <div class="loading-line"></div>
   </div>
 
-  <div class="hero">
-    <div class="kicker">ASTERRA DIGITAL UNIVERSE</div>
-
-    <h1>
-      ENTER THE<br>
-      UNIVERSE
-    </h1>
-
-    <p>
-      Discover a digital universe built around finite planetary
-      surfaces, unique locations and collectible virtual property.
-    </p>
-
-    <div class="actions">
-      <button class="btn primary" id="discoverBtn">
-        DISCOVER SURFACE
-      </button>
-
-      <button class="btn" id="exploreBtn">
-        EXPLORE
-      </button>
-    </div>
-  </div>
-
-  <div class="world-panel">
-    <div class="panel-head">
-      <div class="panel-label">SELECT WORLD</div>
-
-      <div class="world-tabs">
-        <button class="world-tab active" data-world="moon">MOON</button>
-        <button class="world-tab" data-world="mars">MARS</button>
-      </div>
-    </div>
-
-    <div class="panel-body">
-
-      <div class="world-title">
-        <div class="world-name" id="worldName">Moon</div>
-        <div class="world-price" id="worldPrice">$11</div>
-      </div>
-
-      <div class="world-desc" id="worldDesc">
-        Lunar surface mapped from NASA LRO data.
-      </div>
-
-      <div class="stat-grid">
-        <div class="stat">
-          <div class="stat-label">SUPPLY</div>
-          <div class="stat-value" id="supply">248,731</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-label">AVAILABLE</div>
-          <div class="stat-value" id="available">248,731</div>
-        </div>
-      </div>
-
-      <button class="btn panel-button" id="panelExplore">
-        EXPLORE SURFACE
-      </button>
-
-      <div class="plot-panel" id="plotPanel">
-        <div class="plot-id" id="plotId">PLOT-001</div>
-        <div class="plot-price" id="plotPrice">$11</div>
-        <div class="plot-meta" id="plotMeta">
-          NASA mapped surface location.
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="planetHint">
-    DRAG TO ROTATE · SCROLL TO ZOOM
-  </div>
-
-  <div class="bottom-left">
-    ASTERRA DIGITAL UNIVERSE · SURFACE SCANNING
-  </div>
-
-  <div class="bottom-right">
-    <div class="metric">WORLD <strong id="metricWorld">MOON</strong></div>
-    <div class="metric">MODE <strong>3D</strong></div>
-    <div class="metric">NETWORK <strong>ONLINE</strong></div>
-  </div>
-
-  <div class="loading" id="loading">
-    INITIALIZING SURFACE DATA
-  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
@@ -646,167 +689,151 @@ button{
 <script>
 /* =========================================================
    ASTERRA
-   NASA SURFACE / TERRAIN VERSION
+   NASA-BASED MOON + MARS 3D SURFACE
    ========================================================= */
 
 const PLANET_RADIUS = 130;
 
-/*
-  NASA sources
-
-  Moon:
-  - NASA LRO/LROC color map
-  - NASA LOLA elevation map
-
-  Mars:
-  - NASA Mars Global Surveyor / MOC natural-color map
-  - NASA MOLA topography map
-
-  NASA explicitly describes the Moon maps as maps intended
-  for 3D rendering, and the Mars MOLA cylindrical map as
-  suitable for spherical texture mapping.
-*/
+/* ---------------------------------------------------------
+   NASA DATA
+   --------------------------------------------------------- */
 
 const NASA = {
 
-  moonColor:
-    "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg",
+  moon: {
+    color:
+      "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg",
 
-  moonElevation:
-    "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_3_8bit.jpg",
+    elevation:
+      "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_3_8bit.jpg"
+  },
 
-  marsColor:
-    "https://svs.gsfc.nasa.gov/vis/a000000/a004400/a004436/mars_cyl_topo2.jpg",
+  mars: {
 
-  marsElevation:
-    "https://svs.gsfc.nasa.gov/vis/a000000/a004400/a004436/mars_cyl_topo2.jpg"
+    /*
+      NASA MOLA global cylindrical topography.
+
+      This is NOT a photograph of a finished globe.
+      It is geographic/topographic information mapped
+      around the actual planet.
+    */
+    topography:
+      "https://svs.gsfc.nasa.gov/vis/a000000/a004400/a004436/mars_cyl_topo2.jpg"
+  }
+
 };
 
 
-/* =========================================================
+/* ---------------------------------------------------------
    WORLD DATA
-   ========================================================= */
+   --------------------------------------------------------- */
 
 const worldData = {
 
-  moon:{
-    name:"Moon",
-    price:11,
-    supply:248731,
-    available:248731,
-    description:"Lunar surface mapped from NASA LRO / LOLA data.",
-    colorTexture:NASA.moonColor,
-    elevationTexture:NASA.moonElevation,
-    displacementScale:4.2,
-    roughness:.98,
-    rotationY:-.50,
-    colorFallback:"#6d6f72"
+  moon: {
+    name: "MOON",
+    supply: 248731,
+    available: 248731,
+    price: 11,
+
+    description:
+      "Lunar surface based on NASA LROC imagery and LOLA elevation data."
   },
 
-  mars:{
-    name:"Mars",
-    price:21,
-    supply:591427,
-    available:591427,
-    description:"Martian surface mapped from NASA MGS / MOLA data.",
-    colorTexture:NASA.marsColor,
-    elevationTexture:NASA.marsElevation,
-    displacementScale:3.6,
-    roughness:.94,
-    rotationY:-.42,
-    colorFallback:"#7e4b36"
+  mars: {
+    name: "MARS",
+    supply: 591427,
+    available: 591427,
+    price: 21,
+
+    description:
+      "Martian geography based on NASA MOLA global topography."
   }
 
 };
 
+
+/* ---------------------------------------------------------
+   STATE
+   --------------------------------------------------------- */
+
 let currentWorld = "moon";
+let planetBuildId = 0;
+
+let scene;
+let camera;
+let renderer;
+
+let planetGroup;
+let planetMesh;
+let atmosphereMesh;
+let planetMaterial;
+
+let textureLoader;
+
+let targetRotationX = 0;
+let targetRotationY = 0;
+
+let currentRotationX = 0;
+let currentRotationY = 0;
+
+let zoomTarget = 520;
+let zoomCurrent = 520;
+
+let dragging = false;
+let previousPointerX = 0;
+let previousPointerY = 0;
+
+let autoRotate = true;
 
 
-/* =========================================================
-   PLOTS
-   ========================================================= */
+/* ---------------------------------------------------------
+   DOM
+   --------------------------------------------------------- */
 
-const PLOT_COUNT = 240;
+const loading =
+  document.getElementById("loading");
 
-const properties = [];
+const loadingText =
+  document.getElementById("loadingText");
 
-function seededRandom(seed){
-  let x = Math.sin(seed * 999.91) * 43758.5453123;
-  return x - Math.floor(x);
-}
+const worldName =
+  document.getElementById("worldName");
 
-function makePlots(){
+const worldDesc =
+  document.getElementById("worldDesc");
 
-  properties.length = 0;
+const planetLabel =
+  document.getElementById("planetLabel");
 
-  for(let i=0;i<PLOT_COUNT;i++){
+const bottomWorld =
+  document.getElementById("bottomWorld");
 
-    const world = i % 2 === 0 ? "moon" : "mars";
+const bottomSupply =
+  document.getElementById("bottomSupply");
 
-    const index = Math.floor(i / 2) + 1;
+const bottomPrice =
+  document.getElementById("bottomPrice");
 
-    const base =
-      world === "moon"
-        ? 11
-        : 21;
+const propertyPanel =
+  document.getElementById("propertyPanel");
 
-    const variation =
-      Math.floor(
-        seededRandom(i + 13) *
-        (world === "moon" ? 89 : 179)
-      );
+const propertyId =
+  document.getElementById("propertyId");
 
-    const rarity =
-      seededRandom(i + 91);
+const propertyLocation =
+  document.getElementById("propertyLocation");
 
-    let price =
-      base +
-      variation;
-
-    if(rarity > .94){
-      price *= 4;
-    }else if(rarity > .82){
-      price *= 2;
-    }
-
-    price = Math.max(base,Math.round(price));
-
-    properties.push({
-
-      id:
-        world.toUpperCase() +
-        "-" +
-        String(index).padStart(3,"0"),
-
-      world,
-
-      price,
-
-      lat:
-        -70 +
-        seededRandom(i + 301) * 140,
-
-      lon:
-        -180 +
-        seededRandom(i + 501) * 360,
-
-      status:
-        i < 6 ? "AVAILABLE" : "AVAILABLE"
-
-    });
-
-  }
-}
-
-makePlots();
+const propertyPrice =
+  document.getElementById("propertyPrice");
 
 
-/* =========================================================
+/* ---------------------------------------------------------
    STARFIELD
-   ========================================================= */
+   --------------------------------------------------------- */
 
 const starCanvas =
-  document.getElementById("starfield");
+  document.getElementById("stars");
 
 const starCtx =
   starCanvas.getContext("2d");
@@ -815,14 +842,13 @@ let stars = [];
 
 function resizeStars(){
 
-  const dpr =
+  starCanvas.width =
+    window.innerWidth *
     Math.min(window.devicePixelRatio || 1,2);
 
-  starCanvas.width =
-    window.innerWidth * dpr;
-
   starCanvas.height =
-    window.innerHeight * dpr;
+    window.innerHeight *
+    Math.min(window.devicePixelRatio || 1,2);
 
   starCanvas.style.width =
     window.innerWidth + "px";
@@ -830,56 +856,57 @@ function resizeStars(){
   starCanvas.style.height =
     window.innerHeight + "px";
 
-  starCtx.setTransform(
-    dpr,0,0,dpr,0,0
-  );
-
-  createStars();
-}
-
-function createStars(){
-
   stars = [];
 
   const count =
-    window.innerWidth < 700
-      ? 300
-      : 620;
+    Math.min(
+      620,
+      Math.max(
+        320,
+        Math.floor(
+          window.innerWidth *
+          window.innerHeight /
+          3000
+        )
+      )
+    );
 
   for(let i=0;i<count;i++){
 
     stars.push({
 
-      x:Math.random()*window.innerWidth,
+      x:Math.random() * starCanvas.width,
 
-      y:Math.random()*window.innerHeight,
+      y:Math.random() * starCanvas.height,
 
       r:
-        Math.random() < .92
-          ? Math.random()*.75+.15
-          : Math.random()*1.6+.5,
+        Math.random() < .86
+        ? Math.random() * 1.15
+        : Math.random() * 1.9,
 
       a:
-        Math.random()*.72+.16,
+        .15 +
+        Math.random() * .75,
 
       tw:
-        Math.random()*Math.PI*2,
+        Math.random() * Math.PI * 2,
 
       speed:
-        Math.random()*.008+.002
-
+        .004 +
+        Math.random() * .014
     });
 
   }
+
 }
 
-function drawStars(){
+function animateStars(){
 
   starCtx.clearRect(
     0,
     0,
-    window.innerWidth,
-    window.innerHeight
+    starCanvas.width,
+    starCanvas.height
   );
 
   for(const s of stars){
@@ -887,8 +914,11 @@ function drawStars(){
     s.tw += s.speed;
 
     const alpha =
-      s.a +
-      Math.sin(s.tw)*.11;
+      s.a *
+      (
+        .72 +
+        Math.sin(s.tw) * .28
+      );
 
     starCtx.beginPath();
 
@@ -897,355 +927,793 @@ function drawStars(){
       s.y,
       s.r,
       0,
-      Math.PI*2
+      Math.PI * 2
     );
 
     starCtx.fillStyle =
-      `rgba(255,255,255,${Math.max(.05,alpha)})`;
+      "rgba(220,228,255," +
+      alpha +
+      ")";
 
     starCtx.fill();
+
   }
 
-  requestAnimationFrame(drawStars);
+  requestAnimationFrame(animateStars);
+
 }
 
-resizeStars();
-drawStars();
 
+/* ---------------------------------------------------------
+   THREE.JS INITIALIZATION
+   --------------------------------------------------------- */
 
-/* =========================================================
-   THREE.JS
-   ========================================================= */
+function initThree(){
 
-const scene =
-  new THREE.Scene();
+  if(typeof THREE === "undefined"){
 
-const camera =
-  new THREE.PerspectiveCamera(
-    42,
-    window.innerWidth / window.innerHeight,
-    .1,
-    4000
-  );
+    loadingText.textContent =
+      "THREE.JS COULD NOT LOAD";
 
-camera.position.set(
-  0,
-  0,
-  520
-);
+    return false;
+  }
 
-const renderer =
-  new THREE.WebGLRenderer({
-    antialias:true,
-    alpha:true,
-    powerPreference:"high-performance"
-  });
+  scene =
+    new THREE.Scene();
 
-renderer.setPixelRatio(
-  Math.min(window.devicePixelRatio || 1,2)
-);
-
-renderer.setSize(
-  window.innerWidth,
-  window.innerHeight
-);
-
-renderer.outputEncoding =
-  THREE.sRGBEncoding;
-
-renderer.setClearColor(
-  0x000000,
-  0
-);
-
-document
-  .getElementById("scene")
-  .appendChild(renderer.domElement);
-
-
-/* =========================================================
-   LIGHTING
-   ========================================================= */
-
-const ambient =
-  new THREE.AmbientLight(
-    0xffffff,
-    .75
-  );
-
-scene.add(ambient);
-
-const directional =
-  new THREE.DirectionalLight(
-    0xffffff,
-    1.25
-  );
-
-directional.position.set(
-  -250,
-  170,
-  350
-);
-
-scene.add(directional);
-
-const rim =
-  new THREE.DirectionalLight(
-    0xffffff,
-    .45
-  );
-
-rim.position.set(
-  250,
-  -100,
-  -250
-);
-
-scene.add(rim);
-
-
-/* =========================================================
-   PLANET
-   ========================================================= */
-
-const planetGroup =
-  new THREE.Group();
-
-scene.add(planetGroup);
-
-let planetMesh = null;
-let planetMaterial = null;
-let colorTexture = null;
-let elevationTexture = null;
-
-let targetZoom = 520;
-
-const PLANET_FIXED_X = 105;
-const PLANET_FIXED_Y = 0;
-
-planetGroup.position.set(
-  PLANET_FIXED_X,
-  PLANET_FIXED_Y,
-  0
-);
-
-
-/* =========================================================
-   TEXTURE LOADING
-   ========================================================= */
-
-const textureLoader =
-  new THREE.TextureLoader();
-
-textureLoader.crossOrigin = "anonymous";
-
-
-function loadTexture(url){
-
-  return new Promise((resolve,reject)=>{
-
-    textureLoader.load(
-      url,
-      texture=>{
-        texture.encoding =
-          THREE.sRGBEncoding;
-
-        texture.anisotropy =
-          renderer.capabilities.getMaxAnisotropy();
-
-        resolve(texture);
-      },
-      undefined,
-      error=>{
-        reject(error);
-      }
+  camera =
+    new THREE.PerspectiveCamera(
+      42,
+      window.innerWidth /
+      window.innerHeight,
+      .1,
+      3000
     );
 
-  });
+  camera.position.set(
+    0,
+    0,
+    zoomCurrent
+  );
+
+  renderer =
+    new THREE.WebGLRenderer({
+      antialias:true,
+      alpha:true,
+      powerPreference:"high-performance"
+    });
+
+  renderer.setPixelRatio(
+    Math.min(
+      window.devicePixelRatio || 1,
+      1.75
+    )
+  );
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+  renderer.outputEncoding =
+    THREE.sRGBEncoding;
+
+  renderer.toneMapping =
+    THREE.ACESFilmicToneMapping;
+
+  renderer.toneMappingExposure =
+    1.05;
+
+  renderer.domElement.setAttribute(
+    "aria-label",
+    "ASTERRA interactive planetary surface"
+  );
+
+  document
+    .getElementById("scene")
+    .appendChild(renderer.domElement);
+
+
+  /* -----------------------------------------
+     LIGHTING
+     ----------------------------------------- */
+
+  const ambient =
+    new THREE.AmbientLight(
+      0xffffff,
+      .72
+    );
+
+  scene.add(ambient);
+
+
+  const sun =
+    new THREE.DirectionalLight(
+      0xffffff,
+      2.4
+    );
+
+  sun.position.set(
+    -320,
+    180,
+    420
+  );
+
+  scene.add(sun);
+
+
+  const rim =
+    new THREE.DirectionalLight(
+      0x728cff,
+      .45
+    );
+
+  rim.position.set(
+    340,
+    60,
+    -280
+  );
+
+  scene.add(rim);
+
+
+  const soft =
+    new THREE.PointLight(
+      0x8795ff,
+      .35,
+      1000
+    );
+
+  soft.position.set(
+    160,
+    -100,
+    280
+  );
+
+  scene.add(soft);
+
+
+  planetGroup =
+    new THREE.Group();
+
+  planetGroup.position.x =
+    window.innerWidth > 900
+    ? 105
+    : 35;
+
+  scene.add(planetGroup);
+
+
+  textureLoader =
+    new THREE.TextureLoader();
+
+  textureLoader.setCrossOrigin(
+    "anonymous"
+  );
+
+
+  /* -----------------------------------------
+     EVENTS
+     ----------------------------------------- */
+
+  renderer.domElement.addEventListener(
+    "pointerdown",
+    onPointerDown
+  );
+
+  renderer.domElement.addEventListener(
+    "pointermove",
+    onPointerMove
+  );
+
+  renderer.domElement.addEventListener(
+    "pointerup",
+    onPointerUp
+  );
+
+  renderer.domElement.addEventListener(
+    "pointercancel",
+    onPointerUp
+  );
+
+  renderer.domElement.addEventListener(
+    "wheel",
+    onWheel,
+    {passive:false}
+  );
+
+
+  window.addEventListener(
+    "resize",
+    onResize
+  );
+
+
+  return true;
+}
+
+
+/* ---------------------------------------------------------
+   TEXTURE LOADER WITH TIMEOUT
+   --------------------------------------------------------- */
+
+function loadTextureSafe(
+  url,
+  timeout = 9000
+){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      let finished = false;
+
+      const timer =
+        setTimeout(
+          ()=>{
+            if(finished) return;
+
+            finished = true;
+
+            reject(
+              new Error(
+                "Texture timeout"
+              )
+            );
+
+          },
+          timeout
+        );
+
+
+      textureLoader.load(
+
+        url,
+
+        texture=>{
+
+          if(finished) return;
+
+          finished = true;
+
+          clearTimeout(timer);
+
+          texture.anisotropy =
+            renderer.capabilities
+              .getMaxAnisotropy();
+
+          resolve(texture);
+
+        },
+
+        undefined,
+
+        error=>{
+
+          if(finished) return;
+
+          finished = true;
+
+          clearTimeout(timer);
+
+          reject(error);
+
+        }
+
+      );
+
+    }
+  );
 
 }
 
 
-/*
-  A fallback texture prevents the whole ASTERRA scene
-  from disappearing if NASA blocks an external request.
-*/
+/* ---------------------------------------------------------
+   FALLBACK TEXTURE
+   --------------------------------------------------------- */
 
-function createFallbackTexture(hex){
+function createFallbackTexture(
+  baseColor,
+  noiseAmount = 22
+){
+
+  const width = 512;
+  const height = 256;
 
   const canvas =
     document.createElement("canvas");
 
-  canvas.width = 512;
-  canvas.height = 256;
+  canvas.width = width;
+  canvas.height = height;
 
   const ctx =
     canvas.getContext("2d");
 
-  ctx.fillStyle = hex;
-  ctx.fillRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-  for(let i=0;i<350;i++){
-
-    const x =
-      Math.random()*canvas.width;
-
-    const y =
-      Math.random()*canvas.height;
-
-    const r =
-      Math.random()*9+.5;
-
-    ctx.beginPath();
-
-    ctx.arc(
-      x,
-      y,
-      r,
-      0,
-      Math.PI*2
+  const image =
+    ctx.createImageData(
+      width,
+      height
     );
 
-    ctx.fillStyle =
-      `rgba(0,0,0,${Math.random()*.16})`;
+  const rgb =
+    hexToRgb(baseColor);
 
-    ctx.fill();
+  for(
+    let y=0;
+    y<height;
+    y++
+  ){
+
+    for(
+      let x=0;
+      x<width;
+      x++
+    ){
+
+      const i =
+        (y * width + x) * 4;
+
+      const n =
+        (
+          Math.sin(x * .045) +
+          Math.sin(y * .065) +
+          Math.sin(
+            (x+y) * .021
+          )
+        ) / 3;
+
+      const variation =
+        n * noiseAmount;
+
+      image.data[i] =
+        Math.max(
+          0,
+          Math.min(
+            255,
+            rgb.r + variation
+          )
+        );
+
+      image.data[i+1] =
+        Math.max(
+          0,
+          Math.min(
+            255,
+            rgb.g + variation
+          )
+        );
+
+      image.data[i+2] =
+        Math.max(
+          0,
+          Math.min(
+            255,
+            rgb.b + variation
+          )
+        );
+
+      image.data[i+3] = 255;
+    }
+
   }
 
+  ctx.putImageData(
+    image,
+    0,
+    0
+  );
+
   const texture =
-    new THREE.CanvasTexture(canvas);
+    new THREE.CanvasTexture(
+      canvas
+    );
 
   texture.encoding =
     THREE.sRGBEncoding;
+
+  texture.wrapS =
+    THREE.RepeatWrapping;
+
+  texture.wrapT =
+    THREE.ClampToEdgeWrapping;
+
+  return texture;
+}
+
+function hexToRgb(hex){
+
+  hex =
+    hex.replace("#","");
+
+  return {
+
+    r:parseInt(
+      hex.substring(0,2),
+      16
+    ),
+
+    g:parseInt(
+      hex.substring(2,4),
+      16
+    ),
+
+    b:parseInt(
+      hex.substring(4,6),
+      16
+    )
+
+  };
+
+}
+
+
+/* ---------------------------------------------------------
+   MARS COLORIZATION
+   ---------------------------------------------------------
+
+   NASA MOLA global topography contains the real
+   geographic structure of Mars.
+
+   We preserve the NASA geographic image but
+   transform its false-color topographic palette
+   into a natural Mars-like red/brown palette.
+
+   This prevents the planet from appearing blue/green
+   like a scientific elevation map while keeping
+   the actual MOLA geography in place.
+   --------------------------------------------------------- */
+
+function createMarsColorTexture(
+  sourceTexture
+){
+
+  const image =
+    sourceTexture.image;
+
+  const width =
+    Math.min(
+      image.width || 1024,
+      1536
+    );
+
+  const height =
+    Math.floor(
+      width *
+      (image.height / image.width)
+    );
+
+  const canvas =
+    document.createElement("canvas");
+
+  canvas.width =
+    width;
+
+  canvas.height =
+    height;
+
+  const ctx =
+    canvas.getContext(
+      "2d",
+      {willReadFrequently:true}
+    );
+
+  ctx.drawImage(
+    image,
+    0,
+    0,
+    width,
+    height
+  );
+
+  const pixels =
+    ctx.getImageData(
+      0,
+      0,
+      width,
+      height
+    );
+
+  for(
+    let i=0;
+    i<pixels.data.length;
+    i+=4
+  ){
+
+    const r =
+      pixels.data[i];
+
+    const g =
+      pixels.data[i+1];
+
+    const b =
+      pixels.data[i+2];
+
+    /*
+      Luminance preserves the broad
+      geographic structure from MOLA.
+    */
+
+    let lum =
+      (
+        r * .299 +
+        g * .587 +
+        b * .114
+      ) / 255;
+
+
+    /*
+      Slight contrast enhancement.
+    */
+
+    lum =
+      Math.pow(
+        lum,
+        .82
+      );
+
+
+    /*
+      Mars palette:
+
+      dark basalt / low terrain
+      -> deep brown
+      -> red-orange
+      -> dusty ochre
+    */
+
+    let rr;
+    let gg;
+    let bb;
+
+    if(lum < .35){
+
+      const t =
+        lum / .35;
+
+      rr =
+        62 + t * 45;
+
+      gg =
+        24 + t * 24;
+
+      bb =
+        17 + t * 14;
+
+    }else if(lum < .7){
+
+      const t =
+        (lum-.35) / .35;
+
+      rr =
+        107 + t * 55;
+
+      gg =
+        48 + t * 34;
+
+      bb =
+        31 + t * 21;
+
+    }else{
+
+      const t =
+        (lum-.7) / .3;
+
+      rr =
+        162 + t * 48;
+
+      gg =
+        82 + t * 55;
+
+      bb =
+        50 + t * 35;
+
+    }
+
+
+    /*
+      Preserve some original MOLA
+      color information as subtle detail.
+    */
+
+    const originalVariation =
+      (
+        (r-g) * .035 +
+        (g-b) * .018
+      );
+
+    rr += originalVariation * 2;
+    gg += originalVariation;
+    bb += originalVariation * .6;
+
+
+    pixels.data[i] =
+      Math.max(
+        0,
+        Math.min(255,rr)
+      );
+
+    pixels.data[i+1] =
+      Math.max(
+        0,
+        Math.min(255,gg)
+      );
+
+    pixels.data[i+2] =
+      Math.max(
+        0,
+        Math.min(255,bb)
+      );
+
+  }
+
+  ctx.putImageData(
+    pixels,
+    0,
+    0
+  );
+
+  const texture =
+    new THREE.CanvasTexture(
+      canvas
+    );
+
+  texture.encoding =
+    THREE.sRGBEncoding;
+
+  texture.anisotropy =
+    renderer.capabilities
+      .getMaxAnisotropy();
 
   return texture;
 }
 
 
-/* =========================================================
-   BUILD PLANET
-   ========================================================= */
+/* ---------------------------------------------------------
+   ATMOSPHERE
+   --------------------------------------------------------- */
 
-async function buildPlanet(world){
+function createAtmosphere(
+  world
+){
 
-  const data =
-    worldData[world];
+  const geometry =
+    new THREE.SphereGeometry(
+      PLANET_RADIUS * 1.025,
+      96,
+      96
+    );
 
-  document
-    .getElementById("loading")
-    .classList.remove("hide");
+  const material =
+    new THREE.MeshBasicMaterial({
+
+      color:
+        world === "mars"
+        ? 0xb76b48
+        : 0x9da7b7,
+
+      transparent:true,
+
+      opacity:
+        world === "mars"
+        ? .055
+        : .028,
+
+      side:
+        THREE.BackSide,
+
+      blending:
+        THREE.AdditiveBlending,
+
+      depthWrite:false
+
+    });
+
+  return new THREE.Mesh(
+    geometry,
+    material
+  );
+}
+
+
+/* ---------------------------------------------------------
+   PLANET CREATION
+   --------------------------------------------------------- */
+
+async function buildPlanet(
+  world
+){
+
+  const buildId =
+    ++planetBuildId;
+
 
   /*
-    Remove old planet.
+    Clear previous planet.
   */
 
-  while(planetGroup.children.length){
+  while(
+    planetGroup.children.length
+  ){
+
+    const object =
+      planetGroup.children[0];
+
+    if(object.geometry)
+      object.geometry.dispose();
+
+    if(object.material){
+
+      if(object.material.map)
+        object.material.map.dispose();
+
+      if(object.material.bumpMap)
+        object.material.bumpMap.dispose();
+
+      if(object.material.displacementMap)
+        object.material.displacementMap.dispose();
+
+      object.material.dispose();
+    }
 
     planetGroup.remove(
-      planetGroup.children[0]
+      object
     );
-
-  }
-
-  planetMesh = null;
-
-  /*
-    Load NASA color and terrain.
-  */
-
-  try{
-
-    colorTexture =
-      await loadTexture(
-        data.colorTexture
-      );
-
-  }catch(error){
-
-    console.warn(
-      "NASA color texture could not be loaded.",
-      error
-    );
-
-    colorTexture =
-      createFallbackTexture(
-        data.colorFallback
-      );
-
-  }
-
-
-  try{
-
-    elevationTexture =
-      await loadTexture(
-        data.elevationTexture
-      );
-
-  }catch(error){
-
-    console.warn(
-      "NASA elevation texture could not be loaded.",
-      error
-    );
-
-    elevationTexture = null;
 
   }
 
 
   /*
-    High enough subdivision for visible relief
-    without destroying performance on an older laptop.
+    Geometry.
+
+    160 x 160 gives enough vertices
+    for visible lunar displacement while
+    remaining reasonable on an older laptop.
   */
 
   const geometry =
     new THREE.SphereGeometry(
       PLANET_RADIUS,
-      128,
-      128
+      160,
+      160
     );
 
 
   /*
-    The NASA elevation map is used as actual geometry
-    displacement, not just as a painted image.
+    Immediate fallback.
+
+    IMPORTANT:
+    The page does NOT wait for NASA.
   */
+
+  const fallbackTexture =
+    world === "moon"
+    ? createFallbackTexture(
+        "#8b8d91",
+        18
+      )
+    : createFallbackTexture(
+        "#8b4935",
+        20
+      );
+
 
   planetMaterial =
     new THREE.MeshStandardMaterial({
 
-      map:colorTexture,
+      map:
+        fallbackTexture,
 
-      bumpMap:
-        elevationTexture || null,
+      roughness:
+        world === "moon"
+        ? .94
+        : .88,
+
+      metalness:
+        0,
 
       bumpScale:
-        data.displacementScale,
-
-      displacementMap:
-        elevationTexture || null,
-
-      displacementScale:
-        elevationTexture
-          ? data.displacementScale
-          : 0,
-
-      displacementBias:
-        elevationTexture
-          ? -data.displacementScale * .5
-          : 0,
-
-      roughness:data.roughness,
-
-      metalness:.01,
-
-      color:0xffffff
+        world === "moon"
+        ? 1.7
+        : .8
 
     });
 
@@ -1256,12 +1724,8 @@ async function buildPlanet(world){
       planetMaterial
     );
 
-
-  planetMesh.rotation.x =
-    .05;
-
   planetMesh.rotation.y =
-    data.rotationY;
+    Math.PI * .18;
 
   planetGroup.add(
     planetMesh
@@ -1269,99 +1733,290 @@ async function buildPlanet(world){
 
 
   /*
-    A very subtle atmospheric/rim shell.
+    Add atmosphere immediately.
   */
 
-  const atmosphereGeometry =
-    new THREE.SphereGeometry(
-      PLANET_RADIUS * 1.018,
-      96,
-      96
-    );
-
-  const atmosphereMaterial =
-    new THREE.MeshBasicMaterial({
-
-      color:
-        world === "mars"
-          ? 0x7c4734
-          : 0xa8adb2,
-
-      transparent:true,
-
-      opacity:.055,
-
-      side:THREE.BackSide
-
-    });
-
-  const atmosphere =
-    new THREE.Mesh(
-      atmosphereGeometry,
-      atmosphereMaterial
+  atmosphereMesh =
+    createAtmosphere(
+      world
     );
 
   planetGroup.add(
-    atmosphere
+    atmosphereMesh
   );
 
 
   /*
-    Keep original planet coordinates.
+    Center planet.
   */
 
-  planetGroup.position.set(
-    PLANET_FIXED_X,
-    PLANET_FIXED_Y,
-    0
+  planetGroup.rotation.x = 0;
+
+  planetGroup.rotation.y = 0;
+
+
+  /*
+    Hide loading overlay NOW.
+    Remote NASA files must never block
+    the actual 3D scene.
+  */
+
+  loading.classList.add(
+    "hidden"
   );
 
-  planetGroup.scale.set(
-    1,
-    1,
-    1
-  );
 
-  document
-    .getElementById("loading")
-    .classList.add("hide");
+  /*
+    Load actual NASA data asynchronously.
+  */
+
+  try{
+
+    if(world === "moon"){
+
+      const results =
+        await Promise.allSettled([
+
+          loadTextureSafe(
+            NASA.moon.color,
+            10000
+          ),
+
+          loadTextureSafe(
+            NASA.moon.elevation,
+            10000
+          )
+
+        ]);
+
+
+      /*
+        User may have changed world
+        while loading.
+      */
+
+      if(
+        buildId !== planetBuildId
+      ){
+
+        disposeTextureResult(
+          results
+        );
+
+        return;
+      }
+
+
+      const colorResult =
+        results[0];
+
+      const elevationResult =
+        results[1];
+
+
+      /*
+        NASA LROC COLOR
+      */
+
+      if(
+        colorResult.status ===
+        "fulfilled"
+      ){
+
+        const colorTexture =
+          colorResult.value;
+
+        colorTexture.encoding =
+          THREE.sRGBEncoding;
+
+        colorTexture.wrapS =
+          THREE.ClampToEdgeWrapping;
+
+        colorTexture.wrapT =
+          THREE.ClampToEdgeWrapping;
+
+        planetMaterial.map =
+          colorTexture;
+
+        planetMaterial.needsUpdate =
+          true;
+
+      }
+
+
+      /*
+        NASA LOLA ELEVATION
+      */
+
+      if(
+        elevationResult.status ===
+        "fulfilled"
+      ){
+
+        const elevationTexture =
+          elevationResult.value;
+
+        elevationTexture.encoding =
+          THREE.LinearEncoding;
+
+        elevationTexture.wrapS =
+          THREE.ClampToEdgeWrapping;
+
+        elevationTexture.wrapT =
+          THREE.ClampToEdgeWrapping;
+
+        planetMaterial.bumpMap =
+          elevationTexture;
+
+        planetMaterial.bumpScale =
+          2.1;
+
+
+        /*
+          Actual displacement.
+
+          We keep it restrained so the Moon
+          remains realistic rather than
+          becoming a spiky asteroid.
+        */
+
+        planetMaterial.displacementMap =
+          elevationTexture;
+
+        planetMaterial.displacementScale =
+          2.8;
+
+        planetMaterial.displacementBias =
+          -1.4;
+
+        planetMaterial.needsUpdate =
+          true;
+
+      }
+
+    }
+
+
+    /* -----------------------------------------
+       MARS
+       ----------------------------------------- */
+
+    else{
+
+      const topoTexture =
+        await loadTextureSafe(
+          NASA.mars.topography,
+          10000
+        );
+
+
+      if(
+        buildId !== planetBuildId
+      ){
+
+        topoTexture.dispose();
+
+        return;
+      }
+
+
+      /*
+        Transform NASA MOLA map into
+        Mars-like natural coloration.
+      */
+
+      const marsColor =
+        createMarsColorTexture(
+          topoTexture
+        );
+
+
+      /*
+        Use the NASA MOLA geography
+        as subtle surface relief.
+
+        We do NOT use the false-color map
+        as a giant raw displacement map.
+      */
+
+      topoTexture.encoding =
+        THREE.LinearEncoding;
+
+      topoTexture.wrapS =
+        THREE.ClampToEdgeWrapping;
+
+      topoTexture.wrapT =
+        THREE.ClampToEdgeWrapping;
+
+
+      planetMaterial.map =
+        marsColor;
+
+      planetMaterial.bumpMap =
+        topoTexture;
+
+      planetMaterial.bumpScale =
+        1.45;
+
+      planetMaterial.roughness =
+        .9;
+
+      planetMaterial.needsUpdate =
+        true;
+
+    }
+
+  }catch(error){
+
+    /*
+      NASA unavailable?
+
+      No problem.
+
+      The planet remains visible with
+      the local fallback texture.
+    */
+
+    console.warn(
+      "NASA surface data could not be loaded:",
+      error
+    );
+
+  }
+
 }
 
 
-/* =========================================================
+/* ---------------------------------------------------------
+   DISPOSE HELPER
+   --------------------------------------------------------- */
+
+function disposeTextureResult(
+  results
+){
+
+  for(
+    const result of results
+  ){
+
+    if(
+      result &&
+      result.status === "fulfilled" &&
+      result.value
+    ){
+
+      result.value.dispose();
+
+    }
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
    UI
-   ========================================================= */
-
-const worldName =
-  document.getElementById("worldName");
-
-const worldPrice =
-  document.getElementById("worldPrice");
-
-const supply =
-  document.getElementById("supply");
-
-const available =
-  document.getElementById("available");
-
-const worldDesc =
-  document.getElementById("worldDesc");
-
-const metricWorld =
-  document.getElementById("metricWorld");
-
-const plotPanel =
-  document.getElementById("plotPanel");
-
-const plotId =
-  document.getElementById("plotId");
-
-const plotPrice =
-  document.getElementById("plotPrice");
-
-const plotMeta =
-  document.getElementById("plotMeta");
-
+   --------------------------------------------------------- */
 
 function updateWorldUI(){
 
@@ -1371,32 +2026,30 @@ function updateWorldUI(){
   worldName.textContent =
     data.name;
 
-  worldPrice.textContent =
-    "$" + data.price;
+  planetLabel.textContent =
+    data.name;
 
-  supply.textContent =
+  bottomWorld.textContent =
+    data.name;
+
+  bottomSupply.textContent =
     data.supply.toLocaleString();
 
-  available.textContent =
-    data.available.toLocaleString();
+  bottomPrice.textContent =
+    "$" + data.price;
 
   worldDesc.textContent =
     data.description;
 
-  metricWorld.textContent =
-    data.name.toUpperCase();
-
-  plotPanel.classList.remove(
-    "visible"
-  );
 
   document
     .querySelectorAll(".world-tab")
-    .forEach(tab=>{
+    .forEach(button=>{
 
-      tab.classList.toggle(
+      button.classList.toggle(
         "active",
-        tab.dataset.world === currentWorld
+        button.dataset.world ===
+        currentWorld
       );
 
     });
@@ -1404,26 +2057,54 @@ function updateWorldUI(){
 }
 
 
-/* =========================================================
+/* ---------------------------------------------------------
    WORLD SWITCH
-   ========================================================= */
+   --------------------------------------------------------- */
 
 document
   .querySelectorAll(".world-tab")
-  .forEach(tab=>{
+  .forEach(button=>{
 
-    tab.addEventListener(
+    button.addEventListener(
       "click",
       ()=>{
 
+        const world =
+          button.dataset.world;
+
+        if(
+          world === currentWorld
+        ) return;
+
         currentWorld =
-          tab.dataset.world;
+          world;
+
+        updateWorldUI();
+
+        propertyPanel
+          .classList.remove(
+            "visible"
+          );
+
+        loading.classList.remove(
+          "hidden"
+        );
+
+        loadingText.textContent =
+          world === "moon"
+          ? "Loading lunar surface"
+          : "Loading martian surface";
+
+        /*
+          Build immediately.
+          The function itself creates
+          fallback geometry before
+          downloading NASA data.
+        */
 
         buildPlanet(
           currentWorld
         );
-
-        updateWorldUI();
 
       }
     );
@@ -1431,244 +2112,336 @@ document
   });
 
 
-/* =========================================================
-   PLOT DISPLAY
-   ========================================================= */
+/* ---------------------------------------------------------
+   RANDOM PROPERTY SYSTEM
+   --------------------------------------------------------- */
 
-function showPlot(plot){
+const plots = [];
 
-  plotPanel.classList.add(
-    "visible"
-  );
+function seededRandom(seed){
 
-  plotId.textContent =
-    plot.id;
+  let x =
+    Math.sin(seed) *
+    10000;
 
-  plotPrice.textContent =
-    "$" + plot.price;
-
-  plotMeta.innerHTML =
-    "WORLD: " +
-    plot.world.toUpperCase() +
-    "<br>" +
-    "LAT: " +
-    plot.lat.toFixed(3) +
-    "° · LON: " +
-    plot.lon.toFixed(3) +
-    "°<br>" +
-    "STATUS: " +
-    plot.status;
+  return x -
+    Math.floor(x);
 
 }
 
 
-/* =========================================================
-   CLICK / POINTER ROTATION
-   ========================================================= */
+for(
+  let i=1;
+  i<=240;
+  i++
+){
 
-let dragging = false;
-let pointerX = 0;
-let pointerY = 0;
+  const world =
+    i % 2 === 0
+    ? "mars"
+    : "moon";
 
-let velocityX = 0;
-let velocityY = 0;
+  const data =
+    worldData[world];
 
-const minPolar =
-  -1.15;
+  const latitude =
+    -82 +
+    seededRandom(i * 7.21) *
+    164;
 
-const maxPolar =
-  1.15;
+  const longitude =
+    -180 +
+    seededRandom(i * 13.77) *
+    360;
 
-
-renderer.domElement.style.pointerEvents =
-  "auto";
-
-renderer.domElement.style.cursor =
-  "grab";
-
-
-renderer.domElement.addEventListener(
-  "pointerdown",
-  event=>{
-
-    dragging = true;
-
-    pointerX =
-      event.clientX;
-
-    pointerY =
-      event.clientY;
-
-    velocityX = 0;
-    velocityY = 0;
-
-    renderer.domElement.style.cursor =
-      "grabbing";
-
-  }
-);
-
-
-window.addEventListener(
-  "pointermove",
-  event=>{
-
-    if(!dragging)
-      return;
-
-    const dx =
-      event.clientX -
-      pointerX;
-
-    const dy =
-      event.clientY -
-      pointerY;
-
-    pointerX =
-      event.clientX;
-
-    pointerY =
-      event.clientY;
-
-    velocityX =
-      dx * .008;
-
-    velocityY =
-      dy * .006;
-
-    planetGroup.rotation.y +=
-      velocityX;
-
-    planetGroup.rotation.x +=
-      velocityY;
-
-    planetGroup.rotation.x =
-      Math.max(
-        minPolar,
-        Math.min(
-          maxPolar,
-          planetGroup.rotation.x
-        )
-      );
-
-  }
-);
-
-
-window.addEventListener(
-  "pointerup",
-  ()=>{
-    dragging = false;
-
-    renderer.domElement.style.cursor =
-      "grab";
-  }
-);
-
-
-/* =========================================================
-   ZOOM
-   ========================================================= */
-
-renderer.domElement.addEventListener(
-  "wheel",
-  event=>{
-
-    event.preventDefault();
-
-    targetZoom +=
-      event.deltaY * .35;
-
-    targetZoom =
-      Math.max(
-        475,
-        Math.min(
-          760,
-          targetZoom
-        )
-      );
-
-  },
-  {passive:false}
-);
-
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-function selectRandomPlot(){
-
-  const list =
-    properties.filter(
-      p=>p.world === currentWorld
+  let price =
+    data.price +
+    Math.floor(
+      seededRandom(i * 21.91) *
+      (
+        world === "mars"
+        ? 175
+        : 95
+      )
     );
 
-  if(!list.length)
+  const rarity =
+    seededRandom(
+      i * 33.14
+    );
+
+  if(rarity > .96){
+
+    price *= 8;
+
+  }else if(rarity > .90){
+
+    price *= 4;
+
+  }else if(rarity > .76){
+
+    price *= 2;
+
+  }
+
+  price =
+    Math.max(
+      data.price,
+      Math.round(price)
+    );
+
+
+  plots.push({
+
+    id:
+      (
+        world === "moon"
+        ? "LUNA"
+        : "MARS"
+      ) +
+      "-" +
+      String(i)
+        .padStart(5,"0"),
+
+    world,
+
+    latitude,
+
+    longitude,
+
+    price
+
+  });
+
+}
+
+
+/* ---------------------------------------------------------
+   SHOW RANDOM PROPERTY
+   --------------------------------------------------------- */
+
+function showRandomProperty(){
+
+  const candidates =
+    plots.filter(
+      p =>
+        p.world ===
+        currentWorld
+    );
+
+  if(!candidates.length)
     return;
 
-  const plot =
-    list[
+  const property =
+    candidates[
       Math.floor(
-        Math.random()*list.length
+        Math.random() *
+        candidates.length
       )
     ];
 
-  showPlot(plot);
+
+  propertyId.textContent =
+    property.id;
+
+  propertyLocation.textContent =
+    "LAT " +
+    property.latitude
+      .toFixed(3) +
+    "° · LON " +
+    property.longitude
+      .toFixed(3) +
+    "°";
+
+
+  propertyPrice.textContent =
+    "$" +
+    property.price;
+
+
+  propertyPanel
+    .classList.add(
+      "visible"
+    );
+
 
   /*
-    Rotate planet toward a generated
-    longitude/latitude position.
+    Rotate planet toward
+    approximate geographic position.
   */
 
-  const lon =
-    THREE.MathUtils.degToRad(
-      plot.lon
-    );
-
-  const lat =
-    THREE.MathUtils.degToRad(
-      plot.lat
-    );
-
-  planetGroup.rotation.y =
-    -lon;
-
-  planetGroup.rotation.x =
-    lat * .55;
+  rotateToCoordinates(
+    property.latitude,
+    property.longitude
+  );
 
 }
 
+
+/* ---------------------------------------------------------
+   ROTATE TO COORDINATES
+   --------------------------------------------------------- */
+
+function rotateToCoordinates(
+  latitude,
+  longitude
+){
+
+  const lat =
+    THREE.MathUtils.degToRad(
+      latitude
+    );
+
+  const lon =
+    THREE.MathUtils.degToRad(
+      longitude
+    );
+
+
+  targetRotationY =
+    -lon;
+
+
+  targetRotationX =
+    lat * .42;
+
+
+  autoRotate =
+    false;
+
+}
+
+
+/* ---------------------------------------------------------
+   BUTTONS
+   --------------------------------------------------------- */
+
+document
+  .getElementById("randomBtn")
+  .addEventListener(
+    "click",
+    showRandomProperty
+  );
 
 document
   .getElementById("discoverBtn")
   .addEventListener(
     "click",
-    selectRandomPlot
+    showRandomProperty
   );
-
 
 document
-  .getElementById("exploreBtn")
+  .getElementById("propertyClose")
   .addEventListener(
     "click",
-    selectRandomPlot
+    ()=>{
+      propertyPanel
+        .classList.remove(
+          "visible"
+        );
+    }
   );
 
 
-document
-  .getElementById("panelExplore")
-  .addEventListener(
-    "click",
-    selectRandomPlot
+/* ---------------------------------------------------------
+   MOUSE / TOUCH ROTATION
+   --------------------------------------------------------- */
+
+function onPointerDown(
+  event
+){
+
+  dragging = true;
+
+  previousPointerX =
+    event.clientX;
+
+  previousPointerY =
+    event.clientY;
+
+  autoRotate = false;
+
+  renderer.domElement.setPointerCapture(
+    event.pointerId
   );
 
+}
 
-/* =========================================================
+function onPointerMove(
+  event
+){
+
+  if(!dragging)
+    return;
+
+  const dx =
+    event.clientX -
+    previousPointerX;
+
+  const dy =
+    event.clientY -
+    previousPointerY;
+
+
+  previousPointerX =
+    event.clientX;
+
+  previousPointerY =
+    event.clientY;
+
+
+  targetRotationY +=
+    dx * .0055;
+
+  targetRotationX +=
+    dy * .0035;
+
+
+  targetRotationX =
+    THREE.MathUtils.clamp(
+      targetRotationX,
+      -.95,
+      .95
+    );
+
+}
+
+function onPointerUp(){
+
+  dragging = false;
+
+}
+
+
+/* ---------------------------------------------------------
+   ZOOM
+   --------------------------------------------------------- */
+
+function onWheel(
+  event
+){
+
+  event.preventDefault();
+
+  zoomTarget +=
+    event.deltaY *
+    .42;
+
+  zoomTarget =
+    THREE.MathUtils.clamp(
+      zoomTarget,
+      300,
+      760
+    );
+
+}
+
+
+/* ---------------------------------------------------------
    RESIZE
-   ========================================================= */
+   --------------------------------------------------------- */
 
-function resize(){
+function onResize(){
 
   camera.aspect =
     window.innerWidth /
@@ -1684,29 +2457,25 @@ function resize(){
   renderer.setPixelRatio(
     Math.min(
       window.devicePixelRatio || 1,
-      2
+      1.75
     )
   );
 
-  /*
-    Planet coordinates remain unchanged.
-    Only camera framing changes.
-  */
+
+  planetGroup.position.x =
+    window.innerWidth > 900
+    ? 105
+    : 35;
+
+
+  resizeStars();
 
 }
 
-window.addEventListener(
-  "resize",
-  ()=>{
-    resize();
-    resizeStars();
-  }
-);
 
-
-/* =========================================================
+/* ---------------------------------------------------------
    ANIMATION
-   ========================================================= */
+   --------------------------------------------------------- */
 
 function animate(){
 
@@ -1715,37 +2484,73 @@ function animate(){
   );
 
 
-  if(!dragging){
+  /*
+    Smooth rotation.
+  */
 
-    planetGroup.rotation.y +=
-      .0008;
+  currentRotationY +=
+    (
+      targetRotationY -
+      currentRotationY
+    ) * .075;
 
-    planetGroup.rotation.y +=
-      velocityX;
+  currentRotationX +=
+    (
+      targetRotationX -
+      currentRotationX
+    ) * .075;
 
-    planetGroup.rotation.x +=
-      velocityY;
 
-    velocityX *= .94;
-    velocityY *= .94;
+  planetMesh.rotation.y =
+    currentRotationY;
+
+  planetMesh.rotation.x =
+    currentRotationX;
+
+
+  /*
+    Atmosphere follows planet.
+  */
+
+  if(atmosphereMesh){
+
+    atmosphereMesh.rotation.y =
+      currentRotationY;
+
+    atmosphereMesh.rotation.x =
+      currentRotationX;
 
   }
 
 
-  planetGroup.rotation.x =
-    Math.max(
-      minPolar,
-      Math.min(
-        maxPolar,
-        planetGroup.rotation.x
-      )
-    );
+  /*
+    Very slow automatic movement
+    when user is not interacting.
+  */
+
+  if(
+    autoRotate &&
+    !dragging
+  ){
+
+    targetRotationY +=
+      .00055;
+
+  }
 
 
-  camera.position.z +=
-    (targetZoom -
-      camera.position.z) *
-    .08;
+  /*
+    Smooth zoom.
+  */
+
+  zoomCurrent +=
+    (
+      zoomTarget -
+      zoomCurrent
+    ) * .06;
+
+  camera.position.z =
+    zoomCurrent;
 
 
   renderer.render(
@@ -1755,18 +2560,37 @@ function animate(){
 
 }
 
-animate();
 
-
-/* =========================================================
+/* ---------------------------------------------------------
    START
-   ========================================================= */
+   --------------------------------------------------------- */
 
-updateWorldUI();
+resizeStars();
 
-buildPlanet(
-  currentWorld
-);
+animateStars();
+
+if(initThree()){
+
+  updateWorldUI();
+
+  /*
+    IMPORTANT:
+    The Moon appears immediately.
+    NASA data then replaces the fallback.
+  */
+
+  buildPlanet(
+    currentWorld
+  );
+
+  animate();
+
+}else{
+
+  loadingText.textContent =
+    "3D ENGINE FAILED TO LOAD";
+
+}
 
 </script>
 
