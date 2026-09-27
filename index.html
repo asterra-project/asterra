@@ -30,227 +30,258 @@ body{
 
 
 /* =========================================================
-   SPACE BACKGROUND
+   SPACE
 ========================================================= */
 
 #space{
     position:fixed;
     inset:0;
     overflow:hidden;
-
     background:
         radial-gradient(
             ellipse at 68% 44%,
-            rgba(255,255,255,.055) 0%,
-            rgba(255,255,255,.018) 18%,
-            rgba(0,0,0,0) 48%
-        ),
-        radial-gradient(
-            ellipse at 82% 70%,
-            rgba(180,190,210,.035) 0%,
-            rgba(0,0,0,0) 42%
+            rgba(255,255,255,.045) 0%,
+            rgba(255,255,255,.012) 22%,
+            transparent 52%
         ),
         #020305;
 }
 
 
 /* =========================================================
-   DEEP COSMIC WHITE HAZE
+   DEEP WHITE COSMIC NEBULA
 ========================================================= */
 
-.haze{
+.cosmic-nebula{
     position:absolute;
     pointer-events:none;
+    z-index:0;
     border-radius:50%;
-
-    filter:blur(65px);
-
     mix-blend-mode:screen;
-
-    opacity:.38;
 }
 
+.nebula-main{
+    width:1100px;
+    height:500px;
 
-/* broad distant nebula */
+    left:38%;
+    top:8%;
 
-.haze.one{
-    width:850px;
-    height:330px;
-
-    left:39%;
-    top:13%;
-
-    transform:
-        rotate(-15deg);
+    transform:rotate(-18deg);
 
     background:
         radial-gradient(
-            ellipse at center,
+            ellipse at 48% 50%,
             rgba(255,255,255,.085) 0%,
-            rgba(230,235,242,.052) 22%,
-            rgba(190,200,215,.025) 44%,
-            rgba(0,0,0,0) 75%
+            rgba(235,238,243,.065) 15%,
+            rgba(210,218,230,.038) 32%,
+            rgba(170,180,195,.018) 50%,
+            transparent 74%
         );
-
-    animation:
-        hazeFloatOne 18s ease-in-out infinite alternate;
-}
-
-
-/* thinner second cloud */
-
-.haze.two{
-    width:1050px;
-    height:260px;
-
-    left:43%;
-    top:55%;
-
-    transform:
-        rotate(12deg);
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(255,255,255,.065) 0%,
-            rgba(210,220,235,.035) 28%,
-            rgba(0,0,0,0) 72%
-        );
-
-    animation:
-        hazeFloatTwo 24s ease-in-out infinite alternate;
-}
-
-
-/* very distant lower haze */
-
-.haze.three{
-    width:700px;
-    height:240px;
-
-    left:2%;
-    top:69%;
-
-    transform:
-        rotate(-9deg);
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(255,255,255,.045) 0%,
-            rgba(210,220,235,.022) 35%,
-            rgba(0,0,0,0) 75%
-        );
-
-    animation:
-        hazeFloatThree 28s ease-in-out infinite alternate;
-}
-
-
-/* narrow wispy cloud */
-
-.haze.four{
-    width:620px;
-    height:120px;
-
-    left:54%;
-    top:31%;
-
-    transform:
-        rotate(-20deg);
 
     filter:blur(42px);
 
-    opacity:.22;
+    opacity:.75;
+
+    animation:
+        nebulaDrift 28s ease-in-out infinite alternate;
+}
+
+
+.nebula-secondary{
+    width:900px;
+    height:330px;
+
+    left:48%;
+    top:48%;
+
+    transform:rotate(16deg);
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255,255,255,.055) 0%,
+            rgba(220,225,235,.035) 26%,
+            rgba(180,190,205,.016) 47%,
+            transparent 73%
+        );
+
+    filter:blur(55px);
+
+    opacity:.6;
+
+    animation:
+        nebulaDrift2 35s ease-in-out infinite alternate;
+}
+
+
+.nebula-far{
+    width:800px;
+    height:250px;
+
+    left:2%;
+    top:64%;
+
+    transform:rotate(-12deg);
 
     background:
         radial-gradient(
             ellipse,
-            rgba(255,255,255,.10) 0%,
-            rgba(220,225,235,.035) 40%,
+            rgba(255,255,255,.035) 0%,
+            rgba(210,220,230,.018) 35%,
             transparent 75%
         );
 
+    filter:blur(60px);
+
+    opacity:.5;
+}
+
+
+.nebula-ribbon{
+    width:950px;
+    height:100px;
+
+    left:46%;
+    top:32%;
+
+    transform:rotate(-20deg);
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.045),
+            rgba(220,225,235,.018) 38%,
+            transparent 73%
+        );
+
+    filter:blur(28px);
+
+    opacity:.55;
+
     animation:
-        hazeWispy 21s ease-in-out infinite alternate;
+        ribbonDrift 22s ease-in-out infinite alternate;
 }
 
 
-@keyframes hazeFloatOne{
+@keyframes nebulaDrift{
 
     from{
         transform:
-            translate(-25px,-8px)
-            rotate(-15deg)
+            translate(-25px,-10px)
+            rotate(-18deg)
             scale(1);
-        opacity:.28;
+        opacity:.52;
     }
 
     to{
         transform:
-            translate(22px,10px)
-            rotate(-12deg)
-            scale(1.06);
-        opacity:.44;
-    }
-
-}
-
-
-@keyframes hazeFloatTwo{
-
-    from{
-        transform:
-            translate(18px,8px)
-            rotate(12deg)
-            scale(1);
-        opacity:.22;
-    }
-
-    to{
-        transform:
-            translate(-24px,-10px)
-            rotate(9deg)
+            translate(30px,16px)
+            rotate(-14deg)
             scale(1.08);
-        opacity:.36;
+        opacity:.82;
     }
 
 }
 
 
-@keyframes hazeFloatThree{
+@keyframes nebulaDrift2{
 
     from{
         transform:
-            translate(-12px,4px)
-            rotate(-9deg);
-        opacity:.16;
+            translate(20px,5px)
+            rotate(16deg)
+            scale(1);
+        opacity:.38;
     }
 
     to{
         transform:
-            translate(18px,-7px)
-            rotate(-6deg);
-        opacity:.27;
+            translate(-28px,-12px)
+            rotate(12deg)
+            scale(1.1);
+        opacity:.66;
     }
 
 }
 
 
-@keyframes hazeWispy{
+@keyframes ribbonDrift{
 
     from{
         transform:
-            translate(-15px,0)
+            translate(-18px,0)
             rotate(-20deg)
             scaleX(1);
     }
 
     to{
         transform:
-            translate(20px,8px)
+            translate(22px,8px)
             rotate(-16deg)
             scaleX(1.12);
+    }
+
+}
+
+
+/* =========================================================
+   COSMIC DUST
+========================================================= */
+
+#cosmicDust{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+}
+
+
+.dust{
+    position:absolute;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.65) 0%,
+            rgba(235,240,248,.24) 35%,
+            transparent 75%
+        );
+
+    filter:blur(.4px);
+
+    opacity:.08;
+
+    animation:
+        dustFloat
+        var(--duration)
+        ease-in-out
+        infinite alternate;
+}
+
+
+@keyframes dustFloat{
+
+    from{
+        transform:
+            translate3d(
+                calc(var(--moveX)*-1),
+                calc(var(--moveY)*-1),
+                0
+            );
+        opacity:var(--opacity);
+    }
+
+    to{
+        transform:
+            translate3d(
+                var(--moveX),
+                var(--moveY),
+                0
+            );
+        opacity:calc(var(--opacity)*1.45);
     }
 
 }
@@ -263,13 +294,14 @@ body{
 #stars{
     position:absolute;
     inset:0;
+    z-index:3;
     pointer-events:none;
 }
 
 
 /*
-   Base star.
-   Individual shapes are created by JavaScript.
+   Every star is built from CSS geometry.
+   They are NOT all circles.
 */
 
 .star{
@@ -283,92 +315,128 @@ body{
     transform:
         translate(-50%,-50%);
 
-    opacity:.4;
-
     will-change:
         opacity,
-        transform,
-        filter;
+        transform;
 
     pointer-events:none;
 }
 
 
-/* tiny point */
+/* tiny round point */
 
-.star.point{
+.star.dot{
     border-radius:50%;
 }
 
 
-/* soft circular star */
+/* oval star */
 
-.star.soft{
+.star.oval{
     border-radius:50%;
-
-    box-shadow:
-        0 0 5px rgba(255,255,255,.55),
-        0 0 11px rgba(255,255,255,.14);
+    transform:
+        translate(-50%,-50%)
+        rotate(var(--rotation));
 }
 
 
-/* slightly irregular */
+/* irregular organic star */
 
 .star.irregular{
-    border-radius:
-        48% 62% 55% 38% /
-        56% 43% 61% 47%;
-
-    transform:
-        translate(-50%,-50%)
-        rotate(17deg);
-
-    box-shadow:
-        0 0 5px rgba(255,255,255,.55);
+    clip-path:
+        polygon(
+            50% 0%,
+            62% 34%,
+            100% 25%,
+            69% 49%,
+            91% 82%,
+            55% 63%,
+            31% 100%,
+            40% 61%,
+            0% 67%,
+            34% 46%,
+            18% 15%,
+            47% 35%
+        );
 }
 
 
-/* distant elongated star */
+/* four-point star */
 
-.star.streak{
-    border-radius:50%;
-
-    transform:
-        translate(-50%,-50%)
-        rotate(-35deg);
-
-    box-shadow:
-        -4px 0 5px rgba(255,255,255,.12),
-        0 0 5px rgba(255,255,255,.65);
+.star.four{
+    clip-path:
+        polygon(
+            50% 0%,
+            61% 39%,
+            100% 50%,
+            61% 61%,
+            50% 100%,
+            39% 61%,
+            0% 50%,
+            39% 39%
+        );
 }
 
 
-/* subtle four-point star */
+/* six-point star */
 
-.star.cross{
-    width:2px!important;
-    height:2px!important;
-
-    border-radius:50%;
-
-    box-shadow:
-        0 -4px 3px rgba(255,255,255,.30),
-        0 4px 3px rgba(255,255,255,.30),
-        -4px 0 3px rgba(255,255,255,.20),
-        4px 0 3px rgba(255,255,255,.20),
-        0 0 7px rgba(255,255,255,.75);
+.star.six{
+    clip-path:
+        polygon(
+            50% 0%,
+            60% 35%,
+            93% 7%,
+            65% 40%,
+            100% 50%,
+            65% 60%,
+            93% 93%,
+            60% 65%,
+            50% 100%,
+            40% 65%,
+            7% 93%,
+            35% 60%,
+            0% 50%,
+            35% 40%,
+            7% 7%,
+            40% 35%
+        );
 }
 
 
-/* rare bright star */
+/* diamond */
+
+.star.diamond{
+    clip-path:
+        polygon(
+            50% 0%,
+            100% 50%,
+            50% 100%,
+            0% 50%
+        );
+}
+
+
+/* bright natural star */
 
 .star.bright{
     border-radius:50%;
 
     box-shadow:
-        0 0 5px rgba(255,255,255,.9),
-        0 0 12px rgba(255,255,255,.48),
-        0 0 22px rgba(255,255,255,.16);
+        0 0 5px rgba(255,255,255,.95),
+        0 0 12px rgba(255,255,255,.6),
+        0 0 24px rgba(255,255,255,.18);
+}
+
+
+/* larger soft star */
+
+.star.soft{
+    border-radius:50%;
+
+    box-shadow:
+        0 0 8px rgba(255,255,255,.7),
+        0 0 18px rgba(255,255,255,.35),
+        0 0 30px rgba(255,255,255,.1);
 }
 
 
@@ -385,14 +453,14 @@ body{
 
     display:block;
 
-    z-index:2;
+    z-index:5;
 
     pointer-events:auto;
 }
 
 
 /* =========================================================
-   TOP NAV
+   TOP BAR
 ========================================================= */
 
 .topbar{
@@ -475,7 +543,7 @@ body{
 
 
 /* =========================================================
-   LEFT HERO
+   HERO
 ========================================================= */
 
 .hero{
@@ -544,8 +612,6 @@ body{
     font-size:13px;
 
     line-height:1.75;
-
-    font-weight:400;
 
     color:rgba(255,255,255,.55);
 }
@@ -794,7 +860,6 @@ body{
     position:absolute;
 
     left:42px;
-
     right:42px;
 
     bottom:28px;
@@ -957,20 +1022,45 @@ body{
 
 <div id="space">
 
-    <!-- COSMIC DEPTH -->
-    <div class="haze one"></div>
-    <div class="haze two"></div>
-    <div class="haze three"></div>
-    <div class="haze four"></div>
 
-    <!-- RANDOM REALISTIC STARS -->
+    <!-- =====================================================
+         DEEP SPACE NEBULA
+    ====================================================== -->
+
+    <div class="cosmic-nebula nebula-main"></div>
+
+    <div class="cosmic-nebula nebula-secondary"></div>
+
+    <div class="cosmic-nebula nebula-far"></div>
+
+    <div class="cosmic-nebula nebula-ribbon"></div>
+
+
+    <!-- =====================================================
+         COSMIC DUST
+    ====================================================== -->
+
+    <div id="cosmicDust"></div>
+
+
+    <!-- =====================================================
+         STARS
+    ====================================================== -->
+
     <div id="stars"></div>
 
-    <!-- 3D -->
+
+    <!-- =====================================================
+         PLANET
+    ====================================================== -->
+
     <canvas id="spaceCanvas"></canvas>
 
 
-    <!-- TOP -->
+    <!-- =====================================================
+         TOP
+    ====================================================== -->
+
     <div class="topbar">
 
         <div class="brand">
@@ -988,24 +1078,21 @@ body{
 
         <div class="nav">
 
-            <span>
-                UNIVERSE
-            </span>
+            <span>UNIVERSE</span>
 
-            <span>
-                EXCHANGE
-            </span>
+            <span>EXCHANGE</span>
 
-            <span>
-                PORTFOLIO
-            </span>
+            <span>PORTFOLIO</span>
 
         </div>
 
     </div>
 
 
-    <!-- HERO -->
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
     <section class="hero">
 
         <div class="eyebrow">
@@ -1046,7 +1133,10 @@ body{
     </section>
 
 
-    <!-- RIGHT PANEL -->
+    <!-- =====================================================
+         RIGHT PANEL
+    ====================================================== -->
+
     <aside class="side-panel">
 
         <div class="panel-label">
@@ -1160,7 +1250,10 @@ body{
     </aside>
 
 
-    <!-- BOTTOM -->
+    <!-- =====================================================
+         BOTTOM
+    ====================================================== -->
+
     <div class="bottom-bar">
 
         <div class="bottom-left">
@@ -1220,57 +1313,191 @@ body{
 <script>
 
 /* =========================================================
-   REALISTIC RANDOM STARFIELD
+   COSMIC DUST GENERATOR
+========================================================= */
+
+const dustContainer =
+    document.getElementById(
+        "cosmicDust"
+    );
+
+
+/*
+   The dust is concentrated around
+   the nebula rather than covering
+   the entire screen evenly.
+*/
+
+const DUST_COUNT = 240;
+
+
+for(let i=0;i<DUST_COUNT;i++){
+
+    const dust =
+        document.createElement("div");
+
+
+    dust.className="dust";
+
+
+    /*
+       Large natural distribution
+       around the central-right
+       cosmic cloud.
+    */
+
+    const x =
+        28+
+        Math.random()*65;
+
+    const y =
+        8+
+        Math.random()*78;
+
+
+    const size =
+        .5+
+        Math.random()*2.8;
+
+
+    const opacity =
+        .025+
+        Math.random()*.075;
+
+
+    const moveX =
+        3+
+        Math.random()*18;
+
+
+    const moveY =
+        2+
+        Math.random()*10;
+
+
+    const duration =
+        8+
+        Math.random()*20;
+
+
+    dust.style.left =
+        x+"%";
+
+    dust.style.top =
+        y+"%";
+
+
+    dust.style.width =
+        size+"px";
+
+    dust.style.height =
+        size+"px";
+
+
+    dust.style.setProperty(
+        "--opacity",
+        opacity
+    );
+
+
+    dust.style.setProperty(
+        "--moveX",
+        moveX+"px"
+    );
+
+
+    dust.style.setProperty(
+        "--moveY",
+        moveY+"px"
+    );
+
+
+    dust.style.setProperty(
+        "--duration",
+        duration+"s"
+    );
+
+
+    dustContainer.appendChild(
+        dust
+    );
+
+}
+
+
+/* =========================================================
+   REALISTIC GEOMETRIC STARS
 ========================================================= */
 
 const starContainer =
-    document.getElementById("stars");
+    document.getElementById(
+        "stars"
+    );
 
-const starObjects = [];
 
-const STAR_COUNT = 340;
+const starObjects=[];
+
+
+/*
+   More stars than before,
+   but most remain tiny and dim.
+*/
+
+const STAR_COUNT=360;
 
 
 for(let i=0;i<STAR_COUNT;i++){
 
     const star =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
-    /*
-       Different visual types.
-    */
-
-    const random =
+    const r =
         Math.random();
 
 
     let type;
 
 
-    if(random < .42){
+    /*
+       Natural distribution of shapes.
+    */
 
-        type="point";
+    if(r<.43){
+
+        type="dot";
 
     }
-    else if(random < .67){
+    else if(r<.61){
 
-        type="soft";
+        type="oval";
 
     }
-    else if(random < .80){
+    else if(r<.72){
 
         type="irregular";
 
     }
-    else if(random < .90){
+    else if(r<.82){
 
-        type="streak";
+        type="four";
 
     }
-    else if(random < .975){
+    else if(r<.89){
 
-        type="cross";
+        type="six";
+
+    }
+    else if(r<.95){
+
+        type="diamond";
+
+    }
+    else if(r<.985){
+
+        type="soft";
 
     }
     else{
@@ -1280,87 +1507,120 @@ for(let i=0;i<STAR_COUNT;i++){
     }
 
 
-    star.className =
-        "star "+type;
+    star.className=
+        "star "+
+        type;
 
 
     /*
-       Natural star size distribution.
+       Size distribution.
     */
 
     let size;
 
 
-    if(type==="point"){
+    if(type==="dot"){
 
-        size =
+        size=
             .45+
-            Math.random()*.8;
+            Math.random()*.85;
 
     }
-    else if(type==="soft"){
+    else if(type==="oval"){
 
-        size =
+        size=
             .8+
-            Math.random()*1.4;
+            Math.random()*1.5;
 
     }
     else if(type==="irregular"){
 
-        size =
-            .9+
-            Math.random()*1.8;
+        size=
+            1+
+            Math.random()*2.2;
 
     }
-    else if(type==="streak"){
+    else if(type==="four"){
 
-        size =
-            .7+
-            Math.random()*1.2;
+        size=
+            1.2+
+            Math.random()*2.8;
 
     }
-    else if(type==="cross"){
+    else if(type==="six"){
 
-        size=2;
+        size=
+            1.2+
+            Math.random()*3;
+
+    }
+    else if(type==="diamond"){
+
+        size=
+            1+
+            Math.random()*2.3;
+
+    }
+    else if(type==="soft"){
+
+        size=
+            2+
+            Math.random()*3;
 
     }
     else{
 
-        size =
-            1.8+
-            Math.random()*2.5;
+        size=
+            2+
+            Math.random()*3.5;
 
     }
 
 
-    star.style.width =
+    star.style.width=
         size+"px";
 
-    star.style.height =
+    star.style.height=
         size+"px";
 
 
     /*
-       Completely random natural distribution.
+       Completely random positions.
     */
 
-    star.style.left =
-        (Math.random()*100)+"%";
+    star.style.left=
+        Math.random()*100+
+        "%";
 
-    star.style.top =
-        (Math.random()*100)+"%";
+    star.style.top=
+        Math.random()*100+
+        "%";
 
 
     /*
-       Slightly different brightness.
+       Rotation differs between stars.
     */
 
-    const base =
-        .15+
-        Math.random()*.45;
+    const rotation=
+        Math.random()*360;
 
 
-    star.style.opacity =
+    star.style.setProperty(
+        "--rotation",
+        rotation+"deg"
+    );
+
+
+    /*
+       Different base brightness.
+    */
+
+    const base=
+        .12+
+        Math.random()*.48;
+
+
+    star.style.opacity=
         base;
 
 
@@ -1370,7 +1630,7 @@ for(let i=0;i<STAR_COUNT;i++){
 
 
     /*
-       Every star has its own behaviour.
+       Individual twinkle characteristics.
     */
 
     starObjects.push({
@@ -1380,19 +1640,18 @@ for(let i=0;i<STAR_COUNT;i++){
         base:base,
 
         amplitude:
-            .10+
-            Math.random()*.40,
+            .08+
+            Math.random()*.42,
 
         speed:
             .00045+
-            Math.random()*.0019,
+            Math.random()*.002,
 
         phase:
             Math.random()*
             Math.PI*2,
 
-        rotation:
-            Math.random()*360,
+        rotation:rotation,
 
         type:type
 
@@ -1417,26 +1676,31 @@ const scene =
 
 const camera =
     new THREE.PerspectiveCamera(
+
         42,
+
         window.innerWidth/
         window.innerHeight,
+
         .1,
+
         4000
+
     );
 
 
 /*
-   DO NOT CHANGE.
-   This is the working zoom.
+   WORKING ZOOM — UNCHANGED
 */
 
-let zoomDistance = 520;
+let zoomDistance=520;
 
-let targetZoom = 520;
+let targetZoom=520;
 
-const MIN_ZOOM = 475;
 
-const MAX_ZOOM = 760;
+const MIN_ZOOM=475;
+
+const MAX_ZOOM=760;
 
 
 camera.position.set(
@@ -1472,7 +1736,7 @@ renderer.setSize(
 );
 
 
-renderer.outputEncoding =
+renderer.outputEncoding=
     THREE.sRGBEncoding;
 
 
@@ -1489,14 +1753,10 @@ scene.add(
 );
 
 
-const PLANET_RADIUS = 130;
+const PLANET_RADIUS=130;
 
 
-/* =========================================================
-   WORLDS
-========================================================= */
-
-const worlds = {
+const worlds={
 
     moon:{
 
@@ -1538,9 +1798,7 @@ const worlds = {
 };
 
 
-let currentWorld =
-    "moon";
-
+let currentWorld="moon";
 
 let planetMesh;
 
@@ -1585,19 +1843,23 @@ function buildPlanet(worldKey){
         );
 
 
-    const world =
+    const world=
         worlds[worldKey];
 
 
-    const geometry =
+    const geometry=
         new THREE.SphereGeometry(
+
             PLANET_RADIUS,
+
             96,
+
             64
+
         );
 
 
-    const position =
+    const position=
         geometry.attributes.position;
 
 
@@ -1610,17 +1872,17 @@ function buildPlanet(worldKey){
         i++
     ){
 
-        const x =
+        const x=
             position.getX(i);
 
-        const y =
+        const y=
             position.getY(i);
 
-        const z =
+        const z=
             position.getZ(i);
 
 
-        const length =
+        const length=
             Math.sqrt(
                 x*x+
                 y*y+
@@ -1629,22 +1891,29 @@ function buildPlanet(worldKey){
 
 
         const nx=x/length;
+
         const ny=y/length;
+
         const nz=z/length;
 
 
-        const noise =
+        const noise=
             Math.sin(nx*11.4)*
             Math.cos(ny*9.2)*
             Math.sin(nz*13.1);
 
 
-        const noise2 =
-            Math.sin(nx*25+ny*8)*
-            Math.cos(nz*18);
+        const noise2=
+            Math.sin(
+                nx*25+
+                ny*8
+            )*
+            Math.cos(
+                nz*18
+            );
 
 
-        const displacement =
+        const displacement=
             noise*.7+
             noise2*.25;
 
@@ -1665,7 +1934,7 @@ function buildPlanet(worldKey){
         );
 
 
-        const baseColor =
+        const baseColor=
             new THREE.Color(
                 randomWorldColor(
                     world.colors
@@ -1673,36 +1942,38 @@ function buildPlanet(worldKey){
             );
 
 
-        const factor =
-            .84+
-            Math.random()*.26;
-
-
         baseColor.multiplyScalar(
-            factor
+            .84+
+            Math.random()*.26
         );
 
 
         colors.push(
+
             baseColor.r,
+
             baseColor.g,
+
             baseColor.b
+
         );
 
     }
 
 
     geometry.setAttribute(
+
         "color",
 
         new THREE.Float32BufferAttribute(
             colors,
             3
         )
+
     );
 
 
-    const material =
+    const material=
         new THREE.MeshStandardMaterial({
 
             vertexColors:true,
@@ -1716,7 +1987,7 @@ function buildPlanet(worldKey){
         });
 
 
-    planetMesh =
+    planetMesh=
         new THREE.Mesh(
             geometry,
             material
@@ -1732,7 +2003,7 @@ function buildPlanet(worldKey){
        CRATERS
     ===================================================== */
 
-    craterGroup =
+    craterGroup=
         new THREE.Group();
 
 
@@ -1743,44 +2014,44 @@ function buildPlanet(worldKey){
 
     for(let i=0;i<85;i++){
 
-        const phi =
+        const phi=
             Math.acos(
                 2*Math.random()-1
             );
 
 
-        const theta =
+        const theta=
             Math.random()*
             Math.PI*2;
 
 
-        const radius =
+        const radius=
             PLANET_RADIUS+.4;
 
 
-        const x =
+        const x=
             radius*
             Math.sin(phi)*
             Math.cos(theta);
 
 
-        const y =
+        const y=
             radius*
             Math.cos(phi);
 
 
-        const z =
+        const z=
             radius*
             Math.sin(phi)*
             Math.sin(theta);
 
 
-        const size =
+        const size=
             2+
             Math.random()*9;
 
 
-        const ringGeometry =
+        const ringGeometry=
             new THREE.RingGeometry(
                 size*.55,
                 size,
@@ -1788,7 +2059,7 @@ function buildPlanet(worldKey){
             );
 
 
-        const ringMaterial =
+        const ringMaterial=
             new THREE.MeshBasicMaterial({
 
                 color:
@@ -1808,7 +2079,7 @@ function buildPlanet(worldKey){
             });
 
 
-        const ring =
+        const ring=
             new THREE.Mesh(
                 ringGeometry,
                 ringMaterial
@@ -1816,7 +2087,9 @@ function buildPlanet(worldKey){
 
 
         ring.position.set(
-            x,y,z
+            x,
+            y,
+            z
         );
 
 
@@ -1835,10 +2108,10 @@ function buildPlanet(worldKey){
 
 
     /* =====================================================
-       MARKERS
+       PROPERTY MARKERS
     ===================================================== */
 
-    markerGroup =
+    markerGroup=
         new THREE.Group();
 
 
@@ -1849,39 +2122,39 @@ function buildPlanet(worldKey){
 
     for(let i=0;i<8;i++){
 
-        const phi =
+        const phi=
             Math.acos(
                 2*Math.random()-1
             );
 
 
-        const theta =
+        const theta=
             Math.random()*
             Math.PI*2;
 
 
-        const radius =
+        const radius=
             PLANET_RADIUS+2;
 
 
-        const x =
+        const x=
             radius*
             Math.sin(phi)*
             Math.cos(theta);
 
 
-        const y =
+        const y=
             radius*
             Math.cos(phi);
 
 
-        const z =
+        const z=
             radius*
             Math.sin(phi)*
             Math.sin(theta);
 
 
-        const dotGeometry =
+        const dotGeometry=
             new THREE.SphereGeometry(
                 1.8,
                 10,
@@ -1889,7 +2162,7 @@ function buildPlanet(worldKey){
             );
 
 
-        const dotMaterial =
+        const dotMaterial=
             new THREE.MeshBasicMaterial({
 
                 color:0xffffff,
@@ -1901,7 +2174,7 @@ function buildPlanet(worldKey){
             });
 
 
-        const dot =
+        const dot=
             new THREE.Mesh(
                 dotGeometry,
                 dotMaterial
@@ -1909,7 +2182,9 @@ function buildPlanet(worldKey){
 
 
         dot.position.set(
-            x,y,z
+            x,
+            y,
+            z
         );
 
 
@@ -1926,7 +2201,7 @@ function buildPlanet(worldKey){
    LIGHTING
 ========================================================= */
 
-const ambient =
+const ambient=
     new THREE.AmbientLight(
         0xffffff,
         .32
@@ -1938,7 +2213,7 @@ scene.add(
 );
 
 
-const sun =
+const sun=
     new THREE.DirectionalLight(
         0xffffff,
         2.4
@@ -1957,7 +2232,7 @@ scene.add(
 );
 
 
-const rim =
+const rim=
     new THREE.DirectionalLight(
         0xb8c5ff,
         .35
@@ -1977,7 +2252,7 @@ scene.add(
 
 
 /* =========================================================
-   SCREEN → WORLD
+   SCREEN TO WORLD
 ========================================================= */
 
 function screenToWorld(
@@ -1986,34 +2261,34 @@ function screenToWorld(
     distance
 ){
 
-    const width =
+    const width=
         window.innerWidth;
 
-    const height =
+    const height=
         window.innerHeight;
 
 
-    const ndcX =
+    const ndcX=
         (screenX/width)*2-1;
 
 
-    const ndcY =
+    const ndcY=
         -(screenY/height)*2+1;
 
 
-    const vFov =
+    const vFov=
         THREE.MathUtils.degToRad(
             camera.fov
         );
 
 
-    const visibleHeight =
+    const visibleHeight=
         2*
         Math.tan(vFov/2)*
         distance;
 
 
-    const visibleWidth =
+    const visibleWidth=
         visibleHeight*
         camera.aspect;
 
@@ -2035,65 +2310,62 @@ function screenToWorld(
 
 /* =========================================================
    SAFE PLANET POSITION
+   UNCHANGED
 ========================================================= */
 
 function updatePlanetSafePosition(){
 
-    const width =
+    const width=
         window.innerWidth;
 
-    const height =
+    const height=
         window.innerHeight;
 
 
-    const distance =
+    const distance=
         zoomDistance;
 
 
-    const vFov =
+    const vFov=
         THREE.MathUtils.degToRad(
             camera.fov
         );
 
 
-    const visibleHeight =
+    const visibleHeight=
         2*
         Math.tan(vFov/2)*
         distance;
 
 
-    const pixelsPerWorld =
+    const pixelsPerWorld=
         height/
         visibleHeight;
 
 
-    const projectedRadius =
+    const projectedRadius=
         PLANET_RADIUS*
         pixelsPerWorld;
 
 
-    /*
-       UI exclusion zones.
-    */
-
-    let leftBoundary =
+    let leftBoundary=
         42+
         390+
         35;
 
 
-    let rightBoundary =
+    let rightBoundary=
         width-
         42-
         290-
         35;
 
 
-    let topBoundary =
+    let topBoundary=
         115;
 
 
-    let bottomBoundary =
+    let bottomBoundary=
         height-
         100;
 
@@ -2101,38 +2373,38 @@ function updatePlanetSafePosition(){
     const margin=18;
 
 
-    leftBoundary += margin;
+    leftBoundary+=margin;
 
-    rightBoundary -= margin;
+    rightBoundary-=margin;
 
-    topBoundary += margin;
+    topBoundary+=margin;
 
-    bottomBoundary -= margin;
+    bottomBoundary-=margin;
 
 
-    let minX =
+    let minX=
         leftBoundary+
         projectedRadius;
 
 
-    let maxX =
+    let maxX=
         rightBoundary-
         projectedRadius;
 
 
-    let minY =
+    let minY=
         topBoundary+
         projectedRadius;
 
 
-    let maxY =
+    let maxY=
         bottomBoundary-
         projectedRadius;
 
 
     if(minX>maxX){
 
-        const middle =
+        const middle=
             (
                 leftBoundary+
                 rightBoundary
@@ -2148,7 +2420,7 @@ function updatePlanetSafePosition(){
 
     if(minY>maxY){
 
-        const middle =
+        const middle=
             (
                 topBoundary+
                 bottomBoundary
@@ -2162,15 +2434,15 @@ function updatePlanetSafePosition(){
     }
 
 
-    const preferredX =
+    const preferredX=
         width*.57;
 
 
-    const preferredY =
+    const preferredY=
         height*.48;
 
 
-    const finalX =
+    const finalX=
         Math.max(
             minX,
             Math.min(
@@ -2180,7 +2452,7 @@ function updatePlanetSafePosition(){
         );
 
 
-    const finalY =
+    const finalY=
         Math.max(
             minY,
             Math.min(
@@ -2190,7 +2462,7 @@ function updatePlanetSafePosition(){
         );
 
 
-    const world =
+    const world=
         screenToWorld(
             finalX,
             finalY,
@@ -2198,22 +2470,21 @@ function updatePlanetSafePosition(){
         );
 
 
-    planetGroup.position.x =
+    planetGroup.position.x=
         world.x;
 
 
-    planetGroup.position.y =
+    planetGroup.position.y=
         world.y;
 
 
-    planetGroup.position.z =
-        0;
+    planetGroup.position.z=0;
 
 }
 
 
 /* =========================================================
-   DRAG
+   DRAG ROTATION
 ========================================================= */
 
 let dragging=false;
@@ -2249,21 +2520,21 @@ canvas.addEventListener(
             return;
 
 
-        const dx =
+        const dx=
             e.clientX-
             previousX;
 
 
-        const dy =
+        const dy=
             e.clientY-
             previousY;
 
 
-        planetGroup.rotation.y +=
+        planetGroup.rotation.y+=
             dx*.006;
 
 
-        planetGroup.rotation.x +=
+        planetGroup.rotation.x+=
             dy*.003;
 
 
@@ -2302,11 +2573,11 @@ canvas.addEventListener(
         e.preventDefault();
 
 
-        targetZoom +=
+        targetZoom+=
             e.deltaY*.35;
 
 
-        targetZoom =
+        targetZoom=
             Math.max(
                 MIN_ZOOM,
                 Math.min(
@@ -2326,31 +2597,31 @@ canvas.addEventListener(
    WORLD SWITCH
 ========================================================= */
 
-const moonBtn =
+const moonBtn=
     document.getElementById(
         "moonBtn"
     );
 
 
-const marsBtn =
+const marsBtn=
     document.getElementById(
         "marsBtn"
     );
 
 
-const worldName =
+const worldName=
     document.getElementById(
         "worldName"
     );
 
 
-const worldSub =
+const worldSub=
     document.getElementById(
         "worldSub"
     );
 
 
-const bottomWorld =
+const bottomWorld=
     document.getElementById(
         "bottomWorld"
     );
@@ -2359,7 +2630,6 @@ const bottomWorld =
 function setWorld(world){
 
     currentWorld=world;
-
 
     buildPlanet(world);
 
@@ -2388,15 +2658,15 @@ function setWorld(world){
     }
 
 
-    worldName.textContent =
+    worldName.textContent=
         worlds[world].name;
 
 
-    worldSub.textContent =
+    worldSub.textContent=
         worlds[world].sub;
 
 
-    bottomWorld.textContent =
+    bottomWorld.textContent=
         worlds[world].name;
 
 }
@@ -2419,16 +2689,14 @@ marsBtn.addEventListener(
 
 
 /* =========================================================
-   INITIAL WORLD
+   INITIAL PLANET
 ========================================================= */
 
-buildPlanet(
-    "moon"
-);
+buildPlanet("moon");
 
 
 /* =========================================================
-   MAIN ANIMATION
+   ANIMATION
 ========================================================= */
 
 function animate(){
@@ -2438,13 +2706,13 @@ function animate(){
     );
 
 
-    const time =
+    const time=
         performance.now();
 
 
-    /* -----------------------------------------
-       REALISTIC STAR TWINKLE
-    ----------------------------------------- */
+    /* =====================================================
+       STAR TWINKLING
+    ===================================================== */
 
     for(
         let i=0;
@@ -2452,11 +2720,11 @@ function animate(){
         i++
     ){
 
-        const star =
+        const star=
             starObjects[i];
 
 
-        const wave =
+        const wave=
             Math.sin(
                 time*
                 star.speed+
@@ -2464,27 +2732,27 @@ function animate(){
             );
 
 
-        const secondary =
+        const secondWave=
             Math.sin(
                 time*
                 star.speed*
-                .41+
+                .37+
                 star.phase*
-                1.71
-            )*.28;
+                1.63
+            )*.25;
 
 
-        let opacity =
+        let opacity=
             star.base+
             wave*
             star.amplitude+
-            secondary*
+            secondWave*
             star.amplitude;
 
 
-        opacity =
+        opacity=
             Math.max(
-                .035,
+                .025,
                 Math.min(
                     .98,
                     opacity
@@ -2492,87 +2760,82 @@ function animate(){
             );
 
 
-        /*
-           A very small scale change
-           gives brighter stars a natural
-           breathing effect.
-        */
-
-        const pulse =
+        const pulse=
             1+
             Math.max(
                 0,
                 wave
-            )*.14;
+            )*.16;
 
 
-        let transform =
-            `translate(-50%,-50%) scale(${pulse})`;
+        let transform=
+            "translate(-50%,-50%)";
 
 
-        if(
-            star.type==="irregular"
-        ){
-
-            transform +=
-                ` rotate(${star.rotation}deg)`;
-
-        }
-
+        /*
+           Different geometry
+           retains its individual rotation.
+        */
 
         if(
+            star.type==="oval" ||
+            star.type==="irregular" ||
             star.type==="streak"
         ){
 
-            transform +=
+            transform+=
                 ` rotate(${star.rotation}deg)`;
 
         }
 
 
-        star.element.style.opacity =
+        transform+=
+            ` scale(${pulse})`;
+
+
+        star.element.style.opacity=
             opacity;
 
 
-        star.element.style.transform =
+        star.element.style.transform=
             transform;
 
     }
 
 
-    /* -----------------------------------------
+    /* =====================================================
        ZOOM
-    ----------------------------------------- */
+    ===================================================== */
 
-    zoomDistance +=
+    zoomDistance+=
         (
             targetZoom-
             zoomDistance
         )*.08;
 
 
-    camera.position.z =
+    camera.position.z=
         zoomDistance;
 
 
     /*
-       Keep planet inside the safe area
-       during zoom.
+       Planet remains inside
+       the safe UI area.
     */
 
     updatePlanetSafePosition();
 
 
-    /* -----------------------------------------
-       PLANET ROTATION
-    ----------------------------------------- */
+    /* =====================================================
+       ROTATION
+    ===================================================== */
 
     if(!dragging){
 
-        planetGroup.rotation.y +=
+        planetGroup.rotation.y+=
             currentWorld==="mars"
-            ? .00030
-            : .00022;
+            ?.00030
+            :.00022;
 
     }
 
@@ -2596,7 +2859,7 @@ window.addEventListener(
     "resize",
     ()=>{
 
-        camera.aspect =
+        camera.aspect=
             window.innerWidth/
             window.innerHeight;
 
@@ -2617,7 +2880,7 @@ window.addEventListener(
 
 
 /* =========================================================
-   INITIAL POSITION
+   INITIAL SAFE POSITION
 ========================================================= */
 
 updatePlanetSafePosition();
