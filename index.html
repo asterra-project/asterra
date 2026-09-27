@@ -2,25 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASTERRA — Enter the Virtual Universe</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ASTERRA — Digital Universe</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:#02030a;
+    background:#020305;
     color:#fff;
     font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-    background:
-        radial-gradient(circle at 50% 45%,rgba(38,45,80,.18),transparent 45%),
-        #02030a;
+    cursor:default;
 }
 
 button{
@@ -32,536 +34,694 @@ button{
     position:fixed;
     inset:0;
     overflow:hidden;
+    background:
+        radial-gradient(
+            ellipse at 72% 50%,
+            rgba(52,58,82,.13),
+            transparent 40%
+        ),
+        #020305;
 }
 
-#space{
+/* =====================================================
+   STARFIELD
+===================================================== */
+
+#stars{
     position:absolute;
     inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.star{
+    position:absolute;
+    width:1px;
+    height:1px;
+    border-radius:50%;
+    background:#fff;
+    opacity:.5;
+    animation:twinkle var(--duration) ease-in-out infinite;
+    animation-delay:var(--delay);
+}
+
+.star.large{
+    width:2px;
+    height:2px;
+    opacity:.8;
+}
+
+@keyframes twinkle{
+    0%,100%{
+        opacity:.18;
+        transform:scale(.7);
+    }
+    50%{
+        opacity:.95;
+        transform:scale(1.35);
+    }
+}
+
+/* =====================================================
+   AMBIENT LIGHT
+===================================================== */
+
+.ambient{
+    position:absolute;
+    width:800px;
+    height:800px;
+    right:-250px;
+    top:50%;
+    transform:translateY(-50%);
+    border-radius:50%;
+    background:
+        radial-gradient(
+            circle,
+            rgba(90,105,150,.12) 0%,
+            rgba(40,45,70,.04) 35%,
+            transparent 70%
+        );
+    pointer-events:none;
+}
+
+/* =====================================================
+   TOP NAV
+===================================================== */
+
+.top{
+    position:absolute;
+    z-index:20;
+    left:0;
+    right:0;
+    top:0;
+    height:92px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 46px;
+
+    border-bottom:1px solid rgba(255,255,255,.055);
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(2,3,5,.82),
+            rgba(2,3,5,.15)
+        );
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.brand-mark{
+    width:31px;
+    height:31px;
+    border:1px solid rgba(255,255,255,.45);
+    border-radius:50%;
+    position:relative;
+}
+
+.brand-mark:before{
+    content:"";
+    position:absolute;
+    left:6px;
+    right:6px;
+    top:14px;
+    height:1px;
+    background:#fff;
+    transform:rotate(-30deg);
+}
+
+.brand-text{
+    font-size:17px;
+    letter-spacing:8px;
+    font-weight:500;
+}
+
+.brand-sub{
+    color:#646a77;
+    font-size:8px;
+    letter-spacing:3px;
+    margin-left:5px;
+}
+
+.navigation{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.navigation button{
+    border:0;
+    background:transparent;
+    color:#707681;
+    padding:12px 17px;
+    font-size:9px;
+    letter-spacing:2px;
+    transition:.25s;
+}
+
+.navigation button:hover{
+    color:#fff;
+}
+
+.navigation .active{
+    color:#fff;
+}
+
+/* =====================================================
+   LEFT CONTENT
+===================================================== */
+
+.left-content{
+    position:absolute;
+    z-index:10;
+    left:7vw;
+    top:50%;
+    transform:translateY(-50%);
+    width:440px;
+}
+
+.eyebrow{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#727986;
+    font-size:9px;
+    letter-spacing:4px;
+    margin-bottom:22px;
+}
+
+.eyebrow-line{
+    width:42px;
+    height:1px;
+    background:#777e8d;
+}
+
+h1{
+    font-size:clamp(50px,5.5vw,88px);
+    font-weight:300;
+    letter-spacing:-4px;
+    line-height:.92;
+}
+
+h1 strong{
+    font-weight:600;
+}
+
+.description{
+    margin-top:28px;
+    max-width:380px;
+    color:#747b88;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.explore{
+    margin-top:34px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.explore button{
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.4);
+    background:rgba(255,255,255,.025);
+    color:#fff;
+    padding:16px 25px;
+    font-size:9px;
+    letter-spacing:3px;
+    transition:.3s;
+}
+
+.explore button:hover{
+    background:#fff;
+    color:#050609;
+}
+
+.explore-note{
+    color:#555c68;
+    font-size:9px;
+    letter-spacing:1px;
+}
+
+/* =====================================================
+   PLANET AREA
+===================================================== */
+
+#planet{
+    position:absolute;
+    z-index:5;
+    right:-4vw;
+    top:50%;
+    width:min(63vw,850px);
+    height:min(63vw,850px);
+    transform:translateY(-50%);
 }
 
 canvas{
     display:block;
 }
 
-/* LOADING */
+/* =====================================================
+   PLANET LABEL
+===================================================== */
 
-#loading{
-    position:fixed;
-    inset:0;
-    z-index:1000;
-    background:#02030a;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:opacity .8s ease,visibility .8s ease;
-}
-
-#loading.hidden{
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-}
-
-.loading-inner{
-    text-align:center;
-}
-
-.loading-logo{
-    font-size:42px;
-    letter-spacing:12px;
-    font-weight:700;
-}
-
-.loading-text{
-    margin-top:16px;
-    color:#8e94a9;
-    font-size:11px;
-    letter-spacing:4px;
-}
-
-.loading-line{
-    width:180px;
-    height:1px;
-    background:rgba(255,255,255,.15);
-    margin:25px auto 0;
-    overflow:hidden;
-}
-
-.loading-line div{
-    height:100%;
-    width:40%;
-    background:#fff;
-    animation:loading 1.2s infinite ease-in-out;
-}
-
-@keyframes loading{
-    0%{transform:translateX(-100%)}
-    100%{transform:translateX(450%)}
-}
-
-/* TOP BAR */
-
-.topbar{
+.planet-label{
     position:absolute;
-    z-index:20;
-    top:0;
-    left:0;
-    right:0;
-    height:76px;
-    padding:0 34px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    background:linear-gradient(to bottom,rgba(2,3,10,.85),transparent);
-    pointer-events:none;
-}
-
-.logo{
-    font-size:22px;
-    font-weight:700;
-    letter-spacing:7px;
-    pointer-events:auto;
-}
-
-.logo span{
-    color:#8d94aa;
-    font-weight:400;
-}
-
-.nav{
-    display:flex;
-    gap:8px;
-    pointer-events:auto;
-}
-
-.nav button{
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.09);
-    color:#b8bdcc;
-    padding:10px 15px;
-    font-size:10px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    border-radius:3px;
-    transition:.2s;
-}
-
-.nav button:hover{
-    color:#fff;
-    border-color:rgba(255,255,255,.3);
-    background:rgba(255,255,255,.07);
-}
-
-/* HERO */
-
-.hero{
-    position:absolute;
-    z-index:10;
-    top:105px;
-    left:40px;
-    pointer-events:none;
-    max-width:420px;
-}
-
-.hero-kicker{
-    color:#858ba0;
-    font-size:10px;
-    letter-spacing:4px;
-    margin-bottom:13px;
-}
-
-.hero h1{
-    font-size:44px;
-    line-height:1;
-    letter-spacing:3px;
-    font-weight:600;
-}
-
-.hero p{
-    margin-top:15px;
-    color:#9298aa;
-    font-size:13px;
-    line-height:1.7;
-    max-width:370px;
-}
-
-/* WORLD SELECTOR */
-
-.world-selector{
-    position:absolute;
-    z-index:15;
-    left:40px;
-    bottom:36px;
-    display:flex;
-    gap:10px;
-}
-
-.world-btn{
-    width:150px;
-    padding:15px 18px;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(4,6,15,.78);
-    backdrop-filter:blur(12px);
-    color:#aeb4c4;
-    text-align:left;
-    transition:.25s;
-}
-
-.world-btn:hover,
-.world-btn.active{
-    border-color:rgba(255,255,255,.42);
-    color:#fff;
-    background:rgba(255,255,255,.08);
-}
-
-.world-name{
-    display:block;
-    font-size:12px;
-    letter-spacing:3px;
-}
-
-.world-count{
-    display:block;
-    margin-top:6px;
-    font-size:9px;
-    color:#70778b;
-    letter-spacing:1px;
-}
-
-/* RIGHT PANEL */
-
-.panel{
-    position:absolute;
-    z-index:30;
-    top:100px;
-    right:30px;
-    width:300px;
-    background:rgba(4,6,15,.82);
-    border:1px solid rgba(255,255,255,.11);
-    backdrop-filter:blur(18px);
-    padding:22px;
-    opacity:0;
-    transform:translateX(20px);
-    pointer-events:none;
-    transition:.3s;
-}
-
-.panel.visible{
-    opacity:1;
-    transform:translateX(0);
-    pointer-events:auto;
-}
-
-.panel-label{
-    color:#6f768a;
-    font-size:9px;
-    letter-spacing:3px;
-    margin-bottom:9px;
-}
-
-.panel h2{
-    font-size:24px;
-    letter-spacing:2px;
-}
-
-.panel-world{
-    color:#777f95;
-    font-size:10px;
-    letter-spacing:2px;
-    margin-top:5px;
-}
-
-.panel-divider{
-    height:1px;
-    background:rgba(255,255,255,.08);
-    margin:18px 0;
-}
-
-.data-row{
-    display:flex;
-    justify-content:space-between;
-    margin:11px 0;
-    font-size:11px;
-}
-
-.data-row span:first-child{
-    color:#6e7588;
-}
-
-.data-row span:last-child{
-    color:#e5e7ed;
-}
-
-.price{
-    font-size:28px;
-    font-weight:500;
-    margin:18px 0;
-}
-
-.price small{
-    color:#777f92;
-    font-size:10px;
-    letter-spacing:2px;
-}
-
-.buy-btn{
-    width:100%;
-    padding:14px;
-    background:#fff;
-    color:#05060a;
-    border:0;
-    font-size:10px;
-    letter-spacing:3px;
-    font-weight:bold;
-}
-
-.buy-btn:hover{
-    background:#dfe3eb;
-}
-
-.close-panel{
-    position:absolute;
-    right:15px;
-    top:12px;
-    background:none;
-    border:0;
-    color:#6e7587;
-    font-size:18px;
-}
-
-/* BOTTOM STATUS */
-
-.status{
-    position:absolute;
-    z-index:15;
-    right:35px;
-    bottom:34px;
+    z-index:12;
+    right:8vw;
+    top:21%;
     text-align:right;
     pointer-events:none;
 }
 
-.status-title{
-    font-size:9px;
-    color:#666d80;
-    letter-spacing:3px;
+.planet-label-small{
+    color:#646b78;
+    font-size:8px;
+    letter-spacing:4px;
 }
 
-.status-value{
-    margin-top:6px;
-    font-size:11px;
-    color:#c5cad6;
-}
-
-/* MODAL */
-
-.modal-bg{
-    position:fixed;
-    z-index:500;
-    inset:0;
-    background:rgba(0,0,0,.7);
-    backdrop-filter:blur(8px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    opacity:0;
-    visibility:hidden;
-    transition:.25s;
-}
-
-.modal-bg.show{
-    opacity:1;
-    visibility:visible;
-}
-
-.modal{
-    width:min(620px,90vw);
-    max-height:85vh;
-    overflow:auto;
-    background:#080a12;
-    border:1px solid rgba(255,255,255,.13);
-    padding:30px;
-}
-
-.modal h2{
-    font-size:22px;
-    letter-spacing:3px;
-}
-
-.modal-sub{
-    color:#777e91;
-    font-size:10px;
-    letter-spacing:2px;
-    margin-top:8px;
-}
-
-.modal-content{
-    margin-top:25px;
-    color:#9ba1b1;
-    font-size:13px;
-    line-height:1.8;
-}
-
-.modal-close{
-    margin-top:25px;
-    padding:12px 20px;
-    background:transparent;
-    border:1px solid rgba(255,255,255,.18);
-    color:#fff;
-    font-size:10px;
-    letter-spacing:2px;
-}
-
-/* CHECKOUT */
-
-.checkout{
-    position:fixed;
-    z-index:600;
-    inset:0;
-    background:rgba(0,0,0,.78);
-    backdrop-filter:blur(10px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    opacity:0;
-    visibility:hidden;
-    transition:.25s;
-}
-
-.checkout.show{
-    opacity:1;
-    visibility:visible;
-}
-
-.checkout-box{
-    width:min(520px,92vw);
-    background:#080a12;
-    border:1px solid rgba(255,255,255,.14);
-    padding:30px;
-}
-
-.checkout-title{
-    font-size:22px;
-    letter-spacing:3px;
-}
-
-.checkout-property{
-    margin-top:18px;
-    padding:16px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.08);
-}
-
-.checkout-property strong{
-    display:block;
-    font-size:16px;
-    letter-spacing:2px;
-}
-
-.checkout-property span{
-    display:block;
+.planet-label-name{
     margin-top:7px;
-    color:#777f92;
-    font-size:11px;
+    font-size:17px;
+    letter-spacing:6px;
+    font-weight:300;
 }
 
-.checkout-price{
-    margin-top:22px;
-    font-size:30px;
-}
-
-.payment-options{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:20px;
-}
-
-.payment{
-    padding:15px;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.035);
-    color:#b8bdc9;
-    font-size:10px;
+.planet-label-coords{
+    margin-top:8px;
+    color:#555c69;
+    font-size:8px;
     letter-spacing:2px;
 }
 
-.payment:hover{
+/* =====================================================
+   WORLD SWITCHER
+===================================================== */
+
+.worlds{
+    position:absolute;
+    z-index:20;
+    left:46px;
+    bottom:42px;
+    display:flex;
+    gap:7px;
+}
+
+.world{
+    min-width:135px;
+    padding:13px 17px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(5,7,11,.58);
+    backdrop-filter:blur(15px);
+    color:#646b77;
+    text-align:left;
+    transition:.3s;
+}
+
+.world:hover{
+    border-color:rgba(255,255,255,.25);
+    color:#fff;
+}
+
+.world.active{
     border-color:rgba(255,255,255,.35);
     color:#fff;
 }
 
-.checkout-note{
-    margin-top:18px;
-    color:#606779;
+.world-title{
+    display:block;
     font-size:10px;
-    line-height:1.6;
+    letter-spacing:3px;
 }
 
-.checkout-actions{
+.world-data{
+    display:block;
+    margin-top:6px;
+    font-size:8px;
+    color:#515864;
+    letter-spacing:1px;
+}
+
+/* =====================================================
+   HUD
+===================================================== */
+
+.hud{
+    position:absolute;
+    z-index:15;
+    right:45px;
+    bottom:40px;
     display:flex;
-    gap:10px;
-    margin-top:22px;
+    align-items:flex-end;
+    gap:35px;
+    pointer-events:none;
 }
 
-.checkout-actions button{
-    flex:1;
-    padding:13px;
+.hud-item{
+    text-align:right;
+}
+
+.hud-label{
+    color:#4f5662;
+    font-size:7px;
+    letter-spacing:3px;
+}
+
+.hud-value{
+    margin-top:7px;
+    color:#aeb3bd;
     font-size:10px;
     letter-spacing:2px;
 }
 
-.cancel{
+/* =====================================================
+   SIDE PROPERTY CARD
+===================================================== */
+
+.property{
+    position:absolute;
+    z-index:40;
+    top:50%;
+    right:45px;
+    transform:translateY(-50%) translateX(30px);
+
+    width:310px;
+
+    padding:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13,15,21,.92),
+            rgba(4,6,10,.88)
+        );
+
+    border:1px solid rgba(255,255,255,.13);
+
+    backdrop-filter:blur(22px);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.35s;
+}
+
+.property.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(-50%) translateX(0);
+}
+
+.property-close{
+    position:absolute;
+    right:15px;
+    top:12px;
+    border:0;
     background:transparent;
-    color:#9aa0b0;
+    color:#666d78;
+    font-size:20px;
+}
+
+.property-eyebrow{
+    color:#626a77;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+.property-id{
+    margin-top:8px;
+    font-size:21px;
+    letter-spacing:2px;
+    font-weight:400;
+}
+
+.property-world{
+    margin-top:5px;
+    color:#626a77;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+.property-line{
+    height:1px;
+    background:rgba(255,255,255,.08);
+    margin:20px 0;
+}
+
+.property-row{
+    display:flex;
+    justify-content:space-between;
+    margin:12px 0;
+    font-size:9px;
+    letter-spacing:1px;
+}
+
+.property-row span:first-child{
+    color:#535a67;
+}
+
+.property-row span:last-child{
+    color:#c2c6cf;
+}
+
+.property-price-label{
+    margin-top:22px;
+    color:#545b68;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+.property-price{
+    margin-top:5px;
+    font-size:30px;
+    font-weight:300;
+}
+
+.property-button{
+    margin-top:21px;
+    width:100%;
+    padding:14px;
+    border:0;
+    background:#fff;
+    color:#050608;
+    font-size:9px;
+    letter-spacing:3px;
+    transition:.25s;
+}
+
+.property-button:hover{
+    background:#d8dce4;
+}
+
+/* =====================================================
+   SCAN LINE
+===================================================== */
+
+.scan{
+    position:absolute;
+    z-index:7;
+    right:4vw;
+    top:0;
+    bottom:0;
+    width:1px;
+    background:
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(255,255,255,.06) 30%,
+            rgba(255,255,255,.12) 50%,
+            rgba(255,255,255,.06) 70%,
+            transparent
+        );
+    pointer-events:none;
+}
+
+.scan-dot{
+    position:absolute;
+    left:-2px;
+    top:50%;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 12px #fff;
+}
+
+/* =====================================================
+   BOTTOM CORNER
+===================================================== */
+
+.corner{
+    position:absolute;
+    left:46px;
+    top:120px;
+    color:#3f4651;
+    font-size:7px;
+    line-height:1.9;
+    letter-spacing:2px;
+    z-index:10;
+}
+
+.corner span{
+    color:#6d7480;
+}
+
+/* =====================================================
+   INFO MODAL
+===================================================== */
+
+.modal{
+    position:fixed;
+    z-index:200;
+    inset:0;
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(15px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+}
+
+.modal.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-box{
+    width:min(620px,90vw);
+    padding:38px;
+    background:#080a0f;
     border:1px solid rgba(255,255,255,.13);
 }
 
-.continue{
-    background:#fff;
-    border:0;
-    color:#000;
+.modal-box h2{
+    font-size:25px;
+    letter-spacing:4px;
+    font-weight:300;
 }
 
-/* RESPONSIVE */
+.modal-sub{
+    margin-top:8px;
+    color:#565e6a;
+    font-size:8px;
+    letter-spacing:3px;
+}
 
-@media(max-width:700px){
-    .topbar{
-        padding:0 18px;
-    }
+.modal-text{
+    margin-top:25px;
+    color:#858c98;
+    font-size:12px;
+    line-height:1.9;
+}
 
-    .nav{
+.modal-close{
+    margin-top:28px;
+    padding:12px 22px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,.16);
+    color:#fff;
+    font-size:8px;
+    letter-spacing:3px;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:900px){
+
+    .navigation{
         display:none;
     }
 
-    .hero{
-        left:20px;
-        top:90px;
+    .left-content{
+        left:25px;
+        top:38%;
+        width:330px;
     }
 
-    .hero h1{
-        font-size:32px;
+    h1{
+        font-size:52px;
     }
 
-    .world-selector{
+    #planet{
+        right:-35vw;
+        width:95vw;
+        height:95vw;
+        opacity:.72;
+    }
+
+    .planet-label{
+        display:none;
+    }
+
+    .hud{
+        display:none;
+    }
+
+    .worlds{
         left:20px;
         bottom:20px;
     }
 
-    .world-btn{
-        width:125px;
-    }
-
-    .status{
+    .corner{
         display:none;
     }
 
-    .panel{
+}
+
+@media(max-width:600px){
+
+    .top{
+        padding:0 20px;
+    }
+
+    .brand-sub{
+        display:none;
+    }
+
+    .left-content{
+        top:32%;
+        width:290px;
+    }
+
+    h1{
+        font-size:43px;
+    }
+
+    .description{
+        font-size:11px;
+    }
+
+    #planet{
+        right:-45vw;
+        top:54%;
+        width:105vw;
+        height:105vw;
+    }
+
+    .world{
+        min-width:110px;
+    }
+
+    .property{
         left:15px;
         right:15px;
         width:auto;
-        top:auto;
-        bottom:90px;
     }
+
 }
 </style>
 </head>
@@ -570,118 +730,278 @@ canvas{
 
 <div id="app">
 
-    <div id="space"></div>
+    <div id="stars"></div>
 
-    <div id="loading">
-        <div class="loading-inner">
-            <div class="loading-logo">ASTERRA</div>
-            <div class="loading-text">INITIALIZING DIGITAL UNIVERSE</div>
-            <div class="loading-line"><div></div></div>
-        </div>
+    <div class="ambient"></div>
+
+    <div class="scan">
+        <div class="scan-dot"></div>
     </div>
 
-    <header class="topbar">
-        <div class="logo">ASTERRA <span>UNIVERSE</span></div>
+    <div class="corner">
+        ASTERRA SYSTEM<br>
+        <span>SECTOR 07 · ONLINE</span><br>
+        <span>EXPLORATION MODE</span>
+    </div>
 
-        <nav class="nav">
-            <button onclick="showInfo('universe')">Universe</button>
-            <button onclick="showInfo('supply')">Supply</button>
-            <button onclick="showInfo('history')">History</button>
-            <button onclick="showInfo('account')">Account</button>
+
+    <!-- TOP -->
+
+    <header class="top">
+
+        <div class="brand">
+
+            <div class="brand-mark"></div>
+
+            <div>
+                <div class="brand-text">ASTERRA</div>
+                <div class="brand-sub">DIGITAL UNIVERSE</div>
+            </div>
+
+        </div>
+
+        <nav class="navigation">
+
+            <button class="active" onclick="showModal('UNIVERSE')">
+                UNIVERSE
+            </button>
+
+            <button onclick="showModal('EXCHANGE')">
+                EXCHANGE
+            </button>
+
+            <button onclick="showModal('HISTORY')">
+                HISTORY
+            </button>
+
+            <button onclick="showModal('PORTFOLIO')">
+                PORTFOLIO
+            </button>
+
         </nav>
+
     </header>
 
-    <section class="hero">
-        <div class="hero-kicker">DIGITAL WORLDS · FIXED SUPPLY</div>
-        <h1>ENTER THE<br>VIRTUAL UNIVERSE.</h1>
-        <p>
-            Explore digital worlds, discover unique locations
-            and collect symbolic plots across the ASTERRA universe.
+
+    <!-- LEFT -->
+
+    <section class="left-content">
+
+        <div class="eyebrow">
+            <div class="eyebrow-line"></div>
+            DIGITAL FRONTIER
+        </div>
+
+        <h1>
+            <strong>OWN</strong><br>
+            YOUR<br>
+            WORLD.
+        </h1>
+
+        <p class="description">
+            Explore finite digital territories across the Moon
+            and Mars. Discover unique locations, collect
+            properties and build your presence inside the
+            ASTERRA universe.
         </p>
+
+        <div class="explore">
+
+            <button onclick="selectRandomProperty()">
+                EXPLORE SURFACE
+            </button>
+
+            <div class="explore-note">
+                DRAG · ROTATE · DISCOVER
+            </div>
+
+        </div>
+
     </section>
 
-    <div class="world-selector">
 
-        <button class="world-btn active" id="moonButton" onclick="selectWorld('Moon')">
-            <span class="world-name">MOON</span>
-            <span class="world-count">320,000 PLOTS</span>
-        </button>
+    <!-- PLANET -->
 
-        <button class="world-btn" id="marsButton" onclick="selectWorld('Mars')">
-            <span class="world-name">MARS</span>
-            <span class="world-count">1,220,000 PLOTS</span>
-        </button>
+    <div id="planet"></div>
 
-    </div>
 
-    <div class="status">
-        <div class="status-title">DRAG TO ROTATE · SCROLL TO ZOOM</div>
-        <div class="status-value" id="worldStatus">MOON · DIGITAL SURFACE ONLINE</div>
-    </div>
+    <div class="planet-label">
 
-    <aside class="panel" id="propertyPanel">
-
-        <button class="close-panel" onclick="closeProperty()">×</button>
-
-        <div class="panel-label">DIGITAL PROPERTY</div>
-
-        <h2 id="propertyId">AST-MOON-001</h2>
-
-        <div class="panel-world" id="propertyWorld">MOON</div>
-
-        <div class="panel-divider"></div>
-
-        <div class="data-row">
-            <span>LOCATION</span>
-            <span id="propertyLocation">0° / 0°</span>
+        <div class="planet-label-small">
+            CURRENT WORLD
         </div>
 
-        <div class="data-row">
+        <div class="planet-label-name" id="planetName">
+            MOON
+        </div>
+
+        <div class="planet-label-coords" id="planetCoords">
+            0°00' · 0°00'
+        </div>
+
+    </div>
+
+
+    <!-- WORLDS -->
+
+    <div class="worlds">
+
+        <button
+            class="world active"
+            id="moonBtn"
+            onclick="changeWorld('Moon')">
+
+            <span class="world-title">
+                MOON
+            </span>
+
+            <span class="world-data">
+                320,000 DIGITAL PLOTS
+            </span>
+
+        </button>
+
+
+        <button
+            class="world"
+            id="marsBtn"
+            onclick="changeWorld('Mars')">
+
+            <span class="world-title">
+                MARS
+            </span>
+
+            <span class="world-data">
+                1,220,000 DIGITAL PLOTS
+            </span>
+
+        </button>
+
+    </div>
+
+
+    <!-- HUD -->
+
+    <div class="hud">
+
+        <div class="hud-item">
+            <div class="hud-label">SUPPLY</div>
+            <div class="hud-value" id="supply">
+                320,000
+            </div>
+        </div>
+
+        <div class="hud-item">
+            <div class="hud-label">STATUS</div>
+            <div class="hud-value">
+                ONLINE
+            </div>
+        </div>
+
+        <div class="hud-item">
+            <div class="hud-label">SECTOR</div>
+            <div class="hud-value">
+                07 / 24
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- PROPERTY -->
+
+    <aside class="property" id="property">
+
+        <button
+            class="property-close"
+            onclick="closeProperty()">
+            ×
+        </button>
+
+        <div class="property-eyebrow">
+            DIGITAL TERRITORY
+        </div>
+
+        <div
+            class="property-id"
+            id="propertyId">
+            AST-M-000000
+        </div>
+
+        <div
+            class="property-world"
+            id="propertyWorld">
+            MOON
+        </div>
+
+        <div class="property-line"></div>
+
+        <div class="property-row">
+            <span>LATITUDE</span>
+            <span id="lat">0°</span>
+        </div>
+
+        <div class="property-row">
+            <span>LONGITUDE</span>
+            <span id="lon">0°</span>
+        </div>
+
+        <div class="property-row">
             <span>AREA</span>
-            <span id="propertyArea">1.00 km²</span>
+            <span id="area">1.00 KM²</span>
         </div>
 
-        <div class="data-row">
+        <div class="property-row">
             <span>RARITY</span>
-            <span id="propertyRarity">STANDARD</span>
+            <span id="rarity">STANDARD</span>
         </div>
 
-        <div class="data-row">
+        <div class="property-row">
             <span>STATUS</span>
             <span>AVAILABLE</span>
         </div>
 
-        <div class="panel-divider"></div>
+        <div class="property-line"></div>
 
-        <div class="price">
-            $<span id="propertyPrice">149</span>
-            <small>USD</small>
+        <div class="property-price-label">
+            CURRENT PRICE
         </div>
 
-        <button class="buy-btn" onclick="openCheckout()">
+        <div class="property-price">
+            $<span id="price">149</span>
+        </div>
+
+        <button
+            class="property-button"
+            onclick="acquireProperty()">
             ACQUIRE DIGITAL PLOT
         </button>
 
     </aside>
 
+
 </div>
 
 
-<!-- INFO MODAL -->
+<!-- MODAL -->
 
-<div class="modal-bg" id="infoModal">
+<div class="modal" id="modal">
 
-    <div class="modal">
+    <div class="modal-box">
 
-        <h2 id="modalTitle">ASTERRA</h2>
+        <h2 id="modalTitle">
+            ASTERRA
+        </h2>
 
         <div class="modal-sub" id="modalSub">
             DIGITAL UNIVERSE
         </div>
 
-        <div class="modal-content" id="modalContent"></div>
+        <div class="modal-text" id="modalText"></div>
 
-        <button class="modal-close" onclick="closeInfo()">
+        <button
+            class="modal-close"
+            onclick="closeModal()">
             CLOSE
         </button>
 
@@ -690,189 +1010,138 @@ canvas{
 </div>
 
 
-<!-- CHECKOUT -->
-
-<div class="checkout" id="checkout">
-
-    <div class="checkout-box">
-
-        <div class="checkout-title">ACQUIRE PROPERTY</div>
-
-        <div class="checkout-property">
-            <strong id="checkoutId">AST-MOON-001</strong>
-            <span id="checkoutWorld">MOON · DIGITAL PLOT</span>
-        </div>
-
-        <div class="checkout-price">
-            $<span id="checkoutPrice">149</span> USD
-        </div>
-
-        <div class="payment-options">
-
-            <button class="payment" onclick="selectPayment('CARD')">
-                CARD
-            </button>
-
-            <button class="payment" onclick="selectPayment('PAYPAL')">
-                PAYPAL
-            </button>
-
-            <button class="payment" onclick="selectPayment('APPLE PAY')">
-                APPLE PAY
-            </button>
-
-            <button class="payment" onclick="selectPayment('GOOGLE PAY')">
-                GOOGLE PAY
-            </button>
-
-        </div>
-
-        <div class="checkout-note">
-            Payment integration is prepared as part of the ASTERRA
-            checkout flow. Production payments will be connected
-            through a secure payment provider and server-side
-            confirmation.
-        </div>
-
-        <div class="checkout-actions">
-
-            <button class="cancel" onclick="closeCheckout()">
-                CANCEL
-            </button>
-
-            <button class="continue" onclick="continuePayment()">
-                CONTINUE
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
 <!-- THREE.JS -->
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
 
 <script>
 
-/* =========================================================
-   ASTERRA
-   MAIN APPLICATION
-   ========================================================= */
+/* =====================================================
+   ASTERRA — PREMIUM EXPERIENCE
+===================================================== */
 
-var currentWorld = "Moon";
-var selectedProperty = null;
-var selectedPayment = "CARD";
+var currentWorld="Moon";
 
 var scene;
 var camera;
 var renderer;
 var controls;
 
-var worldGroup;
-var stars;
+var planetGroup;
+var planetMesh;
+var glowMesh;
+
 var raycaster;
 var mouse;
 
-var planetObjects = [];
-var propertyMarkers = [];
+var markers=[];
 
-var worldData = {
+var data={
 
     Moon:{
         radius:130,
+        color:0xb9bdc4,
         supply:320000,
-        basePrice:149,
-        color:0xbfc2c8,
-        atmosphere:0x8993a8
+        base:149
     },
 
     Mars:{
         radius:130,
+        color:0xa84c34,
         supply:1220000,
-        basePrice:199,
-        color:0xa84f35,
-        atmosphere:0xa9543c
+        base:199
     }
 
 };
 
 
-/* ---------------------------------------------------------
-   LOADING FALLBACK
---------------------------------------------------------- */
+/* =====================================================
+   STARFIELD
+===================================================== */
 
-setTimeout(function(){
+function createStars(){
 
-    var loading=document.getElementById("loading");
+    var container=
+        document.getElementById("stars");
 
-    if(loading){
-        loading.classList.add("hidden");
-    }
+    var count=190;
 
-},2200);
+    for(var i=0;i<count;i++){
 
+        var star=
+            document.createElement("div");
 
-/* ---------------------------------------------------------
-   START
---------------------------------------------------------- */
+        star.className=
+            Math.random()>.88
+            ? "star large"
+            : "star";
 
-window.addEventListener("load",function(){
+        star.style.left=
+            Math.random()*100+"%";
 
-    try{
+        star.style.top=
+            Math.random()*100+"%";
 
-        initThree();
-        createStars();
-        createWorld("Moon");
-        createInteraction();
-        animate();
+        star.style.setProperty(
+            "--duration",
+            (2+Math.random()*5)+"s"
+        );
 
-        setTimeout(function(){
+        star.style.setProperty(
+            "--delay",
+            (-Math.random()*5)+"s"
+        );
 
-            document.getElementById("loading").classList.add("hidden");
-
-        },900);
-
-    }catch(error){
-
-        console.log("ASTERRA initialization:",error);
-
-        document.getElementById("loading").classList.add("hidden");
+        container.appendChild(star);
 
     }
 
-});
+}
+
+createStars();
 
 
-/* ---------------------------------------------------------
-   THREE INITIALIZATION
---------------------------------------------------------- */
+/* =====================================================
+   THREE
+===================================================== */
 
-function initThree(){
+function init(){
 
-    scene = new THREE.Scene();
+    scene=
+        new THREE.Scene();
 
-    scene.background = new THREE.Color(0x02030a);
+    scene.background=
+        new THREE.Color(0x020305);
 
-    camera = new THREE.PerspectiveCamera(
-        45,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        2000
+
+    camera=
+        new THREE.PerspectiveCamera(
+            42,
+            window.innerWidth/window.innerHeight,
+            .1,
+            2000
+        );
+
+    camera.position.set(
+        0,
+        20,
+        400
     );
 
-    camera.position.set(0,35,390);
 
-    renderer = new THREE.WebGLRenderer({
-        antialias:true,
-        alpha:false
-    });
+    renderer=
+        new THREE.WebGLRenderer({
+            antialias:true
+        });
 
     renderer.setPixelRatio(
-        Math.min(window.devicePixelRatio || 1,1.5)
+        Math.min(
+            window.devicePixelRatio||1,
+            1.5
+        )
     );
 
     renderer.setSize(
@@ -880,716 +1149,652 @@ function initThree(){
         window.innerHeight
     );
 
-    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.outputEncoding=
+        THREE.sRGBEncoding;
 
-    document.getElementById("space").appendChild(
-        renderer.domElement
-    );
+    document
+        .getElementById("planet")
+        .appendChild(
+            renderer.domElement
+        );
 
-    controls = new THREE.OrbitControls(
-        camera,
-        renderer.domElement
-    );
+
+    controls=
+        new THREE.OrbitControls(
+            camera,
+            renderer.domElement
+        );
 
     controls.enableDamping=true;
-    controls.dampingFactor=.045;
+    controls.dampingFactor=.035;
 
     controls.enablePan=false;
 
     controls.minDistance=175;
-    controls.maxDistance=600;
+    controls.maxDistance=500;
 
     controls.autoRotate=true;
-    controls.autoRotateSpeed=.25;
+    controls.autoRotateSpeed=.16;
 
-    raycaster = new THREE.Raycaster();
 
-    mouse = new THREE.Vector2();
-
-    /* LIGHTS */
-
-    var ambient = new THREE.AmbientLight(
-        0x777b8a,
-        1.15
-    );
+    var ambient=
+        new THREE.AmbientLight(
+            0x626875,
+            1.1
+        );
 
     scene.add(ambient);
 
-    var sun = new THREE.DirectionalLight(
-        0xffffff,
-        2.3
+
+    var sunlight=
+        new THREE.DirectionalLight(
+            0xffffff,
+            2.5
+        );
+
+    sunlight.position.set(
+        -300,
+        150,
+        250
     );
 
-    sun.position.set(
-        -250,
-        120,
-        260
-    );
+    scene.add(sunlight);
 
-    scene.add(sun);
 
-    var rim = new THREE.DirectionalLight(
-        0x536bff,
-        .45
-    );
+    var rim=
+        new THREE.DirectionalLight(
+            0x5969a8,
+            .7
+        );
 
     rim.position.set(
-        250,
+        300,
         -100,
-        -200
+        -250
     );
 
     scene.add(rim);
 
+
+    raycaster=
+        new THREE.Raycaster();
+
+    mouse=
+        new THREE.Vector2();
+
+
+    renderer.domElement.addEventListener(
+        "click",
+        planetClick
+    );
+
+
     window.addEventListener(
         "resize",
-        onResize
+        resize
     );
+
+
+    buildWorld("Moon");
+
+    animate();
 
 }
 
 
-/* ---------------------------------------------------------
-   STARS
---------------------------------------------------------- */
+/* =====================================================
+   WORLD
+===================================================== */
 
-function createStars(){
-
-    var geometry = new THREE.BufferGeometry();
-
-    var count = 5500;
-
-    var positions = new Float32Array(
-        count * 3
-    );
-
-    for(var i=0;i<count;i++){
-
-        var radius =
-            650 +
-            Math.random()*800;
-
-        var theta =
-            Math.random()*Math.PI*2;
-
-        var phi =
-            Math.acos(
-                2*Math.random()-1
-            );
-
-        positions[i*3] =
-            radius *
-            Math.sin(phi) *
-            Math.cos(theta);
-
-        positions[i*3+1] =
-            radius *
-            Math.cos(phi);
-
-        positions[i*3+2] =
-            radius *
-            Math.sin(phi) *
-            Math.sin(theta);
-
-    }
-
-    geometry.setAttribute(
-        "position",
-        new THREE.BufferAttribute(
-            positions,
-            3
-        )
-    );
-
-    var material =
-        new THREE.PointsMaterial({
-            color:0xffffff,
-            size:1.3,
-            transparent:true,
-            opacity:.8
-        });
-
-    stars =
-        new THREE.Points(
-            geometry,
-            material
-        );
-
-    scene.add(stars);
-
-}
-
-
-/* ---------------------------------------------------------
-   WORLD CREATION
---------------------------------------------------------- */
-
-function createWorld(name){
-
-    clearWorld();
+function buildWorld(name){
 
     currentWorld=name;
 
-    var data=worldData[name];
+    if(planetGroup){
 
-    worldGroup =
+        scene.remove(
+            planetGroup
+        );
+
+    }
+
+    planetGroup=
         new THREE.Group();
 
-    scene.add(worldGroup);
+    scene.add(
+        planetGroup
+    );
 
-    createPlanet(data);
+    markers=[];
 
-    createAtmosphere(data);
+    createPlanet();
 
-    createCraters(data);
+    createAtmosphere();
 
-    createGrid(data);
+    createCraters();
 
-    createMarkers(data);
+    createSurfaceLights();
 
-    updateInterface();
+    createMarkers();
 
-}
-
-
-/* ---------------------------------------------------------
-   CLEAR OLD WORLD
---------------------------------------------------------- */
-
-function clearWorld(){
-
-    if(!worldGroup) return;
-
-    scene.remove(worldGroup);
-
-    worldGroup.traverse(function(object){
-
-        if(object.geometry)
-            object.geometry.dispose();
-
-        if(object.material){
-
-            if(Array.isArray(object.material)){
-
-                object.material.forEach(function(m){
-                    m.dispose();
-                });
-
-            }else{
-
-                object.material.dispose();
-
-            }
-
-        }
-
-    });
-
-    worldGroup=null;
-
-    planetObjects=[];
-    propertyMarkers=[];
+    updateWorldUI();
 
 }
 
 
-/* ---------------------------------------------------------
+/* =====================================================
    PLANET
---------------------------------------------------------- */
+===================================================== */
 
-function createPlanet(data){
+function createPlanet(){
 
-    var geometry =
+    var d=data[currentWorld];
+
+    var geometry=
         new THREE.SphereGeometry(
-            data.radius,
+            d.radius,
             72,
             72
         );
 
-    var position =
+
+    var pos=
         geometry.attributes.position;
 
-    var vertex =
-        new THREE.Color();
+
+    var colors=
+        new Float32Array(
+            pos.count*3
+        );
+
 
     for(
         var i=0;
-        i<position.count;
+        i<pos.count;
         i++
     ){
 
-        var x=position.getX(i);
-        var y=position.getY(i);
-        var z=position.getZ(i);
+        var x=pos.getX(i);
+        var y=pos.getY(i);
+        var z=pos.getZ(i);
 
-        var length =
+        var len=
             Math.sqrt(
                 x*x+y*y+z*z
             );
 
-        var nx=x/length;
-        var ny=y/length;
-        var nz=z/length;
+        var nx=x/len;
+        var ny=y/len;
+        var nz=z/len;
 
-        var noise =
-            Math.sin(nx*12.7) *
-            Math.cos(ny*17.3) *
-            Math.sin(nz*9.1);
 
-        var largeTerrain =
-            Math.sin(nx*4.0+ny*3.0) *
-            Math.cos(nz*5.0);
+        var noise=
+            Math.sin(nx*14)
+            *
+            Math.cos(ny*11)
+            *
+            Math.sin(nz*17);
 
-        var displacement =
-            noise*1.8 +
-            largeTerrain*1.3;
 
-        var scale =
-            (data.radius+displacement) /
-            data.radius;
+        var terrain=
+            Math.sin(
+                nx*5+
+                ny*4
+            )
+            *
+            Math.cos(
+                nz*6
+            );
 
-        position.setX(i,x*scale);
-        position.setY(i,y*scale);
-        position.setZ(i,z*scale);
+
+        var displacement=
+            noise*1.8+
+            terrain*1.2;
+
+
+        var scale=
+            (d.radius+displacement)/
+            d.radius;
+
+
+        pos.setX(
+            i,
+            x*scale
+        );
+
+        pos.setY(
+            i,
+            y*scale
+        );
+
+        pos.setZ(
+            i,
+            z*scale
+        );
+
 
         if(currentWorld==="Moon"){
 
-            var brightness =
-                .43 +
-                noise*.08 +
-                largeTerrain*.05;
+            colors[i*3]=
+                .43+
+                noise*.07+
+                terrain*.04;
 
-            vertex.setRGB(
-                brightness,
-                brightness,
-                brightness*1.03
-            );
+            colors[i*3+1]=
+                .44+
+                noise*.07+
+                terrain*.04;
+
+            colors[i*3+2]=
+                .47+
+                noise*.07+
+                terrain*.05;
 
         }else{
 
-            var r =
-                .48 +
-                noise*.07;
+            colors[i*3]=
+                .46+
+                noise*.06+
+                terrain*.05;
 
-            var g =
-                .20 +
+            colors[i*3+1]=
+                .18+
                 noise*.025;
 
-            var b =
-                .13 +
-                noise*.015;
-
-            vertex.setRGB(r,g,b);
+            colors[i*3+2]=
+                .11+
+                noise*.018;
 
         }
-
-        if(!geometry.attributes.color){
-
-            geometry.setAttribute(
-                "color",
-                new THREE.BufferAttribute(
-                    new Float32Array(
-                        position.count*3
-                    ),
-                    3
-                )
-            );
-
-        }
-
-        geometry.attributes.color.setXYZ(
-            i,
-            vertex.r,
-            vertex.g,
-            vertex.b
-        );
 
     }
 
-    geometry.attributes.position.needsUpdate=true;
-    geometry.attributes.color.needsUpdate=true;
 
-    var material =
+    geometry.setAttribute(
+        "color",
+        new THREE.BufferAttribute(
+            colors,
+            3
+        )
+    );
+
+
+    var material=
         new THREE.MeshStandardMaterial({
             vertexColors:true,
             roughness:.96,
             metalness:.02
         });
 
-    var planet =
+
+    planetMesh=
         new THREE.Mesh(
             geometry,
             material
         );
 
-    worldGroup.add(planet);
-
-    planetObjects.push(planet);
+    planetGroup.add(
+        planetMesh
+    );
 
 }
 
 
-/* ---------------------------------------------------------
+/* =====================================================
    ATMOSPHERE
---------------------------------------------------------- */
+===================================================== */
 
-function createAtmosphere(data){
+function createAtmosphere(){
 
-    var geometry =
+    var d=data[currentWorld];
+
+    var geometry=
         new THREE.SphereGeometry(
-            data.radius*1.035,
+            d.radius*1.045,
             64,
             64
         );
 
-    var material =
+
+    var material=
         new THREE.MeshBasicMaterial({
-            color:data.atmosphere,
+            color:
+                currentWorld==="Mars"
+                ? 0xb6533c
+                : 0x8791a7,
+
             transparent:true,
+
             opacity:
                 currentWorld==="Mars"
                 ? .12
                 : .035,
-            side:THREE.BackSide
+
+            side:
+                THREE.BackSide
         });
 
-    var atmosphere =
+
+    glowMesh=
         new THREE.Mesh(
             geometry,
             material
         );
 
-    worldGroup.add(atmosphere);
+    planetGroup.add(
+        glowMesh
+    );
 
 }
 
 
-/* ---------------------------------------------------------
+/* =====================================================
    CRATERS
---------------------------------------------------------- */
+===================================================== */
 
-function createCraters(data){
+function createCraters(){
 
-    var count =
+    var d=data[currentWorld];
+
+    var amount=
         currentWorld==="Moon"
-        ? 95
-        : 65;
+        ? 105
+        : 75;
 
-    for(var i=0;i<count;i++){
 
-        var phi =
-            Math.acos(
-                2*Math.random()-1
+    for(
+        var i=0;
+        i<amount;
+        i++
+    ){
+
+        var lat=
+            -75+
+            Math.random()*150;
+
+        var lon=
+            -180+
+            Math.random()*360;
+
+
+        var phi=
+            (90-lat)*
+            Math.PI/180;
+
+        var theta=
+            lon*
+            Math.PI/180;
+
+
+        var radius=
+            d.radius+.5;
+
+
+        var x=
+            radius*
+            Math.sin(phi)*
+            Math.cos(theta);
+
+        var y=
+            radius*
+            Math.cos(phi);
+
+        var z=
+            radius*
+            Math.sin(phi)*
+            Math.sin(theta);
+
+
+        var size=
+            1+
+            Math.random()*
+            (
+                currentWorld==="Moon"
+                ? 5
+                : 4
             );
 
-        var theta =
-            Math.random()*Math.PI*2;
 
-        var r=data.radius+0.7;
-
-        var x =
-            r*Math.sin(phi)*Math.cos(theta);
-
-        var y =
-            r*Math.cos(phi);
-
-        var z =
-            r*Math.sin(phi)*Math.sin(theta);
-
-        var size =
-            currentWorld==="Moon"
-            ? 1.2+Math.random()*5
-            : 1+Math.random()*4;
-
-        var geometry =
+        var geometry=
             new THREE.RingGeometry(
                 size*.55,
                 size,
-                24
+                20
             );
 
-        var material =
+
+        var material=
             new THREE.MeshBasicMaterial({
                 color:
                     currentWorld==="Moon"
-                    ? 0x55575c
-                    : 0x55251c,
+                    ? 0x46494f
+                    : 0x52261d,
+
                 transparent:true,
+
                 opacity:.45,
-                side:THREE.DoubleSide
+
+                side:
+                    THREE.DoubleSide
             });
 
-        var crater =
+
+        var crater=
             new THREE.Mesh(
                 geometry,
                 material
             );
+
 
         crater.position.set(
             x,y,z
         );
 
-        crater.lookAt(0,0,0);
+        crater.lookAt(
+            0,0,0
+        );
 
-        worldGroup.add(crater);
+
+        planetGroup.add(
+            crater
+        );
 
     }
 
 }
 
 
-/* ---------------------------------------------------------
-   SURFACE GRID
---------------------------------------------------------- */
+/* =====================================================
+   SURFACE LIGHTS
+===================================================== */
 
-function createGrid(data){
+function createSurfaceLights(){
 
-    var group =
+    var d=data[currentWorld];
+
+    var group=
         new THREE.Group();
 
-    var material =
-        new THREE.LineBasicMaterial({
-            color:
-                currentWorld==="Moon"
-                ? 0x89909c
-                : 0xc06851,
-            transparent:true,
-            opacity:.08
-        });
-
-    var radius =
-        data.radius+0.65;
 
     for(
-        var lat=-60;
-        lat<=60;
-        lat+=20
+        var i=0;
+        i<45;
+        i++
     ){
 
-        var points=[];
+        var lat=
+            -70+
+            Math.random()*140;
 
-        var phi =
-            (90-lat) *
+        var lon=
+            -180+
+            Math.random()*360;
+
+
+        var phi=
+            (90-lat)*
             Math.PI/180;
 
-        for(
-            var lon=-180;
-            lon<=180;
-            lon+=6
-        ){
+        var theta=
+            lon*
+            Math.PI/180;
 
-            var theta =
-                lon*Math.PI/180;
 
-            points.push(
-                new THREE.Vector3(
-                    radius*
-                    Math.sin(phi)*
-                    Math.cos(theta),
+        var r=
+            d.radius+1.5;
 
-                    radius*
-                    Math.cos(phi),
 
-                    radius*
-                    Math.sin(phi)*
-                    Math.sin(theta)
-                )
+        var dot=
+            new THREE.Mesh(
+                new THREE.SphereGeometry(
+                    .55,
+                    8,
+                    8
+                ),
+
+                new THREE.MeshBasicMaterial({
+                    color:0xdde6ff,
+                    transparent:true,
+                    opacity:.25
+                })
             );
 
-        }
 
-        var geometry =
-            new THREE.BufferGeometry()
-                .setFromPoints(points);
-
-        group.add(
-            new THREE.Line(
-                geometry,
-                material
-            )
+        dot.position.set(
+            r*Math.sin(phi)*Math.cos(theta),
+            r*Math.cos(phi),
+            r*Math.sin(phi)*Math.sin(theta)
         );
+
+
+        group.add(dot);
 
     }
 
-    for(
-        var lon=-180;
-        lon<180;
-        lon+=20
-    ){
 
-        var points=[];
-
-        for(
-            var lat=-90;
-            lat<=90;
-            lat+=5
-        ){
-
-            var phi =
-                (90-lat) *
-                Math.PI/180;
-
-            var theta =
-                lon*Math.PI/180;
-
-            points.push(
-                new THREE.Vector3(
-                    radius*
-                    Math.sin(phi)*
-                    Math.cos(theta),
-
-                    radius*
-                    Math.cos(phi),
-
-                    radius*
-                    Math.sin(phi)*
-                    Math.sin(theta)
-                )
-            );
-
-        }
-
-        var geometry =
-            new THREE.BufferGeometry()
-                .setFromPoints(points);
-
-        group.add(
-            new THREE.Line(
-                geometry,
-                material
-            )
-        );
-
-    }
-
-    worldGroup.add(group);
+    planetGroup.add(group);
 
 }
 
 
-/* ---------------------------------------------------------
+/* =====================================================
    PROPERTY MARKERS
---------------------------------------------------------- */
+===================================================== */
 
-function createMarkers(data){
+function createMarkers(){
 
-    var number=26;
+    var d=data[currentWorld];
 
-    for(var i=0;i<number;i++){
+    for(
+        var i=0;
+        i<24;
+        i++
+    ){
 
-        var lat =
-            -65 +
+        var lat=
+            -65+
             Math.random()*130;
 
-        var lon =
-            -180 +
+        var lon=
+            -180+
             Math.random()*360;
 
-        var phi =
-            (90-lat)*Math.PI/180;
 
-        var theta =
-            lon*Math.PI/180;
+        var phi=
+            (90-lat)*
+            Math.PI/180;
 
-        var radius=data.radius+2.0;
+        var theta=
+            lon*
+            Math.PI/180;
 
-        var position =
-            new THREE.Vector3(
-                radius*
-                Math.sin(phi)*
-                Math.cos(theta),
 
-                radius*
-                Math.cos(phi),
+        var r=
+            d.radius+3;
 
-                radius*
-                Math.sin(phi)*
-                Math.sin(theta)
+
+        var marker=
+            new THREE.Mesh(
+                new THREE.SphereGeometry(
+                    1.7,
+                    12,
+                    12
+                ),
+
+                new THREE.MeshBasicMaterial({
+                    color:0xffffff
+                })
             );
 
-        var rarityValue =
+
+        marker.position.set(
+            r*Math.sin(phi)*Math.cos(theta),
+            r*Math.cos(phi),
+            r*Math.sin(phi)*Math.sin(theta)
+        );
+
+
+        var roll=
             Math.random();
 
-        var rarity =
-            rarityValue>.93
+
+        var rarity=
+            roll>.94
             ? "RARE"
-            : rarityValue>.72
+            : roll>.72
             ? "PREMIUM"
             : "STANDARD";
 
-        var id =
-            "AST-" +
-            (currentWorld==="Moon"?"M":"R") +
-            "-" +
-            String(
-                Math.floor(
-                    100000+
-                    Math.random()*899999
-                )
-            );
 
-        var price =
+        var price=
             calculatePrice(
                 lat,
                 lon,
-                data.basePrice,
+                d.base,
                 rarity
             );
 
-        var markerGroup =
-            new THREE.Group();
-
-        markerGroup.position.copy(
-            position
-        );
-
-        markerGroup.lookAt(0,0,0);
-
-        var geometry =
-            new THREE.CircleGeometry(
-                rarity==="RARE"
-                ? 2.8
-                : 2.0,
-                20
-            );
-
-        var material =
-            new THREE.MeshBasicMaterial({
-                color:0xffffff,
-                transparent:true,
-                opacity:.92,
-                side:THREE.DoubleSide
-            });
-
-        var marker =
-            new THREE.Mesh(
-                geometry,
-                material
-            );
 
         marker.userData={
-            id:id,
+            id:
+                "AST-"+
+                (currentWorld==="Moon"
+                ?"M"
+                :"R")+
+                "-"+
+                Math.floor(
+                    100000+
+                    Math.random()*899999
+                ),
+
             world:currentWorld,
+
             lat:lat,
+
             lon:lon,
+
             price:price,
+
             rarity:rarity
         };
 
-        markerGroup.add(marker);
 
-        worldGroup.add(markerGroup);
+        planetGroup.add(
+            marker
+        );
 
-        propertyMarkers.push(marker);
+        markers.push(
+            marker
+        );
 
     }
 
 }
 
 
-/* ---------------------------------------------------------
-   PRICE ALGORITHM
---------------------------------------------------------- */
+/* =====================================================
+   PRICE
+===================================================== */
 
 function calculatePrice(
     lat,
@@ -1598,165 +1803,145 @@ function calculatePrice(
     rarity
 ){
 
-    var terrainFactor =
+    var terrain=
         Math.abs(
-            Math.sin(lat*.17)*
-            Math.cos(lon*.11)
+            Math.sin(lat*.12)*
+            Math.cos(lon*.09)
         );
 
-    var locationFactor =
+
+    var location=
         Math.abs(
-            Math.sin(lon*.043)
+            Math.cos(lon*.035)
         );
 
-    var price =
-        base +
-        terrainFactor*base*3.2 +
-        locationFactor*base*2.1;
+
+    var value=
+        base+
+        terrain*base*3+
+        location*base*2;
+
 
     if(rarity==="PREMIUM")
-        price*=2.3;
+        value*=2.5;
 
     if(rarity==="RARE")
-        price*=5.5;
+        value*=5;
 
-    return Math.max(
-        base,
-        Math.round(price)
+
+    return Math.round(
+        value
     );
 
 }
 
 
-/* ---------------------------------------------------------
-   INTERACTION
---------------------------------------------------------- */
+/* =====================================================
+   CLICK
+===================================================== */
 
-function createInteraction(){
+function planetClick(event){
 
-    renderer.domElement.addEventListener(
-        "pointerdown",
-        onPointerDown
-    );
-
-    renderer.domElement.addEventListener(
-        "pointermove",
-        onPointerMove
-    );
-
-    renderer.domElement.addEventListener(
-        "click",
-        onCanvasClick
-    );
-
-}
+    var rect=
+        renderer.domElement.getBoundingClientRect();
 
 
-function onPointerDown(){
-
-    controls.autoRotate=false;
-
-}
-
-
-function onPointerMove(event){
-
-    mouse.x =
-        (event.clientX /
-        window.innerWidth)*2-1;
-
-    mouse.y =
-        -(event.clientY /
-        window.innerHeight)*2+1;
-
-}
+    mouse.x=
+        (
+            (event.clientX-rect.left)/
+            rect.width
+        )*2-1;
 
 
-function onCanvasClick(event){
+    mouse.y=
+        -(
+            (event.clientY-rect.top)/
+            rect.height
+        )*2+1;
 
-    mouse.x =
-        (event.clientX /
-        window.innerWidth)*2-1;
-
-    mouse.y =
-        -(event.clientY /
-        window.innerHeight)*2+1;
 
     raycaster.setFromCamera(
         mouse,
         camera
     );
 
-    var hits =
+
+    var hits=
         raycaster.intersectObjects(
-            propertyMarkers,
-            true
+            markers
         );
 
-    if(hits.length>0){
 
-        var object=hits[0].object;
+    if(hits.length){
 
-        if(object.userData){
-
-            openProperty(
-                object.userData
-            );
-
-        }
+        showProperty(
+            hits[0].object.userData
+        );
 
     }
 
 }
 
 
-/* ---------------------------------------------------------
-   PROPERTY PANEL
---------------------------------------------------------- */
+/* =====================================================
+   PROPERTY
+===================================================== */
 
-function openProperty(data){
-
-    selectedProperty=data;
+function showProperty(p){
 
     document.getElementById(
         "propertyId"
-    ).textContent=data.id;
+    ).textContent=p.id;
+
 
     document.getElementById(
         "propertyWorld"
     ).textContent=
-        data.world.toUpperCase();
+        p.world.toUpperCase();
+
 
     document.getElementById(
-        "propertyLocation"
+        "lat"
     ).textContent=
-        Math.round(data.lat*10)/10+
-        "° / "+
-        Math.round(data.lon*10)/10+
+        Math.round(p.lat*10)/10+
         "°";
 
-    document.getElementById(
-        "propertyArea"
-    ).textContent=
-        data.rarity==="RARE"
-        ? "5.00 km²"
-        : data.rarity==="PREMIUM"
-        ? "2.00 km²"
-        : "1.00 km²";
 
     document.getElementById(
-        "propertyRarity"
+        "lon"
     ).textContent=
-        data.rarity;
+        Math.round(p.lon*10)/10+
+        "°";
+
 
     document.getElementById(
-        "propertyPrice"
+        "area"
     ).textContent=
-        data.price.toLocaleString();
+        p.rarity==="RARE"
+        ?"5.00 KM²"
+        :
+        p.rarity==="PREMIUM"
+        ?"2.00 KM²"
+        :"1.00 KM²";
+
 
     document.getElementById(
-        "propertyPanel"
-    ).classList.add("visible");
+        "rarity"
+    ).textContent=
+        p.rarity;
+
+
+    document.getElementById(
+        "price"
+    ).textContent=
+        p.price.toLocaleString();
+
+
+    document.getElementById(
+        "property"
+    ).classList.add(
+        "show"
+    );
 
 }
 
@@ -1764,227 +1949,261 @@ function openProperty(data){
 function closeProperty(){
 
     document.getElementById(
-        "propertyPanel"
-    ).classList.remove("visible");
-
-    selectedProperty=null;
+        "property"
+    ).classList.remove(
+        "show"
+    );
 
 }
 
 
-/* ---------------------------------------------------------
-   WORLD SWITCH
---------------------------------------------------------- */
+/* =====================================================
+   RANDOM DISCOVERY
+===================================================== */
 
-function selectWorld(name){
+function selectRandomProperty(){
+
+    if(!markers.length)
+        return;
+
+
+    var marker=
+        markers[
+            Math.floor(
+                Math.random()*
+                markers.length
+            )
+        ];
+
+
+    showProperty(
+        marker.userData
+    );
+
+
+    var target=
+        marker.position.clone()
+        .normalize()
+        .multiplyScalar(
+            data[currentWorld].radius
+        );
+
+
+    camera.lookAt(
+        target
+    );
+
+}
+
+
+/* =====================================================
+   ACQUIRE
+===================================================== */
+
+function acquireProperty(){
+
+    var id=
+        document.getElementById(
+            "propertyId"
+        ).textContent;
+
+    var price=
+        document.getElementById(
+            "price"
+        ).textContent;
+
+
+    alert(
+        "ASTERRA\n\n"+
+        "DIGITAL PROPERTY\n"+
+        id+
+        "\n\n"+
+        "CURRENT PRICE: $"+
+        price+
+        "\n\n"+
+        "Payment gateway will be connected here."
+    );
+
+}
+
+
+/* =====================================================
+   WORLD CHANGE
+===================================================== */
+
+function changeWorld(name){
 
     currentWorld=name;
 
+
     document.getElementById(
-        "moonButton"
+        "moonBtn"
     ).classList.toggle(
         "active",
         name==="Moon"
     );
 
+
     document.getElementById(
-        "marsButton"
+        "marsBtn"
     ).classList.toggle(
         "active",
         name==="Mars"
     );
 
+
     closeProperty();
 
-    createWorld(name);
 
-}
-
-
-/* ---------------------------------------------------------
-   CHECKOUT
---------------------------------------------------------- */
-
-function openCheckout(){
-
-    if(!selectedProperty)
-        return;
-
-    document.getElementById(
-        "checkoutId"
-    ).textContent=
-        selectedProperty.id;
-
-    document.getElementById(
-        "checkoutWorld"
-    ).textContent=
-        selectedProperty.world.toUpperCase()+
-        " · DIGITAL PLOT";
-
-    document.getElementById(
-        "checkoutPrice"
-    ).textContent=
-        selectedProperty.price.toLocaleString();
-
-    document.getElementById(
-        "checkout"
-    ).classList.add("show");
-
-}
-
-
-function closeCheckout(){
-
-    document.getElementById(
-        "checkout"
-    ).classList.remove("show");
-
-}
-
-
-function selectPayment(method){
-
-    selectedPayment=method;
-
-}
-
-
-function continuePayment(){
-
-    alert(
-        "ASTERRA CHECKOUT\n\n"+
-        "Property: "+
-        selectedProperty.id+
-        "\nPrice: $"+
-        selectedProperty.price+
-        "\nPayment: "+
-        selectedPayment+
-        "\n\n"+
-        "Production payment gateway will be connected here."
+    buildWorld(
+        name
     );
 
 }
 
 
-/* ---------------------------------------------------------
-   INFO WINDOWS
---------------------------------------------------------- */
+/* =====================================================
+   WORLD UI
+===================================================== */
 
-function showInfo(type){
+function updateWorldUI(){
+
+    var d=
+        data[currentWorld];
+
+
+    document.getElementById(
+        "planetName"
+    ).textContent=
+        currentWorld.toUpperCase();
+
+
+    document.getElementById(
+        "supply"
+    ).textContent=
+        d.supply.toLocaleString();
+
+
+    document.getElementById(
+        "planetCoords"
+    ).textContent=
+        currentWorld==="Moon"
+        ?"29°41' N · 18°32' W"
+        :"14°12' S · 128°43' E";
+
+}
+
+
+/* =====================================================
+   MODALS
+===================================================== */
+
+function showModal(type){
 
     var title="";
     var sub="";
-    var content="";
+    var text="";
 
-    if(type==="universe"){
+
+    if(type==="UNIVERSE"){
 
         title="ASTERRA";
-        sub="ENTER THE VIRTUAL UNIVERSE";
+        sub="DIGITAL UNIVERSE";
 
-        content=
-            "ASTERRA is a digital universe built around "+
-            "collectible symbolic locations on virtual planetary "+
-            "surfaces. Explore worlds, discover locations and "+
-            "build your digital collection.";
-
-    }
-
-    if(type==="supply"){
-
-        title="FIXED SUPPLY";
-        sub="LIMITED DIGITAL INVENTORY";
-
-        content=
-            "Moon inventory: 320,000 digital plots.<br><br>"+
-            "Mars inventory: 1,220,000 digital plots.<br><br>"+
-            "The initial inventory is finite. New base plots "+
-            "are not automatically created after the planned "+
-            "supply is exhausted.";
+        text=
+            "A digital universe built around finite "+
+            "symbolic territories across planetary worlds. "+
+            "Explore the surface, discover locations and "+
+            "build your collection.";
 
     }
 
-    if(type==="history"){
+
+    if(type==="EXCHANGE"){
+
+        title="ASTERRA EXCHANGE";
+        sub="DIGITAL PROPERTY TRADING";
+
+        text=
+            "The ASTERRA Exchange is designed for future "+
+            "primary acquisitions and secondary trading. "+
+            "Users will be able to list properties, receive "+
+            "offers and establish their own resale prices.";
+
+    }
+
+
+    if(type==="HISTORY"){
 
         title="TRANSACTION HISTORY";
-        sub="PERMANENT DIGITAL RECORD";
+        sub="PERMANENT PROPERTY RECORD";
 
-        content=
-            "ASTERRA is designed to preserve a transparent "+
-            "history for every digital property, including "+
-            "transaction ID, timestamp, pseudonymous buyer and "+
-            "seller identifiers and previous prices.<br><br>"+
-            "Future combined properties can preserve the history "+
-            "of their constituent plots.";
+        text=
+            "Each property is designed to maintain a permanent "+
+            "transaction history including transaction ID, "+
+            "timestamp, pseudonymous participants and price "+
+            "changes over time.";
 
     }
 
-    if(type==="account"){
 
-        title="ACCOUNT";
-        sub="YOUR ASTERRA COLLECTION";
+    if(type==="PORTFOLIO"){
 
-        content=
-            "The planned account area will include:<br><br>"+
-            "Products · Companies · Offers · Sales · History · Portfolio.<br><br>"+
-            "This prototype focuses first on the universe, "+
-            "property discovery and acquisition experience.";
+        title="PORTFOLIO";
+        sub="YOUR DIGITAL COLLECTION";
+
+        text=
+            "The future ASTERRA account will contain Products, "+
+            "Companies, Offers, Sales, History and Portfolio. "+
+            "This interface will become the control centre "+
+            "for your digital universe.";
 
     }
+
 
     document.getElementById(
         "modalTitle"
     ).textContent=title;
 
+
     document.getElementById(
         "modalSub"
     ).textContent=sub;
 
-    document.getElementById(
-        "modalContent"
-    ).innerHTML=content;
 
     document.getElementById(
-        "infoModal"
-    ).classList.add("show");
+        "modalText"
+    ).textContent=text;
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add(
+        "show"
+    );
 
 }
 
 
-function closeInfo(){
+function closeModal(){
 
     document.getElementById(
-        "infoModal"
-    ).classList.remove("show");
+        "modal"
+    ).classList.remove(
+        "show"
+    );
 
 }
 
 
-/* ---------------------------------------------------------
-   INTERFACE
---------------------------------------------------------- */
-
-function updateInterface(){
-
-    document.getElementById(
-        "worldStatus"
-    ).textContent=
-        currentWorld.toUpperCase()+
-        " · DIGITAL SURFACE ONLINE";
-
-}
-
-
-/* ---------------------------------------------------------
+/* =====================================================
    RESIZE
---------------------------------------------------------- */
+===================================================== */
 
-function onResize(){
+function resize(){
 
-    if(!camera || !renderer)
-        return;
-
-    camera.aspect =
-        window.innerWidth /
+    camera.aspect=
+        window.innerWidth/
         window.innerHeight;
 
     camera.updateProjectionMatrix();
@@ -1997,9 +2216,9 @@ function onResize(){
 }
 
 
-/* ---------------------------------------------------------
+/* =====================================================
    ANIMATION
---------------------------------------------------------- */
+===================================================== */
 
 function animate(){
 
@@ -2007,26 +2226,32 @@ function animate(){
         animate
     );
 
-    if(stars){
 
-        stars.rotation.y +=
-            0.000035;
+    if(planetGroup){
+
+        planetGroup.rotation.y+=
+            .00035;
 
     }
+
 
     if(controls)
         controls.update();
 
-    if(renderer && scene && camera){
 
-        renderer.render(
-            scene,
-            camera
-        );
-
-    }
+    renderer.render(
+        scene,
+        camera
+    );
 
 }
+
+
+/* =====================================================
+   START
+===================================================== */
+
+init();
 
 </script>
 
