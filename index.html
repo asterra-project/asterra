@@ -4,1248 +4,188 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ASTERRA — Own Your World</title>
+<title>ASTERRA</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
+html, body {
     margin: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
     background: #000;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    position: relative;
-}
-
-/* SPACE */
-#space {
-    position: fixed;
-    inset: 0;
-    background:
-        radial-gradient(circle at 72% 50%, rgba(35,55,80,.18), transparent 28%),
-        radial-gradient(circle at 25% 25%, rgba(30,40,65,.10), transparent 30%),
-        #000;
-}
-
-/* STARS */
-#stars {
-    position: absolute;
-    inset: 0;
+#scene {
     width: 100%;
     height: 100%;
-    z-index: 1;
 }
 
-/* THREE.JS */
-#scene {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-}
-
-/* UI */
-.ui {
-    position: absolute;
-    inset: 0;
+#status {
+    position: fixed;
+    top: 20px;
+    left: 20px;
     z-index: 10;
-    pointer-events: none;
-}
-
-/* BRAND */
-.brand {
-    position: absolute;
-    left: 42px;
-    top: 34px;
-}
-
-.brand-name {
-    font-size: 27px;
-    font-weight: 700;
-    letter-spacing: 7px;
-}
-
-.brand-sub {
-    margin-top: 7px;
-    color: #8e8e8e;
-    font-size: 10px;
-    letter-spacing: 3px;
-}
-
-/* HERO */
-.hero {
-    position: absolute;
-    left: 42px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 390px;
-}
-
-.hero-small {
-    color: #8d9aaa;
-    font-size: 11px;
-    letter-spacing: 4px;
-    margin-bottom: 17px;
-}
-
-.hero h1 {
-    margin: 0;
-    font-size: 62px;
-    line-height: .95;
-    letter-spacing: -3px;
-    font-weight: 700;
-}
-
-.hero p {
-    width: 330px;
-    color: #929292;
-    line-height: 1.65;
+    color: white;
+    font-family: Arial, sans-serif;
     font-size: 14px;
-    margin-top: 24px;
-}
-
-.cta {
-    pointer-events: auto;
-    display: inline-block;
-    margin-top: 20px;
-    padding: 13px 20px;
-    border: 1px solid rgba(255,255,255,.22);
-    background: rgba(255,255,255,.04);
-    color: #fff;
-    font-size: 11px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.cta:hover {
-    background: rgba(255,255,255,.12);
-}
-
-/* WORLD SELECTOR */
-.world-panel {
-    pointer-events: auto;
-    position: absolute;
-    right: 38px;
-    top: 38px;
-    width: 205px;
-}
-
-.world-title {
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: #777;
-    margin-bottom: 10px;
-}
-
-.world-buttons {
-    display: flex;
-    gap: 7px;
-}
-
-.world-btn {
-    flex: 1;
-    padding: 10px 5px;
-    border: 1px solid rgba(255,255,255,.12);
-    background: rgba(0,0,0,.35);
-    color: #777;
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    cursor: pointer;
-}
-
-.world-btn.active {
-    color: #fff;
-    border-color: rgba(255,255,255,.42);
-}
-
-/* PLOT CARD */
-.plot-card {
-    position: absolute;
-    right: 38px;
-    bottom: 65px;
-    width: 260px;
-    padding: 19px;
-    border: 1px solid rgba(255,255,255,.12);
-    background: rgba(5,7,10,.78);
-    backdrop-filter: blur(10px);
-    display: none;
-}
-
-.plot-card.visible {
-    display: block;
-}
-
-.plot-label {
-    color: #777;
-    font-size: 8px;
-    letter-spacing: 3px;
-    margin-bottom: 7px;
-}
-
-.plot-id {
-    font-size: 20px;
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-}
-
-.plot-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    font-size: 11px;
-}
-
-.plot-row span:first-child {
-    color: #777;
-}
-
-.plot-price {
-    margin-top: 15px;
-    font-size: 22px;
-}
-
-.acquire {
-    pointer-events: auto;
-    width: 100%;
-    margin-top: 13px;
-    padding: 11px;
-    background: #fff;
-    border: 0;
-    color: #000;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    cursor: pointer;
-}
-
-/* BOTTOM */
-.bottom {
-    position: absolute;
-    left: 42px;
-    right: 42px;
-    bottom: 28px;
-    display: flex;
-    justify-content: space-between;
-    color: #555;
-    font-size: 9px;
-    letter-spacing: 2px;
-}
-
-/* DRAG */
-.drag {
-    position: absolute;
-    left: 50%;
-    bottom: 28px;
-    transform: translateX(-50%);
-    color: #555;
-    font-size: 9px;
-    letter-spacing: 2px;
-}
-
-/* MOBILE */
-@media(max-width: 800px) {
-    .hero {
-        left: 22px;
-        top: 45%;
-        width: 300px;
-    }
-
-    .hero h1 {
-        font-size: 43px;
-    }
-
-    .hero p {
-        width: 260px;
-    }
-
-    .brand {
-        left: 22px;
-        top: 22px;
-    }
-
-    .world-panel {
-        right: 20px;
-        top: 22px;
-    }
-
-    .plot-card {
-        right: 20px;
-        bottom: 50px;
-    }
-
-    .bottom {
-        left: 22px;
-        right: 22px;
-    }
 }
 </style>
 </head>
 
 <body>
 
-<div id="space">
-    <canvas id="stars"></canvas>
-    <div id="scene"></div>
+<div id="scene"></div>
+<div id="status">ASTERRA — LOADING 3D...</div>
 
-    <div class="ui">
-
-        <div class="brand">
-            <div class="brand-name">ASTERRA</div>
-            <div class="brand-sub">OWN YOUR WORLD.</div>
-        </div>
-
-        <div class="hero">
-            <div class="hero-small">VIRTUAL UNIVERSE</div>
-
-            <h1>ENTER<br>THE UNIVERSE</h1>
-
-            <p>
-                Explore digital worlds. Discover unique locations.
-                Own a place and build your virtual collection.
-            </p>
-
-            <div class="cta" id="discover">
-                DISCOVER SURFACE
-            </div>
-        </div>
-
-        <div class="world-panel">
-            <div class="world-title">SELECT WORLD</div>
-
-            <div class="world-buttons">
-                <button class="world-btn active" id="moonBtn">
-                    MOON
-                </button>
-
-                <button class="world-btn" id="marsBtn">
-                    MARS
-                </button>
-            </div>
-        </div>
-
-        <div class="plot-card" id="plotCard">
-
-            <div class="plot-label">SELECTED LOCATION</div>
-
-            <div class="plot-id" id="plotId">
-                M-00001
-            </div>
-
-            <div class="plot-row">
-                <span>WORLD</span>
-                <span id="plotWorld">MOON</span>
-            </div>
-
-            <div class="plot-row">
-                <span>TERRAIN</span>
-                <span id="plotTerrain">PLAIN</span>
-            </div>
-
-            <div class="plot-row">
-                <span>RARITY</span>
-                <span id="plotRarity">STANDARD</span>
-            </div>
-
-            <div class="plot-row">
-                <span>AREA</span>
-                <span>1 PLOT</span>
-            </div>
-
-            <div class="plot-price" id="plotPrice">
-                $11
-            </div>
-
-            <button class="acquire" id="acquireBtn">
-                ACQUIRE PLOT
-            </button>
-
-        </div>
-
-        <div class="bottom">
-            <div>ASTERRA EXCHANGE</div>
-            <div>MOON • MARS</div>
-        </div>
-
-        <div class="drag">
-            DRAG TO ROTATE • SCROLL TO ZOOM
-        </div>
-
-    </div>
-</div>
-
-
-<!-- THREE.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
 
 <script>
 
-/* =========================================================
-   STARFIELD
-========================================================= */
+const status = document.getElementById("status");
 
-const starCanvas = document.getElementById("stars");
-const starCtx = starCanvas.getContext("2d");
+if (typeof THREE === "undefined") {
 
-let stars = [];
+    status.textContent =
+        "ERROR: THREE.JS DID NOT LOAD";
 
-function resizeStars() {
-
-    starCanvas.width = window.innerWidth * devicePixelRatio;
-    starCanvas.height = window.innerHeight * devicePixelRatio;
-
-    starCanvas.style.width = window.innerWidth + "px";
-    starCanvas.style.height = window.innerHeight + "px";
-
-    starCtx.setTransform(
-        devicePixelRatio,
-        0,
-        0,
-        devicePixelRatio,
-        0,
-        0
-    );
-}
-
-function createStars() {
-
-    stars = [];
-
-    const count = Math.min(
-        420,
-        Math.max(220, Math.floor(window.innerWidth * 0.32))
-    );
-
-    for (let i = 0; i < count; i++) {
-
-        stars.push({
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-            size: Math.random() < .88
-                ? Math.random() * 1.2 + .2
-                : Math.random() * 1.8 + .7,
-            alpha: Math.random() * .65 + .2,
-            speed: Math.random() * .018 + .004,
-            phase: Math.random() * Math.PI * 2
-        });
-    }
-}
-
-function drawStars(time) {
-
-    starCtx.clearRect(
-        0,
-        0,
-        window.innerWidth,
-        window.innerHeight
-    );
-
-    for (const s of stars) {
-
-        const twinkle =
-            s.alpha +
-            Math.sin(time * s.speed + s.phase) * .18;
-
-        starCtx.beginPath();
-
-        starCtx.fillStyle =
-            "rgba(255,255,255," +
-            Math.max(.05, twinkle) +
-            ")";
-
-        starCtx.arc(
-            s.x,
-            s.y,
-            s.size,
-            0,
-            Math.PI * 2
-        );
-
-        starCtx.fill();
-    }
+    throw new Error("Three.js failed to load");
 }
 
 
-/* =========================================================
-   THREE.JS SETUP
-========================================================= */
+/* SCENE */
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    2000
-);
+scene.background =
+    new THREE.Color(0x000000);
 
-camera.position.set(
-    0,
-    0,
-    560
-);
 
-const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: true
-});
+/* CAMERA */
 
-renderer.setPixelRatio(
-    Math.min(window.devicePixelRatio, 2)
-);
+const camera =
+    new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        2000
+    );
+
+camera.position.z = 500;
+
+
+/* RENDERER */
+
+const renderer =
+    new THREE.WebGLRenderer({
+        antialias: true
+    });
 
 renderer.setSize(
     window.innerWidth,
     window.innerHeight
 );
 
-renderer.outputEncoding = THREE.sRGBEncoding;
-
-document.getElementById("scene").appendChild(
-    renderer.domElement
+renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio, 2)
 );
 
-
-/* =========================================================
-   LIGHTING
-========================================================= */
-
-const ambientLight = new THREE.AmbientLight(
-    0xffffff,
-    0.48
-);
-
-scene.add(ambientLight);
+document
+    .getElementById("scene")
+    .appendChild(renderer.domElement);
 
 
-const keyLight = new THREE.DirectionalLight(
-    0xffffff,
-    1.5
-);
+/* LIGHT */
 
-keyLight.position.set(
-    -300,
-    180,
+const ambient =
+    new THREE.AmbientLight(
+        0xffffff,
+        0.5
+    );
+
+scene.add(ambient);
+
+
+const light =
+    new THREE.DirectionalLight(
+        0xffffff,
+        2
+    );
+
+light.position.set(
+    -200,
+    200,
     400
 );
 
-scene.add(keyLight);
+scene.add(light);
 
 
-const rimLight = new THREE.DirectionalLight(
-    0x5577aa,
-    0.45
-);
+/* PLANET */
 
-rimLight.position.set(
-    300,
-    -100,
-    -250
-);
-
-scene.add(rimLight);
-
-
-/* =========================================================
-   PLANET GROUPS
-========================================================= */
-
-const planetGroup = new THREE.Group();
-
-scene.add(planetGroup);
-
-
-const plotGroup = new THREE.Group();
-
-planetGroup.add(plotGroup);
-
-
-/* =========================================================
-   PLANET
-========================================================= */
-
-let currentWorld = "MOON";
-let planet = null;
-
-
-/*
-   Simple procedural terrain.
-
-   Important:
-   This does NOT depend on external terrain files.
-   Therefore the planet cannot disappear because
-   a NASA/texture URL failed.
-*/
-
-function moonHeight(x, y, z) {
-
-    const length = Math.sqrt(x*x + y*y + z*z);
-
-    const nx = x / length;
-    const ny = y / length;
-    const nz = z / length;
-
-    let h = 0;
-
-    /* large craters */
-    h += Math.sin(nx * 14 + nz * 7) * 1.8;
-    h += Math.sin(ny * 19 - nx * 9) * 1.2;
-    h += Math.sin(nz * 26 + ny * 13) * .7;
-
-    /* polar variation */
-    h += Math.abs(ny) * 1.4;
-
-    return h;
-}
-
-
-function marsHeight(x, y, z) {
-
-    const length = Math.sqrt(x*x + y*y + z*z);
-
-    const nx = x / length;
-    const ny = y / length;
-    const nz = z / length;
-
-    let h = 0;
-
-    h += Math.sin(nx * 10 + nz * 8) * 2.4;
-    h += Math.sin(ny * 17 + nx * 6) * 1.7;
-    h += Math.sin(nz * 25 - ny * 10) * .9;
-
-    /* broad northern/southern differences */
-    h += ny * 2.2;
-
-    return h;
-}
-
-
-/* =========================================================
-   PLANET MATERIALS
-========================================================= */
-
-function createMoonMaterial() {
-
-    return new THREE.MeshStandardMaterial({
-
-        color: 0x8f8f8f,
-
-        roughness: .96,
-
-        metalness: 0,
-
-        flatShading: false
-    });
-}
-
-
-function createMarsMaterial() {
-
-    return new THREE.MeshStandardMaterial({
-
-        color: 0x9b4d35,
-
-        roughness: .94,
-
-        metalness: 0,
-
-        flatShading: false
-    });
-}
-
-
-/* =========================================================
-   CREATE PLANET
-========================================================= */
-
-function createPlanet() {
-
-    if (planet) {
-
-        planetGroup.remove(planet);
-
-        planet.geometry.dispose();
-
-        planet.material.dispose();
-
-        planet = null;
-    }
-
-    plotGroup.clear();
-
-    const radius = 145;
-
-    const geometry = new THREE.SphereGeometry(
-        radius,
-        128,
+const geometry =
+    new THREE.SphereGeometry(
+        150,
+        96,
         96
     );
 
-    const position = geometry.attributes.position;
 
-    for (
-        let i = 0;
-        i < position.count;
-        i++
-    ) {
+const material =
+    new THREE.MeshStandardMaterial({
+        color: 0x888888,
+        roughness: 0.9,
+        metalness: 0
+    });
 
-        const x = position.getX(i);
-        const y = position.getY(i);
-        const z = position.getZ(i);
 
-        let displacement;
-
-        if (currentWorld === "MOON") {
-            displacement = moonHeight(x,y,z);
-        } else {
-            displacement = marsHeight(x,y,z);
-        }
-
-        const factor =
-            (radius + displacement) / radius;
-
-        position.setXYZ(
-            i,
-            x * factor,
-            y * factor,
-            z * factor
-        );
-    }
-
-    geometry.computeVertexNormals();
-
-    const material =
-        currentWorld === "MOON"
-            ? createMoonMaterial()
-            : createMarsMaterial();
-
-    planet = new THREE.Mesh(
+const planet =
+    new THREE.Mesh(
         geometry,
         material
     );
 
-    planetGroup.add(planet);
 
-    createPlots();
-}
+scene.add(planet);
 
 
-/* =========================================================
-   PLOT SYSTEM
-========================================================= */
-
-const plotMeshes = [];
-
-function createPlots() {
-
-    plotMeshes.length = 0;
-
-    plotGroup.clear();
-
-    /*
-       18 latitude bands
-       36 longitude sectors
-
-       = 648 visible plot cells
-    */
-
-    const latCount = 18;
-    const lonCount = 36;
-
-    const radius = 148;
-
-    for (let lat = 0; lat < latCount; lat++) {
-
-        const lat1 =
-            -Math.PI / 2 +
-            (lat / latCount) * Math.PI;
-
-        const lat2 =
-            -Math.PI / 2 +
-            ((lat + 1) / latCount) * Math.PI;
-
-        for (let lon = 0; lon < lonCount; lon++) {
-
-            const lon1 =
-                -Math.PI +
-                (lon / lonCount) * Math.PI * 2;
-
-            const lon2 =
-                -Math.PI +
-                ((lon + 1) / lonCount) * Math.PI * 2;
-
-            const geometry =
-                createPlotGeometry(
-                    radius,
-                    lat1,
-                    lat2,
-                    lon1,
-                    lon2
-                );
-
-            const material =
-                new THREE.MeshBasicMaterial({
-                    color: 0xffffff,
-                    transparent: true,
-                    opacity: 0.001,
-                    side: THREE.DoubleSide
-                });
-
-            const mesh =
-                new THREE.Mesh(
-                    geometry,
-                    material
-                );
-
-            mesh.userData = {
-
-                id:
-                    currentWorld === "MOON"
-                        ? "M-" +
-                          String(
-                              lat * lonCount + lon + 1
-                          ).padStart(5,"0")
-                        : "R-" +
-                          String(
-                              lat * lonCount + lon + 1
-                          ).padStart(5,"0"),
-
-                world: currentWorld,
-
-                lat:
-                    ((lat1 + lat2) / 2) *
-                    180 / Math.PI,
-
-                lon:
-                    ((lon1 + lon2) / 2) *
-                    180 / Math.PI,
-
-                terrain:
-                    getTerrain(
-                        (lat1 + lat2) / 2,
-                        (lon1 + lon2) / 2
-                    ),
-
-                rarity:
-                    getRarity(
-                        lat,
-                        lon
-                    ),
-
-                price:
-                    getPrice(
-                        lat,
-                        lon
-                    )
-            };
-
-            plotGroup.add(mesh);
-
-            plotMeshes.push(mesh);
-        }
-    }
-}
-
-
-/* =========================================================
-   PLOT GEOMETRY
-========================================================= */
-
-function createPlotGeometry(
-    radius,
-    lat1,
-    lat2,
-    lon1,
-    lon2
-) {
-
-    const segments = 2;
-
-    const positions = [];
-    const indices = [];
-
-    for (let y = 0; y <= segments; y++) {
-
-        const v = y / segments;
-
-        const lat =
-            lat1 +
-            (lat2 - lat1) * v;
-
-        for (let x = 0; x <= segments; x++) {
-
-            const u = x / segments;
-
-            const lon =
-                lon1 +
-                (lon2 - lon1) * u;
-
-            const px =
-                radius *
-                Math.cos(lat) *
-                Math.cos(lon);
-
-            const py =
-                radius *
-                Math.sin(lat);
-
-            const pz =
-                radius *
-                Math.cos(lat) *
-                Math.sin(lon);
-
-            positions.push(
-                px,
-                py,
-                pz
-            );
-        }
-    }
-
-    for (let y = 0; y < segments; y++) {
-
-        for (let x = 0; x < segments; x++) {
-
-            const a =
-                y * (segments + 1) + x;
-
-            const b = a + 1;
-
-            const c =
-                a + (segments + 1);
-
-            const d = c + 1;
-
-            indices.push(
-                a,b,d,
-                a,d,c
-            );
-        }
-    }
-
-    const geometry =
-        new THREE.BufferGeometry();
-
-    geometry.setAttribute(
-        "position",
-        new THREE.Float32BufferAttribute(
-            positions,
-            3
-        )
-    );
-
-    geometry.setIndex(indices);
-
-    geometry.computeVertexNormals();
-
-    return geometry;
-}
-
-
-/* =========================================================
-   TERRAIN
-========================================================= */
-
-function getTerrain(lat, lon) {
-
-    const a = Math.sin(
-        lat * 7 +
-        lon * 3
-    );
-
-    const b = Math.cos(
-        lon * 5 -
-        lat * 4
-    );
-
-    if (Math.abs(lat) > 1.15) {
-        return "POLAR";
-    }
-
-    if (a > .55) {
-        return "RIDGE";
-    }
-
-    if (b > .65) {
-        return "CRATER";
-    }
-
-    if (a < -.65) {
-        return "BASIN";
-    }
-
-    if (b < -.55) {
-        return "HIGHLAND";
-    }
-
-    return "PLAIN";
-}
-
-
-/* =========================================================
-   RARITY
-========================================================= */
-
-function getRarity(lat, lon) {
-
-    const value =
-        (lat * 37 +
-         lon * 19) % 100;
-
-    if (value > 91) {
-        return "SPECIAL";
-    }
-
-    if (value > 76) {
-        return "PREMIUM";
-    }
-
-    if (value > 56) {
-        return "RARE";
-    }
-
-    return "STANDARD";
-}
-
-
-/* =========================================================
-   PRICE
-========================================================= */
-
-function getPrice(lat, lon) {
-
-    const base =
-        currentWorld === "MOON"
-            ? 11
-            : 21;
-
-    const variation =
-        Math.abs(
-            Math.sin(lat * 13 + lon * 7)
-        );
-
-    const terrainBonus =
-        getTerrain(lat,lon) === "RIDGE"
-            ? 14
-            : getTerrain(lat,lon) === "CRATER"
-            ? 9
-            : getTerrain(lat,lon) === "BASIN"
-            ? 6
-            : 0;
-
-    const rarity =
-        getRarity(
-            Math.round(lat),
-            Math.round(lon)
-        );
-
-    const rarityBonus =
-        rarity === "SPECIAL"
-            ? 60
-            : rarity === "PREMIUM"
-            ? 30
-            : rarity === "RARE"
-            ? 15
-            : 0;
-
-    return Math.floor(
-        base +
-        variation * 35 +
-        terrainBonus +
-        rarityBonus
-    );
-}
-
-
-/* =========================================================
-   RAYCASTING
-========================================================= */
-
-const raycaster =
-    new THREE.Raycaster();
-
-const mouse =
-    new THREE.Vector2();
-
-function selectPlot(event) {
-
-    mouse.x =
-        (event.clientX /
-        window.innerWidth) * 2 - 1;
-
-    mouse.y =
-        -(event.clientY /
-        window.innerHeight) * 2 + 1;
-
-    raycaster.setFromCamera(
-        mouse,
-        camera
-    );
-
-    const hits =
-        raycaster.intersectObjects(
-            plotMeshes
-        );
-
-    if (!hits.length) {
-        return;
-    }
-
-    showPlot(
-        hits[0].object.userData
-    );
-}
-
-
-/* =========================================================
-   PLOT CARD
-========================================================= */
-
-function showPlot(data) {
-
-    document.getElementById("plotCard")
-        .classList.add("visible");
-
-    document.getElementById("plotId")
-        .textContent = data.id;
-
-    document.getElementById("plotWorld")
-        .textContent = data.world;
-
-    document.getElementById("plotTerrain")
-        .textContent = data.terrain;
-
-    document.getElementById("plotRarity")
-        .textContent = data.rarity;
-
-    document.getElementById("plotPrice")
-        .textContent = "$" + data.price;
-
-    selectedPlot = data;
-}
-
-
-let selectedPlot = null;
-
-
-/* =========================================================
-   WORLD SWITCHING
-========================================================= */
-
-function switchWorld(world) {
-
-    currentWorld = world;
-
-    document.getElementById("moonBtn")
-        .classList.toggle(
-            "active",
-            world === "MOON"
-        );
-
-    document.getElementById("marsBtn")
-        .classList.toggle(
-            "active",
-            world === "MARS"
-        );
-
-    document.getElementById("plotCard")
-        .classList.remove("visible");
-
-    createPlanet();
-}
-
-
-document.getElementById("moonBtn")
-    .addEventListener(
-        "click",
-        function() {
-            switchWorld("MOON");
-        }
-    );
-
-
-document.getElementById("marsBtn")
-    .addEventListener(
-        "click",
-        function() {
-            switchWorld("MARS");
-        }
-    );
-
-
-/* =========================================================
-   ROTATION
-========================================================= */
+/* MOUSE ROTATION */
 
 let dragging = false;
-
-let previousX = 0;
-let previousY = 0;
-
-let rotationVelocityX = 0;
-let rotationVelocityY = 0;
-
+let lastX = 0;
+let lastY = 0;
 
 renderer.domElement.addEventListener(
     "pointerdown",
-    function(event) {
+    function(e) {
 
         dragging = true;
 
-        previousX = event.clientX;
-        previousY = event.clientY;
-
-        renderer.domElement.setPointerCapture(
-            event.pointerId
-        );
+        lastX = e.clientX;
+        lastY = e.clientY;
     }
 );
 
 
 renderer.domElement.addEventListener(
     "pointermove",
-    function(event) {
+    function(e) {
 
-        if (!dragging) {
-            return;
-        }
+        if (!dragging) return;
 
         const dx =
-            event.clientX - previousX;
+            e.clientX - lastX;
 
         const dy =
-            event.clientY - previousY;
+            e.clientY - lastY;
 
-        previousX = event.clientX;
-        previousY = event.clientY;
+        planet.rotation.y +=
+            dx * 0.005;
 
-        rotationVelocityY = dx * .004;
-        rotationVelocityX = dy * .004;
+        planet.rotation.x +=
+            dy * 0.005;
 
-        planetGroup.rotation.y +=
-            rotationVelocityY;
-
-        planetGroup.rotation.x +=
-            rotationVelocityX;
-
-        planetGroup.rotation.x =
-            Math.max(
-                -1.25,
-                Math.min(
-                    1.25,
-                    planetGroup.rotation.x
-                )
-            );
+        lastX = e.clientX;
+        lastY = e.clientY;
     }
 );
 
@@ -1259,124 +199,51 @@ renderer.domElement.addEventListener(
 );
 
 
-/* =========================================================
-   ZOOM
-========================================================= */
-
-let zoomDistance = 560;
-
-let targetZoom = 560;
-
-const MIN_ZOOM = 430;
-
-const MAX_ZOOM = 760;
-
-
 renderer.domElement.addEventListener(
-    "wheel",
-    function(event) {
+    "pointerleave",
+    function() {
 
-        event.preventDefault();
-
-        targetZoom +=
-            event.deltaY * .35;
-
-        targetZoom =
-            Math.max(
-                MIN_ZOOM,
-                Math.min(
-                    MAX_ZOOM,
-                    targetZoom
-                )
-            );
-    },
-    { passive:false }
+        dragging = false;
+    }
 );
 
 
-/* =========================================================
-   DISCOVER BUTTON
-========================================================= */
+/* ZOOM */
 
-document.getElementById("discover")
-    .addEventListener(
-        "click",
-        function() {
+let zoom = 500;
 
-            targetZoom = 480;
+renderer.domElement.addEventListener(
+    "wheel",
+    function(e) {
 
-            document.querySelector(".hero")
-                .style.opacity = ".65";
-        }
-    );
+        e.preventDefault();
 
+        zoom += e.deltaY * 0.5;
 
-/* =========================================================
-   ACQUIRE
-========================================================= */
-
-document.getElementById("acquireBtn")
-    .addEventListener(
-        "click",
-        function() {
-
-            const button =
-                document.getElementById(
-                    "acquireBtn"
-                );
-
-            button.textContent =
-                "RESERVING...";
-
-            setTimeout(
-                function() {
-
-                    button.textContent =
-                        "DEMO — CHECKOUT NEXT";
-
-                },
-                700
+        zoom =
+            Math.max(
+                300,
+                Math.min(
+                    800,
+                    zoom
+                )
             );
-        }
-    );
+    },
+    { passive: false }
+);
 
 
-/* =========================================================
-   ANIMATION
-========================================================= */
+/* ANIMATION */
 
-function animate(time) {
+function animate() {
 
     requestAnimationFrame(
         animate
     );
 
-    drawStars(time);
-
-    if (!dragging) {
-
-        planetGroup.rotation.y +=
-            rotationVelocityY;
-
-        planetGroup.rotation.x +=
-            rotationVelocityX;
-
-        rotationVelocityY *= .94;
-        rotationVelocityX *= .94;
-    }
-
-    zoomDistance +=
-        (targetZoom - zoomDistance) *
-        .08;
-
-    camera.position.z =
-        zoomDistance;
-
-    camera.lookAt(
-        0,
-        0,
-        0
-    );
+    camera.position.z +=
+        (zoom - camera.position.z) *
+        0.08;
 
     renderer.render(
         scene,
@@ -1385,9 +252,7 @@ function animate(time) {
 }
 
 
-/* =========================================================
-   RESIZE
-========================================================= */
+/* RESIZE */
 
 window.addEventListener(
     "resize",
@@ -1403,25 +268,15 @@ window.addEventListener(
             window.innerWidth,
             window.innerHeight
         );
-
-        resizeStars();
-
-        createStars();
     }
 );
 
 
-/* =========================================================
-   START
-========================================================= */
+status.textContent =
+    "ASTERRA — 3D ONLINE";
 
-resizeStars();
 
-createStars();
-
-createPlanet();
-
-animate(0);
+animate();
 
 </script>
 
