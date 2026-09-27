@@ -5,694 +5,494 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASTERRA — Own Your World</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html,body{
-    margin:0;
     width:100%;
     height:100%;
-    background:#020304;
+    overflow:hidden;
+    background:#000;
     color:#fff;
-    font-family:Inter,Arial,Helvetica,sans-serif;
-}
-
-body{
-    overflow-x:hidden;
-}
-
-button{
-    font:inherit;
-}
-
-#app{
-    min-height:100vh;
-    background:
-        radial-gradient(circle at 72% 18%,rgba(35,55,75,.12),transparent 30%),
-        radial-gradient(circle at 15% 70%,rgba(30,40,55,.10),transparent 35%),
-        #020304;
+    font-family:Inter,Arial,sans-serif;
 }
 
 #space{
     position:fixed;
     inset:0;
-    z-index:0;
+    overflow:hidden;
+    background:#000;
+}
+
+/* =========================================================
+   SPACE
+========================================================= */
+
+.nebula{
+    position:absolute;
+    inset:-20%;
+    pointer-events:none;
+    z-index:1;
+    opacity:.55;
+    filter:blur(35px);
+}
+
+.nebula-main{
+    background:
+        radial-gradient(ellipse at 70% 40%,
+            rgba(70,100,150,.13) 0%,
+            rgba(30,50,80,.06) 25%,
+            transparent 55%);
+}
+
+.nebula-secondary{
+    background:
+        radial-gradient(ellipse at 20% 75%,
+            rgba(120,90,55,.07) 0%,
+            rgba(50,50,50,.025) 25%,
+            transparent 55%);
+}
+
+.nebula-far{
+    background:
+        radial-gradient(ellipse at 80% 90%,
+            rgba(90,110,145,.05) 0%,
+            transparent 50%);
+}
+
+.nebula-ribbon{
+    background:
+        linear-gradient(
+            135deg,
+            transparent 20%,
+            rgba(120,130,150,.025) 42%,
+            rgba(170,180,195,.035) 50%,
+            transparent 70%
+        );
+}
+
+.nebula-cloud-a{
+    background:
+        radial-gradient(ellipse at 38% 25%,
+            rgba(100,115,140,.035),
+            transparent 40%);
+}
+
+.nebula-cloud-b{
+    background:
+        radial-gradient(ellipse at 72% 70%,
+            rgba(160,130,95,.025),
+            transparent 40%);
+}
+
+#starfield{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:3;
     pointer-events:none;
 }
 
-#planetScene{
-    position:fixed;
+#scene{
+    position:absolute;
     inset:0;
-    z-index:1;
+    z-index:4;
+}
+
+/* =========================================================
+   UI
+========================================================= */
+
+.ui{
+    position:absolute;
+    inset:0;
+    z-index:10;
+    pointer-events:none;
+}
+
+.brand{
+    position:absolute;
+    top:34px;
+    left:42px;
+    pointer-events:none;
+}
+
+.brand-name{
+    font-family:Manrope,sans-serif;
+    font-size:20px;
+    font-weight:800;
+    letter-spacing:.28em;
+}
+
+.brand-sub{
+    margin-top:6px;
+    font-size:9px;
+    letter-spacing:.32em;
+    color:rgba(255,255,255,.42);
+}
+
+.hero{
+    position:absolute;
+    left:42px;
+    top:50%;
+    transform:translateY(-50%);
+    width:420px;
+}
+
+.kicker{
+    font-size:10px;
+    letter-spacing:.3em;
+    color:rgba(255,255,255,.42);
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-family:Manrope,sans-serif;
+    font-size:58px;
+    line-height:.98;
+    letter-spacing:-.045em;
+    font-weight:700;
+}
+
+.hero p{
+    margin-top:24px;
+    max-width:390px;
+    color:rgba(255,255,255,.58);
+    font-size:13px;
+    line-height:1.75;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:30px;
     pointer-events:auto;
 }
 
-canvas{
-    display:block;
+.btn{
+    height:42px;
+    padding:0 20px;
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.035);
+    color:#fff;
+    font-size:10px;
+    letter-spacing:.15em;
+    cursor:pointer;
+    transition:.2s ease;
 }
 
-.overlay{
-    position:relative;
-    z-index:5;
+.btn:hover{
+    background:rgba(255,255,255,.1);
+    border-color:rgba(255,255,255,.35);
 }
 
-/* ================= HEADER ================= */
+.btn.primary{
+    background:#fff;
+    color:#000;
+    border-color:#fff;
+}
 
-header{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    height:82px;
-    z-index:20;
+.world-panel{
+    position:absolute;
+    right:40px;
+    top:50%;
+    transform:translateY(-50%);
+    width:260px;
+    padding:24px;
+    border:1px solid rgba(255,255,255,.11);
+    background:rgba(5,7,10,.42);
+    backdrop-filter:blur(14px);
+    pointer-events:auto;
+}
 
+.panel-label{
+    font-size:9px;
+    letter-spacing:.25em;
+    color:rgba(255,255,255,.4);
+    margin-bottom:15px;
+}
+
+.world-tabs{
     display:flex;
-    align-items:center;
+    gap:7px;
+    margin-bottom:22px;
+}
+
+.world-tab{
+    flex:1;
+    height:34px;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(255,255,255,.1);
+    color:rgba(255,255,255,.55);
+    font-size:9px;
+    letter-spacing:.16em;
+    cursor:pointer;
+}
+
+.world-tab.active{
+    background:#fff;
+    color:#000;
+    border-color:#fff;
+}
+
+.world-description{
+    min-height:58px;
+    color:rgba(255,255,255,.5);
+    font-size:11px;
+    line-height:1.65;
+}
+
+.stats{
+    margin-top:18px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.stat{
+    display:flex;
     justify-content:space-between;
-
-    padding:0 42px;
-
-    border-bottom:1px solid rgba(255,255,255,.07);
-
-    background:linear-gradient(
-        to bottom,
-        rgba(2,3,4,.94),
-        rgba(2,3,4,.55)
-    );
-
-    backdrop-filter:blur(12px);
+    padding:12px 0;
+    border-bottom:1px solid rgba(255,255,255,.06);
 }
 
-.logo{
-    font-size:21px;
-    font-weight:700;
-    letter-spacing:7px;
-}
-
-.logo small{
-    display:block;
-    margin-top:4px;
-    font-size:8px;
-    letter-spacing:3px;
+.stat span:first-child{
+    font-size:9px;
+    letter-spacing:.16em;
     color:rgba(255,255,255,.35);
 }
 
-nav{
+.stat span:last-child{
+    font-size:10px;
+    color:rgba(255,255,255,.82);
+}
+
+.bottom-bar{
+    position:absolute;
+    left:42px;
+    right:42px;
+    bottom:25px;
+    height:48px;
+    border-top:1px solid rgba(255,255,255,.1);
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    padding-bottom:1px;
+}
+
+.bottom-left{
+    font-size:8px;
+    letter-spacing:.2em;
+    color:rgba(255,255,255,.32);
+}
+
+.bottom-right{
     display:flex;
     gap:28px;
 }
 
-nav button{
-    border:0;
-    background:none;
-    color:rgba(255,255,255,.45);
-    cursor:pointer;
-    font-size:10px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-}
-
-nav button:hover{
-    color:#fff;
-}
-
-/* ================= HERO ================= */
-
-.hero{
-    position:relative;
-    min-height:790px;
-    height:100vh;
-    overflow:hidden;
-}
-
-.hero-copy{
-    position:absolute;
-    left:6vw;
-    top:50%;
-    transform:translateY(-50%);
-    width:370px;
-    z-index:8;
-    pointer-events:none;
-}
-
-.kicker{
-    margin-bottom:20px;
-    font-size:10px;
-    letter-spacing:5px;
-    color:rgba(255,255,255,.38);
-}
-
-.hero h1{
-    margin:0;
-    font-size:clamp(58px,7vw,108px);
-    line-height:.86;
-    letter-spacing:-6px;
-    font-weight:500;
-}
-
-.hero h1 span{
+.metric{
+    font-size:8px;
+    letter-spacing:.16em;
     color:rgba(255,255,255,.35);
 }
 
-.hero p{
-    max-width:320px;
-    margin:28px 0 0;
-    color:rgba(255,255,255,.48);
-    font-size:13px;
-    line-height:1.8;
+.metric strong{
+    color:rgba(255,255,255,.7);
+    font-weight:500;
 }
 
-.hero-actions{
-    margin-top:30px;
-    display:flex;
-    gap:10px;
-    pointer-events:auto;
+.drag-hint{
+    position:absolute;
+    left:50%;
+    bottom:31px;
+    transform:translateX(-50%);
+    font-size:8px;
+    letter-spacing:.18em;
+    color:rgba(255,255,255,.27);
 }
 
-.primary{
-    border:1px solid rgba(255,255,255,.55);
-    background:#fff;
-    color:#000;
-    padding:13px 19px;
-    font-size:9px;
-    letter-spacing:3px;
-    cursor:pointer;
-}
+/* =========================================================
+   PLOT CARD
+========================================================= */
 
-.secondary{
+.plot-card{
+    position:absolute;
+    right:40px;
+    bottom:100px;
+    width:290px;
+    padding:22px;
+    background:rgba(4,6,9,.82);
     border:1px solid rgba(255,255,255,.18);
-    background:rgba(255,255,255,.03);
-    color:#fff;
-    padding:13px 19px;
-    font-size:9px;
-    letter-spacing:3px;
-    cursor:pointer;
-}
-
-.primary:hover,
-.secondary:hover{
-    border-color:#fff;
-}
-
-/* ================= WORLD SWITCH ================= */
-
-.world-switch{
-    position:absolute;
-    right:5vw;
-    top:105px;
-    z-index:12;
-
-    display:flex;
-    gap:7px;
-}
-
-.world-switch button{
-    min-width:86px;
-    padding:9px 14px;
-
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(0,0,0,.42);
-    color:rgba(255,255,255,.43);
-
-    cursor:pointer;
-    font-size:9px;
-    letter-spacing:2px;
-}
-
-.world-switch button.active{
-    border-color:rgba(255,255,255,.65);
-    color:#fff;
-    background:rgba(255,255,255,.08);
-}
-
-/* ================= PLANET HUD ================= */
-
-.planet-info{
-    position:absolute;
-    right:5vw;
-    bottom:115px;
-    z-index:10;
-
-    width:225px;
-
-    padding:17px;
-
-    border-left:1px solid rgba(255,255,255,.2);
-
-    background:rgba(2,3,4,.25);
-    backdrop-filter:blur(8px);
-}
-
-.planet-info .label{
-    font-size:8px;
-    letter-spacing:3px;
-    color:rgba(255,255,255,.32);
-}
-
-.planet-info h2{
-    margin:8px 0 6px;
-    font-size:24px;
-    font-weight:500;
-    letter-spacing:-1px;
-}
-
-.planet-info p{
-    margin:0;
-    font-size:10px;
-    line-height:1.6;
-    color:rgba(255,255,255,.42);
-}
-
-.planet-status{
-    margin-top:13px;
-    padding-top:12px;
-    border-top:1px solid rgba(255,255,255,.08);
-    font-size:8px;
-    letter-spacing:2px;
-    color:rgba(255,255,255,.3);
-}
-
-/* ================= STATS ================= */
-
-.stats{
-    position:relative;
-    z-index:7;
-
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-
-    border-top:1px solid rgba(255,255,255,.08);
-    border-bottom:1px solid rgba(255,255,255,.08);
-
-    background:#030405;
-}
-
-.stat{
-    min-height:125px;
-    padding:28px 35px;
-
-    border-right:1px solid rgba(255,255,255,.07);
-}
-
-.stat:last-child{
-    border-right:0;
-}
-
-.stat-label{
-    font-size:8px;
-    letter-spacing:3px;
-    color:rgba(255,255,255,.3);
-}
-
-.stat-value{
-    margin-top:14px;
-    font-size:25px;
-    font-weight:400;
-}
-
-/* ================= EXCHANGE ================= */
-
-.section{
-    position:relative;
-    z-index:7;
-    padding:110px 6vw;
-    background:#030405;
-}
-
-.section-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
-    margin-bottom:35px;
-}
-
-.section-kicker{
-    font-size:9px;
-    letter-spacing:4px;
-    color:rgba(255,255,255,.3);
-}
-
-.section h2{
-    margin:9px 0 0;
-    font-size:40px;
-    font-weight:500;
-    letter-spacing:-2px;
-}
-
-.section-description{
-    max-width:360px;
-    font-size:11px;
-    line-height:1.7;
-    color:rgba(255,255,255,.38);
-}
-
-/* ================= PROPERTY TABLE ================= */
-
-.property-table{
-    border-top:1px solid rgba(255,255,255,.1);
-}
-
-.property-row{
-    display:grid;
-    grid-template-columns:1.1fr 1.3fr .8fr .8fr .7fr;
-    align-items:center;
-
-    min-height:82px;
-
-    border-bottom:1px solid rgba(255,255,255,.07);
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.property-row:hover{
-    background:rgba(255,255,255,.025);
-}
-
-.property-row.header{
-    min-height:44px;
-    cursor:default;
-    color:rgba(255,255,255,.28);
-    font-size:8px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-}
-
-.property-row.header:hover{
-    background:none;
-}
-
-.cell{
-    padding:0 18px;
-}
-
-.property-id{
-    font-size:11px;
-    letter-spacing:1px;
-}
-
-.property-world{
-    font-size:9px;
-    color:rgba(255,255,255,.38);
-    margin-top:5px;
-}
-
-.property-region{
-    font-size:10px;
-    color:rgba(255,255,255,.55);
-}
-
-.property-price{
-    font-size:15px;
-}
-
-.property-status{
-    font-size:8px;
-    letter-spacing:1px;
-    color:rgba(255,255,255,.35);
-}
-
-/* ================= HISTORY ================= */
-
-.history-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-}
-
-.history-card{
-    border:1px solid rgba(255,255,255,.08);
-    padding:25px;
-    background:rgba(255,255,255,.015);
-}
-
-.history-card h3{
-    margin:0 0 20px;
-    font-size:16px;
-    font-weight:500;
-}
-
-.history-line{
-    display:flex;
-    justify-content:space-between;
-    padding:11px 0;
-    border-top:1px solid rgba(255,255,255,.06);
-    font-size:9px;
-}
-
-.history-line span:first-child{
-    color:rgba(255,255,255,.35);
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-    position:relative;
-    z-index:7;
-
-    padding:45px 6vw;
-
-    border-top:1px solid rgba(255,255,255,.08);
-
-    background:#020304;
-
-    display:flex;
-    justify-content:space-between;
-
-    color:rgba(255,255,255,.25);
-
-    font-size:8px;
-    letter-spacing:2px;
-}
-
-/* ================= MODAL ================= */
-
-.modal{
-    position:fixed;
-    inset:0;
-    z-index:50;
-
-    display:none;
-    align-items:center;
-    justify-content:center;
-
-    background:rgba(0,0,0,.75);
-    backdrop-filter:blur(12px);
-}
-
-.modal.show{
-    display:flex;
-}
-
-.modal-box{
-    width:min(650px,90vw);
-
-    border:1px solid rgba(255,255,255,.14);
-    background:#07090b;
-
-    box-shadow:0 30px 100px rgba(0,0,0,.7);
-}
-
-.modal-top{
-    display:flex;
-    justify-content:space-between;
-
-    padding:23px 25px;
-
-    border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.modal-title{
-    font-size:18px;
-    letter-spacing:1px;
-}
-
-.close{
-    border:0;
-    background:none;
-    color:rgba(255,255,255,.45);
-    cursor:pointer;
-    font-size:18px;
-}
-
-.modal-body{
-    padding:25px;
-}
-
-.modal-meta{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:1px;
-    background:rgba(255,255,255,.08);
-}
-
-.meta{
-    background:#07090b;
-    padding:18px;
-}
-
-.meta-label{
-    font-size:7px;
-    letter-spacing:2px;
-    color:rgba(255,255,255,.3);
-}
-
-.meta-value{
-    margin-top:8px;
-    font-size:15px;
-}
-
-.history-list{
-    margin-top:24px;
-}
-
-.history-item{
-    display:flex;
-    justify-content:space-between;
-
-    padding:13px 0;
-
-    border-top:1px solid rgba(255,255,255,.07);
-
-    font-size:9px;
-}
-
-.history-item .muted{
-    color:rgba(255,255,255,.3);
-}
-
-.buy{
-    margin-top:25px;
-
-    width:100%;
-    padding:15px;
-
-    border:1px solid rgba(255,255,255,.35);
-
-    background:#fff;
-    color:#000;
-
-    font-size:9px;
-    letter-spacing:3px;
-
-    cursor:pointer;
-}
-
-.buy:hover{
-    background:#ddd;
-}
-
-/* ================= TOAST ================= */
-
-.toast{
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    z-index:70;
-
-    padding:14px 18px;
-
-    border:1px solid rgba(255,255,255,.15);
-
-    background:#080a0d;
-
-    color:#fff;
-
-    font-size:9px;
-    letter-spacing:1px;
-
+    backdrop-filter:blur(18px);
+    pointer-events:auto;
     opacity:0;
-    transform:translateY(10px);
-
-    transition:.25s;
+    transform:translateY(12px);
+    transition:.25s ease;
 }
 
-.toast.show{
+.plot-card.visible{
     opacity:1;
     transform:translateY(0);
 }
 
-/* ================= RESPONSIVE ================= */
+.plot-card-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.plot-id{
+    font-family:Manrope,sans-serif;
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:-.02em;
+}
+
+.plot-status{
+    font-size:8px;
+    letter-spacing:.16em;
+    color:#7fd39b;
+    padding-top:5px;
+}
+
+.plot-world{
+    font-size:9px;
+    letter-spacing:.2em;
+    color:rgba(255,255,255,.4);
+    margin-bottom:17px;
+}
+
+.plot-data{
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.plot-row{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.plot-row span:first-child{
+    font-size:9px;
+    color:rgba(255,255,255,.35);
+    letter-spacing:.1em;
+}
+
+.plot-row span:last-child{
+    font-size:10px;
+    color:rgba(255,255,255,.8);
+}
+
+.plot-price{
+    margin-top:18px;
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+}
+
+.price-label{
+    font-size:8px;
+    letter-spacing:.16em;
+    color:rgba(255,255,255,.35);
+}
+
+.price-value{
+    font-family:Manrope,sans-serif;
+    font-size:26px;
+    font-weight:700;
+}
+
+.acquire{
+    width:100%;
+    height:42px;
+    margin-top:18px;
+    border:1px solid #fff;
+    background:#fff;
+    color:#000;
+    font-size:9px;
+    letter-spacing:.18em;
+    cursor:pointer;
+}
+
+.acquire:hover{
+    background:#ddd;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:900px){
-
-    header{
-        padding:0 20px;
-    }
-
-    nav{
-        display:none;
-    }
-
-    .hero-copy{
+    .hero{
         left:25px;
-        width:300px;
+        width:340px;
     }
 
     .hero h1{
-        font-size:62px;
+        font-size:44px;
     }
 
-    .world-switch{
+    .world-panel{
         right:20px;
+        width:230px;
     }
 
-    .planet-info{
-        right:20px;
-        bottom:35px;
+    .brand{
+        left:25px;
     }
 
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .property-row{
-        grid-template-columns:1fr 1fr 1fr;
-        gap:10px;
-        padding:15px 0;
-    }
-
-    .property-row .hide-mobile{
-        display:none;
-    }
-
-    .history-grid{
-        grid-template-columns:1fr;
+    .bottom-bar{
+        left:25px;
+        right:25px;
     }
 }
 
-@media(max-width:600px){
-
+@media(max-width:700px){
     .hero{
-        min-height:700px;
+        top:30%;
+        width:calc(100% - 40px);
     }
 
-    .hero-copy{
-        top:42%;
+    .hero h1{
+        font-size:38px;
     }
 
-    .planet-info{
+    .hero p{
+        font-size:11px;
+    }
+
+    .world-panel{
+        top:auto;
+        bottom:75px;
+        left:20px;
+        right:20px;
+        width:auto;
+        transform:none;
+    }
+
+    .plot-card{
+        left:20px;
+        right:20px;
+        bottom:20px;
+        width:auto;
+    }
+
+    .drag-hint{
         display:none;
     }
 
-    .section{
-        padding:75px 22px;
-    }
-
-    .section-head{
-        display:block;
-    }
-
-    .section-description{
-        margin-top:20px;
-    }
-
-    footer{
-        padding:30px 22px;
-        display:block;
+    .bottom-bar{
+        display:none;
     }
 }
 </style>
@@ -700,599 +500,493 @@ footer{
 
 <body>
 
-<div id="app">
+<div id="space">
 
-<header>
-    <div class="logo">
-        ASTERRA
-        <small>OWN YOUR WORLD</small>
-    </div>
+    <div class="nebula nebula-main"></div>
+    <div class="nebula nebula-secondary"></div>
+    <div class="nebula nebula-far"></div>
+    <div class="nebula nebula-ribbon"></div>
+    <div class="nebula nebula-cloud-a"></div>
+    <div class="nebula nebula-cloud-b"></div>
 
-    <nav>
-        <button onclick="scrollToSection('exchange')">EXCHANGE</button>
-        <button onclick="scrollToSection('history')">HISTORY</button>
-        <button onclick="scrollToSection('about')">ABOUT</button>
-    </nav>
-</header>
+    <canvas id="starfield"></canvas>
 
+    <div id="scene"></div>
 
-<section class="hero">
+    <div class="ui">
 
-    <div id="space"></div>
-    <div id="planetScene"></div>
-
-    <div class="world-switch">
-        <button id="moonButton" class="active">
-            MOON
-        </button>
-
-        <button id="marsButton">
-            MARS
-        </button>
-    </div>
-
-    <div class="hero-copy">
-
-        <div class="kicker">
-            VIRTUAL UNIVERSE
+        <div class="brand">
+            <div class="brand-name">ASTERRA</div>
+            <div class="brand-sub">OWN YOUR WORLD.</div>
         </div>
 
-        <h1 id="heroTitle">
-            ENTER<br>
-            <span>THE MOON</span>
-        </h1>
+        <section class="hero">
+            <div class="kicker">ASTERRA DIGITAL UNIVERSE</div>
 
-        <p id="heroText">
-            Explore a virtual representation of the lunar surface.
-            Discover locations, collect plots and build your own
-            digital world.
-        </p>
+            <h1>ENTER THE<br>UNIVERSE</h1>
 
-        <div class="hero-actions">
-            <button class="primary"
-                    onclick="scrollToSection('exchange')">
-                DISCOVER SURFACE
-            </button>
+            <p>
+                Discover a digital universe built around finite planetary
+                surfaces, unique locations and collectible virtual property.
+            </p>
 
-            <button class="secondary"
-                    onclick="openFirstProperty()">
-                EXPLORE
-            </button>
-        </div>
+            <div class="buttons">
+                <button class="btn primary" id="discoverBtn">
+                    DISCOVER SURFACE
+                </button>
 
-    </div>
+                <button class="btn" id="exploreBtn">
+                    EXPLORE
+                </button>
+            </div>
+        </section>
 
+        <aside class="world-panel">
 
-    <div class="planet-info">
+            <div class="panel-label">SELECT WORLD</div>
 
-        <div class="label">
-            CURRENT WORLD
-        </div>
-
-        <h2 id="planetName">
-            MOON
-        </h2>
-
-        <p id="planetDescription">
-            Lunar surface represented using NASA
-            LOLA topographic data.
-        </p>
-
-        <div class="planet-status">
-            DRAG TO ROTATE · SCROLL TO ZOOM
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="stats">
-
-    <div class="stat">
-        <div class="stat-label">
-            MOON SUPPLY
-        </div>
-
-        <div class="stat-value">
-            300,000
-        </div>
-    </div>
-
-    <div class="stat">
-        <div class="stat-label">
-            MARS SUPPLY
-        </div>
-
-        <div class="stat-value">
-            500,000
-        </div>
-    </div>
-
-    <div class="stat">
-        <div class="stat-label">
-            OWNERSHIP
-        </div>
-
-        <div class="stat-value">
-            DIGITAL
-        </div>
-    </div>
-
-    <div class="stat">
-        <div class="stat-label">
-            EXCHANGE
-        </div>
-
-        <div class="stat-value">
-            ASTERRA
-        </div>
-    </div>
-
-</section>
-
-
-<section class="section" id="exchange">
-
-    <div class="section-head">
-
-        <div>
-            <div class="section-kicker">
-                ASTERRA EXCHANGE
+            <div class="world-tabs">
+                <button class="world-tab active" data-world="moon">MOON</button>
+                <button class="world-tab" data-world="mars">MARS</button>
             </div>
 
-            <h2>Selected Properties</h2>
-        </div>
+            <div class="world-description" id="worldDescription">
+                A finite digital surface inspired by Earth's closest
+                celestial neighbour.
+            </div>
 
-        <div class="section-description">
-            Every property has its own identifier,
-            price and permanent transaction history.
-        </div>
+            <div class="stats">
 
-    </div>
-
-
-    <div class="property-table">
-
-        <div class="property-row header">
-            <div class="cell">Property</div>
-            <div class="cell">Region</div>
-            <div class="cell">Size</div>
-            <div class="cell">Price</div>
-            <div class="cell">Status</div>
-        </div>
-
-
-        <div class="property-row"
-             onclick="openProperty('MRS-001847')">
-
-            <div class="cell">
-                <div class="property-id">
-                    MRS-001847
+                <div class="stat">
+                    <span>SUPPLY</span>
+                    <span id="supply">248,731</span>
                 </div>
 
-                <div class="property-world">
-                    MARS
+                <div class="stat">
+                    <span>AVAILABLE</span>
+                    <span id="available">248,731</span>
+                </div>
+
+                <div class="stat">
+                    <span>BASE PRICE</span>
+                    <span id="basePrice">$11</span>
+                </div>
+
+                <div class="stat">
+                    <span>STATUS</span>
+                    <span>ACTIVE</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <div class="plot-card" id="plotCard">
+
+            <div class="plot-card-header">
+                <div>
+                    <div class="plot-id" id="plotId">PLOT M-00001</div>
+                    <div class="plot-world" id="plotWorld">MOON · SECTOR 01</div>
+                </div>
+
+                <div class="plot-status" id="plotStatus">
+                    AVAILABLE
                 </div>
             </div>
 
-            <div class="cell property-region">
-                Tharsis
-            </div>
+            <div class="plot-data">
 
-            <div class="cell">
-                1.84 km²
-            </div>
-
-            <div class="cell property-price">
-                $249
-            </div>
-
-            <div class="cell property-status">
-                AVAILABLE
-            </div>
-
-        </div>
-
-
-        <div class="property-row"
-             onclick="openProperty('MRS-014521')">
-
-            <div class="cell">
-                <div class="property-id">
-                    MRS-014521
+                <div class="plot-row">
+                    <span>AREA</span>
+                    <span id="plotArea">1.42 km²</span>
                 </div>
 
-                <div class="property-world">
-                    MARS
-                </div>
-            </div>
-
-            <div class="cell property-region">
-                Valles Marineris
-            </div>
-
-            <div class="cell">
-                3.12 km²
-            </div>
-
-            <div class="cell property-price">
-                $399
-            </div>
-
-            <div class="cell property-status">
-                AVAILABLE
-            </div>
-
-        </div>
-
-
-        <div class="property-row"
-             onclick="openProperty('MON-008421')">
-
-            <div class="cell">
-                <div class="property-id">
-                    MON-008421
+                <div class="plot-row">
+                    <span>COORDINATES</span>
+                    <span id="plotCoordinates">12.4° N · 38.2° E</span>
                 </div>
 
-                <div class="property-world">
-                    MOON
-                </div>
-            </div>
-
-            <div class="cell property-region">
-                Mare Imbrium
-            </div>
-
-            <div class="cell">
-                2.41 km²
-            </div>
-
-            <div class="cell property-price">
-                $349
-            </div>
-
-            <div class="cell property-status">
-                AVAILABLE
-            </div>
-
-        </div>
-
-
-        <div class="property-row"
-             onclick="openProperty('MON-021733')">
-
-            <div class="cell">
-                <div class="property-id">
-                    MON-021733
+                <div class="plot-row">
+                    <span>TERRAIN</span>
+                    <span id="plotTerrain">RIDGE</span>
                 </div>
 
-                <div class="property-world">
-                    MOON
+                <div class="plot-row">
+                    <span>RARITY</span>
+                    <span id="plotRarity">STANDARD</span>
                 </div>
+
             </div>
 
-            <div class="cell property-region">
-                South Highlands
+            <div class="plot-price">
+                <div class="price-label">CURRENT PRICE</div>
+                <div class="price-value" id="plotPrice">$37</div>
             </div>
 
-            <div class="cell">
-                4.08 km²
-            </div>
-
-            <div class="cell property-price">
-                $499
-            </div>
-
-            <div class="cell property-status">
-                AVAILABLE
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section" id="history">
-
-    <div class="section-head">
-
-        <div>
-            <div class="section-kicker">
-                TRANSPARENCY
-            </div>
-
-            <h2>Permanent History</h2>
-        </div>
-
-        <div class="section-description">
-            Property history remains attached to the
-            property through future transactions.
-        </div>
-
-    </div>
-
-
-    <div class="history-grid">
-
-        <div class="history-card">
-
-            <h3>MRS-001847</h3>
-
-            <div class="history-line">
-                <span>TX-0001847</span>
-                <span>$249</span>
-            </div>
-
-            <div class="history-line">
-                <span>Buyer</span>
-                <span>AST-7F31</span>
-            </div>
-
-            <div class="history-line">
-                <span>Seller</span>
-                <span>AST-19C2</span>
-            </div>
-
-            <div class="history-line">
-                <span>Status</span>
-                <span>COMPLETED</span>
-            </div>
-
-        </div>
-
-
-        <div class="history-card">
-
-            <h3>MON-008421</h3>
-
-            <div class="history-line">
-                <span>TX-0008421</span>
-                <span>$349</span>
-            </div>
-
-            <div class="history-line">
-                <span>Buyer</span>
-                <span>AST-4A18</span>
-            </div>
-
-            <div class="history-line">
-                <span>Seller</span>
-                <span>AST-88D1</span>
-            </div>
-
-            <div class="history-line">
-                <span>Status</span>
-                <span>COMPLETED</span>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section" id="about">
-
-    <div class="section-head">
-
-        <div>
-            <div class="section-kicker">
-                ASTERRA
-            </div>
-
-            <h2>Own Your World.</h2>
-        </div>
-
-        <div class="section-description">
-            ASTERRA is a virtual universe where
-            digital locations can be discovered,
-            collected and traded.
-        </div>
-
-    </div>
-
-</section>
-
-
-<footer>
-
-    <div>
-        ASTERRA
-    </div>
-
-    <div>
-        VIRTUAL DIGITAL ASSETS · NOT REAL PROPERTY
-    </div>
-
-</footer>
-
-</div>
-
-
-<!-- ================= MODAL ================= -->
-
-<div class="modal" id="propertyModal">
-
-    <div class="modal-box">
-
-        <div class="modal-top">
-
-            <div class="modal-title"
-                 id="modalTitle">
-                PROPERTY
-            </div>
-
-            <button class="close"
-                    onclick="closeModal()">
-                ×
+            <button class="acquire" id="acquireBtn">
+                ACQUIRE PLOT
             </button>
 
         </div>
 
+        <div class="bottom-bar">
 
-        <div class="modal-body">
+            <div class="bottom-left">
+                ASTERRA DIGITAL UNIVERSE · SURFACE SCANNING
+            </div>
 
-            <div class="modal-meta">
+            <div class="bottom-right">
 
-                <div class="meta">
-                    <div class="meta-label">
-                        WORLD
-                    </div>
-
-                    <div class="meta-value"
-                         id="modalWorld">
-                        —
-                    </div>
+                <div class="metric">
+                    WORLD <strong id="worldMetric">MOON</strong>
                 </div>
 
-                <div class="meta">
-                    <div class="meta-label">
-                        SIZE
-                    </div>
-
-                    <div class="meta-value"
-                         id="modalSize">
-                        —
-                    </div>
+                <div class="metric">
+                    MODE <strong>EXPLORATION</strong>
                 </div>
 
-                <div class="meta">
-                    <div class="meta-label">
-                        PRICE
-                    </div>
-
-                    <div class="meta-value"
-                         id="modalPrice">
-                        —
-                    </div>
+                <div class="metric">
+                    NETWORK <strong>ONLINE</strong>
                 </div>
 
             </div>
 
+        </div>
 
-            <div class="history-list">
-
-                <div class="history-item">
-                    <span class="muted">
-                        Transaction
-                    </span>
-
-                    <span id="modalTx">
-                        —
-                    </span>
-                </div>
-
-                <div class="history-item">
-                    <span class="muted">
-                        Previous owner
-                    </span>
-
-                    <span id="modalOwner">
-                        —
-                    </span>
-                </div>
-
-                <div class="history-item">
-                    <span class="muted">
-                        Region
-                    </span>
-
-                    <span id="modalRegion">
-                        —
-                    </span>
-                </div>
-
-            </div>
-
-
-            <button class="buy"
-                    onclick="buyProperty()">
-                DEMO ACQUIRE
-            </button>
-
+        <div class="drag-hint">
+            DRAG TO ROTATE · SCROLL TO ZOOM · CLICK A PLOT
         </div>
 
     </div>
 
-</div>
-
-
-<div class="toast" id="toast">
-    Transaction demo completed.
 </div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
+/* =========================================================
+   STARFIELD
+========================================================= */
 
-/* ============================================================
-   ASTERRA CORE
-   ============================================================ */
+const starCanvas = document.getElementById("starfield");
+const starCtx = starCanvas.getContext("2d", {alpha:true});
 
-const properties = {
+let cosmicStars = [];
+let cosmicDust = [];
 
-    "MRS-001847":{
-        world:"MARS",
-        size:"1.84 km²",
-        price:"$249",
-        region:"Tharsis",
-        tx:"TX-0001847",
-        owner:"AST-19C2"
-    },
+function stellarColor(type, alpha){
 
-    "MRS-014521":{
-        world:"MARS",
-        size:"3.12 km²",
-        price:"$399",
-        region:"Valles Marineris",
-        tx:"TX-0014521",
-        owner:"AST-42F8"
-    },
-
-    "MON-008421":{
-        world:"MOON",
-        size:"2.41 km²",
-        price:"$349",
-        region:"Mare Imbrium",
-        tx:"TX-0008421",
-        owner:"AST-88D1"
-    },
-
-    "MON-021733":{
-        world:"MOON",
-        size:"4.08 km²",
-        price:"$499",
-        region:"South Highlands",
-        tx:"TX-0021733",
-        owner:"AST-31A7"
+    if(type === "cool"){
+        return `rgba(205,220,255,${alpha})`;
     }
 
-};
+    if(type === "warm"){
+        return `rgba(255,240,215,${alpha})`;
+    }
+
+    return `rgba(255,255,255,${alpha})`;
+}
+
+function createCosmicStars(){
+
+    cosmicStars = [];
+
+    const area = window.innerWidth * window.innerHeight;
+
+    let count = Math.floor(area / 5200);
+
+    count = Math.max(360, Math.min(620,count));
+
+    for(let i=0;i<count;i++){
+
+        const r = Math.random();
+
+        let radius;
+        let brightness;
+
+        if(r < .76){
+
+            radius = .35 + Math.random() * .55;
+            brightness = .25 + Math.random() * .45;
+
+        }else if(r < .96){
+
+            radius = .65 + Math.random() * .75;
+            brightness = .42 + Math.random() * .42;
+
+        }else{
+
+            radius = 1.2 + Math.random() * 1.6;
+            brightness = .65 + Math.random() * .35;
+        }
+
+        cosmicStars.push({
+
+            x:Math.random(),
+            y:Math.random(),
+
+            radius,
+            brightness,
+
+            phase:Math.random()*Math.PI*2,
+            speed:.15 + Math.random()*.8,
+
+            pulse:.15 + Math.random()*.35,
+
+            type:
+                Math.random() < .12
+                ? "cool"
+                : Math.random() < .06
+                ? "warm"
+                : "white",
+
+            depth:.15 + Math.random()*.85,
+
+            halo:Math.random() < .025,
+
+            diffraction:Math.random() < .009
+        });
+    }
+}
+
+function createCosmicDust(){
+
+    cosmicDust = [];
+
+    for(let i=0;i<85;i++){
+
+        cosmicDust.push({
+
+            x:Math.random(),
+            y:Math.random(),
+
+            radius:.15 + Math.random()*.45,
+
+            alpha:.012 + Math.random()*.035,
+
+            phase:Math.random()*Math.PI*2
+        });
+    }
+}
+
+function resizeStarfield(){
+
+    const dpr = Math.min(window.devicePixelRatio || 1,2);
+
+    starCanvas.width = window.innerWidth * dpr;
+    starCanvas.height = window.innerHeight * dpr;
+
+    starCanvas.style.width = window.innerWidth + "px";
+    starCanvas.style.height = window.innerHeight + "px";
+
+    starCtx.setTransform(dpr,0,0,dpr,0,0);
+
+    createCosmicStars();
+    createCosmicDust();
+}
+
+function drawStar(star,time){
+
+    const twinkle =
+        1 +
+        Math.sin(time * star.speed + star.phase) *
+        star.pulse;
+
+    const x =
+        star.x * window.innerWidth +
+        Math.sin(time * .00002 + star.phase) * star.depth * .35;
+
+    const y =
+        star.y * window.innerHeight +
+        Math.cos(time * .000017 + star.phase) * star.depth * .25;
+
+    const alpha =
+        Math.max(.05,
+        Math.min(1,
+        star.brightness * twinkle));
+
+    starCtx.beginPath();
+
+    starCtx.arc(
+        x,
+        y,
+        star.radius,
+        0,
+        Math.PI*2
+    );
+
+    starCtx.fillStyle =
+        stellarColor(star.type,alpha);
+
+    starCtx.fill();
+
+    if(star.halo){
+
+        const gradient =
+            starCtx.createRadialGradient(
+                x,y,0,
+                x,y,star.radius*6
+            );
+
+        gradient.addColorStop(
+            0,
+            stellarColor(star.type,alpha*.18)
+        );
+
+        gradient.addColorStop(
+            1,
+            stellarColor(star.type,0)
+        );
+
+        starCtx.beginPath();
+
+        starCtx.arc(
+            x,
+            y,
+            star.radius*6,
+            0,
+            Math.PI*2
+        );
+
+        starCtx.fillStyle = gradient;
+        starCtx.fill();
+    }
+
+    if(star.diffraction){
+
+        starCtx.strokeStyle =
+            stellarColor(star.type,alpha*.15);
+
+        starCtx.lineWidth=.5;
+
+        starCtx.beginPath();
+
+        starCtx.moveTo(x-star.radius*5,y);
+        starCtx.lineTo(x+star.radius*5,y);
+
+        starCtx.moveTo(x,y-star.radius*5);
+        starCtx.lineTo(x,y+star.radius*5);
+
+        starCtx.stroke();
+    }
+}
+
+function drawDust(time){
+
+    for(const dust of cosmicDust){
+
+        const pulse =
+            .5 +
+            Math.sin(time*.15+dust.phase)*.5;
+
+        const x =
+            dust.x*window.innerWidth;
+
+        const y =
+            dust.y*window.innerHeight;
+
+        starCtx.beginPath();
+
+        starCtx.arc(
+            x,
+            y,
+            dust.radius,
+            0,
+            Math.PI*2
+        );
+
+        starCtx.fillStyle =
+            `rgba(180,195,215,${dust.alpha*pulse})`;
+
+        starCtx.fill();
+    }
+}
+
+function renderStarfield(now){
+
+    const time = now*.001;
+
+    starCtx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    const haze =
+        starCtx.createRadialGradient(
+            window.innerWidth*.7,
+            window.innerHeight*.45,
+            0,
+            window.innerWidth*.7,
+            window.innerHeight*.45,
+            window.innerWidth*.75
+        );
+
+    haze.addColorStop(
+        0,
+        "rgba(70,90,120,.025)"
+    );
+
+    haze.addColorStop(
+        .55,
+        "rgba(30,45,65,.012)"
+    );
+
+    haze.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+    starCtx.fillStyle = haze;
+
+    starCtx.fillRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    drawDust(time);
+
+    for(const star of cosmicStars){
+        drawStar(star,time);
+    }
+
+    requestAnimationFrame(renderStarfield);
+}
+
+resizeStarfield();
+window.addEventListener("resize",resizeStarfield);
+requestAnimationFrame(renderStarfield);
 
 
-/* ============================================================
+/* =========================================================
    THREE.JS
-   ============================================================ */
+========================================================= */
 
-const scene =
-    new THREE.Scene();
+const scene = new THREE.Scene();
 
 const camera =
     new THREE.PerspectiveCamera(
         42,
-        window.innerWidth /
-        window.innerHeight,
+        window.innerWidth/window.innerHeight,
         .1,
         3000
     );
 
-camera.position.z = 520;
+let zoomDistance = 520;
+let targetZoom = 520;
 
+const MIN_ZOOM = 475;
+const MAX_ZOOM = 760;
+
+camera.position.set(
+    0,
+    0,
+    zoomDistance
+);
 
 const renderer =
     new THREE.WebGLRenderer({
@@ -1300,40 +994,33 @@ const renderer =
         alpha:true
     });
 
+renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio || 1,2)
+);
+
 renderer.setSize(
     window.innerWidth,
     window.innerHeight
 );
 
-renderer.setPixelRatio(
-    Math.min(
-        window.devicePixelRatio,
-        1.6
-    )
-);
-
-renderer.outputEncoding =
-    THREE.sRGBEncoding;
+renderer.outputEncoding = THREE.sRGBEncoding;
 
 document
-    .getElementById("planetScene")
-    .appendChild(
-        renderer.domElement
-    );
+    .getElementById("scene")
+    .appendChild(renderer.domElement);
 
 
-/* ============================================================
-   LIGHT
-   ============================================================ */
+/* =========================================================
+   LIGHTING
+========================================================= */
 
 const ambient =
     new THREE.AmbientLight(
         0xffffff,
-        .55
+        1.15
     );
 
 scene.add(ambient);
-
 
 const keyLight =
     new THREE.DirectionalLight(
@@ -1342,208 +1029,391 @@ const keyLight =
     );
 
 keyLight.position.set(
-    -250,
-    180,
-    400
+    -220,
+    120,
+    260
 );
 
 scene.add(keyLight);
 
-
-const rimLight =
+const fillLight =
     new THREE.DirectionalLight(
-        0x667a99,
-        .3
+        0x8da9d5,
+        .42
     );
 
-rimLight.position.set(
+fillLight.position.set(
     250,
-    -100,
-    -300
+    -80,
+    120
 );
 
-scene.add(rimLight);
+scene.add(fillLight);
 
 
-/* ============================================================
-   STAR FIELD
-   ============================================================ */
+/* =========================================================
+   WORLD
+========================================================= */
 
-const starGeometry =
-    new THREE.BufferGeometry();
-
-const starCount = 460;
-
-const positions =
-    new Float32Array(
-        starCount * 3
-    );
-
-for(
-    let i = 0;
-    i < starCount;
-    i++
-){
-
-    const radius =
-        800 +
-        Math.random() * 650;
-
-    const theta =
-        Math.random() *
-        Math.PI * 2;
-
-    const phi =
-        Math.acos(
-            2 * Math.random() - 1
-        );
-
-    positions[i * 3] =
-        radius *
-        Math.sin(phi) *
-        Math.cos(theta);
-
-    positions[i * 3 + 1] =
-        radius *
-        Math.cos(phi);
-
-    positions[i * 3 + 2] =
-        radius *
-        Math.sin(phi) *
-        Math.sin(theta);
-}
-
-starGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(
-        positions,
-        3
-    )
-);
-
-const starMaterial =
-    new THREE.PointsMaterial({
-        color:0xffffff,
-        size:1.45,
-        transparent:true,
-        opacity:.58,
-        sizeAttenuation:true
-    });
-
-const starField =
-    new THREE.Points(
-        starGeometry,
-        starMaterial
-    );
-
-scene.add(starField);
-
-
-/* ============================================================
-   PLANET
-   ============================================================ */
-
-const planetGroup =
-    new THREE.Group();
+const planetGroup = new THREE.Group();
 
 scene.add(planetGroup);
 
-let planet = null;
+let currentWorld = "moon";
 
-
-/* ============================================================
-   NASA SOURCES
-   ============================================================ */
+let planet;
 
 /*
-   Moon:
-   NASA / GSFC / LRO / LOLA
-   Cylindrical global elevation map.
-*/
+ * Existing visual textures.
+ * These remain the main color textures.
+ */
+let moonTexture =
+    "https://threejs.org/examples/textures/planets/moon_1024.jpg";
 
-const MOON_NASA =
-"https://svs.gsfc.nasa.gov/vis/a000000/a004000/a004014/LDEM_16.0centered.0centered.jpg";
+let marsTexture =
+    "https://threejs.org/examples/textures/planets/mars_1k_color.jpg";
 
 
 /*
-   Mars:
-   NASA / MGS / MOLA
-   Global cylindrical topography map.
-*/
+ * NASA GLOBAL TERRAIN / ELEVATION MAPS
+ *
+ * Moon:
+ * NASA LOLA global elevation.
+ *
+ * Mars:
+ * NASA MOLA global topography.
+ *
+ * These are used as bump maps so the existing
+ * ASTERRA visual style remains intact while
+ * real NASA elevation data adds surface relief.
+ */
 
-const MARS_NASA =
-"https://marsoweb.nas.nasa.gov/globalData/images/fullscale/MOLA_cylin.jpg";
+const moonTerrainTexture =
+    "https://svs.gsfc.nasa.gov/vis/a030000/a030300/a030326/ldem_3_8bit.jpg";
+
+const marsTerrainTexture =
+    "https://svs.gsfc.nasa.gov/vis/a004000/a004400/a004436/mars_cyl_topo2.jpg";
 
 
 const textureLoader =
     new THREE.TextureLoader();
 
-textureLoader.setCrossOrigin(
-    "anonymous"
-);
+textureLoader.crossOrigin = "anonymous";
 
 
-/* ============================================================
-   PLANET FALLBACK
-   ============================================================ */
+/* =========================================================
+   PLOTS
+========================================================= */
 
-function makeBasePlanet(color){
+const plots = [];
 
-    const geometry =
-        new THREE.SphereGeometry(
-            155,
-            160,
-            96
-        );
+let selectedPlot = null;
 
-    const material =
-        new THREE.MeshStandardMaterial({
-            color:color,
-            roughness:.92,
-            metalness:0
-        });
+const PLOT_COUNT = 240;
 
-    return new THREE.Mesh(
-        geometry,
-        material
+const plotGroup = new THREE.Group();
+
+planetGroup.add(plotGroup);
+
+const plotGeometry =
+    new THREE.SphereGeometry(
+        2.6,
+        8,
+        8
+    );
+
+const availableMaterial =
+    new THREE.MeshBasicMaterial({
+        color:0xffffff,
+        transparent:true,
+        opacity:.72
+    });
+
+const soldMaterial =
+    new THREE.MeshBasicMaterial({
+        color:0x777777,
+        transparent:true,
+        opacity:.32
+    });
+
+const selectedMaterial =
+    new THREE.MeshBasicMaterial({
+        color:0xffffff,
+        transparent:true,
+        opacity:1
+    });
+
+function randomTerrain(){
+
+    const terrains = [
+        "RIDGE",
+        "CRATER",
+        "PLAIN",
+        "VALLEY",
+        "HIGHLAND",
+        "BASIN",
+        "CANYON"
+    ];
+
+    return terrains[
+        Math.floor(Math.random()*terrains.length)
+    ];
+}
+
+function randomRarity(){
+
+    const r = Math.random();
+
+    if(r < .70) return "STANDARD";
+    if(r < .90) return "RARE";
+    if(r < .98) return "PREMIUM";
+
+    return "SPECIAL";
+}
+
+function randomArea(rarity){
+
+    if(rarity === "SPECIAL")
+        return 3 + Math.random()*3;
+
+    if(rarity === "PREMIUM")
+        return 2 + Math.random()*2;
+
+    if(rarity === "RARE")
+        return 1 + Math.random()*1.5;
+
+    return .5 + Math.random()*1.2;
+}
+
+function calculatePrice(
+    world,
+    terrain,
+    rarity,
+    index
+){
+
+    let base =
+        world === "moon"
+        ? 11
+        : 21;
+
+    let multiplier = 1;
+
+    if(terrain === "RIDGE")
+        multiplier += .55;
+
+    if(terrain === "CRATER")
+        multiplier += .35;
+
+    if(terrain === "CANYON")
+        multiplier += .7;
+
+    if(terrain === "HIGHLAND")
+        multiplier += .3;
+
+    if(terrain === "VALLEY")
+        multiplier += .18;
+
+    if(rarity === "RARE")
+        multiplier += .65;
+
+    if(rarity === "PREMIUM")
+        multiplier += 1.35;
+
+    if(rarity === "SPECIAL")
+        multiplier += 3.2;
+
+    multiplier +=
+        (Math.sin(index*13.17)*.18);
+
+    return Math.max(
+        base,
+        Math.round(
+            base * multiplier
+        )
     );
 }
 
+function latLonToVector3(
+    lat,
+    lon,
+    radius
+){
 
-/* ============================================================
-   REMOVE PLANET
-   ============================================================ */
+    const phi =
+        (90-lat)*Math.PI/180;
 
-function clearPlanet(){
+    const theta =
+        (lon+180)*Math.PI/180;
+
+    return new THREE.Vector3(
+        -radius *
+        Math.sin(phi) *
+        Math.cos(theta),
+
+        radius *
+        Math.cos(phi),
+
+        radius *
+        Math.sin(phi) *
+        Math.sin(theta)
+    );
+}
+
+function createPlots(){
+
+    while(plotGroup.children.length){
+
+        plotGroup.remove(
+            plotGroup.children[0]
+        );
+    }
+
+    plots.length = 0;
+
+    const radius = 145;
+
+    for(let i=0;i<PLOT_COUNT;i++){
+
+        /*
+         * Fibonacci distribution gives us
+         * an even global distribution.
+         */
+
+        const goldenAngle =
+            Math.PI *
+            (3-Math.sqrt(5));
+
+        const y =
+            1 -
+            (i/(PLOT_COUNT-1))*2;
+
+        const radiusAt =
+            Math.sqrt(
+                1-y*y
+            );
+
+        const theta =
+            goldenAngle*i;
+
+        const x =
+            Math.cos(theta)*radiusAt;
+
+        const z =
+            Math.sin(theta)*radiusAt;
+
+        const lat =
+            Math.asin(y)*180/Math.PI;
+
+        const lon =
+            Math.atan2(z,x)*180/Math.PI;
+
+        const terrain =
+            randomTerrain();
+
+        const rarity =
+            randomRarity();
+
+        const area =
+            randomArea(rarity);
+
+        const price =
+            calculatePrice(
+                currentWorld,
+                terrain,
+                rarity,
+                i
+            );
+
+        /*
+         * Around 12% sold in demo.
+         */
+
+        const sold =
+            Math.random() < .12;
+
+        const mesh =
+            new THREE.Mesh(
+                plotGeometry,
+                sold
+                ? soldMaterial.clone()
+                : availableMaterial.clone()
+            );
+
+        const direction =
+            new THREE.Vector3(
+                x,
+                y,
+                z
+            ).normalize();
+
+        mesh.position.copy(
+            direction.multiplyScalar(
+                radius+2.2
+            )
+        );
+
+        mesh.userData = {
+
+            index:i,
+
+            id:
+                currentWorld === "moon"
+                ? `M-${String(i+1).padStart(5,"0")}`
+                : `R-${String(i+1).padStart(5,"0")}`,
+
+            world:
+                currentWorld,
+
+            lat,
+            lon,
+
+            area,
+
+            price,
+
+            terrain,
+
+            rarity,
+
+            sold
+        };
+
+        plotGroup.add(mesh);
+
+        plots.push(mesh);
+    }
+}
+
+
+/* =========================================================
+   PLANET
+========================================================= */
+
+function disposeTexture(texture){
+
+    if(texture){
+        texture.dispose();
+    }
+}
+
+function disposePlanet(){
 
     if(!planet)
         return;
 
-    planetGroup.remove(
-        planet
-    );
+    planetGroup.remove(planet);
 
-    if(
-        planet.geometry
-    ){
+    if(planet.geometry)
         planet.geometry.dispose();
-    }
 
-    if(
-        planet.material
-    ){
+    if(planet.material){
 
-        if(
-            planet.material.map
-        ){
-            planet.material.map.dispose();
-        }
+        if(planet.material.map)
+            disposeTexture(planet.material.map);
 
-        if(
-            planet.material.bumpMap
-        ){
-            planet.material.bumpMap.dispose();
-        }
+        if(planet.material.bumpMap)
+            disposeTexture(planet.material.bumpMap);
 
         planet.material.dispose();
     }
@@ -1552,376 +1422,328 @@ function clearPlanet(){
 }
 
 
-/* ============================================================
-   CREATE MOON
-   ============================================================ */
+function createPlanet(){
 
-function createMoon(){
+    /*
+     * Remove previous planet safely.
+     */
+    disposePlanet();
 
-    clearPlanet();
 
-    planet =
-        makeBasePlanet(
-            0x969696
+    /*
+     * Base surface texture.
+     */
+    const surfaceUrl =
+        currentWorld === "moon"
+        ? moonTexture
+        : marsTexture;
+
+
+    /*
+     * NASA terrain texture.
+     */
+    const terrainUrl =
+        currentWorld === "moon"
+        ? moonTerrainTexture
+        : marsTerrainTexture;
+
+
+    /*
+     * High-resolution sphere geometry.
+     * The existing 145 radius and 96x96
+     * subdivision are preserved.
+     */
+    const geometry =
+        new THREE.SphereGeometry(
+            145,
+            128,
+            128
         );
 
-    planet.rotation.y =
-        -.55;
 
-    planetGroup.add(
-        planet
+    /*
+     * Start with the existing ASTERRA
+     * visual surface.
+     */
+    const material =
+        new THREE.MeshStandardMaterial({
+
+            roughness:
+                currentWorld === "moon"
+                ? .96
+                : .88,
+
+            metalness:0
+        });
+
+
+    /*
+     * Create planet immediately.
+     *
+     * This is important:
+     * NASA assets load asynchronously and can
+     * never prevent the planet from appearing.
+     */
+    planet =
+        new THREE.Mesh(
+            geometry,
+            material
+        );
+
+    planetGroup.add(planet);
+
+
+    /*
+     * Keep the original ASTERRA orientation.
+     */
+    planetGroup.rotation.set(
+        0.05,
+        -0.55,
+        0
     );
 
 
     /*
-       NASA LOLA topography is used
-       as a bump texture.
-
-       This keeps the sphere stable even
-       if the remote NASA file fails.
-    */
-
+     * Load the existing color texture.
+     */
     textureLoader.load(
 
-        MOON_NASA,
+        surfaceUrl,
 
         function(texture){
-
-            texture.anisotropy =
-                Math.min(
-                    renderer
-                        .capabilities
-                        .getMaxAnisotropy(),
-                    4
-                );
-
-            planet.material.bumpMap =
-                texture;
-
-            planet.material.bumpScale =
-                .72;
-
-            planet.material.roughness =
-                .96;
-
-            planet.material.needsUpdate =
-                true;
-        },
-
-        undefined,
-
-        function(){
-
-            console.log(
-                "NASA Moon texture unavailable."
-            );
-
-        }
-    );
-}
-
-
-/* ============================================================
-   CREATE MARS
-   ============================================================ */
-
-function createMars(){
-
-    clearPlanet();
-
-    planet =
-        makeBasePlanet(
-            0x8e422b
-        );
-
-    planet.rotation.y =
-        .48;
-
-    planetGroup.add(
-        planet
-    );
-
-
-    textureLoader.load(
-
-        MARS_NASA,
-
-        function(texture){
-
-            texture.anisotropy =
-                Math.min(
-                    renderer
-                        .capabilities
-                        .getMaxAnisotropy(),
-                    4
-                );
 
             /*
-               MOLA map is used only as
-               relief information.
+             * Only apply it if this planet is
+             * still the active planet.
+             */
+            if(!planet)
+                return;
 
-               We keep the Mars surface
-               itself red/brown.
-            */
+            texture.encoding =
+                THREE.sRGBEncoding;
 
-            planet.material.bumpMap =
-                texture;
+            texture.anisotropy =
+                renderer.capabilities.getMaxAnisotropy();
 
-            planet.material.bumpScale =
-                .95;
-
-            planet.material.roughness =
-                .94;
-
-            planet.material.needsUpdate =
-                true;
+            material.map = texture;
+            material.needsUpdate = true;
         },
 
         undefined,
 
         function(){
 
-            console.log(
-                "NASA Mars texture unavailable."
+            /*
+             * If the original texture fails,
+             * the planet remains visible.
+             */
+            console.warn(
+                "ASTERRA: surface texture failed to load."
             );
-
         }
     );
+
+
+    /*
+     * Load NASA global elevation.
+     *
+     * The map becomes a real surface-height
+     * relief layer rather than replacing the
+     * existing ASTERRA planet appearance.
+     */
+    const planetReference = planet;
+
+    textureLoader.load(
+
+        terrainUrl,
+
+        function(terrainTexture){
+
+            /*
+             * Do not apply an old Moon terrain
+             * texture to a newly selected Mars,
+             * or vice versa.
+             */
+            if(
+                !planet ||
+                planet !== planetReference
+            ){
+
+                terrainTexture.dispose();
+                return;
+            }
+
+
+            /*
+             * NASA elevation map.
+             */
+            terrainTexture.wrapS =
+                THREE.RepeatWrapping;
+
+            terrainTexture.wrapT =
+                THREE.ClampToEdgeWrapping;
+
+
+            /*
+             * Use NASA terrain as physical-looking
+             * bump relief.
+             *
+             * Moon gets stronger relief because
+             * lunar craters are visually prominent.
+             */
+            material.bumpMap =
+                terrainTexture;
+
+            material.bumpScale =
+                currentWorld === "moon"
+                ? 2.15
+                : 1.75;
+
+            material.needsUpdate = true;
+
+        },
+
+        undefined,
+
+        function(){
+
+            /*
+             * NASA failure must NEVER break
+             * the ASTERRA planet.
+             */
+            console.warn(
+                "ASTERRA: NASA terrain texture failed to load."
+            );
+        }
+    );
+
+
+    /*
+     * Preserve plot system.
+     */
+    createPlots();
 }
 
-
-/* ============================================================
-   WORLD SWITCH
-   ============================================================ */
-
-const moonButton =
-    document.getElementById(
-        "moonButton"
-    );
-
-const marsButton =
-    document.getElementById(
-        "marsButton"
-    );
+createPlanet();
 
 
-const heroTitle =
-    document.getElementById(
-        "heroTitle"
-    );
+/* =========================================================
+   SAFE PLANET POSITION
+========================================================= */
 
-const heroText =
-    document.getElementById(
-        "heroText"
-    );
+function updatePlanetSafePosition(){
 
-const planetName =
-    document.getElementById(
-        "planetName"
-    );
+    const mobile =
+        window.innerWidth < 900;
 
-const planetDescription =
-    document.getElementById(
-        "planetDescription"
-    );
+    if(mobile){
 
-
-function setWorld(world){
-
-    if(world === "moon"){
-
-        moonButton.classList.add(
-            "active"
-        );
-
-        marsButton.classList.remove(
-            "active"
-        );
-
-        heroTitle.innerHTML =
-            "ENTER<br><span>THE MOON</span>";
-
-        heroText.innerHTML =
-            "Explore a virtual representation of the lunar surface. Discover locations, collect plots and build your own digital world.";
-
-        planetName.innerHTML =
-            "MOON";
-
-        planetDescription.innerHTML =
-            "Lunar terrain represented using NASA LRO LOLA global topography.";
-
-        createMoon();
+        planetGroup.position.x = 0;
+        planetGroup.position.y = -85;
 
     }else{
 
-        marsButton.classList.add(
-            "active"
-        );
-
-        moonButton.classList.remove(
-            "active"
-        );
-
-        heroTitle.innerHTML =
-            "ENTER<br><span>MARS</span>";
-
-        heroText.innerHTML =
-            "Explore a virtual representation of Mars. Discover terrain, collect plots and build your own digital world.";
-
-        planetName.innerHTML =
-            "MARS";
-
-        planetDescription.innerHTML =
-            "Martian terrain represented using NASA Mars Global Surveyor MOLA topography.";
-
-        createMars();
+        planetGroup.position.x = 105;
+        planetGroup.position.y = 0;
     }
 }
 
-
-moonButton.onclick =
-    function(){
-        setWorld("moon");
-    };
+updatePlanetSafePosition();
 
 
-marsButton.onclick =
-    function(){
-        setWorld("mars");
-    };
-
-
-/* ============================================================
+/* =========================================================
    ROTATION
-   ============================================================ */
+========================================================= */
 
 let dragging = false;
 
-let lastX = 0;
-let lastY = 0;
+let previousX = 0;
+let previousY = 0;
 
-let velocityX = 0;
-let velocityY = 0;
-
+let rotationVelocityX = 0;
+let rotationVelocityY = 0;
 
 renderer.domElement.addEventListener(
     "pointerdown",
-    function(e){
+    e => {
 
         dragging = true;
 
-        lastX =
-            e.clientX;
+        previousX = e.clientX;
+        previousY = e.clientY;
 
-        lastY =
-            e.clientY;
-
-        velocityX = 0;
-        velocityY = 0;
-
-        renderer.domElement
-            .setPointerCapture(
-                e.pointerId
-            );
+        renderer.domElement.setPointerCapture(
+            e.pointerId
+        );
     }
 );
-
 
 renderer.domElement.addEventListener(
     "pointermove",
-    function(e){
+    e => {
 
-        if(
-            !dragging ||
-            !planet
-        ){
+        if(!dragging)
             return;
-        }
 
         const dx =
-            e.clientX -
-            lastX;
+            e.clientX-previousX;
 
         const dy =
-            e.clientY -
-            lastY;
+            e.clientY-previousY;
 
-        lastX =
-            e.clientX;
+        rotationVelocityY =
+            dx*.004;
 
-        lastY =
-            e.clientY;
+        rotationVelocityX =
+            dy*.004;
 
-        velocityX =
-            dx * .006;
+        planetGroup.rotation.y +=
+            dx*.004;
 
-        velocityY =
-            dy * .004;
+        planetGroup.rotation.x +=
+            dy*.004;
 
-        planet.rotation.y +=
-            velocityX;
-
-        planet.rotation.x +=
-            velocityY;
-
-        const maxTilt =
-            Math.PI * .42;
-
-        planet.rotation.x =
+        planetGroup.rotation.x =
             Math.max(
-                -maxTilt,
+                -1.15,
                 Math.min(
-                    maxTilt,
-                    planet.rotation.x
+                    1.15,
+                    planetGroup.rotation.x
                 )
             );
+
+        previousX = e.clientX;
+        previousY = e.clientY;
     }
 );
 
-
 renderer.domElement.addEventListener(
     "pointerup",
-    function(e){
+    e => {
 
         dragging = false;
 
         try{
-            renderer.domElement
-                .releasePointerCapture(
-                    e.pointerId
-                );
-        }catch(error){}
+            renderer.domElement.releasePointerCapture(
+                e.pointerId
+            );
+        }catch(err){}
     }
 );
 
 
-renderer.domElement.addEventListener(
-    "pointercancel",
-    function(){
-        dragging = false;
-    }
-);
-
-
-/* ============================================================
+/* =========================================================
    ZOOM
-   ============================================================ */
-
-let zoomDistance = 520;
-let targetZoom = 520;
-
-const MIN_ZOOM = 400;
-const MAX_ZOOM = 760;
-
+========================================================= */
 
 renderer.domElement.addEventListener(
     "wheel",
-    function(e){
+    e => {
 
         e.preventDefault();
 
         targetZoom +=
-            e.deltaY * .35;
+            e.deltaY*.35;
 
         targetZoom =
             Math.max(
@@ -1933,17 +1755,353 @@ renderer.domElement.addEventListener(
             );
 
     },
-    {
-        passive:false
+    {passive:false}
+);
+
+
+/* =========================================================
+   RAYCASTING
+========================================================= */
+
+const raycaster =
+    new THREE.Raycaster();
+
+const mouse =
+    new THREE.Vector2();
+
+function pointerToNDC(e){
+
+    const rect =
+        renderer.domElement.getBoundingClientRect();
+
+    mouse.x =
+        ((e.clientX-rect.left) /
+        rect.width)*2-1;
+
+    mouse.y =
+        -((e.clientY-rect.top) /
+        rect.height)*2+1;
+}
+
+renderer.domElement.addEventListener(
+    "click",
+    e => {
+
+        pointerToNDC(e);
+
+        raycaster.setFromCamera(
+            mouse,
+            camera
+        );
+
+        const hits =
+            raycaster.intersectObjects(
+                plotGroup.children,
+                false
+            );
+
+        if(!hits.length)
+            return;
+
+        const plot =
+            hits[0].object;
+
+        selectPlot(plot);
     }
 );
 
 
-/* ============================================================
-   ANIMATION
-   ============================================================ */
+/* =========================================================
+   PLOT SELECTION
+========================================================= */
 
-let animationTime = 0;
+const plotCard =
+    document.getElementById("plotCard");
+
+const plotId =
+    document.getElementById("plotId");
+
+const plotWorld =
+    document.getElementById("plotWorld");
+
+const plotStatus =
+    document.getElementById("plotStatus");
+
+const plotArea =
+    document.getElementById("plotArea");
+
+const plotCoordinates =
+    document.getElementById("plotCoordinates");
+
+const plotTerrain =
+    document.getElementById("plotTerrain");
+
+const plotRarity =
+    document.getElementById("plotRarity");
+
+const plotPrice =
+    document.getElementById("plotPrice");
+
+const acquireBtn =
+    document.getElementById("acquireBtn");
+
+function selectPlot(mesh){
+
+    if(selectedPlot){
+
+        selectedPlot.scale.set(
+            1,
+            1,
+            1
+        );
+
+        selectedPlot.material =
+            selectedPlot.userData.sold
+            ? soldMaterial.clone()
+            : availableMaterial.clone();
+    }
+
+    selectedPlot = mesh;
+
+    selectedPlot.scale.set(
+        1.8,
+        1.8,
+        1.8
+    );
+
+    selectedPlot.material =
+        selectedMaterial.clone();
+
+    const data =
+        mesh.userData;
+
+    plotId.textContent =
+        `PLOT ${data.id}`;
+
+    plotWorld.textContent =
+        `${data.world.toUpperCase()} · SECTOR ${String(
+            Math.floor(data.index/30)+1
+        ).padStart(2,"0")}`;
+
+    plotStatus.textContent =
+        data.sold
+        ? "SOLD"
+        : "AVAILABLE";
+
+    plotStatus.style.color =
+        data.sold
+        ? "rgba(255,255,255,.4)"
+        : "#7fd39b";
+
+    plotArea.textContent =
+        `${data.area.toFixed(2)} km²`;
+
+    plotCoordinates.textContent =
+        `${data.lat.toFixed(1)}° · ${data.lon.toFixed(1)}°`;
+
+    plotTerrain.textContent =
+        data.terrain;
+
+    plotRarity.textContent =
+        data.rarity;
+
+    plotPrice.textContent =
+        `$${data.price}`;
+
+    acquireBtn.disabled =
+        data.sold;
+
+    acquireBtn.style.opacity =
+        data.sold ? ".35" : "1";
+
+    acquireBtn.textContent =
+        data.sold
+        ? "PLOT SOLD"
+        : "ACQUIRE PLOT";
+
+    plotCard.classList.add(
+        "visible"
+    );
+}
+
+
+/* =========================================================
+   ACQUIRE DEMO
+========================================================= */
+
+acquireBtn.addEventListener(
+    "click",
+    () => {
+
+        if(!selectedPlot)
+            return;
+
+        if(selectedPlot.userData.sold)
+            return;
+
+        acquireBtn.textContent =
+            "RESERVING...";
+
+        setTimeout(
+            () => {
+
+                acquireBtn.textContent =
+                    "DEMO — CHECKOUT NEXT";
+
+            },
+            650
+        );
+    }
+);
+
+
+/* =========================================================
+   WORLD DATA
+========================================================= */
+
+const worldData = {
+
+    moon:{
+        description:
+            "A finite digital surface inspired by Earth's closest celestial neighbour.",
+
+        supply:"248,731",
+
+        available:"248,731",
+
+        base:"$11"
+    },
+
+    mars:{
+        description:
+            "A finite digital surface inspired by the red planet and its iconic terrain.",
+
+        supply:"591,427",
+
+        available:"591,427",
+
+        base:"$21"
+    }
+};
+
+const worldDescription =
+    document.getElementById(
+        "worldDescription"
+    );
+
+const supply =
+    document.getElementById("supply");
+
+const available =
+    document.getElementById("available");
+
+const basePrice =
+    document.getElementById("basePrice");
+
+const worldMetric =
+    document.getElementById("worldMetric");
+
+document
+    .querySelectorAll(".world-tab")
+    .forEach(tab => {
+
+        tab.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(
+                        ".world-tab"
+                    )
+                    .forEach(t =>
+                        t.classList.remove(
+                            "active"
+                        )
+                    );
+
+                tab.classList.add(
+                    "active"
+                );
+
+                currentWorld =
+                    tab.dataset.world;
+
+                const data =
+                    worldData[
+                        currentWorld
+                    ];
+
+                worldDescription.textContent =
+                    data.description;
+
+                supply.textContent =
+                    data.supply;
+
+                available.textContent =
+                    data.available;
+
+                basePrice.textContent =
+                    data.base;
+
+                worldMetric.textContent =
+                    currentWorld.toUpperCase();
+
+                plotCard.classList.remove(
+                    "visible"
+                );
+
+                selectedPlot = null;
+
+                createPlanet();
+            }
+        );
+    });
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+document
+    .getElementById("discoverBtn")
+    .addEventListener(
+        "click",
+        () => {
+
+            /*
+             * Put the camera into
+             * exploration mode.
+             */
+
+            targetZoom = 500;
+
+            document
+                .querySelector(
+                    ".world-panel"
+                )
+                .scrollIntoView({
+                    behavior:"smooth"
+                });
+        }
+    );
+
+document
+    .getElementById("exploreBtn")
+    .addEventListener(
+        "click",
+        () => {
+
+            targetZoom = 475;
+        }
+    );
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+const clock =
+    new THREE.Clock();
 
 function animate(){
 
@@ -1951,44 +2109,37 @@ function animate(){
         animate
     );
 
-    animationTime += .01;
-
+    /*
+     * Smooth zoom.
+     * This is the same mechanism
+     * used in the working version.
+     */
 
     zoomDistance +=
-        (
-            targetZoom -
-            zoomDistance
-        ) * .08;
+        (targetZoom-zoomDistance)*.08;
 
     camera.position.z =
         zoomDistance;
 
+    /*
+     * Gentle automatic movement
+     * when the user isn't dragging.
+     */
 
-    if(
-        planet &&
-        !dragging
-    ){
+    if(!dragging){
 
-        planet.rotation.y +=
-            .00065;
+        planetGroup.rotation.y +=
+            .00045;
 
-        planet.rotation.y +=
-            velocityX * .18;
+        planetGroup.rotation.x +=
+            rotationVelocityX*.03;
 
-        planet.rotation.x +=
-            velocityY * .18;
+        planetGroup.rotation.y +=
+            rotationVelocityY*.03;
 
-        velocityX *= .94;
-        velocityY *= .94;
+        rotationVelocityX *= .94;
+        rotationVelocityY *= .94;
     }
-
-
-    starMaterial.opacity =
-        .53 +
-        Math.sin(
-            animationTime * .65
-        ) * .07;
-
 
     renderer.render(
         scene,
@@ -1996,14 +2147,16 @@ function animate(){
     );
 }
 
+animate();
 
-/* ============================================================
+
+/* =========================================================
    RESIZE
-   ============================================================ */
+========================================================= */
 
 window.addEventListener(
     "resize",
-    function(){
+    () => {
 
         camera.aspect =
             window.innerWidth /
@@ -2015,177 +2168,17 @@ window.addEventListener(
             window.innerWidth,
             window.innerHeight
         );
-    }
-);
 
-
-/* ============================================================
-   PROPERTY MODAL
-   ============================================================ */
-
-let selectedProperty =
-    null;
-
-
-function openProperty(id){
-
-    const data =
-        properties[id];
-
-    if(!data)
-        return;
-
-    selectedProperty =
-        id;
-
-    document.getElementById(
-        "modalTitle"
-    ).innerHTML =
-        id;
-
-    document.getElementById(
-        "modalWorld"
-    ).innerHTML =
-        data.world;
-
-    document.getElementById(
-        "modalSize"
-    ).innerHTML =
-        data.size;
-
-    document.getElementById(
-        "modalPrice"
-    ).innerHTML =
-        data.price;
-
-    document.getElementById(
-        "modalTx"
-    ).innerHTML =
-        data.tx;
-
-    document.getElementById(
-        "modalOwner"
-    ).innerHTML =
-        data.owner;
-
-    document.getElementById(
-        "modalRegion"
-    ).innerHTML =
-        data.region;
-
-    document.getElementById(
-        "propertyModal"
-    ).classList.add(
-        "show"
-    );
-}
-
-
-function openFirstProperty(){
-
-    openProperty(
-        "MON-008421"
-    );
-}
-
-
-function closeModal(){
-
-    document.getElementById(
-        "propertyModal"
-    ).classList.remove(
-        "show"
-    );
-}
-
-
-function buyProperty(){
-
-    closeModal();
-
-    showToast(
-        "Demo transaction completed."
-    );
-}
-
-
-function showToast(message){
-
-    const toast =
-        document.getElementById(
-            "toast"
+        renderer.setPixelRatio(
+            Math.min(
+                window.devicePixelRatio || 1,
+                2
+            )
         );
 
-    toast.innerHTML =
-        message;
-
-    toast.classList.add(
-        "show"
-    );
-
-    setTimeout(
-        function(){
-
-            toast.classList.remove(
-                "show"
-            );
-
-        },
-        2200
-    );
-}
-
-
-document.getElementById(
-    "propertyModal"
-).addEventListener(
-    "click",
-    function(e){
-
-        if(
-            e.target === this
-        ){
-            closeModal();
-        }
+        updatePlanetSafePosition();
     }
 );
-
-
-/* ============================================================
-   SCROLL
-   ============================================================ */
-
-function scrollToSection(id){
-
-    const element =
-        document.getElementById(
-            id
-        );
-
-    if(!element)
-        return;
-
-    element.scrollIntoView({
-        behavior:"smooth"
-    });
-}
-
-
-/* ============================================================
-   START
-   ============================================================ */
-
-/*
-   IMPORTANT:
-   Planet is created BEFORE animation starts.
-   No plot group, texture or external object
-   is required for initial rendering.
-*/
-
-setWorld("moon");
-
-animate();
-
 </script>
 
 </body>
