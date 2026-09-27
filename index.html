@@ -1712,6 +1712,16 @@ scene.add(
 
 function createPlanetTexture(world){
 
+    /*
+       =====================================================
+       ONLY MOON TEXTURE IS CHANGED
+       =====================================================
+
+       NASA LROC WAC global lunar color mosaic.
+       Everything else remains exactly as before.
+    */
+
+
     const canvas =
         document.createElement("canvas");
 
@@ -1721,208 +1731,228 @@ function createPlanetTexture(world){
     const ctx =
         canvas.getContext("2d");
 
-    const image =
-        ctx.createImageData(
-            canvas.width,
-            canvas.height
-        );
 
-    const data =
-        image.data;
+    /*
+       Mars remains exactly the original
+       procedural texture.
+    */
 
+    if(world!=="Moon"){
 
-    for(
-        let y=0;
-        y<canvas.height;
-        y++
-    ){
+        const image =
+            ctx.createImageData(
+                canvas.width,
+                canvas.height
+            );
+
+        const data =
+            image.data;
+
 
         for(
-            let x=0;
-            x<canvas.width;
-            x++
+            let y=0;
+            y<canvas.height;
+            y++
         ){
 
-            const nx =
-                x/canvas.width;
+            for(
+                let x=0;
+                x<canvas.width;
+                x++
+            ){
 
-            const ny =
-                y/canvas.height;
+                const nx =
+                    x/canvas.width;
 
-
-            const n =
-                Math.sin(
-                    nx*31+
-                    Math.sin(ny*8)*3
-                )
-                +
-                Math.sin(
-                    nx*67+
-                    ny*19
-                )*.45
-                +
-                Math.sin(
-                    nx*121-
-                    ny*43
-                )*.22
-                +
-                Math.sin(
-                    (nx+ny)*210
-                )*.08;
+                const ny =
+                    y/canvas.height;
 
 
-            let r,g,b;
+                const n =
+                    Math.sin(
+                        nx*31+
+                        Math.sin(ny*8)*3
+                    )
+                    +
+                    Math.sin(
+                        nx*67+
+                        ny*19
+                    )*.45
+                    +
+                    Math.sin(
+                        nx*121-
+                        ny*43
+                    )*.22
+                    +
+                    Math.sin(
+                        (nx+ny)*210
+                    )*.08;
 
-
-            if(world==="Moon"){
-
-                const base =
-                    116+n*15;
-
-                r=base;
-                g=base;
-                b=base+5;
-
-            }else{
 
                 const base =
                     105+n*17;
 
-                r=base+25;
-                g=base-7;
-                b=base-18;
+
+                const r=base+25;
+                const g=base-7;
+                const b=base-18;
+
+
+                const index =
+                    (y*canvas.width+x)*4;
+
+
+                data[index] =
+                    Math.max(
+                        0,
+                        Math.min(
+                            255,
+                            r
+                        )
+                    );
+
+                data[index+1] =
+                    Math.max(
+                        0,
+                        Math.min(
+                            255,
+                            g
+                        )
+                    );
+
+                data[index+2] =
+                    Math.max(
+                        0,
+                        Math.min(
+                            255,
+                            b
+                        )
+                    );
+
+                data[index+3]=255;
             }
-
-
-            const index =
-                (y*canvas.width+x)*4;
-
-
-            data[index] =
-                Math.max(
-                    0,
-                    Math.min(
-                        255,
-                        r
-                    )
-                );
-
-            data[index+1] =
-                Math.max(
-                    0,
-                    Math.min(
-                        255,
-                        g
-                    )
-                );
-
-            data[index+2] =
-                Math.max(
-                    0,
-                    Math.min(
-                        255,
-                        b
-                    )
-                );
-
-            data[index+3]=255;
         }
-    }
 
 
-    ctx.putImageData(
-        image,
-        0,
-        0
-    );
+        ctx.putImageData(
+            image,
+            0,
+            0
+        );
 
 
-    const craterCount =
-        world==="Moon"
-        ? 170
-        : 105;
+        const craterCount=105;
 
 
-    for(
-        let i=0;
-        i<craterCount;
-        i++
-    ){
+        for(
+            let i=0;
+            i<craterCount;
+            i++
+        ){
 
-        const x =
-            Math.random()*
-            canvas.width;
+            const x =
+                Math.random()*
+                canvas.width;
 
-        const y =
-            Math.random()*
-            canvas.height;
+            const y =
+                Math.random()*
+                canvas.height;
 
-        const radius =
-            randomBetween(
-                world==="Moon"
-                ? 2
-                : 3,
+            const radius =
+                randomBetween(
+                    3,
+                    14
+                );
 
-                world==="Moon"
-                ? 18
-                : 14
+
+            const gradient =
+                ctx.createRadialGradient(
+                    x-radius*.25,
+                    y-radius*.25,
+                    radius*.15,
+                    x,
+                    y,
+                    radius
+                );
+
+
+            gradient.addColorStop(
+                0,
+                "rgba(20,20,22,.25)"
+            );
+
+            gradient.addColorStop(
+                .65,
+                "rgba(40,40,44,.16)"
+            );
+
+            gradient.addColorStop(
+                1,
+                "rgba(255,255,255,0)"
             );
 
 
-        const gradient =
-            ctx.createRadialGradient(
-                x-radius*.25,
-                y-radius*.25,
-                radius*.15,
+            ctx.fillStyle=gradient;
+
+            ctx.beginPath();
+
+            ctx.arc(
                 x,
                 y,
-                radius
+                radius,
+                0,
+                Math.PI*2
             );
 
-
-        gradient.addColorStop(
-            0,
-            "rgba(20,20,22,.25)"
-        );
-
-        gradient.addColorStop(
-            .65,
-            "rgba(40,40,44,.16)"
-        );
-
-        gradient.addColorStop(
-            1,
-            "rgba(255,255,255,0)"
-        );
+            ctx.fill();
+        }
 
 
-        ctx.fillStyle=gradient;
+        const texture =
+            new THREE.CanvasTexture(
+                canvas
+            );
 
-        ctx.beginPath();
+        texture.anisotropy =
+            renderer
+                .capabilities
+                .getMaxAnisotropy();
 
-        ctx.arc(
-            x,
-            y,
-            radius,
-            0,
-            Math.PI*2
-        );
-
-        ctx.fill();
+        return texture;
     }
 
 
-    const texture =
-        new THREE.CanvasTexture(
-            canvas
+    /*
+       NASA 2025 LROC WAC global color map.
+
+       This is the actual lunar geographic surface map,
+       not a procedural recreation.
+    */
+
+    const moonTexture =
+        new THREE.TextureLoader().load(
+            "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg"
         );
 
-    texture.anisotropy =
+
+    moonTexture.encoding =
+        THREE.sRGBEncoding;
+
+
+    moonTexture.anisotropy =
         renderer
             .capabilities
             .getMaxAnisotropy();
 
-    return texture;
+
+    moonTexture.wrapS =
+        THREE.ClampToEdgeWrapping;
+
+    moonTexture.wrapT =
+        THREE.ClampToEdgeWrapping;
+
+
+    return moonTexture;
 }
 
 
