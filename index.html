@@ -16,7 +16,7 @@ html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:#020306;
+    background:#010205;
     color:#fff;
     font-family:Arial,Helvetica,sans-serif;
 }
@@ -25,38 +25,51 @@ body{
     cursor:default;
 }
 
-/* =====================================================
-   MAIN SPACE
-===================================================== */
-
 #app{
     position:relative;
     width:100vw;
     height:100vh;
     overflow:hidden;
-
     background:
         radial-gradient(
-            circle at 72% 48%,
-            rgba(100,105,120,.075),
-            transparent 30%
+            circle at 74% 48%,
+            rgba(95,105,125,.09),
+            transparent 32%
         ),
         radial-gradient(
-            circle at 20% 75%,
-            rgba(70,75,95,.045),
-            transparent 35%
+            circle at 25% 80%,
+            rgba(70,75,100,.05),
+            transparent 32%
         ),
-        #020306;
+        #010205;
 }
 
 /* =====================================================
-   BACKGROUND STARS
+   FULL SCREEN 3D SPACE
+===================================================== */
+
+#space{
+    position:absolute;
+    inset:0;
+    z-index:1;
+}
+
+#spaceCanvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+/* =====================================================
+   STARFIELD
 ===================================================== */
 
 #starfield{
     position:absolute;
     inset:0;
-    z-index:1;
+    z-index:2;
     pointer-events:none;
 }
 
@@ -66,58 +79,32 @@ body{
     background:#fff;
     width:1px;
     height:1px;
-    opacity:.3;
+    opacity:.32;
     box-shadow:0 0 3px rgba(255,255,255,.35);
     animation:twinkle 6s ease-in-out infinite;
 }
 
 .star.small{
-    opacity:.16;
+    opacity:.14;
 }
 
 .star.medium{
     width:1.5px;
     height:1.5px;
-    opacity:.45;
-    box-shadow:0 0 5px rgba(255,255,255,.4);
+    opacity:.46;
+    box-shadow:0 0 5px rgba(255,255,255,.42);
 }
 
 .star.large{
     width:2.5px;
     height:2.5px;
     opacity:.8;
-    box-shadow:0 0 9px rgba(255,255,255,.7);
+    box-shadow:0 0 10px rgba(255,255,255,.7);
 }
 
 @keyframes twinkle{
-    0%,100%{
-        opacity:.15;
-    }
-
-    50%{
-        opacity:.7;
-    }
-}
-
-/* subtle space haze */
-
-.spaceGlow{
-    position:absolute;
-    z-index:2;
-    pointer-events:none;
-    width:70vw;
-    height:70vw;
-    right:-15vw;
-    top:10vh;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(125,130,145,.045),
-            transparent 66%
-        );
-
-    filter:blur(30px);
+    0%,100%{opacity:.15}
+    50%{opacity:.72}
 }
 
 /* =====================================================
@@ -138,241 +125,168 @@ body{
     height:3px;
     border-radius:50%;
     background:#fff;
-
     box-shadow:
         0 0 5px #fff,
-        0 0 13px rgba(255,255,255,.85),
-        0 0 25px rgba(190,210,255,.35);
-
+        0 0 13px rgba(255,255,255,.9),
+        0 0 25px rgba(190,210,255,.4);
     opacity:0;
-
-    transform:rotate(-28deg);
 }
 
 .comet:before{
     content:"";
     position:absolute;
-
-    width:105px;
+    width:120px;
     height:1px;
-
     right:2px;
     top:1px;
-
-    transform-origin:right center;
-
-    background:
-        linear-gradient(
-            to left,
-            rgba(255,255,255,.85),
-            rgba(210,220,255,.28),
-            transparent
-        );
-
+    background:linear-gradient(
+        to left,
+        rgba(255,255,255,.9),
+        rgba(215,225,255,.28),
+        transparent
+    );
     filter:blur(.4px);
 }
 
 .comet:after{
     content:"";
     position:absolute;
-
-    width:42px;
-    height:4px;
-
+    width:45px;
+    height:5px;
     right:8px;
     top:-1px;
-
-    background:
-        linear-gradient(
-            to left,
-            rgba(255,255,255,.35),
-            transparent
-        );
-
+    background:linear-gradient(
+        to left,
+        rgba(255,255,255,.35),
+        transparent
+    );
     filter:blur(4px);
 }
 
 .comet.c1{
     left:-8%;
-    top:19%;
-    animation:flyComet1 13s linear infinite;
+    top:18%;
+    transform:rotate(-27deg);
+    animation:comet1 14s linear infinite;
 }
 
 .comet.c2{
-    left:-12%;
-    top:67%;
+    left:-10%;
+    top:68%;
     transform:rotate(-20deg) scale(.65);
-    animation:flyComet2 18s linear infinite;
-    animation-delay:5s;
+    animation:comet2 19s linear infinite;
+    animation-delay:6s;
 }
 
 .comet.c3{
-    left:38%;
+    left:42%;
     top:-8%;
     transform:rotate(55deg) scale(.45);
-    animation:flyComet3 20s linear infinite;
-    animation-delay:9s;
+    animation:comet3 22s linear infinite;
+    animation-delay:10s;
 }
 
 .comet.c4{
-    left:76%;
-    top:-10%;
-    transform:rotate(112deg) scale(.75);
-    animation:flyComet4 23s linear infinite;
-    animation-delay:14s;
+    left:80%;
+    top:-8%;
+    transform:rotate(110deg) scale(.7);
+    animation:comet4 25s linear infinite;
+    animation-delay:15s;
 }
 
-.comet.c5{
-    left:-8%;
-    top:42%;
-    transform:rotate(-18deg) scale(.5);
-    animation:flyComet5 25s linear infinite;
-    animation-delay:17s;
-}
-
-@keyframes flyComet1{
+@keyframes comet1{
     0%{
-        transform:translate(-100px,0) rotate(-28deg);
+        transform:translate(-100px,0) rotate(-27deg);
         opacity:0;
     }
-
-    8%{
-        opacity:.8;
-    }
-
-    50%{
-        opacity:.65;
-    }
-
+    8%{opacity:.8}
+    55%{opacity:.65}
     100%{
-        transform:translate(120vw,55vh) rotate(-28deg);
+        transform:translate(125vw,55vh) rotate(-27deg);
         opacity:0;
     }
 }
 
-@keyframes flyComet2{
+@keyframes comet2{
     0%{
         transform:translate(-100px,0) rotate(-20deg) scale(.65);
         opacity:0;
     }
-
-    10%{
-        opacity:.65;
-    }
-
+    10%{opacity:.65}
     100%{
-        transform:translate(120vw,-20vh) rotate(-20deg) scale(.65);
+        transform:translate(125vw,-18vh) rotate(-20deg) scale(.65);
         opacity:0;
     }
 }
 
-@keyframes flyComet3{
+@keyframes comet3{
     0%{
         transform:translate(0,-100px) rotate(55deg) scale(.45);
         opacity:0;
     }
-
-    12%{
-        opacity:.7;
-    }
-
+    12%{opacity:.7}
     100%{
         transform:translate(-45vw,120vh) rotate(55deg) scale(.45);
         opacity:0;
     }
 }
 
-@keyframes flyComet4{
+@keyframes comet4{
     0%{
-        transform:translate(0,-100px) rotate(112deg) scale(.75);
+        transform:translate(0,-100px) rotate(110deg) scale(.7);
         opacity:0;
     }
-
-    12%{
-        opacity:.65;
-    }
-
+    12%{opacity:.65}
     100%{
-        transform:translate(-80vw,120vh) rotate(112deg) scale(.75);
-        opacity:0;
-    }
-}
-
-@keyframes flyComet5{
-    0%{
-        transform:translate(-100px,0) rotate(-18deg) scale(.5);
-        opacity:0;
-    }
-
-    10%{
-        opacity:.55;
-    }
-
-    100%{
-        transform:translate(120vw,28vh) rotate(-18deg) scale(.5);
+        transform:translate(-80vw,120vh) rotate(110deg) scale(.7);
         opacity:0;
     }
 }
 
 /* =====================================================
-   PLANET CONTAINER
+   PLANET ATMOSPHERIC GLOW
 ===================================================== */
 
-#planet{
+.planetHalo{
     position:absolute;
+    z-index:3;
+    pointer-events:none;
 
-    z-index:5;
+    width:620px;
+    height:620px;
 
-    right:-6vw;
+    right:7vw;
     top:50%;
 
-    width:min(57vw,820px);
-    height:min(57vw,820px);
-
     transform:translateY(-50%);
-}
-
-#planetCanvas{
-    display:block;
-    width:100%;
-    height:100%;
-}
-
-.planetGlow{
-    position:absolute;
-    inset:3%;
 
     border-radius:50%;
 
-    pointer-events:none;
+    background:radial-gradient(
+        circle,
+        transparent 58%,
+        rgba(120,130,150,.045) 68%,
+        rgba(120,130,150,.025) 74%,
+        transparent 80%
+    );
 
-    background:
-        radial-gradient(
-            circle,
-            transparent 55%,
-            rgba(150,155,165,.025) 68%,
-            rgba(120,130,150,.045) 73%,
-            transparent 80%
-        );
-
-    filter:blur(7px);
+    filter:blur(12px);
 }
 
 /* =====================================================
-   TOP BAR
+   TOP BAR — VERSION 2
 ===================================================== */
 
 .topbar{
     position:absolute;
     z-index:20;
-
     left:42px;
     right:42px;
     top:30px;
 
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
 
     pointer-events:none;
 }
@@ -381,24 +295,27 @@ body{
     font-size:18px;
     letter-spacing:7px;
     font-weight:600;
+    color:#fff;
 }
 
 .logo span{
-    color:rgba(255,255,255,.32);
+    color:rgba(255,255,255,.35);
     font-size:9px;
     letter-spacing:3px;
     margin-left:9px;
+    vertical-align:middle;
 }
 
 .status{
     display:flex;
     align-items:center;
-    gap:8px;
+    gap:9px;
 
-    color:rgba(255,255,255,.35);
-
-    font-size:8px;
+    font-size:9px;
     letter-spacing:2.5px;
+    color:rgba(255,255,255,.38);
+
+    text-transform:uppercase;
 }
 
 .statusDot{
@@ -406,19 +323,18 @@ body{
     height:5px;
     border-radius:50%;
 
-    background:#dbe5ff;
+    background:#dce5ff;
 
     box-shadow:
         0 0 10px rgba(210,225,255,.8);
 }
 
 /* =====================================================
-   LEFT HERO
+   HERO — VERSION 2
 ===================================================== */
 
 .hero{
     position:absolute;
-
     z-index:15;
 
     left:7vw;
@@ -434,46 +350,46 @@ body{
     align-items:center;
     gap:12px;
 
-    margin-bottom:22px;
-
     color:rgba(255,255,255,.38);
 
     font-size:9px;
     letter-spacing:3px;
+
+    margin-bottom:24px;
 }
 
 .eyebrowLine{
     width:30px;
     height:1px;
 
-    background:rgba(255,255,255,.3);
+    background:rgba(255,255,255,.35);
 }
 
 h1{
-    font-size:clamp(52px,5vw,82px);
+    font-size:clamp(52px,5vw,84px);
     line-height:.92;
 
     font-weight:300;
 
     letter-spacing:-4px;
 
-    margin-bottom:27px;
+    margin-bottom:28px;
 }
 
 h1 strong{
-    font-weight:600;
     display:block;
+    font-weight:600;
 }
 
 .description{
-    width:325px;
+    width:310px;
 
-    color:rgba(255,255,255,.45);
+    color:rgba(255,255,255,.47);
 
     font-size:13px;
     line-height:1.8;
 
-    margin-bottom:32px;
+    margin-bottom:34px;
 }
 
 .discoverBtn{
@@ -485,7 +401,7 @@ h1 strong{
 
     padding:0 20px;
 
-    border:1px solid rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.16);
 
     background:rgba(255,255,255,.025);
 
@@ -498,12 +414,12 @@ h1 strong{
 
     transition:.3s ease;
 
-    backdrop-filter:blur(8px);
+    backdrop-filter:blur(10px);
 }
 
 .discoverBtn:hover{
     background:rgba(255,255,255,.09);
-    border-color:rgba(255,255,255,.32);
+    border-color:rgba(255,255,255,.35);
 }
 
 .discoverArrow{
@@ -517,11 +433,10 @@ h1 strong{
 
 .planetInfo{
     position:absolute;
-
     z-index:12;
 
     right:7vw;
-    top:20%;
+    top:22%;
 
     text-align:right;
 
@@ -529,36 +444,38 @@ h1 strong{
 }
 
 .planetInfo .world{
-    font-size:8px;
+    font-size:9px;
     letter-spacing:4px;
 
-    color:rgba(255,255,255,.32);
+    color:rgba(255,255,255,.38);
+
+    text-transform:uppercase;
 
     margin-bottom:8px;
 }
 
 .planetInfo h2{
-    font-size:25px;
+    font-size:26px;
     font-weight:300;
+
     letter-spacing:5px;
 }
 
-.coordinates{
-    margin-top:9px;
+.planetInfo .coordinates{
+    margin-top:10px;
 
     font-size:8px;
     letter-spacing:2px;
 
-    color:rgba(255,255,255,.23);
+    color:rgba(255,255,255,.25);
 }
 
 /* =====================================================
-   WORLD SELECTOR
+   WORLD SELECTOR — VERSION 2
 ===================================================== */
 
 .worldSelector{
     position:absolute;
-
     z-index:20;
 
     left:7vw;
@@ -576,10 +493,14 @@ h1 strong{
     font-size:8px;
     letter-spacing:2.5px;
 
-    color:rgba(255,255,255,.27);
+    color:rgba(255,255,255,.28);
+
+    text-transform:uppercase;
 }
 
 .worldBtn{
+    position:relative;
+
     height:38px;
 
     padding:0 18px;
@@ -600,7 +521,7 @@ h1 strong{
 
 .worldBtn:hover{
     color:#fff;
-    border-color:rgba(255,255,255,.27);
+    border-color:rgba(255,255,255,.28);
 }
 
 .worldBtn.active{
@@ -613,13 +534,26 @@ h1 strong{
         rgba(255,255,255,.065);
 }
 
+.worldBtn.active:before{
+    content:"";
+
+    position:absolute;
+
+    left:10px;
+    right:10px;
+    bottom:-1px;
+
+    height:1px;
+
+    background:#fff;
+}
+
 /* =====================================================
-   HUD
+   HUD — VERSION 2
 ===================================================== */
 
 .hud{
     position:absolute;
-
     z-index:15;
 
     right:5vw;
@@ -632,23 +566,25 @@ h1 strong{
 }
 
 .hudItem{
-    min-width:78px;
+    min-width:80px;
 }
 
 .hudLabel{
     font-size:7px;
     letter-spacing:2px;
 
-    color:rgba(255,255,255,.22);
+    color:rgba(255,255,255,.24);
 
     margin-bottom:7px;
+
+    text-transform:uppercase;
 }
 
 .hudValue{
-    font-size:10px;
+    font-size:11px;
     letter-spacing:1px;
 
-    color:rgba(255,255,255,.58);
+    color:rgba(255,255,255,.6);
 }
 
 /* =====================================================
@@ -657,18 +593,21 @@ h1 strong{
 
 .propertyCard{
     position:absolute;
-
     z-index:30;
 
     right:4vw;
     top:50%;
+
+    transform:
+        translateY(-50%)
+        translateX(30px);
 
     width:255px;
 
     padding:21px;
 
     background:
-        rgba(5,7,11,.78);
+        rgba(5,7,11,.74);
 
     border:
         1px solid rgba(255,255,255,.13);
@@ -679,11 +618,7 @@ h1 strong{
 
     pointer-events:none;
 
-    transform:
-        translateY(-50%)
-        translateX(25px);
-
-    transition:.4s ease;
+    transition:.45s ease;
 }
 
 .propertyCard.visible{
@@ -699,13 +634,18 @@ h1 strong{
 .propertyCardTop{
     display:flex;
     justify-content:space-between;
+    align-items:flex-start;
+
+    margin-bottom:18px;
 }
 
 .propertyCard small{
     font-size:7px;
     letter-spacing:2px;
 
-    color:rgba(255,255,255,.27);
+    color:rgba(255,255,255,.28);
+
+    text-transform:uppercase;
 }
 
 .propertyCard h3{
@@ -713,11 +653,13 @@ h1 strong{
 
     font-size:15px;
     font-weight:400;
+
     letter-spacing:1px;
 }
 
 .closeCard{
     font-size:17px;
+
     color:rgba(255,255,255,.4);
 
     cursor:pointer;
@@ -753,13 +695,14 @@ h1 strong{
 
 .price{
     font-size:24px!important;
+
     color:#fff!important;
+
     font-weight:300;
 }
 
 .acquireBtn{
     width:100%;
-
     height:39px;
 
     margin-top:9px;
@@ -771,7 +714,6 @@ h1 strong{
     color:#050609;
 
     font-size:8px;
-
     font-weight:600;
 
     letter-spacing:2px;
@@ -780,7 +722,7 @@ h1 strong{
 }
 
 .acquireBtn:hover{
-    background:#e1e5eb;
+    background:#dfe4ec;
 }
 
 /* =====================================================
@@ -789,18 +731,19 @@ h1 strong{
 
 .scan{
     position:absolute;
-
     z-index:15;
 
     right:5vw;
-    bottom:110px;
+    bottom:105px;
 
-    width:180px;
+    width:185px;
 
-    color:rgba(255,255,255,.25);
+    color:rgba(255,255,255,.32);
 
-    font-size:7px;
+    font-size:8px;
     letter-spacing:2px;
+
+    text-transform:uppercase;
 
     text-align:right;
 
@@ -810,9 +753,9 @@ h1 strong{
 .scanTop{
     display:flex;
     justify-content:flex-end;
-    gap:8px;
+    gap:10px;
 
-    margin-bottom:8px;
+    margin-bottom:9px;
 }
 
 .scanDot{
@@ -823,21 +766,20 @@ h1 strong{
 
     background:#fff;
 
-    opacity:.5;
+    opacity:.6;
 
-    box-shadow:
-        0 0 8px #fff;
+    box-shadow:0 0 8px #fff;
 }
 
 .scanLine{
-    height:1px;
     width:100%;
+    height:1px;
 
     background:
         linear-gradient(
             to right,
             transparent,
-            rgba(255,255,255,.16)
+            rgba(255,255,255,.18)
         );
 }
 
@@ -847,24 +789,15 @@ h1 strong{
 
 @media(max-width:900px){
 
-    #planet{
-        right:-28vw;
-
-        width:90vw;
-        height:90vw;
-
-        top:55%;
-    }
-
     .hero{
         left:28px;
-        top:35%;
+        top:34%;
 
-        width:320px;
+        width:330px;
     }
 
     h1{
-        font-size:50px;
+        font-size:52px;
     }
 
     .description{
@@ -896,13 +829,13 @@ h1 strong{
     }
 
     .propertyCard{
-        left:20px;
         right:20px;
+        left:20px;
 
         width:auto;
 
-        top:auto;
         bottom:20px;
+        top:auto;
 
         transform:
             translateY(20px);
@@ -920,10 +853,13 @@ h1 strong{
 
 <div id="app">
 
-    <!-- STAR FIELD -->
-    <div id="starfield"></div>
+    <!-- FULL SCREEN THREE.JS -->
+    <div id="space">
+        <canvas id="spaceCanvas"></canvas>
+    </div>
 
-    <div class="spaceGlow"></div>
+    <!-- CSS STARS -->
+    <div id="starfield"></div>
 
     <!-- COMETS -->
     <div class="cometLayer">
@@ -931,8 +867,10 @@ h1 strong{
         <div class="comet c2"></div>
         <div class="comet c3"></div>
         <div class="comet c4"></div>
-        <div class="comet c5"></div>
     </div>
+
+    <!-- PLANET HALO -->
+    <div class="planetHalo"></div>
 
     <!-- TOP -->
     <div class="topbar">
@@ -977,15 +915,6 @@ h1 strong{
 
     </section>
 
-    <!-- PLANET -->
-    <div id="planet">
-
-        <canvas id="planetCanvas"></canvas>
-
-        <div class="planetGlow"></div>
-
-    </div>
-
     <!-- PLANET INFO -->
     <div class="planetInfo">
 
@@ -1006,7 +935,7 @@ h1 strong{
 
     </div>
 
-    <!-- PROPERTY -->
+    <!-- PROPERTY CARD -->
     <div
         class="propertyCard"
         id="propertyCard"
@@ -1015,6 +944,7 @@ h1 strong{
         <div class="propertyCardTop">
 
             <div>
+
                 <small>
                     SELECTED PLOT
                 </small>
@@ -1022,6 +952,7 @@ h1 strong{
                 <h3 id="plotId">
                     MRS-084291
                 </h3>
+
             </div>
 
             <div
@@ -1102,6 +1033,7 @@ h1 strong{
     <div class="hud">
 
         <div class="hudItem">
+
             <div class="hudLabel">
                 SUPPLY
             </div>
@@ -1112,9 +1044,11 @@ h1 strong{
             >
                 1,220,000
             </div>
+
         </div>
 
         <div class="hudItem">
+
             <div class="hudLabel">
                 AVAILABLE
             </div>
@@ -1125,9 +1059,11 @@ h1 strong{
             >
                 1,220,000
             </div>
+
         </div>
 
         <div class="hudItem">
+
             <div class="hudLabel">
                 BASE PRICE
             </div>
@@ -1138,6 +1074,7 @@ h1 strong{
             >
                 $199
             </div>
+
         </div>
 
     </div>
@@ -1157,26 +1094,17 @@ h1 strong{
 </div>
 
 
-<!-- THREE.JS -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
 
 <script>
 
 /* =====================================================
-   ASTERRA V4
+   ASTERRA — FULL SCREEN PLANET ENGINE
 ===================================================== */
 
 const canvas =
     document.getElementById(
-        "planetCanvas"
-    );
-
-const container =
-    document.getElementById(
-        "planet"
+        "spaceCanvas"
     );
 
 let currentWorld = "mars";
@@ -1184,6 +1112,11 @@ let currentWorld = "mars";
 let planetGroup = null;
 let planetMesh = null;
 let markerGroup = null;
+
+
+/* =====================================================
+   SCENE
+===================================================== */
 
 const scene =
     new THREE.Scene();
@@ -1196,16 +1129,16 @@ const scene =
 const camera =
     new THREE.PerspectiveCamera(
         42,
-        container.clientWidth /
-        container.clientHeight,
+        window.innerWidth /
+        window.innerHeight,
         0.1,
-        3000
+        4000
     );
 
 camera.position.set(
     0,
     10,
-    405
+    520
 );
 
 
@@ -1221,7 +1154,6 @@ const renderer =
         antialias:true,
 
         alpha:true
-
     });
 
 renderer.setPixelRatio(
@@ -1232,8 +1164,8 @@ renderer.setPixelRatio(
 );
 
 renderer.setSize(
-    container.clientWidth,
-    container.clientHeight
+    window.innerWidth,
+    window.innerHeight
 );
 
 renderer.outputEncoding =
@@ -1241,12 +1173,12 @@ renderer.outputEncoding =
 
 
 /* =====================================================
-   LIGHTING
+   LIGHT
 ===================================================== */
 
 const ambient =
     new THREE.AmbientLight(
-        0x777777,
+        0x777b82,
         .42
     );
 
@@ -1256,13 +1188,13 @@ scene.add(ambient);
 const sun =
     new THREE.DirectionalLight(
         0xffffff,
-        1.65
+        1.75
     );
 
 sun.position.set(
-    -240,
-    170,
-    320
+    -300,
+    190,
+    380
 );
 
 scene.add(sun);
@@ -1270,24 +1202,24 @@ scene.add(sun);
 
 const rim =
     new THREE.DirectionalLight(
-        0x66738c,
-        .30
+        0x71809a,
+        .35
     );
 
 rim.position.set(
-    240,
+    280,
     -100,
-    -220
+    -250
 );
 
 scene.add(rim);
 
 
 /* =====================================================
-   STARS
+   3D STAR LAYERS
 ===================================================== */
 
-function createStarLayer(
+function createStars(
     count,
     spread,
     size,
@@ -1358,43 +1290,48 @@ function createStarLayer(
     );
 }
 
-const stars1 =
-    createStarLayer(
-        1900,
-        2300,
-        .48,
-        .34
+
+const starsBack =
+    createStars(
+        2200,
+        2600,
+        .45,
+        .33
     );
 
-const stars2 =
-    createStarLayer(
-        550,
-        1550,
-        .85,
+
+const starsMiddle =
+    createStars(
+        700,
+        1700,
+        .82,
         .43
     );
 
-const stars3 =
-    createStarLayer(
-        90,
-        1100,
+
+const starsFront =
+    createStars(
+        110,
+        1200,
         1.65,
-        .70
+        .72
     );
 
-scene.add(stars1);
-scene.add(stars2);
-scene.add(stars3);
+
+scene.add(starsBack);
+scene.add(starsMiddle);
+scene.add(starsFront);
 
 
 /* =====================================================
-   CSS STARS
+   CSS STARFIELD
 ===================================================== */
 
 const starfield =
     document.getElementById(
         "starfield"
     );
+
 
 for(
     let i=0;
@@ -1410,44 +1347,57 @@ for(
     star.className =
         "star";
 
+
     const r =
         Math.random();
 
-    if(r < .25){
+
+    if(
+        r < .22
+    ){
 
         star.classList.add(
             "small"
         );
 
-    }else if(r > .91){
+    }else if(
+        r > .92
+    ){
 
         star.classList.add(
             "large"
         );
 
-    }else if(r > .68){
+    }else if(
+        r > .67
+    ){
 
         star.classList.add(
             "medium"
         );
     }
 
+
     star.style.left =
         Math.random()*100 +
         "%";
+
 
     star.style.top =
         Math.random()*100 +
         "%";
 
+
     star.style.animationDelay =
         Math.random()*7 +
         "s";
+
 
     star.style.animationDuration =
         4 +
         Math.random()*8 +
         "s";
+
 
     starfield.appendChild(
         star
@@ -1456,12 +1406,14 @@ for(
 
 
 /* =====================================================
-   PLANET CREATION
+   PLANET
 ===================================================== */
 
 function createPlanet(world){
 
-    if(planetGroup){
+    if(
+        planetGroup
+    ){
 
         scene.remove(
             planetGroup
@@ -1471,6 +1423,23 @@ function createPlanet(world){
 
     planetGroup =
         new THREE.Group();
+
+
+    /*
+       IMPORTANT:
+
+       Planet is positioned in the
+       3D world, not inside a small
+       canvas.
+
+       This is what fixes the clipping.
+    */
+
+    planetGroup.position.set(
+        105,
+        0,
+        0
+    );
 
 
     planetGroup.rotation.z =
@@ -1490,12 +1459,9 @@ function createPlanet(world){
     );
 
 
-    const radius = 130;
+    const radius =
+        130;
 
-
-    /* ================================================
-       GEOMETRY
-    ================================================= */
 
     const geometry =
         new THREE.SphereGeometry(
@@ -1516,20 +1482,8 @@ function createPlanet(world){
         new THREE.Color();
 
 
-    /* ================================================
-       NASA-INSPIRED COLOR PALETTES
-
-       MOON:
-       ash grey
-       warm grey
-       subtle beige
-       dark mare
-
-       MARS:
-       rusty red
-       iron brown
-       dusty orange
-       dark volcanic brown
+    /* =================================================
+       PLANET COLOR
     ================================================= */
 
     for(
@@ -1548,40 +1502,30 @@ function createPlanet(world){
             positions.getZ(i);
 
 
-        const largeNoise =
-            Math.sin(
-                x*.043
-            ) *
-            Math.cos(
-                y*.057
-            ) *
-            Math.sin(
-                z*.049
-            );
+        const noise =
+            Math.sin(x*.043) *
+            Math.cos(y*.057) *
+            Math.sin(z*.049);
 
 
-        const smallNoise =
+        const noise2 =
             Math.sin(
-                x*.125 +
-                y*.067
+                x*.12 +
+                y*.07
             ) *
             Math.cos(
-                z*.105
+                z*.10
             );
 
 
         const n =
-            largeNoise*.55 +
-            smallNoise*.20;
+            noise*.55 +
+            noise2*.20;
 
 
-        if(world === "moon"){
-
-            /*
-             NASA-like lunar palette:
-             neutral grey with subtle
-             warm mineral variation.
-            */
+        if(
+            world === "moon"
+        ){
 
             let r =
                 .40 +
@@ -1596,10 +1540,6 @@ function createPlanet(world){
                 n*.068;
 
 
-            /*
-             Darker lunar mare areas
-            */
-
             const mare =
                 Math.sin(
                     x*.028 +
@@ -1610,18 +1550,15 @@ function createPlanet(world){
                 );
 
 
-            if(mare > .62){
+            if(
+                mare > .62
+            ){
 
                 r -= .075;
                 g -= .075;
-                b -= .07;
-
+                b -= .070;
             }
 
-
-            /*
-             subtle warm mineral areas
-            */
 
             if(
                 n > .42
@@ -1634,19 +1571,10 @@ function createPlanet(world){
 
 
             color.setRGB(
-                r,
-                g,
-                b
+                r,g,b
             );
 
         }else{
-
-            /*
-             NASA-like Mars palette:
-             iron oxide red,
-             rusty brown,
-             dusty orange.
-            */
 
             let r =
                 .43 +
@@ -1660,10 +1588,6 @@ function createPlanet(world){
                 .085 +
                 n*.035;
 
-
-            /*
-             Dark volcanic / rocky regions
-            */
 
             const darkArea =
                 Math.sin(
@@ -1682,13 +1606,8 @@ function createPlanet(world){
                 r -= .11;
                 g -= .035;
                 b -= .018;
-
             }
 
-
-            /*
-             lighter dusty regions
-            */
 
             if(
                 n > .38
@@ -1701,9 +1620,7 @@ function createPlanet(world){
 
 
             color.setRGB(
-                r,
-                g,
-                b
+                r,g,b
             );
         }
 
@@ -1736,7 +1653,7 @@ function createPlanet(world){
                 ? .98
                 : .94,
 
-            metalness:.0
+            metalness:0
         });
 
 
@@ -1802,16 +1719,14 @@ function createPlanet(world){
 
         const normal =
             new THREE.Vector3(
-                x,
-                y,
-                z
+                x,y,z
             ).normalize();
 
 
         crater.position.copy(
             normal.clone()
             .multiplyScalar(
-                radius + .75
+                radius + .7
             )
         );
 
@@ -1879,7 +1794,7 @@ function createPlanet(world){
 
 
     /* =================================================
-       PLOTS
+       PLOT MARKERS
     ================================================= */
 
     markerGroup =
@@ -1895,7 +1810,7 @@ function createPlanet(world){
 
 
 /* =====================================================
-   PLOT MARKERS
+   MARKERS
 ===================================================== */
 
 function createMarkers(count){
@@ -1918,7 +1833,7 @@ function createMarkers(count){
 
 
         const radius =
-            131.3;
+            131.4;
 
 
         const x =
@@ -1942,7 +1857,7 @@ function createMarkers(count){
             new THREE.Mesh(
 
                 new THREE.SphereGeometry(
-                    1.05,
+                    1.1,
                     10,
                     10
                 ),
@@ -1953,15 +1868,13 @@ function createMarkers(count){
 
                     transparent:true,
 
-                    opacity:.72
+                    opacity:.7
                 })
             );
 
 
         marker.position.set(
-            x,
-            y,
-            z
+            x,y,z
         );
 
 
@@ -2028,7 +1941,7 @@ function generatePlotData(){
 
 
 /* =====================================================
-   INITIAL WORLD
+   INITIAL PLANET
 ===================================================== */
 
 createPlanet(
@@ -2037,53 +1950,128 @@ createPlanet(
 
 
 /* =====================================================
-   ORBIT CONTROLS
+   CUSTOM PLANET ZOOM
 ===================================================== */
 
-const controls =
-    new THREE.OrbitControls(
-        camera,
-        canvas
-    );
+/*
+   We intentionally do NOT use OrbitControls
+   for zoom.
+
+   Instead:
+   - drag = rotate planet
+   - wheel = zoom
+   - zoom is clamped by projected planet size
+   - entire planet stays visible
+*/
+
+let zoomDistance = 520;
+
+let targetZoom = 520;
+
+const MIN_ZOOM = 475;
+const MAX_ZOOM = 760;
 
 
-controls.enableDamping =
-    true;
+let dragging = false;
+
+let previousX = 0;
+let previousY = 0;
 
 
-controls.dampingFactor =
-    .035;
+canvas.addEventListener(
+    "mousedown",
+    function(e){
+
+        dragging = true;
+
+        previousX =
+            e.clientX;
+
+        previousY =
+            e.clientY;
+    }
+);
 
 
-controls.enablePan =
-    false;
+window.addEventListener(
+    "mouseup",
+    function(){
+
+        dragging = false;
+    }
+);
+
+
+window.addEventListener(
+    "mousemove",
+    function(e){
+
+        if(
+            !dragging ||
+            !planetGroup
+        ){
+            return;
+        }
+
+
+        const dx =
+            e.clientX -
+            previousX;
+
+
+        const dy =
+            e.clientY -
+            previousY;
+
+
+        previousX =
+            e.clientX;
+
+
+        previousY =
+            e.clientY;
+
+
+        planetGroup.rotation.y +=
+            dx * .006;
+
+
+        planetGroup.rotation.x +=
+            dy * .003;
+    }
+);
 
 
 /*
- IMPORTANT:
+   Wheel zoom.
 
- The minimum distance is deliberately
- limited so the planet NEVER fills
- the frame enough to get cut off.
-
- At the closest point the entire
- planetary disk remains visible.
+   Smaller distance = closer.
 */
 
-controls.minDistance =
-    370;
+canvas.addEventListener(
+    "wheel",
+    function(e){
+
+        e.preventDefault();
 
 
-controls.maxDistance =
-    560;
+        targetZoom +=
+            e.deltaY *
+            .35;
 
 
-controls.autoRotate =
-    true;
+        targetZoom =
+            Math.max(
+                MIN_ZOOM,
+                Math.min(
+                    MAX_ZOOM,
+                    targetZoom
+                )
+            );
 
-
-controls.autoRotateSpeed =
-    .10;
+    },
+    {passive:false}
+);
 
 
 /* =====================================================
@@ -2100,26 +2088,29 @@ const mouse =
 
 canvas.addEventListener(
     "mousemove",
-    function(event){
-
-        const rect =
-            canvas.getBoundingClientRect();
-
+    function(e){
 
         mouse.x =
-            (
-                (event.clientX -
-                rect.left) /
-                rect.width
-            ) * 2 - 1;
+            (e.clientX /
+            window.innerWidth) *
+            2 - 1;
 
 
         mouse.y =
-            -(
-                (event.clientY -
-                rect.top) /
-                rect.height
-            ) * 2 + 1;
+            -(e.clientY /
+            window.innerHeight) *
+            2 + 1;
+
+
+        if(
+            !dragging
+        ){
+
+            raycaster.setFromCamera(
+                mouse,
+                camera
+            );
+        }
     }
 );
 
@@ -2127,6 +2118,13 @@ canvas.addEventListener(
 canvas.addEventListener(
     "click",
     function(){
+
+        if(
+            !markerGroup
+        ){
+            return;
+        }
+
 
         raycaster.setFromCamera(
             mouse,
@@ -2375,35 +2373,38 @@ function animate(){
     );
 
 
-    /*
-     Deep space movement
-    */
+    /* smooth zoom */
 
-    stars1.rotation.y +=
-        .000018;
-
-
-    stars1.rotation.x +=
-        .000004;
-
-
-    stars2.rotation.y -=
-        .000027;
-
-
-    stars2.rotation.x +=
-        .000006;
-
-
-    stars3.rotation.y +=
-        .000045;
+    zoomDistance +=
+        (
+            targetZoom -
+            zoomDistance
+        ) * .08;
 
 
     /*
-     Planet
+       Camera stays centered on the
+       universe. Planet remains to
+       the right.
+
+       At closest distance it is
+       large, but the whole sphere
+       remains visible.
     */
 
-    if(planetGroup){
+    camera.position.z =
+        zoomDistance;
+
+
+    /*
+       Slow automatic rotation
+       only when user is not dragging.
+    */
+
+    if(
+        planetGroup &&
+        !dragging
+    ){
 
         planetGroup.rotation.y +=
             currentWorld === "mars"
@@ -2412,7 +2413,18 @@ function animate(){
     }
 
 
-    controls.update();
+    /*
+       Deep star movement
+    */
+
+    starsBack.rotation.y +=
+        .000012;
+
+    starsMiddle.rotation.y -=
+        .000020;
+
+    starsFront.rotation.y +=
+        .000035;
 
 
     renderer.render(
@@ -2433,24 +2445,17 @@ window.addEventListener(
     "resize",
     function(){
 
-        const width =
-            container.clientWidth;
-
-
-        const height =
-            container.clientHeight;
-
-
         camera.aspect =
-            width / height;
+            window.innerWidth /
+            window.innerHeight;
 
 
         camera.updateProjectionMatrix();
 
 
         renderer.setSize(
-            width,
-            height
+            window.innerWidth,
+            window.innerHeight
         );
     }
 );
