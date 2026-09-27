@@ -14,8 +14,6 @@
 
 :root{
     --bg:#030405;
-    --line:rgba(255,255,255,.10);
-    --line-soft:rgba(255,255,255,.06);
     --text:#f5f7fa;
     --muted:#89909a;
 }
@@ -31,7 +29,7 @@ body{
     margin:0;
     overflow:hidden;
     background:#030405;
-    color:var(--text);
+    color:#fff;
     font-family:Inter,Arial,sans-serif;
 }
 
@@ -50,20 +48,20 @@ body{
 
     background:
         radial-gradient(
-            ellipse 42% 28% at 72% 43%,
-            rgba(215,225,235,.045),
-            transparent 70%
+            ellipse 40% 28% at 66% 42%,
+            rgba(220,230,240,.035),
+            transparent 72%
         ),
         radial-gradient(
-            ellipse 30% 20% at 30% 76%,
-            rgba(190,205,220,.025),
-            transparent 72%
+            ellipse 30% 20% at 34% 72%,
+            rgba(190,205,220,.022),
+            transparent 75%
         ),
         #030405;
 }
 
 /* =========================================================
-   DISTANT WHITE COSMIC HAZE
+   DISTANT COSMIC HAZE
 ========================================================= */
 
 .cosmic-haze{
@@ -74,64 +72,60 @@ body{
 
     background:
         radial-gradient(
-            ellipse 24% 9% at 76% 32%,
-            rgba(255,255,255,.045),
-            transparent 72%
-        ),
-        radial-gradient(
-            ellipse 31% 10% at 68% 38%,
-            rgba(225,235,245,.025),
+            ellipse 32% 8% at 75% 33%,
+            rgba(255,255,255,.042),
             transparent 74%
         ),
         radial-gradient(
-            ellipse 18% 7% at 38% 68%,
-            rgba(255,255,255,.022),
-            transparent 72%
+            ellipse 28% 7% at 66% 39%,
+            rgba(230,238,245,.025),
+            transparent 75%
+        ),
+        radial-gradient(
+            ellipse 18% 6% at 38% 69%,
+            rgba(255,255,255,.018),
+            transparent 75%
         );
 
-    filter:blur(30px);
+    filter:blur(32px);
 
-    transform:
-        rotate(-8deg)
-        scale(1.15);
+    transform:rotate(-8deg) scale(1.15);
 }
-
-/* subtle moving distant haze */
 
 .cosmic-haze::after{
     content:"";
+
     position:absolute;
     inset:0;
 
     background:
         radial-gradient(
-            ellipse 35% 7% at 60% 42%,
+            ellipse 34% 7% at 59% 42%,
             rgba(255,255,255,.018),
-            transparent 75%
+            transparent 76%
         );
 
-    filter:blur(20px);
+    filter:blur(25px);
 
-    animation:
-        hazeDrift 24s ease-in-out infinite alternate;
+    animation:hazeDrift 26s ease-in-out infinite alternate;
 }
 
 @keyframes hazeDrift{
 
-    0%{
-        transform:translate3d(-2%,0,0) scale(1);
+    from{
+        transform:translateX(-2%) scale(1);
         opacity:.65;
     }
 
-    100%{
-        transform:translate3d(3%,1%,0) scale(1.04);
+    to{
+        transform:translateX(3%) scale(1.04);
         opacity:1;
     }
 
 }
 
 /* =========================================================
-   STAR FIELD
+   STARS
 ========================================================= */
 
 #stars{
@@ -149,8 +143,7 @@ body{
 
     background:#fff;
 
-    transform:
-        translate(-50%,-50%);
+    transform:translate(-50%,-50%);
 
     will-change:
         opacity,
@@ -160,7 +153,7 @@ body{
 .star.glow{
     box-shadow:
         0 0 4px rgba(255,255,255,.55),
-        0 0 9px rgba(255,255,255,.20);
+        0 0 10px rgba(255,255,255,.20);
 }
 
 /* =========================================================
@@ -205,8 +198,6 @@ body{
 
     left:42px;
     top:34px;
-
-    z-index:20;
 }
 
 .brand-main{
@@ -218,8 +209,6 @@ body{
     letter-spacing:.27em;
 
     font-weight:800;
-
-    color:#fff;
 }
 
 .brand-sub{
@@ -236,7 +225,7 @@ body{
 }
 
 /* =========================================================
-   TOP NAV
+   NAV
 ========================================================= */
 
 .top-nav{
@@ -246,8 +235,6 @@ body{
     right:42px;
 
     display:flex;
-    align-items:center;
-
     gap:34px;
 }
 
@@ -255,7 +242,6 @@ body{
     position:relative;
 
     font-size:10px;
-
     font-weight:700;
 
     letter-spacing:.18em;
@@ -282,7 +268,6 @@ body{
 
     left:0;
     right:0;
-
     bottom:-9px;
 
     height:1px;
@@ -291,14 +276,14 @@ body{
 }
 
 /* =========================================================
-   CORNER SYSTEM LABELS
+   SMALL SYSTEM LABELS
 ========================================================= */
 
 .corner-detail{
     position:absolute;
 
-    top:116px;
     left:42px;
+    top:116px;
 
     font-size:7px;
 
@@ -312,8 +297,8 @@ body{
 .corner-detail-right{
     position:absolute;
 
-    top:116px;
     right:42px;
+    top:116px;
 
     font-size:7px;
 
@@ -342,7 +327,6 @@ body{
 .eyebrow{
     display:flex;
     align-items:center;
-
     gap:10px;
 
     margin-bottom:19px;
@@ -369,7 +353,6 @@ body{
     font-family:Manrope,Inter,sans-serif;
 
     font-size:59px;
-
     line-height:.98;
 
     letter-spacing:-.055em;
@@ -391,33 +374,23 @@ body{
     width:385px;
 
     font-size:13px;
-
     line-height:1.75;
 
     color:#858d97;
-
-    font-weight:400;
 }
 
 .hero-actions{
     display:flex;
-    align-items:center;
-
     gap:14px;
 
     margin-top:28px;
 }
 
-.primary-btn{
+.primary-btn,
+.secondary-btn{
     height:43px;
 
     padding:0 20px;
-
-    border:1px solid rgba(255,255,255,.2);
-
-    background:#f0f2f4;
-
-    color:#080a0c;
 
     font-size:10px;
 
@@ -430,32 +403,24 @@ body{
     transition:.25s;
 }
 
+.primary-btn{
+    border:1px solid rgba(255,255,255,.2);
+
+    background:#f0f2f4;
+
+    color:#080a0c;
+}
+
 .primary-btn:hover{
     background:#fff;
-
-    transform:translateY(-1px);
 }
 
 .secondary-btn{
-    height:43px;
-
-    padding:0 18px;
-
     border:1px solid rgba(255,255,255,.1);
 
     background:rgba(255,255,255,.025);
 
     color:#a0a7b0;
-
-    font-size:10px;
-
-    font-weight:700;
-
-    letter-spacing:.13em;
-
-    cursor:pointer;
-
-    transition:.25s;
 }
 
 .secondary-btn:hover{
@@ -466,7 +431,7 @@ body{
 }
 
 /* =========================================================
-   RIGHT ASSET PANEL
+   RIGHT PANEL
 ========================================================= */
 
 .asset-panel{
@@ -479,7 +444,7 @@ body{
 
     width:290px;
 
-    padding:20px 20px 18px;
+    padding:20px;
 
     border:
         1px solid rgba(255,255,255,.1);
@@ -502,7 +467,7 @@ body{
     padding-bottom:15px;
 
     border-bottom:
-        1px solid var(--line-soft);
+        1px solid rgba(255,255,255,.06);
 }
 
 .panel-heading-left{
@@ -578,10 +543,10 @@ body{
     grid-template-columns:1fr 1fr;
 
     border-top:
-        1px solid var(--line-soft);
+        1px solid rgba(255,255,255,.06);
 
     border-left:
-        1px solid var(--line-soft);
+        1px solid rgba(255,255,255,.06);
 }
 
 .metric{
@@ -590,10 +555,10 @@ body{
     padding:12px 11px;
 
     border-right:
-        1px solid var(--line-soft);
+        1px solid rgba(255,255,255,.06);
 
     border-bottom:
-        1px solid var(--line-soft);
+        1px solid rgba(255,255,255,.06);
 }
 
 .metric-label{
@@ -620,7 +585,6 @@ body{
     display:flex;
 
     justify-content:space-between;
-
     align-items:end;
 
     margin-top:17px;
@@ -644,8 +608,6 @@ body{
     font-size:22px;
 
     font-weight:700;
-
-    letter-spacing:-.03em;
 }
 
 .acquire{
@@ -670,13 +632,6 @@ body{
     cursor:pointer;
 }
 
-.acquire:hover{
-    border-color:
-        rgba(255,255,255,.35);
-
-    color:#fff;
-}
-
 /* =========================================================
    WORLD SELECTOR
 ========================================================= */
@@ -691,6 +646,8 @@ body{
 }
 
 .selector-title{
+    margin-bottom:10px;
+
     font-size:8px;
 
     letter-spacing:.21em;
@@ -698,13 +655,10 @@ body{
     color:#5f6872;
 
     font-weight:800;
-
-    margin-bottom:10px;
 }
 
 .world-buttons{
     display:flex;
-
     gap:6px;
 }
 
@@ -728,15 +682,6 @@ body{
     font-weight:800;
 
     cursor:pointer;
-
-    transition:.25s;
-}
-
-.world-btn:hover{
-    color:#dce2e8;
-
-    border-color:
-        rgba(255,255,255,.18);
 }
 
 .world-btn.active{
@@ -763,6 +708,8 @@ body{
 }
 
 .plot-label{
+    margin-bottom:10px;
+
     font-size:8px;
 
     letter-spacing:.2em;
@@ -770,22 +717,20 @@ body{
     color:#59616b;
 
     font-weight:800;
-
-    margin-bottom:10px;
 }
 
 .plot-inner{
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:13px 0;
+
     border-top:
         1px solid rgba(255,255,255,.1);
 
     border-bottom:
         1px solid rgba(255,255,255,.1);
-
-    padding:13px 0;
-
-    display:flex;
-
-    justify-content:space-between;
 }
 
 .plot-id{
@@ -815,8 +760,6 @@ body{
 
     font-size:9px;
 
-    letter-spacing:.08em;
-
     color:#c5ccd3;
 
     font-weight:700;
@@ -839,12 +782,11 @@ body{
         1px solid rgba(255,255,255,.08);
 
     background:
-        rgba(4,6,8,.93);
+        rgba(4,6,8,.94);
 
     backdrop-filter:blur(15px);
 
     display:flex;
-
     align-items:center;
 
     padding:0 42px;
@@ -994,6 +936,7 @@ body{
     .hero{
         left:22px;
         top:45%;
+
         width:300px;
     }
 
@@ -1009,7 +952,9 @@ body{
     .asset-panel{
         right:18px;
         top:20%;
+
         transform:none;
+
         width:230px;
     }
 
@@ -1027,14 +972,7 @@ body{
         padding:0 18px;
     }
 
-    .market-left{
-        width:auto;
-    }
-
-    .market-data{
-        display:none;
-    }
-
+    .market-data,
     .controls-hint{
         display:none;
     }
@@ -1053,6 +991,7 @@ body{
     <div id="stars"></div>
 
     <canvas id="spaceCanvas"></canvas>
+
 
     <div class="interface">
 
@@ -1089,8 +1028,6 @@ body{
 
         </div>
 
-
-        <!-- SYSTEM LABELS -->
 
         <div class="corner-detail">
             ASTERRA / DIGITAL SURFACE SYSTEM
@@ -1148,7 +1085,7 @@ body{
         </section>
 
 
-        <!-- RIGHT PANEL -->
+        <!-- RIGHT INFORMATION PANEL -->
 
         <aside class="asset-panel">
 
@@ -1307,7 +1244,7 @@ body{
         </div>
 
 
-        <!-- SELECTED PLOT -->
+        <!-- PLOT -->
 
         <div class="plot-card">
 
@@ -1318,12 +1255,8 @@ body{
 
             <div class="plot-inner">
 
-                <div>
-
-                    <div class="plot-id">
-                        MR-08421
-                    </div>
-
+                <div class="plot-id">
+                    MR-08421
                 </div>
 
 
@@ -1344,7 +1277,7 @@ body{
         </div>
 
 
-        <!-- BOTTOM BAR -->
+        <!-- BOTTOM -->
 
         <div class="market-bar">
 
@@ -1437,12 +1370,12 @@ body{
 <script>
 
 /* =========================================================
-   ASTERRA — SPACE ENGINE
+   ASTERRA ENGINE
 ========================================================= */
 
 
 /* =========================================================
-   STARS
+   RANDOM STARS
 ========================================================= */
 
 const starsContainer =
@@ -1472,7 +1405,11 @@ function createStars(){
         );
 
 
-    for(let i=0;i<count;i++){
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
 
         const star =
             document.createElement("div");
@@ -1493,27 +1430,22 @@ function createStars(){
 
 
         star.style.width =
-            size + "px";
+            size+"px";
 
         star.style.height =
-            size + "px";
+            size+"px";
 
-
-        /*
-           Completely random distribution.
-           No grid / no pattern.
-        */
 
         star.style.left =
-            Math.random()*100 + "%";
+            Math.random()*100+"%";
 
         star.style.top =
-            Math.random()*100 + "%";
+            Math.random()*100+"%";
 
 
         if(
             large ||
-            Math.random() > .88
+            Math.random()>.88
         ){
 
             star.classList.add(
@@ -1523,45 +1455,35 @@ function createStars(){
         }
 
 
-        const data = {
+        starsContainer.appendChild(
+            star
+        );
+
+
+        stars.push({
 
             element:star,
 
             base:
                 large
-                    ? .30 + Math.random()*.35
-                    : .16 + Math.random()*.40,
+                    ? .30+Math.random()*.35
+                    : .16+Math.random()*.40,
 
             amplitude:
                 large
-                    ? .22 + Math.random()*.38
-                    : .10 + Math.random()*.38,
+                    ? .22+Math.random()*.38
+                    : .10+Math.random()*.38,
 
             speed:
-                .28 + Math.random()*1.9,
+                .28+Math.random()*1.9,
 
             phase:
-                Math.random() *
-                Math.PI *
-                2,
+                Math.random()*Math.PI*2,
 
             secondPhase:
-                Math.random() *
-                Math.PI *
-                2,
+                Math.random()*Math.PI*2
 
-            size:size
-
-        };
-
-
-        starsContainer.appendChild(
-            star
-        );
-
-        stars.push(
-            data
-        );
+        });
 
     }
 
@@ -1571,14 +1493,10 @@ function createStars(){
 createStars();
 
 
-/* =========================================================
-   STAR TWINKLING
-========================================================= */
-
 function animateStars(time){
 
     const t =
-        time * .001;
+        time*.001;
 
 
     for(
@@ -1591,41 +1509,36 @@ function animateStars(time){
             stars[i];
 
 
-        const primary =
+        const a =
             (
                 Math.sin(
-                    t*s.speed +
+                    t*s.speed+
                     s.phase
-                ) + 1
-            ) / 2;
+                )+1
+            )/2;
 
 
-        const secondary =
+        const b =
             (
                 Math.sin(
-                    t*s.speed*.37 +
+                    t*s.speed*.37+
                     s.secondPhase
-                ) + 1
-            ) / 2;
+                )+1
+            )/2;
 
-
-        /*
-           Different stars reach different
-           brightness levels independently.
-        */
 
         const brightness =
-            s.base +
-            s.amplitude *
+            s.base+
+            s.amplitude*
             (
-                primary*.72 +
-                secondary*.28
+                a*.72+
+                b*.28
             );
 
 
         const scale =
-            .72 +
-            primary*.48;
+            .72+
+            a*.48;
 
 
         s.element.style.opacity =
@@ -1644,7 +1557,7 @@ function animateStars(time){
 
 
 /* =========================================================
-   THREE.JS
+   THREE
 ========================================================= */
 
 const canvas =
@@ -1708,14 +1621,11 @@ renderer.outputEncoding =
    LIGHT
 ========================================================= */
 
-const ambient =
+scene.add(
     new THREE.AmbientLight(
         0x555555,
         .48
-    );
-
-scene.add(
-    ambient
+    )
 );
 
 
@@ -1758,24 +1668,11 @@ scene.add(
 
 
 /* =========================================================
-   PLANET GROUP
+   PLANET
 ========================================================= */
 
 const planetGroup =
     new THREE.Group();
-
-
-/*
-   Slightly left from the previous version.
-   This gives the zoomed planet more room
-   before the right-side information panel.
-*/
-
-planetGroup.position.set(
-    70,
-    0,
-    0
-);
 
 
 scene.add(
@@ -1787,16 +1684,16 @@ let currentWorld =
     "mars";
 
 
+const PLANET_RADIUS =
+    130;
+
+
 const worldData = {
 
     mars:{
-
         supply:"1,220,000",
-
         price:"$199",
-
         code:"MR / 01",
-
         colors:[
             [112,45,31],
             [143,62,39],
@@ -1805,18 +1702,12 @@ const worldData = {
             [77,31,25],
             [126,53,36]
         ]
-
     },
 
-
     moon:{
-
         supply:"320,000",
-
         price:"$149",
-
         code:"MN / 01",
-
         colors:[
             [116,116,112],
             [144,143,138],
@@ -1825,7 +1716,6 @@ const worldData = {
             [98,98,95],
             [127,126,122]
         ]
-
     }
 
 };
@@ -1837,7 +1727,7 @@ let markerGroup = null;
 
 
 /* =========================================================
-   SEEDED RANDOM
+   RANDOM
 ========================================================= */
 
 function seededRandom(seed){
@@ -1845,18 +1735,17 @@ function seededRandom(seed){
     const x =
         Math.sin(
             seed*12.9898
-        ) *
-        43758.5453;
+        )*43758.5453;
 
 
-    return x -
+    return x-
         Math.floor(x);
 
 }
 
 
 /* =========================================================
-   PLANET
+   CREATE PLANET
 ========================================================= */
 
 function createPlanet(world){
@@ -1868,6 +1757,7 @@ function createPlanet(world){
         );
 
         planetMesh.geometry.dispose();
+        planetMesh.material.dispose();
 
     }
 
@@ -1894,13 +1784,9 @@ function createPlanet(world){
         worldData[world];
 
 
-    const radius =
-        130;
-
-
     const geometry =
         new THREE.SphereGeometry(
-            radius,
+            PLANET_RADIUS,
             96,
             96
         );
@@ -1930,32 +1816,32 @@ function createPlanet(world){
 
 
         const nx =
-            x/radius;
+            x/PLANET_RADIUS;
 
         const ny =
-            y/radius;
+            y/PLANET_RADIUS;
 
         const nz =
-            z/radius;
+            z/PLANET_RADIUS;
 
 
         let noise =
             Math.sin(
-                nx*8.3 +
+                nx*8.3+
                 ny*4.7
             )*.5;
 
 
         noise +=
             Math.sin(
-                nz*13.2 -
+                nz*13.2-
                 nx*3.1
             )*.25;
 
 
         noise +=
             Math.sin(
-                ny*18.1 +
+                ny*18.1+
                 nz*5.7
             )*.15;
 
@@ -1969,11 +1855,11 @@ function createPlanet(world){
         const index =
             Math.abs(
                 Math.floor(
-                    (noise+1) *
-                    data.colors.length *
+                    (noise+1)*
+                    data.colors.length*
                     .48
                 )
-            ) %
+            )%
             data.colors.length;
 
 
@@ -1982,7 +1868,7 @@ function createPlanet(world){
 
 
         const shade =
-            .82 +
+            .82+
             noise*.13;
 
 
@@ -2051,7 +1937,7 @@ function createPlanet(world){
 
 
     const craterCount =
-        world === "moon"
+        world==="moon"
             ? 54
             : 38;
 
@@ -2085,7 +1971,7 @@ function createPlanet(world){
 
 
         const r =
-            radius+.55;
+            PLANET_RADIUS+.55;
 
 
         const x =
@@ -2106,14 +1992,14 @@ function createPlanet(world){
 
 
         const size =
-            2.5 +
+            2.5+
             seededRandom(
                 i*9.4+4
-            ) *
+            )*
             (
                 world==="moon"
-                    ? 10
-                    : 7
+                    ?10
+                    :7
             );
 
 
@@ -2130,15 +2016,15 @@ function createPlanet(world){
 
                     color:
                         world==="moon"
-                            ? 0x4c4c49
-                            : 0x56261d,
+                            ?0x4c4c49
+                            :0x56261d,
 
                     transparent:true,
 
                     opacity:
                         world==="moon"
-                            ? .16
-                            : .12,
+                            ?.16
+                            :.12,
 
                     side:
                         THREE.DoubleSide,
@@ -2177,7 +2063,7 @@ function createPlanet(world){
 
 
     /* =====================================================
-       PROPERTY MARKERS
+       MARKERS
     ===================================================== */
 
     markerGroup =
@@ -2193,19 +2079,19 @@ function createPlanet(world){
         const theta =
             seededRandom(
                 i*3.1+17
-            ) *
+            )*
             Math.PI*2;
 
 
         const phi =
             seededRandom(
                 i*4.8+21
-            ) *
+            )*
             Math.PI;
 
 
         const r =
-            radius+1.7;
+            PLANET_RADIUS+1.7;
 
 
         const x =
@@ -2230,8 +2116,8 @@ function createPlanet(world){
 
                 new THREE.SphereGeometry(
                     i===0
-                        ? 1.8
-                        : 1.1,
+                        ?1.8
+                        :1.1,
                     12,
                     12
                 ),
@@ -2240,8 +2126,8 @@ function createPlanet(world){
 
                     color:
                         i===0
-                            ? 0xffffff
-                            : 0x9aa9b8
+                            ?0xffffff
+                            :0x9aa9b8
 
                 })
 
@@ -2269,13 +2155,17 @@ function createPlanet(world){
 }
 
 
+/* =========================================================
+   INITIAL PLANET
+========================================================= */
+
 createPlanet(
     "mars"
 );
 
 
 /* =========================================================
-   ROTATION
+   DRAG ROTATION
 ========================================================= */
 
 let dragging =
@@ -2292,14 +2182,10 @@ canvas.addEventListener(
     "pointerdown",
     e => {
 
-        dragging =
-            true;
+        dragging=true;
 
-        previousX =
-            e.clientX;
-
-        previousY =
-            e.clientY;
+        previousX=e.clientX;
+        previousY=e.clientY;
 
         canvas.setPointerCapture(
             e.pointerId
@@ -2318,12 +2204,12 @@ canvas.addEventListener(
 
 
         const dx =
-            e.clientX -
+            e.clientX-
             previousX;
 
 
         const dy =
-            e.clientY -
+            e.clientY-
             previousY;
 
 
@@ -2345,11 +2231,8 @@ canvas.addEventListener(
             );
 
 
-        previousX =
-            e.clientX;
-
-        previousY =
-            e.clientY;
+        previousX=e.clientX;
+        previousY=e.clientY;
 
     }
 );
@@ -2358,10 +2241,7 @@ canvas.addEventListener(
 canvas.addEventListener(
     "pointerup",
     () => {
-
-        dragging =
-            false;
-
+        dragging=false;
     }
 );
 
@@ -2369,17 +2249,14 @@ canvas.addEventListener(
 canvas.addEventListener(
     "pointercancel",
     () => {
-
-        dragging =
-            false;
-
+        dragging=false;
     }
 );
 
 
 /* =========================================================
    ZOOM
-   EXACTLY THE SAME WORKING MECHANISM
+   DO NOT CHANGE
 ========================================================= */
 
 let zoomDistance =
@@ -2424,6 +2301,335 @@ canvas.addEventListener(
 
 
 /* =========================================================
+   IMPORTANT:
+   SAFE PLANET POSITION
+========================================================= */
+
+/*
+   The planet must live in the open central area.
+
+   We calculate its projected radius on screen
+   and then place its CENTER so that the whole
+   sphere remains inside the safe zone.
+
+   This is what prevents the planet from
+   jumping over text/panels.
+*/
+
+function updateSafePlanetPosition(){
+
+    const width =
+        window.innerWidth;
+
+    const height =
+        window.innerHeight;
+
+
+    /*
+       Approximate projected planet radius.
+       This uses the actual camera distance
+       and camera FOV.
+    */
+
+    const fovRadians =
+        camera.fov*
+        Math.PI/
+        180;
+
+
+    const projectedRadius =
+        (
+            PLANET_RADIUS/
+            Math.tan(
+                fovRadians/2
+            )
+        )/
+        zoomDistance;
+
+
+    const radiusPixels =
+        (
+            projectedRadius*
+            height/
+            2
+        );
+
+
+    /*
+       UI safe zones.
+    */
+
+    let leftSafe =
+        42+430+55;
+
+
+    let rightSafe =
+        width-42-290-55;
+
+
+    /*
+       On smaller screens the text and panel
+       compress, so use a more flexible gap.
+    */
+
+    if(width<1200){
+
+        leftSafe =
+            Math.min(
+                leftSafe,
+                width*.38
+            );
+
+        rightSafe =
+            Math.max(
+                rightSafe,
+                width*.62
+            );
+
+    }
+
+
+    /*
+       Vertical safe area.
+
+       Keep away from:
+       - top branding
+       - hero text
+       - bottom bar
+    */
+
+    const topSafe =
+        Math.max(
+            165,
+            height*.18
+        );
+
+
+    const bottomSafe =
+        height-
+        84-
+        32;
+
+
+    /*
+       Ideal center of the free area.
+    */
+
+    let centerX =
+        (
+            leftSafe+
+            rightSafe
+        )/2;
+
+
+    let centerY =
+        (
+            topSafe+
+            bottomSafe
+        )/2;
+
+
+    /*
+       Make sure the complete sphere
+       stays inside the horizontal area.
+    */
+
+    const minCenterX =
+        leftSafe+
+        radiusPixels;
+
+
+    const maxCenterX =
+        rightSafe-
+        radiusPixels;
+
+
+    /*
+       If the available area is large enough,
+       clamp normally.
+    */
+
+    if(
+        minCenterX<=maxCenterX
+    ){
+
+        centerX =
+            Math.max(
+                minCenterX,
+                Math.min(
+                    maxCenterX,
+                    centerX
+                )
+            );
+
+    }
+    else{
+
+        /*
+           Very narrow screens:
+           prioritize keeping the planet
+           away from the right information panel.
+        */
+
+        centerX =
+            width*.53;
+
+    }
+
+
+    /*
+       Vertical clamping.
+    */
+
+    const minCenterY =
+        topSafe+
+        radiusPixels;
+
+
+    const maxCenterY =
+        bottomSafe-
+        radiusPixels;
+
+
+    if(
+        minCenterY<=maxCenterY
+    ){
+
+        centerY =
+            Math.max(
+                minCenterY,
+                Math.min(
+                    maxCenterY,
+                    centerY
+                )
+            );
+
+    }
+    else{
+
+        centerY =
+            height*.43;
+
+    }
+
+
+    /*
+       Convert screen coordinates
+       back into the Three.js world.
+
+       x:
+       screen center = 0
+
+       y:
+       screen center = 0
+       and positive world Y is upward.
+    */
+
+    const worldX =
+        (
+            centerX-
+            width/2
+        )*
+        zoomDistance/
+        height*
+        2*
+        Math.tan(
+            fovRadians/2
+        )*
+        camera.aspect;
+
+
+    const worldY =
+        -(
+            centerY-
+            height/2
+        )*
+        zoomDistance/
+        height*
+        2*
+        Math.tan(
+            fovRadians/2
+        );
+
+
+    planetGroup.position.x =
+        worldX;
+
+    planetGroup.position.y =
+        worldY;
+
+}
+
+
+/* =========================================================
+   MAIN LOOP
+========================================================= */
+
+function animate(time){
+
+    animateStars(
+        time
+    );
+
+
+    /*
+       SAME ZOOM FEEL.
+    */
+
+    zoomDistance +=
+        (
+            targetZoom-
+            zoomDistance
+        )*.08;
+
+
+    camera.position.z =
+        zoomDistance;
+
+
+    /*
+       The important part:
+       every frame the planet is recalculated
+       against the current screen size,
+       camera distance and UI safe zones.
+    */
+
+    updateSafePlanetPosition();
+
+
+    /*
+       Slow automatic rotation.
+    */
+
+    if(!dragging){
+
+        planetGroup.rotation.y +=
+            currentWorld==="mars"
+                ? .00030
+                : .00022;
+
+    }
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+
+    requestAnimationFrame(
+        animate
+    );
+
+}
+
+
+requestAnimationFrame(
+    animate
+);
+
+
+/* =========================================================
    WORLD SWITCH
 ========================================================= */
 
@@ -2431,7 +2637,6 @@ const marsBtn =
     document.getElementById(
         "marsBtn"
     );
-
 
 const moonBtn =
     document.getElementById(
@@ -2529,118 +2734,6 @@ moonBtn.addEventListener(
 
 
 /* =========================================================
-   MAIN ANIMATION
-========================================================= */
-
-function animate(time){
-
-    /*
-       Stars independently twinkle.
-    */
-
-    animateStars(
-        time
-    );
-
-
-    /*
-       APPROVED ZOOM:
-       values and mechanism unchanged.
-    */
-
-    zoomDistance +=
-        (
-            targetZoom -
-            zoomDistance
-        )*.08;
-
-
-    camera.position.z =
-        zoomDistance;
-
-
-    /*
-       When zooming in:
-       1. move planet upward
-       2. move planet left
-       
-       The actual zoom remains unchanged.
-    */
-
-    const zoomFactor =
-        (
-            520 -
-            zoomDistance
-        ) /
-        (
-            520 -
-            MIN_ZOOM
-        );
-
-
-    const factor =
-        Math.max(
-            0,
-            Math.min(
-                1,
-                zoomFactor
-            )
-        );
-
-
-    /*
-       Base X = 70.
-       At maximum zoom the planet moves
-       another 38 units to the left.
-    */
-
-    planetGroup.position.x =
-        70 -
-        factor*38;
-
-
-    /*
-       Lift planet slightly so the lower
-       edge stays clear of the bottom panel.
-    */
-
-    planetGroup.position.y =
-        factor*58;
-
-
-    /*
-       Automatic slow rotation.
-    */
-
-    if(!dragging){
-
-        planetGroup.rotation.y +=
-            currentWorld==="mars"
-                ? .00030
-                : .00022;
-
-    }
-
-
-    renderer.render(
-        scene,
-        camera
-    );
-
-
-    requestAnimationFrame(
-        animate
-    );
-
-}
-
-
-requestAnimationFrame(
-    animate
-);
-
-
-/* =========================================================
    RESIZE
 ========================================================= */
 
@@ -2649,7 +2742,7 @@ window.addEventListener(
     () => {
 
         camera.aspect =
-            window.innerWidth /
+            window.innerWidth/
             window.innerHeight;
 
 
