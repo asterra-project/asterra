@@ -38,6 +38,7 @@ body{
     position:fixed;
     inset:0;
     overflow:hidden;
+
     background:
         radial-gradient(
             ellipse 75% 70% at 73% 48%,
@@ -53,7 +54,7 @@ body{
 }
 
 /* =========================================================
-   DEEP SPACE NEBULA / HAZE
+   DEEP SPACE NEBULA
 ========================================================= */
 
 .nebula{
@@ -69,6 +70,7 @@ body{
     height:570px;
     right:-100px;
     top:3%;
+
     background:
         radial-gradient(
             ellipse at 42% 52%,
@@ -77,6 +79,7 @@ body{
             rgba(170,185,205,.020) 37%,
             transparent 72%
         );
+
     filter:blur(48px);
     opacity:.9;
     transform:rotate(-14deg);
@@ -88,6 +91,7 @@ body{
     height:330px;
     right:4%;
     top:37%;
+
     background:
         radial-gradient(
             ellipse at 50% 50%,
@@ -95,6 +99,7 @@ body{
             rgba(210,220,235,.023) 30%,
             transparent 70%
         );
+
     filter:blur(42px);
     opacity:.75;
     transform:rotate(-22deg);
@@ -106,6 +111,7 @@ body{
     height:400px;
     right:-350px;
     top:8%;
+
     background:
         radial-gradient(
             ellipse at center,
@@ -113,6 +119,7 @@ body{
             rgba(210,220,235,.012) 35%,
             transparent 70%
         );
+
     filter:blur(65px);
     opacity:.75;
     transform:rotate(8deg);
@@ -123,6 +130,7 @@ body{
     height:220px;
     right:-250px;
     top:52%;
+
     background:
         radial-gradient(
             ellipse at center,
@@ -130,6 +138,7 @@ body{
             rgba(210,220,235,.014) 30%,
             transparent 70%
         );
+
     filter:blur(36px);
     transform:rotate(-17deg);
     opacity:.7;
@@ -141,6 +150,7 @@ body{
     height:300px;
     right:24%;
     top:18%;
+
     background:
         radial-gradient(
             ellipse,
@@ -148,6 +158,7 @@ body{
             rgba(210,220,235,.016) 32%,
             transparent 72%
         );
+
     filter:blur(38px);
     opacity:.65;
     transform:rotate(-30deg);
@@ -158,6 +169,7 @@ body{
     height:230px;
     right:6%;
     bottom:11%;
+
     background:
         radial-gradient(
             ellipse,
@@ -165,6 +177,7 @@ body{
             rgba(190,200,215,.013) 35%,
             transparent 72%
         );
+
     filter:blur(40px);
     opacity:.65;
     transform:rotate(13deg);
@@ -174,6 +187,7 @@ body{
     from{
         transform:translate3d(0,0,0) rotate(-14deg) scale(1);
     }
+
     to{
         transform:translate3d(-30px,14px,0) rotate(-10deg) scale(1.035);
     }
@@ -183,6 +197,7 @@ body{
     from{
         transform:translate3d(0,0,0) rotate(-22deg);
     }
+
     to{
         transform:translate3d(22px,-14px,0) rotate(-18deg);
     }
@@ -192,13 +207,14 @@ body{
     from{
         transform:translate3d(0,0,0) rotate(-17deg);
     }
+
     to{
         transform:translate3d(-28px,13px,0) rotate(-13deg);
     }
 }
 
 /* =========================================================
-   REALISTIC STARFIELD
+   STARFIELD
 ========================================================= */
 
 #starfield{
@@ -240,6 +256,7 @@ canvas{
     top:32px;
     left:42px;
     right:42px;
+
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
@@ -269,6 +286,7 @@ canvas{
     display:flex;
     align-items:center;
     gap:8px;
+
     font-size:9px;
     letter-spacing:.16em;
     color:rgba(255,255,255,.48);
@@ -282,7 +300,9 @@ canvas{
     box-shadow:0 0 12px rgba(255,255,255,.7);
 }
 
-/* HERO */
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
     position:absolute;
@@ -311,6 +331,7 @@ h1{
 
 .hero-text{
     width:330px;
+
     color:rgba(255,255,255,.56);
     font-size:13px;
     line-height:1.75;
@@ -326,13 +347,16 @@ h1{
 .btn{
     height:42px;
     padding:0 18px;
+
     border:1px solid rgba(255,255,255,.14);
     background:rgba(255,255,255,.035);
     color:#fff;
+
     font-family:Inter,sans-serif;
     font-size:9px;
     font-weight:600;
     letter-spacing:.16em;
+
     cursor:pointer;
     transition:.2s ease;
 }
@@ -352,7 +376,9 @@ h1{
     background:#e9edf2;
 }
 
-/* WORLD PANEL */
+/* =========================================================
+   WORLD PANEL
+========================================================= */
 
 .world-panel{
     position:absolute;
@@ -378,13 +404,17 @@ h1{
 .world-tab{
     padding:0 0 13px;
     margin-right:25px;
+
     border:0;
     background:none;
+
     color:rgba(255,255,255,.35);
+
     font-family:Inter,sans-serif;
     font-size:10px;
     font-weight:600;
     letter-spacing:.17em;
+
     cursor:pointer;
     position:relative;
 }
@@ -416,6 +446,7 @@ h1{
 
 .world-description{
     margin-top:9px;
+
     font-size:11px;
     line-height:1.65;
     color:rgba(255,255,255,.42);
@@ -430,7 +461,9 @@ h1{
     display:flex;
     justify-content:space-between;
     align-items:center;
+
     min-height:43px;
+
     border-bottom:1px solid rgba(255,255,255,.08);
 }
 
@@ -454,20 +487,26 @@ h1{
 
 .status-live::before{
     content:"";
+
     width:5px;
     height:5px;
+
     border-radius:50%;
+
     background:#fff;
     box-shadow:0 0 9px rgba(255,255,255,.7);
 }
 
-/* BOTTOM */
+/* =========================================================
+   BOTTOM
+========================================================= */
 
 .bottom{
     position:absolute;
     left:42px;
     right:42px;
     bottom:28px;
+
     display:flex;
     justify-content:space-between;
     align-items:flex-end;
@@ -506,10 +545,15 @@ h1{
     left:50%;
     bottom:31px;
     transform:translateX(-50%);
+
     font-size:7px;
     letter-spacing:.2em;
     color:rgba(255,255,255,.23);
 }
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:1000px){
 
@@ -588,7 +632,6 @@ h1{
     <div class="nebula nebula-cloud-a"></div>
     <div class="nebula nebula-cloud-b"></div>
 
-    <!-- NEW REALISTIC COSMIC LAYER -->
     <canvas id="starfield"></canvas>
 
     <div id="scene"></div>
@@ -598,6 +641,7 @@ h1{
         <div class="topbar">
 
             <div>
+
                 <div class="brand">
                     ASTERRA
                 </div>
@@ -605,6 +649,7 @@ h1{
                 <div class="brand-sub">
                     OWN YOUR WORLD.
                 </div>
+
             </div>
 
             <div class="top-right">
@@ -617,6 +662,7 @@ h1{
             </div>
 
         </div>
+
 
         <section class="hero">
 
@@ -653,6 +699,7 @@ h1{
 
         </section>
 
+
         <aside class="world-panel">
 
             <div class="panel-label">
@@ -677,6 +724,7 @@ h1{
 
             </div>
 
+
             <div class="world-info">
 
                 <div
@@ -693,6 +741,7 @@ h1{
                     A finite digital surface inspired by Earth's closest
                     celestial neighbour.
                 </div>
+
 
                 <div class="stats">
 
@@ -711,6 +760,7 @@ h1{
 
                     </div>
 
+
                     <div class="stat">
 
                         <span class="stat-label">
@@ -726,6 +776,7 @@ h1{
 
                     </div>
 
+
                     <div class="stat">
 
                         <span class="stat-label">
@@ -740,6 +791,7 @@ h1{
                         </span>
 
                     </div>
+
 
                     <div class="stat">
 
@@ -759,15 +811,18 @@ h1{
 
         </aside>
 
+
         <div class="drag-hint">
             DRAG TO ROTATE · SCROLL TO ZOOM
         </div>
+
 
         <div class="bottom">
 
             <div class="bottom-left">
                 ASTERRA DIGITAL UNIVERSE · SURFACE SCANNING
             </div>
+
 
             <div class="bottom-right">
 
@@ -786,6 +841,7 @@ h1{
 
                 </div>
 
+
                 <div class="metric">
 
                     <div class="metric-label">
@@ -797,6 +853,7 @@ h1{
                     </div>
 
                 </div>
+
 
                 <div class="metric">
 
@@ -818,16 +875,18 @@ h1{
 
 </div>
 
+
+<!-- =======================================================
+     THREE.JS
+======================================================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 
-<!-- NASA/LRO Moon GLB loader -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
 
 /* =========================================================
    REALISTIC COSMIC STARFIELD
-   Completely replaces the old CSS star system.
 ========================================================= */
 
 const starCanvas =
@@ -838,80 +897,54 @@ const starCtx =
         alpha:true
     });
 
-let starWidth = 0;
-let starHeight = 0;
-let starDpr = 1;
+let starWidth=0;
+let starHeight=0;
+let starDpr=1;
 
-const cosmicStars = [];
-const cosmicDust = [];
+const cosmicStars=[];
+const cosmicDust=[];
 
-
-/* ---------------------------------------------------------
-   Utility
---------------------------------------------------------- */
 
 function randomBetween(a,b){
-    return a + Math.random() * (b-a);
+
+    return a+
+        Math.random()*
+        (b-a);
 }
 
 
-/* ---------------------------------------------------------
-   Stellar colour temperature
---------------------------------------------------------- */
+/* =========================================================
+   STAR COLOURS
+========================================================= */
 
-function stellarColor(type, alpha){
+function stellarColor(type,alpha){
 
     if(type===0){
 
-        return `rgba(
-            255,
-            255,
-            255,
-            ${alpha}
-        )`;
+        return `rgba(255,255,255,${alpha})`;
     }
 
     if(type===1){
 
-        return `rgba(
-            214,
-            228,
-            255,
-            ${alpha}
-        )`;
+        return `rgba(214,228,255,${alpha})`;
     }
 
     if(type===2){
 
-        return `rgba(
-            255,
-            244,
-            224,
-            ${alpha}
-        )`;
+        return `rgba(255,244,224,${alpha})`;
     }
 
-    return `rgba(
-        238,
-        242,
-        255,
-        ${alpha}
-    )`;
+    return `rgba(238,242,255,${alpha})`;
 }
 
 
-/* ---------------------------------------------------------
-   Create stars
---------------------------------------------------------- */
+/* =========================================================
+   CREATE STARS
+========================================================= */
 
 function createCosmicStars(){
 
-    cosmicStars.length = 0;
-
-    /*
-       Sparse background.
-       Most stars are extremely faint.
-    */
+    cosmicStars.length=0;
 
     const count =
         Math.min(
@@ -919,89 +952,58 @@ function createCosmicStars(){
             Math.max(
                 360,
                 Math.floor(
-                    window.innerWidth *
-                    window.innerHeight /
+                    window.innerWidth*
+                    window.innerHeight/
                     2500
                 )
             )
         );
 
 
-    for(let i=0;i<count;i++){
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
 
         const layer =
             Math.random();
-
 
         let radius;
         let brightness;
 
 
-        /*
-           Deep background stars.
-        */
-
-        if(layer < .76){
+        if(layer<.76){
 
             radius =
-                randomBetween(
-                    .28,
-                    .72
-                );
+                randomBetween(.28,.72);
 
             brightness =
-                randomBetween(
-                    .12,
-                    .38
-                );
-        }
+                randomBetween(.12,.38);
 
-        /*
-           Medium distance.
-        */
-
-        else if(layer < .96){
+        }else if(layer<.96){
 
             radius =
-                randomBetween(
-                    .65,
-                    1.15
-                );
+                randomBetween(.65,1.15);
 
             brightness =
-                randomBetween(
-                    .28,
-                    .68
-                );
-        }
+                randomBetween(.28,.68);
 
-        /*
-           Rare prominent stars.
-        */
-
-        else{
+        }else{
 
             radius =
-                randomBetween(
-                    1.05,
-                    1.9
-                );
+                randomBetween(1.05,1.9);
 
             brightness =
-                randomBetween(
-                    .55,
-                    .95
-                );
+                randomBetween(.55,.95);
         }
 
 
         cosmicStars.push({
 
-            x:
-                Math.random(),
+            x:Math.random(),
 
-            y:
-                Math.random(),
+            y:Math.random(),
 
             radius,
 
@@ -1009,47 +1011,29 @@ function createCosmicStars(){
 
             phase:
                 Math.random()*
-                Math.PI*2,
+                Math.PI*
+                2,
 
             speed:
-                randomBetween(
-                    .18,
-                    1.15
-                ),
+                randomBetween(.18,1.15),
 
             pulse:
-                randomBetween(
-                    .025,
-                    .22
-                ),
+                randomBetween(.025,.22),
 
             type:
                 Math.random()<.84
-                ? 0
-                : (
+                ?0
+                :(
                     Math.random()<.55
-                    ? 1
-                    : 2
+                    ?1
+                    :2
                 ),
 
             depth:
-                randomBetween(
-                    .15,
-                    1
-                ),
-
-            /*
-               Only a very small percentage
-               get an optical halo.
-            */
+                randomBetween(.15,1),
 
             halo:
                 Math.random()<.025,
-
-            /*
-               Only the rarest stars receive
-               diffraction-like optical rays.
-            */
 
             diffraction:
                 Math.random()<.009
@@ -1058,9 +1042,9 @@ function createCosmicStars(){
 }
 
 
-/* ---------------------------------------------------------
-   Very sparse cosmic dust
---------------------------------------------------------- */
+/* =========================================================
+   COSMIC DUST
+========================================================= */
 
 function createCosmicDust(){
 
@@ -1068,7 +1052,11 @@ function createCosmicDust(){
 
     const count=85;
 
-    for(let i=0;i<count;i++){
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
 
         cosmicDust.push({
 
@@ -1077,63 +1065,55 @@ function createCosmicDust(){
             y:Math.random(),
 
             radius:
-                randomBetween(
-                    .25,
-                    1.1
-                ),
+                randomBetween(.25,1.1),
 
             alpha:
-                randomBetween(
-                    .018,
-                    .075
-                ),
+                randomBetween(.018,.075),
 
             phase:
                 Math.random()*
-                Math.PI*2,
+                Math.PI*
+                2,
 
             speed:
-                randomBetween(
-                    .01,
-                    .035
-                )
+                randomBetween(.01,.035)
         });
     }
 }
 
 
-/* ---------------------------------------------------------
-   Resize
---------------------------------------------------------- */
+/* =========================================================
+   STARFIELD RESIZE
+========================================================= */
 
 function resizeStarfield(){
 
     starDpr =
         Math.min(
-            window.devicePixelRatio || 1,
+            window.devicePixelRatio||1,
             2
         );
 
-    starWidth =
+    starWidth=
         window.innerWidth;
 
-    starHeight =
+    starHeight=
         window.innerHeight;
 
 
-    starCanvas.width =
-        starWidth *
+    starCanvas.width=
+        starWidth*
         starDpr;
 
-    starCanvas.height =
-        starHeight *
+    starCanvas.height=
+        starHeight*
         starDpr;
 
 
-    starCanvas.style.width =
+    starCanvas.style.width=
         starWidth+"px";
 
-    starCanvas.style.height =
+    starCanvas.style.height=
         starHeight+"px";
 
 
@@ -1155,9 +1135,9 @@ function resizeStarfield(){
 resizeStarfield();
 
 
-/* ---------------------------------------------------------
-   Draw a natural soft star
---------------------------------------------------------- */
+/* =========================================================
+   DRAW STAR
+========================================================= */
 
 function drawStar(star,time){
 
@@ -1179,13 +1159,8 @@ function drawStar(star,time){
         );
 
 
-    /*
-       Mostly stable brightness.
-       Only subtle natural variation.
-    */
-
     let intensity =
-        star.brightness *
+        star.brightness*
         (
             1+
             twinkle*
@@ -1196,7 +1171,7 @@ function drawStar(star,time){
         );
 
 
-    intensity =
+    intensity=
         Math.max(
             .025,
             Math.min(
@@ -1206,14 +1181,9 @@ function drawStar(star,time){
         );
 
 
-    /*
-       Tiny depth drift.
-    */
-
     const driftX =
         Math.sin(
-            time*
-            .008+
+            time*.008+
             star.phase
         )*
         star.depth*
@@ -1222,8 +1192,7 @@ function drawStar(star,time){
 
     const driftY =
         Math.cos(
-            time*
-            .006+
+            time*.006+
             star.phase
         )*
         star.depth*
@@ -1235,16 +1204,11 @@ function drawStar(star,time){
         starWidth+
         driftX;
 
-
     const y =
         star.y*
         starHeight+
         driftY;
 
-
-    /*
-       Main point.
-    */
 
     starCtx.beginPath();
 
@@ -1256,7 +1220,7 @@ function drawStar(star,time){
         Math.PI*2
     );
 
-    starCtx.fillStyle =
+    starCtx.fillStyle=
         stellarColor(
             star.type,
             intensity
@@ -1265,16 +1229,12 @@ function drawStar(star,time){
     starCtx.fill();
 
 
-    /*
-       Extremely rare soft halo.
-    */
-
     if(
-        star.halo &&
+        star.halo&&
         intensity>.52
     ){
 
-        const glow =
+        const glow=
             starCtx.createRadialGradient(
                 x,
                 y,
@@ -1326,13 +1286,8 @@ function drawStar(star,time){
     }
 
 
-    /*
-       Almost invisible optical diffraction
-       on only a handful of bright stars.
-    */
-
     if(
-        star.diffraction &&
+        star.diffraction&&
         intensity>.58
     ){
 
@@ -1376,7 +1331,7 @@ function drawStar(star,time){
         );
 
 
-        starCtx.fillStyle =
+        starCtx.fillStyle=
             rayGradient;
 
         starCtx.fillRect(
@@ -1421,7 +1376,7 @@ function drawStar(star,time){
         );
 
 
-        starCtx.fillStyle =
+        starCtx.fillStyle=
             verticalGradient;
 
         starCtx.fillRect(
@@ -1434,9 +1389,9 @@ function drawStar(star,time){
 }
 
 
-/* ---------------------------------------------------------
-   Draw faint dust
---------------------------------------------------------- */
+/* =========================================================
+   DRAW DUST
+========================================================= */
 
 function drawDust(time){
 
@@ -1445,31 +1400,33 @@ function drawDust(time){
         of cosmicDust
     ){
 
-        const x =
+        const x=
             dust.x*
             starWidth;
 
-        const y =
+        const y=
             dust.y*
             starHeight;
 
 
-        const pulse =
+        const pulse=
             (
                 Math.sin(
                     time*
                     dust.speed+
                     dust.phase
-                )+1
+                )+
+                1
             )*.5;
 
 
-        const alpha =
+        const alpha=
             dust.alpha*
-            (.72+pulse*.28);
+            (.72+
+            pulse*.28);
 
 
-        const gradient =
+        const gradient=
             starCtx.createRadialGradient(
                 x,
                 y,
@@ -1508,19 +1465,18 @@ function drawDust(time){
 }
 
 
-/* ---------------------------------------------------------
-   Main cosmic animation
---------------------------------------------------------- */
+/* =========================================================
+   STARFIELD ANIMATION
+========================================================= */
 
-const cosmicClock =
+const cosmicClock=
     performance.now();
 
 
 function renderStarfield(now){
 
-    const time =
-        (now-cosmicClock)/
-        1000;
+    const time=
+        (now-cosmicClock)/1000;
 
 
     starCtx.clearRect(
@@ -1531,13 +1487,7 @@ function renderStarfield(now){
     );
 
 
-    /*
-       Extremely subtle deep-space haze.
-       This sits behind the stars and creates
-       a photographic rather than graphic look.
-    */
-
-    const haze =
+    const haze=
         starCtx.createRadialGradient(
             starWidth*.72,
             starHeight*.48,
@@ -1580,10 +1530,6 @@ function renderStarfield(now){
     drawDust(time);
 
 
-    /*
-       Draw the stars in depth order.
-    */
-
     for(
         const star
         of cosmicStars
@@ -1608,13 +1554,14 @@ requestAnimationFrame(
 
 
 /* =========================================================
-   THREE.JS
+   THREE.JS SCENE
 ========================================================= */
 
-const scene =
+const scene=
     new THREE.Scene();
 
-const camera =
+
+const camera=
     new THREE.PerspectiveCamera(
         42,
         window.innerWidth/
@@ -1623,32 +1570,46 @@ const camera =
         4000
     );
 
+
 camera.position.set(
     0,
     0,
     520
 );
 
-const renderer =
+
+const renderer=
     new THREE.WebGLRenderer({
+
         antialias:true,
-        alpha:true
+
+        alpha:true,
+
+        powerPreference:"high-performance"
     });
+
 
 renderer.setPixelRatio(
     Math.min(
-        window.devicePixelRatio,
+        window.devicePixelRatio||1,
         2
     )
 );
+
 
 renderer.setSize(
     window.innerWidth,
     window.innerHeight
 );
 
-renderer.outputEncoding =
+
+renderer.outputEncoding=
     THREE.sRGBEncoding;
+
+
+renderer.domElement.style.touchAction=
+    "none";
+
 
 document
     .getElementById("scene")
@@ -1661,19 +1622,21 @@ document
    LIGHTING
 ========================================================= */
 
-const ambient =
+const ambient=
     new THREE.AmbientLight(
         0xffffff,
-        .75
+        .68
     );
 
 scene.add(ambient);
 
-const keyLight =
+
+const keyLight=
     new THREE.DirectionalLight(
         0xffffff,
-        1.25
+        1.35
     );
+
 
 keyLight.position.set(
     -250,
@@ -1681,13 +1644,16 @@ keyLight.position.set(
     350
 );
 
+
 scene.add(keyLight);
 
-const rimLight =
+
+const rimLight=
     new THREE.DirectionalLight(
         0x8fa9d0,
-        .45
+        .42
     );
+
 
 rimLight.position.set(
     250,
@@ -1695,63 +1661,77 @@ rimLight.position.set(
     -250
 );
 
+
 scene.add(rimLight);
 
 
 /* =========================================================
-   PLANET
+   PLANET SYSTEM
 ========================================================= */
 
-const PLANET_RADIUS =
+const PLANET_RADIUS=
     130;
 
-const planetGroup =
+
+const planetGroup=
     new THREE.Group();
+
 
 scene.add(
     planetGroup
 );
 
 
+let currentWorld=
+    "Moon";
+
+
+let planetMesh=
+    null;
+
+
+let moonLoadToken=
+    0;
+
+
 /* =========================================================
-   NASA LRO MOON
-   Official NASA 3D model:
-   LRO colour map + topographic height data.
+   NASA MOON TEXTURES
 ========================================================= */
 
-const NASA_MOON_TOPO =
-    "https://svs.gsfc.nasa.gov/vis/a010000/a014900/a014959/Moon_NASA_LRO_8k_Topo_Small.glb";
-
-const moonLoader =
-    new THREE.GLTFLoader();
-
-let moonLoadingToken = 0;
+const NASA_MOON_COLOR=
+    "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg";
 
 
-/* ---------------------------------------------------------
-   Original procedural texture
-   Used for Mars and as Moon fallback while
-   the NASA model is loading.
---------------------------------------------------------- */
+const NASA_MOON_HEIGHT=
+    "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_3_8bit.jpg";
+
+
+/* =========================================================
+   FALLBACK PLANET TEXTURE
+========================================================= */
 
 function createPlanetTexture(world){
 
-    const canvas =
+    const canvas=
         document.createElement("canvas");
+
 
     canvas.width=1024;
     canvas.height=512;
 
-    const ctx =
+
+    const ctx=
         canvas.getContext("2d");
 
-    const image =
+
+    const image=
         ctx.createImageData(
             canvas.width,
             canvas.height
         );
 
-    const data =
+
+    const data=
         image.data;
 
 
@@ -1767,14 +1747,14 @@ function createPlanetTexture(world){
             x++
         ){
 
-            const nx =
+            const nx=
                 x/canvas.width;
 
-            const ny =
+            const ny=
                 y/canvas.height;
 
 
-            const n =
+            const n=
                 Math.sin(
                     nx*31+
                     Math.sin(ny*8)*3
@@ -1800,8 +1780,9 @@ function createPlanetTexture(world){
 
             if(world==="Moon"){
 
-                const base =
-                    116+n*15;
+                const base=
+                    116+
+                    n*15;
 
                 r=base;
                 g=base;
@@ -1809,8 +1790,9 @@ function createPlanetTexture(world){
 
             }else{
 
-                const base =
-                    105+n*17;
+                const base=
+                    105+
+                    n*17;
 
                 r=base+25;
                 g=base-7;
@@ -1818,11 +1800,11 @@ function createPlanetTexture(world){
             }
 
 
-            const index =
+            const index=
                 (y*canvas.width+x)*4;
 
 
-            data[index] =
+            data[index]=
                 Math.max(
                     0,
                     Math.min(
@@ -1831,7 +1813,8 @@ function createPlanetTexture(world){
                     )
                 );
 
-            data[index+1] =
+
+            data[index+1]=
                 Math.max(
                     0,
                     Math.min(
@@ -1840,7 +1823,8 @@ function createPlanetTexture(world){
                     )
                 );
 
-            data[index+2] =
+
+            data[index+2]=
                 Math.max(
                     0,
                     Math.min(
@@ -1848,6 +1832,7 @@ function createPlanetTexture(world){
                         b
                     )
                 );
+
 
             data[index+3]=255;
         }
@@ -1861,10 +1846,17 @@ function createPlanetTexture(world){
     );
 
 
-    const craterCount =
+    /*
+       Fallback craters.
+
+       These are used only if NASA
+       imagery cannot be loaded.
+    */
+
+    const craterCount=
         world==="Moon"
-        ? 170
-        : 105;
+        ?170
+        :105;
 
 
     for(
@@ -1873,27 +1865,28 @@ function createPlanetTexture(world){
         i++
     ){
 
-        const x =
+        const x=
             Math.random()*
             canvas.width;
 
-        const y =
+        const y=
             Math.random()*
             canvas.height;
 
-        const radius =
+
+        const radius=
             randomBetween(
                 world==="Moon"
-                ? 2
-                : 3,
+                ?2
+                :3,
 
                 world==="Moon"
-                ? 18
-                : 14
+                ?18
+                :14
             );
 
 
-        const gradient =
+        const gradient=
             ctx.createRadialGradient(
                 x-radius*.25,
                 y-radius*.25,
@@ -1920,9 +1913,12 @@ function createPlanetTexture(world){
         );
 
 
-        ctx.fillStyle=gradient;
+        ctx.fillStyle=
+            gradient;
+
 
         ctx.beginPath();
+
 
         ctx.arc(
             x,
@@ -1932,346 +1928,190 @@ function createPlanetTexture(world){
             Math.PI*2
         );
 
+
         ctx.fill();
     }
 
 
-    const texture =
+    const texture=
         new THREE.CanvasTexture(
             canvas
         );
 
-    texture.anisotropy =
+
+    texture.encoding=
+        THREE.sRGBEncoding;
+
+
+    texture.anisotropy=
         renderer
             .capabilities
             .getMaxAnisotropy();
 
-    texture.encoding =
-        THREE.sRGBEncoding;
+
+    texture.wrapS=
+        THREE.RepeatWrapping;
+
+
+    texture.wrapT=
+        THREE.ClampToEdgeWrapping;
+
 
     return texture;
 }
 
 
-/* ---------------------------------------------------------
-   Dispose planet safely
---------------------------------------------------------- */
+/* =========================================================
+   DISPOSE CURRENT PLANET
+========================================================= */
 
-function disposePlanetObject(object){
+function disposePlanet(){
 
-    if(!object){
+    if(!planetMesh){
         return;
     }
 
 
-    object.traverse(
-        child=>{
-
-            if(!child.isMesh){
-                return;
-            }
-
-
-            if(child.geometry){
-
-                child.geometry.dispose();
-            }
-
-
-            if(child.material){
-
-                const materials =
-                    Array.isArray(
-                        child.material
-                    )
-                    ? child.material
-                    : [child.material];
-
-
-                materials.forEach(
-                    material=>{
-
-                        if(material.map){
-                            material.map.dispose();
-                        }
-
-                        if(material.normalMap){
-                            material.normalMap.dispose();
-                        }
-
-                        if(material.roughnessMap){
-                            material.roughnessMap.dispose();
-                        }
-
-                        if(material.metalnessMap){
-                            material.metalnessMap.dispose();
-                        }
-
-                        if(material.aoMap){
-                            material.aoMap.dispose();
-                        }
-
-                        material.dispose();
-                    }
-                );
-            }
-        }
-    );
-}
-
-
-/* ---------------------------------------------------------
-   Remove current planet
---------------------------------------------------------- */
-
-function clearPlanet(){
-
-    while(
-        planetGroup.children.length
-    ){
-
-        const child =
-            planetGroup.children[
-                planetGroup.children.length-1
-            ];
-
-        planetGroup.remove(child);
-
-        disposePlanetObject(
-            child
-        );
-    }
-}
-
-
-/* ---------------------------------------------------------
-   Prepare NASA Moon model
---------------------------------------------------------- */
-
-function prepareNASAmoon(root){
-
-    /*
-       Calculate bounding box.
-    */
-
-    const box =
-        new THREE.Box3()
-            .setFromObject(root);
-
-    const center =
-        new THREE.Vector3();
-
-    const size =
-        new THREE.Vector3();
-
-    box.getCenter(center);
-    box.getSize(size);
-
-
-    /*
-       Center the NASA model.
-    */
-
-    root.position.sub(
-        center
+    planetGroup.remove(
+        planetMesh
     );
 
 
-    /*
-       Normalize to our existing
-       ASTERRA planet radius.
-    */
+    if(planetMesh.geometry){
 
-    const maxDimension =
-        Math.max(
-            size.x,
-            size.y,
-            size.z
-        );
-
-
-    if(maxDimension>0){
-
-        const desiredDiameter =
-            PLANET_RADIUS*2;
-
-        const scale =
-            desiredDiameter/
-            maxDimension;
-
-        root.scale.setScalar(
-            scale
-        );
+        planetMesh.geometry.dispose();
     }
 
 
-    /*
-       NASA's model already contains
-       actual lunar topography.
+    if(planetMesh.material){
 
-       We make the relief visually readable
-       at this relatively small screen size,
-       without changing the basic geography.
-    */
+        if(
+            planetMesh.material.map
+        ){
 
-    root.updateMatrixWorld(true);
-
-
-    root.traverse(
-        child=>{
-
-            if(!child.isMesh){
-                return;
-            }
-
-
-            /*
-               Keep the NASA geometry opaque.
-               This is important because the previous
-               version could appear transparent.
-            */
-
-            child.frustumCulled=false;
-
-
-            /*
-               Use the actual NASA mesh normals.
-            */
-
-            if(child.geometry){
-
-                if(
-                    child.geometry.attributes &&
-                    child.geometry.attributes.position
-                ){
-
-                    child.geometry.computeVertexNormals();
-                }
-            }
-
-
-            /*
-               NASA GLB materials.
-            */
-
-            const materials =
-                Array.isArray(
-                    child.material
-                )
-                ? child.material
-                : [child.material];
-
-
-            materials.forEach(
-                material=>{
-
-                    if(!material){
-                        return;
-                    }
-
-
-                    material.transparent=false;
-                    material.opacity=1;
-                    material.depthWrite=true;
-                    material.depthTest=true;
-
-                    material.side =
-                        THREE.FrontSide;
-
-                    material.roughness=.96;
-                    material.metalness=.02;
-
-
-                    if(material.map){
-
-                        material.map.encoding =
-                            THREE.sRGBEncoding;
-
-                        material.map.anisotropy =
-                            renderer
-                                .capabilities
-                                .getMaxAnisotropy();
-                    }
-                }
-            );
+            planetMesh.material.map.dispose();
         }
-    );
 
 
-    return root;
+        if(
+            planetMesh.material.displacementMap
+        ){
+
+            planetMesh.material
+                .displacementMap
+                .dispose();
+        }
+
+
+        planetMesh.material.dispose();
+    }
+
+
+    planetMesh=null;
 }
 
 
-/* ---------------------------------------------------------
-   Load official NASA Moon
---------------------------------------------------------- */
-
-function loadNASAmoon(){
-
-    return new Promise(
-        (resolve,reject)=>{
-
-            moonLoader.load(
-
-                NASA_MOON_TOPO,
-
-                gltf=>{
-
-                    resolve(
-                        gltf.scene
-                    );
-                },
-
-                undefined,
-
-                error=>{
-
-                    reject(error);
-                }
-            );
-        }
-    );
-}
-
-
-/* ---------------------------------------------------------
-   Planet state
---------------------------------------------------------- */
-
-let currentWorld="Moon";
-
-let planetMesh=null;
-
-
-/* ---------------------------------------------------------
-   Build planet
---------------------------------------------------------- */
+/* =========================================================
+   BUILD PLANET
+========================================================= */
 
 function buildPlanet(world){
 
-    /*
-       Invalidate any previous asynchronous
-       NASA Moon load.
-    */
-
-    moonLoadingToken++;
-
-    const loadingToken =
-        moonLoadingToken;
+    currentWorld=
+        world;
 
 
     /*
-       Remove existing planet.
+       Invalidate previous NASA
+       loading operations.
     */
 
-    clearPlanet();
+    moonLoadToken++;
 
-    planetMesh=null;
+    const thisLoadToken=
+        moonLoadToken;
+
+
+    disposePlanet();
 
 
     /*
-       Reset basic orientation.
+       Moon gets denser geometry because
+       the elevation map needs vertices
+       to deform.
+       
+       Mars remains lighter.
     */
+
+    const segmentsX=
+        world==="Moon"
+        ?192
+        :96;
+
+
+    const segmentsY=
+        world==="Moon"
+        ?128
+        :96;
+
+
+    const geometry=
+        new THREE.SphereGeometry(
+            PLANET_RADIUS,
+            segmentsX,
+            segmentsY
+        );
+
+
+    /*
+       Always create fallback first.
+       This guarantees that something is
+       immediately rendered.
+    */
+
+    const fallbackTexture=
+        createPlanetTexture(
+            world
+        );
+
+
+    const material=
+        new THREE.MeshStandardMaterial({
+
+            map:
+                fallbackTexture,
+
+            roughness:
+                world==="Moon"
+                ?.98
+                :.94,
+
+            metalness:
+                .02,
+
+            displacementScale:
+                0,
+
+            displacementBias:
+                0
+        });
+
+
+    planetMesh=
+        new THREE.Mesh(
+            geometry,
+            material
+        );
+
+
+    planetMesh.frustumCulled=
+        true;
+
+
+    planetGroup.add(
+        planetMesh
+    );
+
 
     planetGroup.rotation.set(
         .05,
@@ -2280,186 +2120,249 @@ function buildPlanet(world){
     );
 
 
-    /* =====================================================
-       MARS
-       Keep the original ASTERRA procedural Mars.
-    ===================================================== */
+    /*
+       Mars uses the procedural texture
+       and stops here.
+    */
 
-    if(world==="Mars"){
-
-        const geometry =
-            new THREE.SphereGeometry(
-                PLANET_RADIUS,
-                96,
-                96
-            );
-
-
-        const texture =
-            createPlanetTexture(
-                "Mars"
-            );
-
-
-        const material =
-            new THREE.MeshStandardMaterial({
-                map:texture,
-                roughness:.96,
-                metalness:.02
-            });
-
-
-        planetMesh =
-            new THREE.Mesh(
-                geometry,
-                material
-            );
-
-
-        planetGroup.add(
-            planetMesh
-        );
+    if(world!=="Moon"){
 
         return;
     }
 
 
     /* =====================================================
-       MOON FALLBACK
-       Show the original Moon immediately so the page
-       never becomes empty while NASA loads.
+       NASA LOADER
     ===================================================== */
 
-    const fallbackGeometry =
-        new THREE.SphereGeometry(
-            PLANET_RADIUS,
-            96,
-            96
-        );
+    const loader=
+        new THREE.TextureLoader();
 
 
-    const fallbackTexture =
-        createPlanetTexture(
-            "Moon"
-        );
-
-
-    const fallbackMaterial =
-        new THREE.MeshStandardMaterial({
-            map:fallbackTexture,
-            roughness:.96,
-            metalness:.02
-        });
-
-
-    planetMesh =
-        new THREE.Mesh(
-            fallbackGeometry,
-            fallbackMaterial
-        );
-
-
-    planetGroup.add(
-        planetMesh
+    loader.setCrossOrigin(
+        "anonymous"
     );
 
 
+    let colorTexture=
+        null;
+
+
+    let heightTexture=
+        null;
+
+
     /*
-       Load NASA/LRO Moon asynchronously.
+       Called whenever either NASA texture
+       becomes available.
     */
 
-    loadNASAmoon()
-        .then(
-            nasaMoon=>{
+    function applyNASA(){
 
-                /*
-                   If the user switched to Mars
-                   while the 3D Moon was loading,
-                   do not insert the old Moon.
-                */
+        if(
+            thisLoadToken!==
+            moonLoadToken
+        ){
 
-                if(
-                    loadingToken !==
-                    moonLoadingToken
-                ){
-                    disposePlanetObject(
-                        nasaMoon
-                    );
-
-                    return;
-                }
+            return;
+        }
 
 
-                if(
-                    currentWorld!=="Moon"
-                ){
-                    disposePlanetObject(
-                        nasaMoon
-                    );
+        if(
+            !planetMesh||
+            currentWorld!=="Moon"
+        ){
 
-                    return;
-                }
+            return;
+        }
 
 
-                prepareNASAmoon(
-                    nasaMoon
-                );
+        /* -----------------------------------------------
+           LROC COLOR
+        ----------------------------------------------- */
+
+        if(colorTexture){
+
+            colorTexture.encoding=
+                THREE.sRGBEncoding;
 
 
-                /*
-                   Remove procedural fallback.
-                */
-
-                if(planetMesh){
-
-                    planetGroup.remove(
-                        planetMesh
-                    );
-
-                    disposePlanetObject(
-                        planetMesh
-                    );
-
-                    planetMesh=null;
-                }
+            colorTexture.anisotropy=
+                renderer
+                    .capabilities
+                    .getMaxAnisotropy();
 
 
-                /*
-                   Add the real NASA Moon.
-                */
-
-                planetGroup.add(
-                    nasaMoon
-                );
+            colorTexture.wrapS=
+                THREE.ClampToEdgeWrapping;
 
 
-                /*
-                   Keep a reference to the NASA
-                   object so the existing animation
-                   system continues to work.
-                */
+            colorTexture.wrapT=
+                THREE.ClampToEdgeWrapping;
 
-                planetMesh =
-                    nasaMoon;
+
+            const oldMap=
+                planetMesh.material.map;
+
+
+            planetMesh.material.map=
+                colorTexture;
+
+
+            if(
+                oldMap&&
+                oldMap!==colorTexture
+            ){
+
+                oldMap.dispose();
             }
-        )
-        .catch(
-            error=>{
+        }
 
-                /*
-                   Keep the procedural fallback
-                   if NASA cannot be downloaded.
-                   The page therefore remains visible.
-                */
 
-                console.warn(
-                    "ASTERRA: NASA Moon model could not be loaded.",
-                    error
-                );
+        /* -----------------------------------------------
+           LOLA HEIGHT
+        ----------------------------------------------- */
+
+        if(heightTexture){
+
+            heightTexture.wrapS=
+                THREE.ClampToEdgeWrapping;
+
+
+            heightTexture.wrapT=
+                THREE.ClampToEdgeWrapping;
+
+
+            /*
+               Grayscale height data.
+
+               NearestFilter is avoided because
+               LinearFilter gives smoother terrain.
+            */
+
+            heightTexture.minFilter=
+                THREE.LinearMipmapLinearFilter;
+
+
+            heightTexture.magFilter=
+                THREE.LinearFilter;
+
+
+            heightTexture.anisotropy=
+                renderer
+                    .capabilities
+                    .getMaxAnisotropy();
+
+
+            planetMesh.material.displacementMap=
+                heightTexture;
+
+
+            /*
+               Moderate real elevation.
+
+               The goal is visible lunar terrain,
+               not an exaggerated mountain sphere.
+            */
+
+            planetMesh.material.displacementScale=
+                2.4;
+
+
+            planetMesh.material.displacementBias=
+                -1.2;
+        }
+
+
+        planetMesh.material.needsUpdate=
+            true;
+    }
+
+
+    /* =====================================================
+       NASA LROC COLOR
+    ===================================================== */
+
+    loader.load(
+
+        NASA_MOON_COLOR,
+
+        function(texture){
+
+            if(
+                thisLoadToken!==
+                moonLoadToken
+            ){
+
+                texture.dispose();
+
+                return;
             }
-        );
+
+
+            colorTexture=
+                texture;
+
+
+            applyNASA();
+        },
+
+        undefined,
+
+        function(error){
+
+            console.warn(
+                "NASA Moon colour texture failed. Fallback remains active.",
+                error
+            );
+        }
+    );
+
+
+    /* =====================================================
+       NASA LOLA HEIGHT
+    ===================================================== */
+
+    loader.load(
+
+        NASA_MOON_HEIGHT,
+
+        function(texture){
+
+            if(
+                thisLoadToken!==
+                moonLoadToken
+            ){
+
+                texture.dispose();
+
+                return;
+            }
+
+
+            heightTexture=
+                texture;
+
+
+            applyNASA();
+        },
+
+        undefined,
+
+        function(error){
+
+            console.warn(
+                "NASA Moon elevation texture failed. Fallback remains active.",
+                error
+            );
+        }
+    );
 }
 
+
+/* =========================================================
+   INITIAL MOON
+========================================================= */
 
 buildPlanet("Moon");
 
@@ -2485,6 +2388,7 @@ const worldData={
             "$11"
     },
 
+
     Mars:{
 
         description:
@@ -2504,62 +2408,71 @@ const worldData={
 
 
 /* =========================================================
-   WORLD SWITCH
+   UI REFERENCES
 ========================================================= */
 
-const worldName =
+const worldName=
     document.getElementById(
         "worldName"
     );
 
-const worldDescription =
+
+const worldDescription=
     document.getElementById(
         "worldDescription"
     );
 
-const supply =
+
+const supply=
     document.getElementById(
         "supply"
     );
 
-const available =
+
+const available=
     document.getElementById(
         "available"
     );
 
-const price =
+
+const price=
     document.getElementById(
         "price"
     );
 
-const bottomWorld =
+
+const bottomWorld=
     document.getElementById(
         "bottomWorld"
     );
 
 
+/* =========================================================
+   WORLD SWITCH
+========================================================= */
+
 document
-    .querySelectorAll(
-        ".world-tab"
-    )
+    .querySelectorAll(".world-tab")
     .forEach(button=>{
 
         button.addEventListener(
             "click",
             ()=>{
 
-                const world =
+                const world=
                     button.dataset.world;
 
 
                 if(
-                    world===currentWorld
+                    world===
+                    currentWorld
                 ){
+
                     return;
                 }
 
 
-                currentWorld =
+                currentWorld=
                     world;
 
 
@@ -2573,30 +2486,34 @@ document
                             "active",
                             b===button
                         );
-
                     });
 
 
-                const data =
+                const data=
                     worldData[world];
 
 
-                worldName.textContent =
+                worldName.textContent=
                     world.toUpperCase();
 
-                worldDescription.textContent =
+
+                worldDescription.textContent=
                     data.description;
 
-                supply.textContent =
+
+                supply.textContent=
                     data.supply;
 
-                available.textContent =
+
+                available.textContent=
                     data.available;
 
-                price.textContent =
+
+                price.textContent=
                     data.price;
 
-                bottomWorld.textContent =
+
+                bottomWorld.textContent=
                     world.toUpperCase();
 
 
@@ -2609,29 +2526,52 @@ document
 
 
 /* =========================================================
-   ROTATION
+   PLANET ROTATION
 ========================================================= */
 
-let dragging=false;
+let dragging=
+    false;
 
-let previousX=0;
-let previousY=0;
 
-let velocityX=0;
-let velocityY=0;
+let previousX=
+    0;
+
+
+let previousY=
+    0;
+
+
+let velocityX=
+    0;
+
+
+let velocityY=
+    0;
 
 
 renderer.domElement.addEventListener(
     "pointerdown",
     e=>{
 
-        dragging=true;
+        dragging=
+            true;
+
 
         previousX=
             e.clientX;
 
+
         previousY=
             e.clientY;
+
+
+        velocityX=
+            0;
+
+
+        velocityY=
+            0;
+
 
         renderer
             .domElement
@@ -2651,37 +2591,41 @@ renderer.domElement.addEventListener(
         }
 
 
-        const dx =
+        const dx=
             e.clientX-
             previousX;
 
-        const dy =
+
+        const dy=
             e.clientY-
             previousY;
 
 
-        previousX =
+        previousX=
             e.clientX;
 
-        previousY =
+
+        previousY=
             e.clientY;
 
 
-        velocityX =
+        velocityX=
             dx*.004;
 
-        velocityY =
+
+        velocityY=
             dy*.004;
 
 
-        planetGroup.rotation.y +=
+        planetGroup.rotation.y+=
             dx*.004;
 
-        planetGroup.rotation.x +=
+
+        planetGroup.rotation.x+=
             dy*.004;
 
 
-        planetGroup.rotation.x =
+        planetGroup.rotation.x=
             Math.max(
                 -1.15,
                 Math.min(
@@ -2697,13 +2641,19 @@ renderer.domElement.addEventListener(
     "pointerup",
     e=>{
 
-        dragging=false;
+        dragging=
+            false;
 
-        renderer
-            .domElement
-            .releasePointerCapture(
-                e.pointerId
-            );
+
+        try{
+
+            renderer
+                .domElement
+                .releasePointerCapture(
+                    e.pointerId
+                );
+
+        }catch(err){}
     }
 );
 
@@ -2711,7 +2661,9 @@ renderer.domElement.addEventListener(
 renderer.domElement.addEventListener(
     "pointercancel",
     ()=>{
-        dragging=false;
+
+        dragging=
+            false;
     }
 );
 
@@ -2720,24 +2672,31 @@ renderer.domElement.addEventListener(
    ZOOM
 ========================================================= */
 
-let zoomDistance=520;
+let zoomDistance=
+    520;
 
-let targetZoom=520;
 
-const MIN_ZOOM=475;
+let targetZoom=
+    520;
 
-const MAX_ZOOM=760;
+
+const MIN_ZOOM=
+    475;
+
+
+const MAX_ZOOM=
+    760;
 
 
 window.addEventListener(
     "wheel",
     e=>{
 
-        targetZoom +=
+        targetZoom+=
             e.deltaY*.35;
 
 
-        targetZoom =
+        targetZoom=
             Math.max(
                 MIN_ZOOM,
                 Math.min(
@@ -2763,33 +2722,35 @@ function screenToWorld(
     distance
 ){
 
-    const ndcX =
+    const ndcX=
         screenX/
         window.innerWidth*
-        2-1;
+        2-
+        1;
 
 
-    const ndcY =
+    const ndcY=
         -(
             screenY/
             window.innerHeight*
-            2-1
+            2-
+            1
         );
 
 
-    const vFov =
+    const vFov=
         THREE.MathUtils.degToRad(
             camera.fov
         );
 
 
-    const visibleHeight =
+    const visibleHeight=
         2*
         Math.tan(vFov/2)*
         distance;
 
 
-    const visibleWidth =
+    const visibleWidth=
         visibleHeight*
         camera.aspect;
 
@@ -2798,11 +2759,13 @@ function screenToWorld(
 
         x:
             ndcX*
-            visibleWidth/2,
+            visibleWidth/
+            2,
 
         y:
             ndcY*
-            visibleHeight/2
+            visibleHeight/
+            2
     };
 }
 
@@ -2813,111 +2776,147 @@ function screenToWorld(
 
 function updatePlanetSafePosition(){
 
-    const width =
+    const width=
         window.innerWidth;
 
-    const height =
+
+    const height=
         window.innerHeight;
 
-    const distance =
+
+    const distance=
         zoomDistance;
 
 
-    const vFov =
+    const vFov=
         THREE.MathUtils.degToRad(
             camera.fov
         );
 
 
-    const visibleHeight =
+    const visibleHeight=
         2*
         Math.tan(vFov/2)*
         distance;
 
 
-    const pixelsPerWorld =
+    const pixelsPerWorld=
         height/
         visibleHeight;
 
 
-    const projectedRadius =
+    const projectedRadius=
         PLANET_RADIUS*
         pixelsPerWorld;
 
 
-    let leftBoundary =
-        42+390+35;
+    let leftBoundary=
+        42+
+        390+
+        35;
 
-    let rightBoundary =
-        width-42-290-35;
 
-    let topBoundary =
+    let rightBoundary=
+        width-
+        42-
+        290-
+        35;
+
+
+    let topBoundary=
         115;
 
-    let bottomBoundary =
-        height-100;
+
+    let bottomBoundary=
+        height-
+        100;
 
 
-    const margin=18;
+    const margin=
+        18;
 
 
-    leftBoundary += margin;
-    rightBoundary -= margin;
-    topBoundary += margin;
-    bottomBoundary -= margin;
+    leftBoundary+=
+        margin;
 
 
-    let minX =
+    rightBoundary-=
+        margin;
+
+
+    topBoundary+=
+        margin;
+
+
+    bottomBoundary-=
+        margin;
+
+
+    let minX=
         leftBoundary+
         projectedRadius;
 
-    let maxX =
+
+    let maxX=
         rightBoundary-
         projectedRadius;
 
-    let minY =
+
+    let minY=
         topBoundary+
         projectedRadius;
 
-    let maxY =
+
+    let maxY=
         bottomBoundary-
         projectedRadius;
 
 
     if(minX>maxX){
 
-        const middle =
+        const middle=
             (
                 leftBoundary+
                 rightBoundary
-            )/2;
+            )/
+            2;
 
-        minX=middle;
-        maxX=middle;
+
+        minX=
+            middle;
+
+        maxX=
+            middle;
     }
 
 
     if(minY>maxY){
 
-        const middle =
+        const middle=
             (
                 topBoundary+
                 bottomBoundary
-            )/2;
+            )/
+            2;
 
-        minY=middle;
-        maxY=middle;
+
+        minY=
+            middle;
+
+        maxY=
+            middle;
     }
 
 
-    const preferredX =
+    const preferredX=
         width*.57;
 
-    const preferredY =
+
+    const preferredY=
         height*.48;
 
 
-    const finalX =
+    const finalX=
         Math.max(
             minX,
             Math.min(
@@ -2927,7 +2926,7 @@ function updatePlanetSafePosition(){
         );
 
 
-    const finalY =
+    const finalY=
         Math.max(
             minY,
             Math.min(
@@ -2937,7 +2936,7 @@ function updatePlanetSafePosition(){
         );
 
 
-    const world =
+    const world=
         screenToWorld(
             finalX,
             finalY,
@@ -2945,13 +2944,16 @@ function updatePlanetSafePosition(){
         );
 
 
-    planetGroup.position.x =
+    planetGroup.position.x=
         world.x;
 
-    planetGroup.position.y =
+
+    planetGroup.position.y=
         world.y;
 
-    planetGroup.position.z=0;
+
+    planetGroup.position.z=
+        0;
 }
 
 
@@ -2960,9 +2962,7 @@ function updatePlanetSafePosition(){
 ========================================================= */
 
 document
-    .getElementById(
-        "discoverBtn"
-    )
+    .getElementById("discoverBtn")
     .addEventListener(
         "click",
         ()=>{
@@ -2974,14 +2974,12 @@ document
 
 
 document
-    .getElementById(
-        "exploreBtn"
-    )
+    .getElementById("exploreBtn")
     .addEventListener(
         "click",
         ()=>{
 
-            targetZoom =
+            targetZoom=
                 Math.max(
                     MIN_ZOOM,
                     targetZoom-35
@@ -2994,10 +2992,6 @@ document
    ANIMATION
 ========================================================= */
 
-const clock =
-    new THREE.Clock();
-
-
 function animate(){
 
     requestAnimationFrame(
@@ -3005,52 +2999,64 @@ function animate(){
     );
 
 
-    /* -----------------------------------------------
-       ZOOM
-    ----------------------------------------------- */
+    /* -----------------------------------------------------
+       SMOOTH ZOOM
+    ----------------------------------------------------- */
 
-    zoomDistance +=
+    zoomDistance+=
         (
             targetZoom-
             zoomDistance
         )*.08;
 
 
-    camera.position.z =
+    camera.position.z=
         zoomDistance;
 
 
-    /* -----------------------------------------------
-       PLANET
-    ----------------------------------------------- */
+    /* -----------------------------------------------------
+       PLANET ROTATION
+    ----------------------------------------------------- */
 
     if(!dragging){
 
-        planetGroup.rotation.y +=
+        planetGroup.rotation.y+=
             .0008;
+
 
         velocityX*=.94;
         velocityY*=.94;
     }
 
 
-    planetGroup.rotation.y +=
+    planetGroup.rotation.y+=
         velocityX*.25;
 
-    planetGroup.rotation.x +=
+
+    planetGroup.rotation.x+=
         velocityY*.25;
 
 
-    /* -----------------------------------------------
-       SAFE PLANET POSITION
-    ----------------------------------------------- */
+    planetGroup.rotation.x=
+        Math.max(
+            -1.15,
+            Math.min(
+                1.15,
+                planetGroup.rotation.x
+            )
+        );
+
+
+    /* -----------------------------------------------------
+       POSITION
+    ----------------------------------------------------- */
 
     updatePlanetSafePosition();
 
 
-    /* -----------------------------------------------
+    /* -----------------------------------------------------
        RENDER
-    ----------------------------------------------- */
+    ----------------------------------------------------- */
 
     renderer.render(
         scene,
@@ -3070,7 +3076,7 @@ window.addEventListener(
     "resize",
     ()=>{
 
-        camera.aspect =
+        camera.aspect=
             window.innerWidth/
             window.innerHeight;
 
@@ -3085,6 +3091,7 @@ window.addEventListener(
 
 
         resizeStarfield();
+
 
         updatePlanetSafePosition();
     }
