@@ -433,6 +433,7 @@ html,body{
 ========================================================= */
 
 @media(max-width:900px){
+
     .hero{
         left:25px;
         width:340px;
@@ -458,6 +459,7 @@ html,body{
 }
 
 @media(max-width:700px){
+
     .hero{
         top:30%;
         width:calc(100% - 40px);
@@ -521,9 +523,14 @@ html,body{
         </div>
 
         <section class="hero">
-            <div class="kicker">ASTERRA DIGITAL UNIVERSE</div>
 
-            <h1>ENTER THE<br>UNIVERSE</h1>
+            <div class="kicker">
+                ASTERRA DIGITAL UNIVERSE
+            </div>
+
+            <h1>
+                ENTER THE<br>UNIVERSE
+            </h1>
 
             <p>
                 Discover a digital universe built around finite planetary
@@ -531,6 +538,7 @@ html,body{
             </p>
 
             <div class="buttons">
+
                 <button class="btn primary" id="discoverBtn">
                     DISCOVER SURFACE
                 </button>
@@ -538,21 +546,40 @@ html,body{
                 <button class="btn" id="exploreBtn">
                     EXPLORE
                 </button>
+
             </div>
+
         </section>
 
         <aside class="world-panel">
 
-            <div class="panel-label">SELECT WORLD</div>
-
-            <div class="world-tabs">
-                <button class="world-tab active" data-world="moon">MOON</button>
-                <button class="world-tab" data-world="mars">MARS</button>
+            <div class="panel-label">
+                SELECT WORLD
             </div>
 
-            <div class="world-description" id="worldDescription">
+            <div class="world-tabs">
+
+                <button
+                    class="world-tab active"
+                    data-world="moon">
+                    MOON
+                </button>
+
+                <button
+                    class="world-tab"
+                    data-world="mars">
+                    MARS
+                </button>
+
+            </div>
+
+            <div
+                class="world-description"
+                id="worldDescription">
+
                 A finite digital surface inspired by Earth's closest
                 celestial neighbour.
+
             </div>
 
             <div class="stats">
@@ -584,46 +611,80 @@ html,body{
         <div class="plot-card" id="plotCard">
 
             <div class="plot-card-header">
+
                 <div>
-                    <div class="plot-id" id="plotId">PLOT M-00001</div>
-                    <div class="plot-world" id="plotWorld">MOON · SECTOR 01</div>
+
+                    <div
+                        class="plot-id"
+                        id="plotId">
+                        PLOT M-00001
+                    </div>
+
+                    <div
+                        class="plot-world"
+                        id="plotWorld">
+                        MOON · SECTOR 01
+                    </div>
+
                 </div>
 
-                <div class="plot-status" id="plotStatus">
+                <div
+                    class="plot-status"
+                    id="plotStatus">
                     AVAILABLE
                 </div>
+
             </div>
 
             <div class="plot-data">
 
                 <div class="plot-row">
                     <span>AREA</span>
-                    <span id="plotArea">1.42 km²</span>
+                    <span id="plotArea">
+                        1.42 km²
+                    </span>
                 </div>
 
                 <div class="plot-row">
                     <span>COORDINATES</span>
-                    <span id="plotCoordinates">12.4° N · 38.2° E</span>
+                    <span id="plotCoordinates">
+                        12.4° N · 38.2° E
+                    </span>
                 </div>
 
                 <div class="plot-row">
                     <span>TERRAIN</span>
-                    <span id="plotTerrain">RIDGE</span>
+                    <span id="plotTerrain">
+                        RIDGE
+                    </span>
                 </div>
 
                 <div class="plot-row">
                     <span>RARITY</span>
-                    <span id="plotRarity">STANDARD</span>
+                    <span id="plotRarity">
+                        STANDARD
+                    </span>
                 </div>
 
             </div>
 
             <div class="plot-price">
-                <div class="price-label">CURRENT PRICE</div>
-                <div class="price-value" id="plotPrice">$37</div>
+
+                <div class="price-label">
+                    CURRENT PRICE
+                </div>
+
+                <div
+                    class="price-value"
+                    id="plotPrice">
+                    $37
+                </div>
+
             </div>
 
-            <button class="acquire" id="acquireBtn">
+            <button
+                class="acquire"
+                id="acquireBtn">
                 ACQUIRE PLOT
             </button>
 
@@ -638,15 +699,18 @@ html,body{
             <div class="bottom-right">
 
                 <div class="metric">
-                    WORLD <strong id="worldMetric">MOON</strong>
+                    WORLD
+                    <strong id="worldMetric">MOON</strong>
                 </div>
 
                 <div class="metric">
-                    MODE <strong>EXPLORATION</strong>
+                    MODE
+                    <strong>EXPLORATION</strong>
                 </div>
 
                 <div class="metric">
-                    NETWORK <strong>ONLINE</strong>
+                    NETWORK
+                    <strong>ONLINE</strong>
                 </div>
 
             </div>
@@ -661,21 +725,27 @@ html,body{
 
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
+
 /* =========================================================
    STARFIELD
 ========================================================= */
 
-const starCanvas = document.getElementById("starfield");
-const starCtx = starCanvas.getContext("2d", {alpha:true});
+const starCanvas =
+    document.getElementById("starfield");
+
+const starCtx =
+    starCanvas.getContext(
+        "2d",
+        {alpha:true}
+    );
 
 let cosmicStars = [];
 let cosmicDust = [];
 
-function stellarColor(type, alpha){
+function stellarColor(type,alpha){
 
     if(type === "cool"){
         return `rgba(205,220,255,${alpha})`;
@@ -692,33 +762,56 @@ function createCosmicStars(){
 
     cosmicStars = [];
 
-    const area = window.innerWidth * window.innerHeight;
+    const area =
+        window.innerWidth *
+        window.innerHeight;
 
-    let count = Math.floor(area / 5200);
+    let count =
+        Math.floor(area/5200);
 
-    count = Math.max(360, Math.min(620,count));
+    count =
+        Math.max(
+            360,
+            Math.min(620,count)
+        );
 
     for(let i=0;i<count;i++){
 
-        const r = Math.random();
+        const r =
+            Math.random();
 
         let radius;
         let brightness;
 
         if(r < .76){
 
-            radius = .35 + Math.random() * .55;
-            brightness = .25 + Math.random() * .45;
+            radius =
+                .35 +
+                Math.random()*.55;
+
+            brightness =
+                .25 +
+                Math.random()*.45;
 
         }else if(r < .96){
 
-            radius = .65 + Math.random() * .75;
-            brightness = .42 + Math.random() * .42;
+            radius =
+                .65 +
+                Math.random()*.75;
+
+            brightness =
+                .42 +
+                Math.random()*.42;
 
         }else{
 
-            radius = 1.2 + Math.random() * 1.6;
-            brightness = .65 + Math.random() * .35;
+            radius =
+                1.2 +
+                Math.random()*1.6;
+
+            brightness =
+                .65 +
+                Math.random()*.35;
         }
 
         cosmicStars.push({
@@ -729,23 +822,34 @@ function createCosmicStars(){
             radius,
             brightness,
 
-            phase:Math.random()*Math.PI*2,
-            speed:.15 + Math.random()*.8,
+            phase:
+                Math.random()*
+                Math.PI*2,
 
-            pulse:.15 + Math.random()*.35,
+            speed:
+                .15 +
+                Math.random()*.8,
+
+            pulse:
+                .15 +
+                Math.random()*.35,
 
             type:
-                Math.random() < .12
+                Math.random()<.12
                 ? "cool"
-                : Math.random() < .06
+                : Math.random()<.06
                 ? "warm"
                 : "white",
 
-            depth:.15 + Math.random()*.85,
+            depth:
+                .15 +
+                Math.random()*.85,
 
-            halo:Math.random() < .025,
+            halo:
+                Math.random()<.025,
 
-            diffraction:Math.random() < .009
+            diffraction:
+                Math.random()<.009
         });
     }
 }
@@ -761,26 +865,44 @@ function createCosmicDust(){
             x:Math.random(),
             y:Math.random(),
 
-            radius:.15 + Math.random()*.45,
+            radius:
+                .15 +
+                Math.random()*.45,
 
-            alpha:.012 + Math.random()*.035,
+            alpha:
+                .012 +
+                Math.random()*.035,
 
-            phase:Math.random()*Math.PI*2
+            phase:
+                Math.random()*
+                Math.PI*2
         });
     }
 }
 
 function resizeStarfield(){
 
-    const dpr = Math.min(window.devicePixelRatio || 1,2);
+    const dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
 
-    starCanvas.width = window.innerWidth * dpr;
-    starCanvas.height = window.innerHeight * dpr;
+    starCanvas.width =
+        window.innerWidth*dpr;
 
-    starCanvas.style.width = window.innerWidth + "px";
-    starCanvas.style.height = window.innerHeight + "px";
+    starCanvas.height =
+        window.innerHeight*dpr;
 
-    starCtx.setTransform(dpr,0,0,dpr,0,0);
+    starCanvas.style.width =
+        window.innerWidth+"px";
+
+    starCanvas.style.height =
+        window.innerHeight+"px";
+
+    starCtx.setTransform(
+        dpr,0,0,dpr,0,0
+    );
 
     createCosmicStars();
     createCosmicDust();
@@ -790,21 +912,36 @@ function drawStar(star,time){
 
     const twinkle =
         1 +
-        Math.sin(time * star.speed + star.phase) *
+        Math.sin(
+            time*star.speed+
+            star.phase
+        )*
         star.pulse;
 
     const x =
-        star.x * window.innerWidth +
-        Math.sin(time * .00002 + star.phase) * star.depth * .35;
+        star.x*window.innerWidth +
+        Math.sin(
+            time*.00002+
+            star.phase
+        )*
+        star.depth*.35;
 
     const y =
-        star.y * window.innerHeight +
-        Math.cos(time * .000017 + star.phase) * star.depth * .25;
+        star.y*window.innerHeight +
+        Math.cos(
+            time*.000017+
+            star.phase
+        )*
+        star.depth*.25;
 
     const alpha =
-        Math.max(.05,
-        Math.min(1,
-        star.brightness * twinkle));
+        Math.max(
+            .05,
+            Math.min(
+                1,
+                star.brightness*twinkle
+            )
+        );
 
     starCtx.beginPath();
 
@@ -817,7 +954,10 @@ function drawStar(star,time){
     );
 
     starCtx.fillStyle =
-        stellarColor(star.type,alpha);
+        stellarColor(
+            star.type,
+            alpha
+        );
 
     starCtx.fill();
 
@@ -831,12 +971,18 @@ function drawStar(star,time){
 
         gradient.addColorStop(
             0,
-            stellarColor(star.type,alpha*.18)
+            stellarColor(
+                star.type,
+                alpha*.18
+            )
         );
 
         gradient.addColorStop(
             1,
-            stellarColor(star.type,0)
+            stellarColor(
+                star.type,
+                0
+            )
         );
 
         starCtx.beginPath();
@@ -849,24 +995,43 @@ function drawStar(star,time){
             Math.PI*2
         );
 
-        starCtx.fillStyle = gradient;
+        starCtx.fillStyle =
+            gradient;
+
         starCtx.fill();
     }
 
     if(star.diffraction){
 
         starCtx.strokeStyle =
-            stellarColor(star.type,alpha*.15);
+            stellarColor(
+                star.type,
+                alpha*.15
+            );
 
         starCtx.lineWidth=.5;
 
         starCtx.beginPath();
 
-        starCtx.moveTo(x-star.radius*5,y);
-        starCtx.lineTo(x+star.radius*5,y);
+        starCtx.moveTo(
+            x-star.radius*5,
+            y
+        );
 
-        starCtx.moveTo(x,y-star.radius*5);
-        starCtx.lineTo(x,y+star.radius*5);
+        starCtx.lineTo(
+            x+star.radius*5,
+            y
+        );
+
+        starCtx.moveTo(
+            x,
+            y-star.radius*5
+        );
+
+        starCtx.lineTo(
+            x,
+            y+star.radius*5
+        );
 
         starCtx.stroke();
     }
@@ -878,13 +1043,18 @@ function drawDust(time){
 
         const pulse =
             .5 +
-            Math.sin(time*.15+dust.phase)*.5;
+            Math.sin(
+                time*.15+
+                dust.phase
+            )*.5;
 
         const x =
-            dust.x*window.innerWidth;
+            dust.x*
+            window.innerWidth;
 
         const y =
-            dust.y*window.innerHeight;
+            dust.y*
+            window.innerHeight;
 
         starCtx.beginPath();
 
@@ -897,7 +1067,9 @@ function drawDust(time){
         );
 
         starCtx.fillStyle =
-            `rgba(180,195,215,${dust.alpha*pulse})`;
+            `rgba(180,195,215,${
+                dust.alpha*pulse
+            })`;
 
         starCtx.fill();
     }
@@ -905,7 +1077,8 @@ function drawDust(time){
 
 function renderStarfield(now){
 
-    const time = now*.001;
+    const time =
+        now*.001;
 
     starCtx.clearRect(
         0,
@@ -939,7 +1112,8 @@ function renderStarfield(now){
         "rgba(0,0,0,0)"
     );
 
-    starCtx.fillStyle = haze;
+    starCtx.fillStyle =
+        haze;
 
     starCtx.fillRect(
         0,
@@ -954,39 +1128,76 @@ function renderStarfield(now){
         drawStar(star,time);
     }
 
-    requestAnimationFrame(renderStarfield);
+    requestAnimationFrame(
+        renderStarfield
+    );
 }
 
 resizeStarfield();
-window.addEventListener("resize",resizeStarfield);
-requestAnimationFrame(renderStarfield);
+
+window.addEventListener(
+    "resize",
+    resizeStarfield
+);
+
+requestAnimationFrame(
+    renderStarfield
+);
 
 
 /* =========================================================
    THREE.JS
 ========================================================= */
 
-const scene = new THREE.Scene();
+const scene =
+    new THREE.Scene();
 
 const camera =
     new THREE.PerspectiveCamera(
         42,
-        window.innerWidth/window.innerHeight,
+        window.innerWidth/
+        window.innerHeight,
         .1,
         3000
     );
 
+
+/*
+ * NORMAL ZOOM
+ *
+ * The user's zoom behaviour is preserved.
+ */
 let zoomDistance = 520;
 let targetZoom = 520;
 
-const MIN_ZOOM = 475;
-const MAX_ZOOM = 760;
+const BASE_MIN_ZOOM = 475;
+const MAX_ZOOM = 900;
+
+
+/*
+ * =========================================================
+ * IMPORTANT ASTERRA RULE
+ *
+ * PLANET COORDINATES ARE FIXED.
+ *
+ * These values must NOT be changed on resize,
+ * world selection, texture loading or animation.
+ *
+ * Only safe scale / camera distance may change.
+ * =========================================================
+ */
+
+const PLANET_FIXED_X = 105;
+const PLANET_FIXED_Y = 0;
+
+const PLANET_RADIUS = 145;
 
 camera.position.set(
     0,
     0,
     zoomDistance
 );
+
 
 const renderer =
     new THREE.WebGLRenderer({
@@ -995,7 +1206,10 @@ const renderer =
     });
 
 renderer.setPixelRatio(
-    Math.min(window.devicePixelRatio || 1,2)
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    )
 );
 
 renderer.setSize(
@@ -1003,11 +1217,14 @@ renderer.setSize(
     window.innerHeight
 );
 
-renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.outputEncoding =
+    THREE.sRGBEncoding;
 
 document
     .getElementById("scene")
-    .appendChild(renderer.domElement);
+    .appendChild(
+        renderer.domElement
+    );
 
 
 /* =========================================================
@@ -1055,50 +1272,60 @@ scene.add(fillLight);
    WORLD
 ========================================================= */
 
-const planetGroup = new THREE.Group();
+const planetGroup =
+    new THREE.Group();
 
-scene.add(planetGroup);
+scene.add(
+    planetGroup
+);
 
-let currentWorld = "moon";
+let currentWorld =
+    "moon";
 
 let planet;
 
+
 /*
  * Existing visual textures.
- * These remain the main color textures.
  */
-let moonTexture =
+const moonTexture =
     "https://threejs.org/examples/textures/planets/moon_1024.jpg";
 
-let marsTexture =
+const marsTexture =
     "https://threejs.org/examples/textures/planets/mars_1k_color.jpg";
 
 
 /*
- * NASA GLOBAL TERRAIN / ELEVATION MAPS
+ * =========================================================
+ * VERIFIED NASA TERRAIN DATA
+ * =========================================================
  *
  * Moon:
- * NASA LOLA global elevation.
+ * NASA LOLA global elevation map.
  *
  * Mars:
- * NASA MOLA global topography.
+ * NASA MOLA global elevation map.
  *
- * These are used as bump maps so the existing
- * ASTERRA visual style remains intact while
- * real NASA elevation data adds surface relief.
+ * Both are cylindrical projections suitable
+ * for spherical mapping.
  */
 
-const moonTerrainTexture =
-    "https://svs.gsfc.nasa.gov/vis/a030000/a030300/a030326/ldem_3_8bit.jpg";
 
+/* NASA LOLA Moon */
+const moonTerrainTexture =
+    "https://svs.gsfc.nasa.gov/vis/a000000/a004000/a004014/LDEM_16.0centered.0centered.jpg";
+
+
+/* NASA MOLA Mars */
 const marsTerrainTexture =
-    "https://svs.gsfc.nasa.gov/vis/a004000/a004400/a004436/mars_cyl_topo2.jpg";
+    "https://svs.gsfc.nasa.gov/vis/a000000/a004400/a004436/mars_cyl_topo2.jpg";
 
 
 const textureLoader =
     new THREE.TextureLoader();
 
-textureLoader.crossOrigin = "anonymous";
+textureLoader.crossOrigin =
+    "anonymous";
 
 
 /* =========================================================
@@ -1111,9 +1338,12 @@ let selectedPlot = null;
 
 const PLOT_COUNT = 240;
 
-const plotGroup = new THREE.Group();
+const plotGroup =
+    new THREE.Group();
 
-planetGroup.add(plotGroup);
+planetGroup.add(
+    plotGroup
+);
 
 const plotGeometry =
     new THREE.SphereGeometry(
@@ -1146,6 +1376,7 @@ const selectedMaterial =
 function randomTerrain(){
 
     const terrains = [
+
         "RIDGE",
         "CRATER",
         "PLAIN",
@@ -1153,20 +1384,30 @@ function randomTerrain(){
         "HIGHLAND",
         "BASIN",
         "CANYON"
+
     ];
 
     return terrains[
-        Math.floor(Math.random()*terrains.length)
+        Math.floor(
+            Math.random()*
+            terrains.length
+        )
     ];
 }
 
 function randomRarity(){
 
-    const r = Math.random();
+    const r =
+        Math.random();
 
-    if(r < .70) return "STANDARD";
-    if(r < .90) return "RARE";
-    if(r < .98) return "PREMIUM";
+    if(r < .70)
+        return "STANDARD";
+
+    if(r < .90)
+        return "RARE";
+
+    if(r < .98)
+        return "PREMIUM";
 
     return "SPECIAL";
 }
@@ -1174,15 +1415,15 @@ function randomRarity(){
 function randomArea(rarity){
 
     if(rarity === "SPECIAL")
-        return 3 + Math.random()*3;
+        return 3+Math.random()*3;
 
     if(rarity === "PREMIUM")
-        return 2 + Math.random()*2;
+        return 2+Math.random()*2;
 
     if(rarity === "RARE")
-        return 1 + Math.random()*1.5;
+        return 1+Math.random()*1.5;
 
-    return .5 + Math.random()*1.2;
+    return .5+Math.random()*1.2;
 }
 
 function calculatePrice(
@@ -1224,12 +1465,12 @@ function calculatePrice(
         multiplier += 3.2;
 
     multiplier +=
-        (Math.sin(index*13.17)*.18);
+        Math.sin(index*13.17)*.18;
 
     return Math.max(
         base,
         Math.round(
-            base * multiplier
+            base*multiplier
         )
     );
 }
@@ -1241,28 +1482,33 @@ function latLonToVector3(
 ){
 
     const phi =
-        (90-lat)*Math.PI/180;
+        (90-lat)*
+        Math.PI/180;
 
     const theta =
-        (lon+180)*Math.PI/180;
+        (lon+180)*
+        Math.PI/180;
 
     return new THREE.Vector3(
-        -radius *
-        Math.sin(phi) *
+
+        -radius*
+        Math.sin(phi)*
         Math.cos(theta),
 
-        radius *
+        radius*
         Math.cos(phi),
 
-        radius *
-        Math.sin(phi) *
+        radius*
+        Math.sin(phi)*
         Math.sin(theta)
     );
 }
 
 function createPlots(){
 
-    while(plotGroup.children.length){
+    while(
+        plotGroup.children.length
+    ){
 
         plotGroup.remove(
             plotGroup.children[0]
@@ -1271,17 +1517,17 @@ function createPlots(){
 
     plots.length = 0;
 
-    const radius = 145;
+    const radius =
+        PLANET_RADIUS;
 
-    for(let i=0;i<PLOT_COUNT;i++){
-
-        /*
-         * Fibonacci distribution gives us
-         * an even global distribution.
-         */
+    for(
+        let i=0;
+        i<PLOT_COUNT;
+        i++
+    ){
 
         const goldenAngle =
-            Math.PI *
+            Math.PI*
             (3-Math.sqrt(5));
 
         const y =
@@ -1297,16 +1543,20 @@ function createPlots(){
             goldenAngle*i;
 
         const x =
-            Math.cos(theta)*radiusAt;
+            Math.cos(theta)*
+            radiusAt;
 
         const z =
-            Math.sin(theta)*radiusAt;
+            Math.sin(theta)*
+            radiusAt;
 
         const lat =
-            Math.asin(y)*180/Math.PI;
+            Math.asin(y)*
+            180/Math.PI;
 
         const lon =
-            Math.atan2(z,x)*180/Math.PI;
+            Math.atan2(z,x)*
+            180/Math.PI;
 
         const terrain =
             randomTerrain();
@@ -1325,12 +1575,8 @@ function createPlots(){
                 i
             );
 
-        /*
-         * Around 12% sold in demo.
-         */
-
         const sold =
-            Math.random() < .12;
+            Math.random()<.12;
 
         const mesh =
             new THREE.Mesh(
@@ -1369,20 +1615,47 @@ function createPlots(){
             lon,
 
             area,
-
             price,
 
             terrain,
-
             rarity,
 
             sold
         };
 
-        plotGroup.add(mesh);
+        plotGroup.add(
+            mesh
+        );
 
-        plots.push(mesh);
+        plots.push(
+            mesh
+        );
     }
+}
+
+
+/* =========================================================
+   PLANET TEXTURE HELPERS
+========================================================= */
+
+function safeDisposeTexture(texture){
+
+    if(texture){
+        texture.dispose();
+    }
+}
+
+
+/*
+ * Give Mars a non-white fallback immediately.
+ */
+function getPlanetFallbackColor(){
+
+    if(currentWorld === "mars"){
+        return 0x8c4933;
+    }
+
+    return 0x77766f;
 }
 
 
@@ -1390,30 +1663,30 @@ function createPlots(){
    PLANET
 ========================================================= */
 
-function disposeTexture(texture){
-
-    if(texture){
-        texture.dispose();
-    }
-}
-
 function disposePlanet(){
 
     if(!planet)
         return;
 
-    planetGroup.remove(planet);
+    planetGroup.remove(
+        planet
+    );
 
-    if(planet.geometry)
+    if(planet.geometry){
         planet.geometry.dispose();
+    }
 
     if(planet.material){
 
         if(planet.material.map)
-            disposeTexture(planet.material.map);
+            safeDisposeTexture(
+                planet.material.map
+            );
 
         if(planet.material.bumpMap)
-            disposeTexture(planet.material.bumpMap);
+            safeDisposeTexture(
+                planet.material.bumpMap
+            );
 
         planet.material.dispose();
     }
@@ -1425,13 +1698,34 @@ function disposePlanet(){
 function createPlanet(){
 
     /*
-     * Remove previous planet safely.
+     * Remove previous planet.
      */
     disposePlanet();
 
 
     /*
-     * Base surface texture.
+     * =====================================================
+     * IMPORTANT:
+     * Planet coordinates are set ONLY here.
+     *
+     * They are NOT changed by resize.
+     * They are NOT changed by NASA loading.
+     * They are NOT changed by world switching.
+     * =====================================================
+     */
+
+    planetGroup.position.x =
+        PLANET_FIXED_X;
+
+    planetGroup.position.y =
+        PLANET_FIXED_Y;
+
+    planetGroup.position.z =
+        0;
+
+
+    /*
+     * Existing visual texture.
      */
     const surfaceUrl =
         currentWorld === "moon"
@@ -1440,7 +1734,7 @@ function createPlanet(){
 
 
     /*
-     * NASA terrain texture.
+     * NASA terrain.
      */
     const terrainUrl =
         currentWorld === "moon"
@@ -1449,52 +1743,56 @@ function createPlanet(){
 
 
     /*
-     * High-resolution sphere geometry.
-     * The existing 145 radius and 96x96
-     * subdivision are preserved.
+     * Higher geometry resolution.
+     * Still lightweight enough for the laptop.
      */
     const geometry =
         new THREE.SphereGeometry(
-            145,
+            PLANET_RADIUS,
             128,
             128
         );
 
 
     /*
-     * Start with the existing ASTERRA
-     * visual surface.
+     * Start immediately.
+     *
+     * Mars cannot appear as a white sphere
+     * because a fallback color is supplied.
      */
     const material =
         new THREE.MeshStandardMaterial({
+
+            color:
+                getPlanetFallbackColor(),
 
             roughness:
                 currentWorld === "moon"
                 ? .96
                 : .88,
 
-            metalness:0
+            metalness:0,
+
+            bumpScale:
+                currentWorld === "moon"
+                ? 2.8
+                : 2.4
         });
 
 
-    /*
-     * Create planet immediately.
-     *
-     * This is important:
-     * NASA assets load asynchronously and can
-     * never prevent the planet from appearing.
-     */
     planet =
         new THREE.Mesh(
             geometry,
             material
         );
 
-    planetGroup.add(planet);
+    planetGroup.add(
+        planet
+    );
 
 
     /*
-     * Keep the original ASTERRA orientation.
+     * Preserve original orientation.
      */
     planetGroup.rotation.set(
         0.05,
@@ -1504,29 +1802,49 @@ function createPlanet(){
 
 
     /*
-     * Load the existing color texture.
+     * =====================================================
+     * LOAD BASE SURFACE
+     * =====================================================
      */
+
+    const planetReference =
+        planet;
+
     textureLoader.load(
 
         surfaceUrl,
 
         function(texture){
 
-            /*
-             * Only apply it if this planet is
-             * still the active planet.
-             */
-            if(!planet)
+            if(
+                !planet ||
+                planet !== planetReference
+            ){
+
+                texture.dispose();
                 return;
+            }
 
             texture.encoding =
                 THREE.sRGBEncoding;
 
             texture.anisotropy =
-                renderer.capabilities.getMaxAnisotropy();
+                renderer
+                    .capabilities
+                    .getMaxAnisotropy();
 
-            material.map = texture;
-            material.needsUpdate = true;
+            material.map =
+                texture;
+
+            /*
+             * The texture supplies the
+             * recognizable planetary surface.
+             */
+            material.color =
+                0xffffff;
+
+            material.needsUpdate =
+                true;
         },
 
         undefined,
@@ -1534,24 +1852,38 @@ function createPlanet(){
         function(){
 
             /*
-             * If the original texture fails,
-             * the planet remains visible.
+             * If the old Three.js texture fails,
+             * keep the planet coloured.
+             *
+             * Most importantly:
+             * NEVER become a white sphere.
              */
+
+            if(
+                planet &&
+                planet === planetReference
+            ){
+
+                material.color =
+                    getPlanetFallbackColor();
+
+                material.needsUpdate =
+                    true;
+            }
+
             console.warn(
-                "ASTERRA: surface texture failed to load."
+                "ASTERRA: base surface texture failed:",
+                currentWorld
             );
         }
     );
 
 
     /*
-     * Load NASA global elevation.
-     *
-     * The map becomes a real surface-height
-     * relief layer rather than replacing the
-     * existing ASTERRA planet appearance.
+     * =====================================================
+     * LOAD NASA REAL TERRAIN
+     * =====================================================
      */
-    const planetReference = planet;
 
     textureLoader.load(
 
@@ -1559,11 +1891,6 @@ function createPlanet(){
 
         function(terrainTexture){
 
-            /*
-             * Do not apply an old Moon terrain
-             * texture to a newly selected Mars,
-             * or vice versa.
-             */
             if(
                 !planet ||
                 planet !== planetReference
@@ -1575,51 +1902,66 @@ function createPlanet(){
 
 
             /*
-             * NASA elevation map.
+             * Cylindrical NASA maps correspond
+             * to the UV layout of SphereGeometry.
              */
             terrainTexture.wrapS =
-                THREE.RepeatWrapping;
+                THREE.ClampToEdgeWrapping;
 
             terrainTexture.wrapT =
                 THREE.ClampToEdgeWrapping;
 
 
+            terrainTexture.anisotropy =
+                renderer
+                    .capabilities
+                    .getMaxAnisotropy();
+
+
             /*
-             * Use NASA terrain as physical-looking
-             * bump relief.
-             *
-             * Moon gets stronger relief because
-             * lunar craters are visually prominent.
+             * NASA elevation map becomes
+             * actual optical surface relief.
              */
             material.bumpMap =
                 terrainTexture;
 
+
+            /*
+             * Strong enough to see real craters,
+             * basins and elevation changes.
+             */
             material.bumpScale =
                 currentWorld === "moon"
-                ? 2.15
-                : 1.75;
+                ? 4.2
+                : 3.6;
 
-            material.needsUpdate = true;
+
+            material.needsUpdate =
+                true;
+
+
+            console.log(
+                "ASTERRA NASA terrain loaded:",
+                currentWorld
+            );
 
         },
 
         undefined,
 
-        function(){
+        function(error){
 
-            /*
-             * NASA failure must NEVER break
-             * the ASTERRA planet.
-             */
             console.warn(
-                "ASTERRA: NASA terrain texture failed to load."
+                "ASTERRA: NASA terrain failed:",
+                currentWorld,
+                error
             );
         }
     );
 
 
     /*
-     * Preserve plot system.
+     * Recreate plot markers.
      */
     createPlots();
 }
@@ -1628,27 +1970,212 @@ createPlanet();
 
 
 /* =========================================================
-   SAFE PLANET POSITION
+   SAFE PLANET VIEW
 ========================================================= */
 
-function updatePlanetSafePosition(){
+/*
+ * RULE:
+ *
+ * NEVER move the planet.
+ *
+ * planetGroup.position.x/y remain fixed at
+ * PLANET_FIXED_X / PLANET_FIXED_Y.
+ *
+ * We only change SCALE and safe zoom.
+ *
+ * This prevents the planet from crossing the
+ * visible UI panels.
+ */
 
-    const mobile =
-        window.innerWidth < 900;
+let safePlanetScale = 1;
 
-    if(mobile){
+function updatePlanetSafeView(){
 
-        planetGroup.position.x = 0;
-        planetGroup.position.y = -85;
+    /*
+     * Do not touch:
+     *
+     * planetGroup.position.x
+     * planetGroup.position.y
+     *
+     * EVER.
+     */
+
+    const width =
+        window.innerWidth;
+
+    const height =
+        window.innerHeight;
+
+
+    /*
+     * On the desktop layout:
+     *
+     * Left UI ends around x=462.
+     * Right world panel starts around
+     * width - 300.
+     *
+     * The planet must fit between them.
+     */
+    let leftBoundary;
+    let rightBoundary;
+
+
+    if(width > 900){
+
+        leftBoundary =
+            475;
+
+        rightBoundary =
+            width-325;
 
     }else{
 
-        planetGroup.position.x = 105;
-        planetGroup.position.y = 0;
+        /*
+         * Tablet:
+         * make the planet smaller rather
+         * than moving it.
+         */
+        leftBoundary =
+            Math.max(
+                120,
+                width*.08
+            );
+
+        rightBoundary =
+            width-
+            Math.max(
+                120,
+                width*.08
+            );
+    }
+
+
+    /*
+     * Fixed planet centre in screen coordinates.
+     *
+     * Because the world coordinate remains fixed
+     * at x=105.
+     */
+    const centerX =
+        width/2+
+        PLANET_FIXED_X;
+
+
+    /*
+     * Available horizontal radius.
+     */
+    const availableLeft =
+        Math.max(
+            40,
+            centerX-leftBoundary
+        );
+
+    const availableRight =
+        Math.max(
+            40,
+            rightBoundary-centerX
+        );
+
+    const availableRadius =
+        Math.min(
+            availableLeft,
+            availableRight
+        );
+
+
+    /*
+     * At the normal camera distance calculate
+     * how much of the sphere fits.
+     *
+     * The scale is capped at 1 so the normal
+     * desktop planet is never enlarged.
+     */
+    const fovRadians =
+        42*Math.PI/180;
+
+    const projectedRadiusAt520 =
+        PLANET_RADIUS*
+        height/
+        (
+            2*
+            Math.tan(fovRadians/2)*
+            520
+        );
+
+
+    let desiredScale =
+        availableRadius/
+        projectedRadiusAt520;
+
+
+    desiredScale =
+        Math.min(
+            1,
+            Math.max(
+                .55,
+                desiredScale
+            )
+        );
+
+
+    /*
+     * On normal large screens the original
+     * planet remains exactly the same size.
+     */
+    safePlanetScale =
+        desiredScale;
+
+
+    if(planetGroup){
+
+        planetGroup.scale.set(
+            safePlanetScale,
+            safePlanetScale,
+            safePlanetScale
+        );
+    }
+
+
+    /*
+     * If the viewport becomes narrow, don't
+     * let normal scrolling bring the planet
+     * through the UI.
+     *
+     * We increase the minimum safe camera distance.
+     */
+    const safeMinimumZoom =
+        Math.max(
+            BASE_MIN_ZOOM,
+            Math.min(
+                760,
+                BASE_MIN_ZOOM/
+                safePlanetScale
+            )
+        );
+
+
+    /*
+     * Never allow the current camera state
+     * to violate the safe boundary.
+     */
+    if(targetZoom < safeMinimumZoom){
+
+        targetZoom =
+            safeMinimumZoom;
+    }
+
+    if(zoomDistance < safeMinimumZoom){
+
+        zoomDistance =
+            safeMinimumZoom;
     }
 }
 
-updatePlanetSafePosition();
+
+/*
+ * Initial safe layout.
+ */
+updatePlanetSafeView();
 
 
 /* =========================================================
@@ -1669,8 +2196,11 @@ renderer.domElement.addEventListener(
 
         dragging = true;
 
-        previousX = e.clientX;
-        previousY = e.clientY;
+        previousX =
+            e.clientX;
+
+        previousY =
+            e.clientY;
 
         renderer.domElement.setPointerCapture(
             e.pointerId
@@ -1686,10 +2216,12 @@ renderer.domElement.addEventListener(
             return;
 
         const dx =
-            e.clientX-previousX;
+            e.clientX-
+            previousX;
 
         const dy =
-            e.clientY-previousY;
+            e.clientY-
+            previousY;
 
         rotationVelocityY =
             dx*.004;
@@ -1712,8 +2244,11 @@ renderer.domElement.addEventListener(
                 )
             );
 
-        previousX = e.clientX;
-        previousY = e.clientY;
+        previousX =
+            e.clientX;
+
+        previousY =
+            e.clientY;
     }
 );
 
@@ -1724,9 +2259,12 @@ renderer.domElement.addEventListener(
         dragging = false;
 
         try{
-            renderer.domElement.releasePointerCapture(
-                e.pointerId
-            );
+
+            renderer.domElement
+                .releasePointerCapture(
+                    e.pointerId
+                );
+
         }catch(err){}
     }
 );
@@ -1745,9 +2283,21 @@ renderer.domElement.addEventListener(
         targetZoom +=
             e.deltaY*.35;
 
+
+        const safeMinimumZoom =
+            Math.max(
+                BASE_MIN_ZOOM,
+                Math.min(
+                    760,
+                    BASE_MIN_ZOOM/
+                    safePlanetScale
+                )
+            );
+
+
         targetZoom =
             Math.max(
-                MIN_ZOOM,
+                safeMinimumZoom,
                 Math.min(
                     MAX_ZOOM,
                     targetZoom
@@ -1772,15 +2322,20 @@ const mouse =
 function pointerToNDC(e){
 
     const rect =
-        renderer.domElement.getBoundingClientRect();
+        renderer.domElement
+            .getBoundingClientRect();
 
     mouse.x =
-        ((e.clientX-rect.left) /
-        rect.width)*2-1;
+        (
+            (e.clientX-rect.left)/
+            rect.width
+        )*2-1;
 
     mouse.y =
-        -((e.clientY-rect.top) /
-        rect.height)*2+1;
+        -(
+            (e.clientY-rect.top)/
+            rect.height
+        )*2+1;
 }
 
 renderer.domElement.addEventListener(
@@ -1803,10 +2358,9 @@ renderer.domElement.addEventListener(
         if(!hits.length)
             return;
 
-        const plot =
-            hits[0].object;
-
-        selectPlot(plot);
+        selectPlot(
+            hits[0].object
+        );
     }
 );
 
@@ -1816,34 +2370,54 @@ renderer.domElement.addEventListener(
 ========================================================= */
 
 const plotCard =
-    document.getElementById("plotCard");
+    document.getElementById(
+        "plotCard"
+    );
 
 const plotId =
-    document.getElementById("plotId");
+    document.getElementById(
+        "plotId"
+    );
 
 const plotWorld =
-    document.getElementById("plotWorld");
+    document.getElementById(
+        "plotWorld"
+    );
 
 const plotStatus =
-    document.getElementById("plotStatus");
+    document.getElementById(
+        "plotStatus"
+    );
 
 const plotArea =
-    document.getElementById("plotArea");
+    document.getElementById(
+        "plotArea"
+    );
 
 const plotCoordinates =
-    document.getElementById("plotCoordinates");
+    document.getElementById(
+        "plotCoordinates"
+    );
 
 const plotTerrain =
-    document.getElementById("plotTerrain");
+    document.getElementById(
+        "plotTerrain"
+    );
 
 const plotRarity =
-    document.getElementById("plotRarity");
+    document.getElementById(
+        "plotRarity"
+    );
 
 const plotPrice =
-    document.getElementById("plotPrice");
+    document.getElementById(
+        "plotPrice"
+    );
 
 const acquireBtn =
-    document.getElementById("acquireBtn");
+    document.getElementById(
+        "acquireBtn"
+    );
 
 function selectPlot(mesh){
 
@@ -1861,7 +2435,8 @@ function selectPlot(mesh){
             : availableMaterial.clone();
     }
 
-    selectedPlot = mesh;
+    selectedPlot =
+        mesh;
 
     selectedPlot.scale.set(
         1.8,
@@ -1912,7 +2487,9 @@ function selectPlot(mesh){
         data.sold;
 
     acquireBtn.style.opacity =
-        data.sold ? ".35" : "1";
+        data.sold
+        ? ".35"
+        : "1";
 
     acquireBtn.textContent =
         data.sold
@@ -1936,7 +2513,9 @@ acquireBtn.addEventListener(
         if(!selectedPlot)
             return;
 
-        if(selectedPlot.userData.sold)
+        if(
+            selectedPlot.userData.sold
+        )
             return;
 
         acquireBtn.textContent =
@@ -1962,25 +2541,33 @@ acquireBtn.addEventListener(
 const worldData = {
 
     moon:{
+
         description:
             "A finite digital surface inspired by Earth's closest celestial neighbour.",
 
-        supply:"248,731",
+        supply:
+            "248,731",
 
-        available:"248,731",
+        available:
+            "248,731",
 
-        base:"$11"
+        base:
+            "$11"
     },
 
     mars:{
+
         description:
             "A finite digital surface inspired by the red planet and its iconic terrain.",
 
-        supply:"591,427",
+        supply:
+            "591,427",
 
-        available:"591,427",
+        available:
+            "591,427",
 
-        base:"$21"
+        base:
+            "$21"
     }
 };
 
@@ -1990,19 +2577,30 @@ const worldDescription =
     );
 
 const supply =
-    document.getElementById("supply");
+    document.getElementById(
+        "supply"
+    );
 
 const available =
-    document.getElementById("available");
+    document.getElementById(
+        "available"
+    );
 
 const basePrice =
-    document.getElementById("basePrice");
+    document.getElementById(
+        "basePrice"
+    );
 
 const worldMetric =
-    document.getElementById("worldMetric");
+    document.getElementById(
+        "worldMetric"
+    );
+
 
 document
-    .querySelectorAll(".world-tab")
+    .querySelectorAll(
+        ".world-tab"
+    )
     .forEach(tab => {
 
         tab.addEventListener(
@@ -2052,7 +2650,14 @@ document
 
                 selectedPlot = null;
 
+                /*
+                 * Recreate only the planet.
+                 *
+                 * Its coordinates remain fixed.
+                 */
                 createPlanet();
+
+                updatePlanetSafeView();
             }
         );
     });
@@ -2063,35 +2668,35 @@ document
 ========================================================= */
 
 document
-    .getElementById("discoverBtn")
+    .getElementById(
+        "discoverBtn"
+    )
     .addEventListener(
         "click",
         () => {
 
-            /*
-             * Put the camera into
-             * exploration mode.
-             */
-
-            targetZoom = 500;
-
-            document
-                .querySelector(
-                    ".world-panel"
-                )
-                .scrollIntoView({
-                    behavior:"smooth"
-                });
+            targetZoom =
+                Math.max(
+                    500,
+                    BASE_MIN_ZOOM
+                );
         }
     );
 
+
 document
-    .getElementById("exploreBtn")
+    .getElementById(
+        "exploreBtn"
+    )
     .addEventListener(
         "click",
         () => {
 
-            targetZoom = 475;
+            targetZoom =
+                Math.max(
+                    BASE_MIN_ZOOM,
+                    475
+                );
         }
     );
 
@@ -2100,32 +2705,47 @@ document
    ANIMATION
 ========================================================= */
 
-const clock =
-    new THREE.Clock();
-
 function animate(){
 
     requestAnimationFrame(
         animate
     );
 
+
     /*
-     * Smooth zoom.
-     * This is the same mechanism
-     * used in the working version.
+     * Always enforce safe zoom.
      */
+    const safeMinimumZoom =
+        Math.max(
+            BASE_MIN_ZOOM,
+            Math.min(
+                760,
+                BASE_MIN_ZOOM/
+                safePlanetScale
+            )
+        );
+
+
+    if(targetZoom < safeMinimumZoom){
+
+        targetZoom =
+            safeMinimumZoom;
+    }
+
 
     zoomDistance +=
-        (targetZoom-zoomDistance)*.08;
+        (
+            targetZoom-
+            zoomDistance
+        )*.08;
 
     camera.position.z =
         zoomDistance;
 
-    /*
-     * Gentle automatic movement
-     * when the user isn't dragging.
-     */
 
+    /*
+     * Automatic rotation.
+     */
     if(!dragging){
 
         planetGroup.rotation.y +=
@@ -2137,9 +2757,13 @@ function animate(){
         planetGroup.rotation.y +=
             rotationVelocityY*.03;
 
-        rotationVelocityX *= .94;
-        rotationVelocityY *= .94;
+        rotationVelocityX *=
+            .94;
+
+        rotationVelocityY *=
+            .94;
     }
+
 
     renderer.render(
         scene,
@@ -2159,7 +2783,7 @@ window.addEventListener(
     () => {
 
         camera.aspect =
-            window.innerWidth /
+            window.innerWidth/
             window.innerHeight;
 
         camera.updateProjectionMatrix();
@@ -2176,9 +2800,19 @@ window.addEventListener(
             )
         );
 
-        updatePlanetSafePosition();
+
+        /*
+         * IMPORTANT:
+         *
+         * This does NOT change planet coordinates.
+         *
+         * It only calculates a safe scale
+         * and safe camera distance.
+         */
+        updatePlanetSafeView();
     }
 );
+
 </script>
 
 </body>
