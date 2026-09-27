@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -283,6 +282,8 @@ canvas{
     box-shadow:0 0 12px rgba(255,255,255,.7);
 }
 
+/* HERO */
+
 .hero{
     position:absolute;
     left:42px;
@@ -350,6 +351,8 @@ h1{
 .btn.primary:hover{
     background:#e9edf2;
 }
+
+/* WORLD PANEL */
 
 .world-panel{
     position:absolute;
@@ -457,6 +460,8 @@ h1{
     background:#fff;
     box-shadow:0 0 9px rgba(255,255,255,.7);
 }
+
+/* BOTTOM */
 
 .bottom{
     position:absolute;
@@ -583,6 +588,7 @@ h1{
     <div class="nebula nebula-cloud-a"></div>
     <div class="nebula nebula-cloud-b"></div>
 
+    <!-- NEW REALISTIC COSMIC LAYER -->
     <canvas id="starfield"></canvas>
 
     <div id="scene"></div>
@@ -818,6 +824,7 @@ h1{
 
 /* =========================================================
    REALISTIC COSMIC STARFIELD
+   Completely replaces the old CSS star system.
 ========================================================= */
 
 const starCanvas =
@@ -835,30 +842,73 @@ let starDpr = 1;
 const cosmicStars = [];
 const cosmicDust = [];
 
+
+/* ---------------------------------------------------------
+   Utility
+--------------------------------------------------------- */
+
 function randomBetween(a,b){
     return a + Math.random() * (b-a);
 }
 
+
+/* ---------------------------------------------------------
+   Stellar colour temperature
+--------------------------------------------------------- */
+
 function stellarColor(type, alpha){
 
     if(type===0){
-        return `rgba(255,255,255,${alpha})`;
+
+        return `rgba(
+            255,
+            255,
+            255,
+            ${alpha}
+        )`;
     }
 
     if(type===1){
-        return `rgba(214,228,255,${alpha})`;
+
+        return `rgba(
+            214,
+            228,
+            255,
+            ${alpha}
+        )`;
     }
 
     if(type===2){
-        return `rgba(255,244,224,${alpha})`;
+
+        return `rgba(
+            255,
+            244,
+            224,
+            ${alpha}
+        )`;
     }
 
-    return `rgba(238,242,255,${alpha})`;
+    return `rgba(
+        238,
+        242,
+        255,
+        ${alpha}
+    )`;
 }
+
+
+/* ---------------------------------------------------------
+   Create stars
+--------------------------------------------------------- */
 
 function createCosmicStars(){
 
     cosmicStars.length = 0;
+
+    /*
+       Sparse background.
+       Most stars are extremely faint.
+    */
 
     const count =
         Math.min(
@@ -873,36 +923,85 @@ function createCosmicStars(){
             )
         );
 
+
     for(let i=0;i<count;i++){
 
         const layer =
             Math.random();
 
+
         let radius;
         let brightness;
 
+
+        /*
+           Deep background stars.
+        */
+
         if(layer < .76){
 
-            radius = randomBetween(.28,.72);
-            brightness = randomBetween(.12,.38);
+            radius =
+                randomBetween(
+                    .28,
+                    .72
+                );
 
-        }else if(layer < .96){
-
-            radius = randomBetween(.65,1.15);
-            brightness = randomBetween(.28,.68);
-
-        }else{
-
-            radius = randomBetween(1.05,1.9);
-            brightness = randomBetween(.55,.95);
+            brightness =
+                randomBetween(
+                    .12,
+                    .38
+                );
         }
+
+        /*
+           Medium distance.
+        */
+
+        else if(layer < .96){
+
+            radius =
+                randomBetween(
+                    .65,
+                    1.15
+                );
+
+            brightness =
+                randomBetween(
+                    .28,
+                    .68
+                );
+        }
+
+        /*
+           Rare prominent stars.
+        */
+
+        else{
+
+            radius =
+                randomBetween(
+                    1.05,
+                    1.9
+                );
+
+            brightness =
+                randomBetween(
+                    .55,
+                    .95
+                );
+        }
+
 
         cosmicStars.push({
 
-            x:Math.random(),
-            y:Math.random(),
+            x:
+                Math.random(),
+
+            y:
+                Math.random(),
 
             radius,
+
             brightness,
 
             phase:
@@ -910,10 +1009,16 @@ function createCosmicStars(){
                 Math.PI*2,
 
             speed:
-                randomBetween(.18,1.15),
+                randomBetween(
+                    .18,
+                    1.15
+                ),
 
             pulse:
-                randomBetween(.025,.22),
+                randomBetween(
+                    .025,
+                    .22
+                ),
 
             type:
                 Math.random()<.84
@@ -925,16 +1030,34 @@ function createCosmicStars(){
                 ),
 
             depth:
-                randomBetween(.15,1),
+                randomBetween(
+                    .15,
+                    1
+                ),
+
+            /*
+               Only a very small percentage
+               get an optical halo.
+            */
 
             halo:
                 Math.random()<.025,
+
+            /*
+               Only the rarest stars receive
+               diffraction-like optical rays.
+            */
 
             diffraction:
                 Math.random()<.009
         });
     }
 }
+
+
+/* ---------------------------------------------------------
+   Very sparse cosmic dust
+--------------------------------------------------------- */
 
 function createCosmicDust(){
 
@@ -947,23 +1070,38 @@ function createCosmicDust(){
         cosmicDust.push({
 
             x:Math.random(),
+
             y:Math.random(),
 
             radius:
-                randomBetween(.25,1.1),
+                randomBetween(
+                    .25,
+                    1.1
+                ),
 
             alpha:
-                randomBetween(.018,.075),
+                randomBetween(
+                    .018,
+                    .075
+                ),
 
             phase:
                 Math.random()*
                 Math.PI*2,
 
             speed:
-                randomBetween(.01,.035)
+                randomBetween(
+                    .01,
+                    .035
+                )
         });
     }
 }
+
+
+/* ---------------------------------------------------------
+   Resize
+--------------------------------------------------------- */
 
 function resizeStarfield(){
 
@@ -979,6 +1117,7 @@ function resizeStarfield(){
     starHeight =
         window.innerHeight;
 
+
     starCanvas.width =
         starWidth *
         starDpr;
@@ -987,11 +1126,13 @@ function resizeStarfield(){
         starHeight *
         starDpr;
 
+
     starCanvas.style.width =
         starWidth+"px";
 
     starCanvas.style.height =
         starHeight+"px";
+
 
     starCtx.setTransform(
         starDpr,
@@ -1002,11 +1143,18 @@ function resizeStarfield(){
         0
     );
 
+
     createCosmicStars();
     createCosmicDust();
 }
 
+
 resizeStarfield();
+
+
+/* ---------------------------------------------------------
+   Draw a natural soft star
+--------------------------------------------------------- */
 
 function drawStar(star,time){
 
@@ -1017,6 +1165,7 @@ function drawStar(star,time){
             star.phase
         );
 
+
     const secondary =
         Math.sin(
             time*
@@ -1025,6 +1174,12 @@ function drawStar(star,time){
             star.phase*
             1.71
         );
+
+
+    /*
+       Mostly stable brightness.
+       Only subtle natural variation.
+    */
 
     let intensity =
         star.brightness *
@@ -1037,6 +1192,7 @@ function drawStar(star,time){
             .28
         );
 
+
     intensity =
         Math.max(
             .025,
@@ -1045,6 +1201,11 @@ function drawStar(star,time){
                 intensity
             )
         );
+
+
+    /*
+       Tiny depth drift.
+    */
 
     const driftX =
         Math.sin(
@@ -1055,6 +1216,7 @@ function drawStar(star,time){
         star.depth*
         .35;
 
+
     const driftY =
         Math.cos(
             time*
@@ -1064,15 +1226,22 @@ function drawStar(star,time){
         star.depth*
         .22;
 
+
     const x =
         star.x*
         starWidth+
         driftX;
 
+
     const y =
         star.y*
         starHeight+
         driftY;
+
+
+    /*
+       Main point.
+    */
 
     starCtx.beginPath();
 
@@ -1092,6 +1261,11 @@ function drawStar(star,time){
 
     starCtx.fill();
 
+
+    /*
+       Extremely rare soft halo.
+    */
+
     if(
         star.halo &&
         intensity>.52
@@ -1106,6 +1280,7 @@ function drawStar(star,time){
                 y,
                 star.radius*7
             );
+
 
         glow.addColorStop(
             0,
@@ -1131,6 +1306,7 @@ function drawStar(star,time){
             )
         );
 
+
         starCtx.beginPath();
 
         starCtx.arc(
@@ -1142,8 +1318,15 @@ function drawStar(star,time){
         );
 
         starCtx.fillStyle=glow;
+
         starCtx.fill();
     }
+
+
+    /*
+       Almost invisible optical diffraction
+       on only a handful of bright stars.
+    */
 
     if(
         star.diffraction &&
@@ -1155,6 +1338,7 @@ function drawStar(star,time){
             7*
             intensity;
 
+
         const rayGradient =
             starCtx.createLinearGradient(
                 x-ray,
@@ -1162,6 +1346,7 @@ function drawStar(star,time){
                 x+ray,
                 y
             );
+
 
         rayGradient.addColorStop(
             0,
@@ -1187,6 +1372,7 @@ function drawStar(star,time){
             )
         );
 
+
         starCtx.fillStyle =
             rayGradient;
 
@@ -1197,6 +1383,7 @@ function drawStar(star,time){
             .7
         );
 
+
         const verticalGradient =
             starCtx.createLinearGradient(
                 x,
@@ -1204,6 +1391,7 @@ function drawStar(star,time){
                 x,
                 y+ray
             );
+
 
         verticalGradient.addColorStop(
             0,
@@ -1229,6 +1417,7 @@ function drawStar(star,time){
             )
         );
 
+
         starCtx.fillStyle =
             verticalGradient;
 
@@ -1240,6 +1429,11 @@ function drawStar(star,time){
         );
     }
 }
+
+
+/* ---------------------------------------------------------
+   Draw faint dust
+--------------------------------------------------------- */
 
 function drawDust(time){
 
@@ -1256,6 +1450,7 @@ function drawDust(time){
             dust.y*
             starHeight;
 
+
         const pulse =
             (
                 Math.sin(
@@ -1265,9 +1460,11 @@ function drawDust(time){
                 )+1
             )*.5;
 
+
         const alpha =
             dust.alpha*
             (.72+pulse*.28);
+
 
         const gradient =
             starCtx.createRadialGradient(
@@ -1279,6 +1476,7 @@ function drawDust(time){
                 dust.radius*4
             );
 
+
         gradient.addColorStop(
             0,
             `rgba(220,230,245,${alpha})`
@@ -1288,6 +1486,7 @@ function drawDust(time){
             1,
             "rgba(220,230,245,0)"
         );
+
 
         starCtx.fillStyle=gradient;
 
@@ -1305,8 +1504,14 @@ function drawDust(time){
     }
 }
 
+
+/* ---------------------------------------------------------
+   Main cosmic animation
+--------------------------------------------------------- */
+
 const cosmicClock =
     performance.now();
+
 
 function renderStarfield(now){
 
@@ -1314,12 +1519,20 @@ function renderStarfield(now){
         (now-cosmicClock)/
         1000;
 
+
     starCtx.clearRect(
         0,
         0,
         starWidth,
         starHeight
     );
+
+
+    /*
+       Extremely subtle deep-space haze.
+       This sits behind the stars and creates
+       a photographic rather than graphic look.
+    */
 
     const haze =
         starCtx.createRadialGradient(
@@ -1333,6 +1546,7 @@ function renderStarfield(now){
                 starHeight
             )*.72
         );
+
 
     haze.addColorStop(
         0,
@@ -1349,6 +1563,7 @@ function renderStarfield(now){
         "rgba(0,0,0,0)"
     );
 
+
     starCtx.fillStyle=haze;
 
     starCtx.fillRect(
@@ -1358,7 +1573,13 @@ function renderStarfield(now){
         starHeight
     );
 
+
     drawDust(time);
+
+
+    /*
+       Draw the stars in depth order.
+    */
 
     for(
         const star
@@ -1371,10 +1592,12 @@ function renderStarfield(now){
         );
     }
 
+
     requestAnimationFrame(
         renderStarfield
     );
 }
+
 
 requestAnimationFrame(
     renderStarfield
@@ -1487,173 +1710,206 @@ scene.add(
 );
 
 
-/* =========================================================
-   REAL PLANETARY DATA
-=========================================================
-
-   Moon:
-   NASA LROC WAC global colour
-   NASA LDEM elevation
-
-   Mars:
-   NASA Mars Trek MOC global colour mosaic
-   NASA Mars Trek MOLA/HRSC colour hillshade
-
-   No procedural geography.
-========================================================= */
-
-
-/* ---------------------------------------------------------
-   Safe image loader
---------------------------------------------------------- */
-
-function loadImageSafe(
-    url,
-    timeout=15000
-){
-
-    return new Promise(
-        (resolve,reject)=>{
-
-            const image =
-                new Image();
-
-            image.crossOrigin =
-                "anonymous";
-
-            let finished=false;
-
-            const timer =
-                setTimeout(
-                    ()=>{
-                        if(finished)
-                            return;
-
-                        finished=true;
-
-                        reject(
-                            new Error(
-                                "Timeout: "+url
-                            )
-                        );
-                    },
-                    timeout
-                );
-
-
-            image.onload =
-                ()=>{
-
-                    if(finished)
-                        return;
-
-                    finished=true;
-
-                    clearTimeout(
-                        timer
-                    );
-
-                    resolve(image);
-                };
-
-
-            image.onerror =
-                ()=>{
-
-                    if(finished)
-                        return;
-
-                    finished=true;
-
-                    clearTimeout(
-                        timer
-                    );
-
-                    reject(
-                        new Error(
-                            "Failed: "+url
-                        )
-                    );
-                };
-
-
-            image.src=url;
-        }
-    );
-}
-
-
-/* ---------------------------------------------------------
-   Canvas -> Three texture
---------------------------------------------------------- */
-
-function makeTexture(
-    image,
-    encoding=THREE.sRGBEncoding
-){
-
-    const texture =
-        new THREE.Texture(
-            image
-        );
-
-    texture.needsUpdate=true;
-
-    texture.encoding=
-        encoding;
-
-    texture.anisotropy =
-        renderer
-            .capabilities
-            .getMaxAnisotropy();
-
-
-    texture.wrapS =
-        THREE.ClampToEdgeWrapping;
-
-    texture.wrapT =
-        THREE.ClampToEdgeWrapping;
-
-
-    return texture;
-}
-
-
-/* ---------------------------------------------------------
-   Emergency surface.
-
-   This is ONLY displayed while real data
-   is loading. It is NOT the final geography.
---------------------------------------------------------- */
-
-function createEmergencyTexture(
-    world
-){
+function createPlanetTexture(world){
 
     const canvas =
-        document.createElement(
-            "canvas"
-        );
+        document.createElement("canvas");
 
     canvas.width=1024;
     canvas.height=512;
 
     const ctx =
-        canvas.getContext(
-            "2d"
+        canvas.getContext("2d");
+
+    const image =
+        ctx.createImageData(
+            canvas.width,
+            canvas.height
         );
 
-    ctx.fillStyle =
-        world==="Moon"
-        ? "#77797d"
-        : "#793c2d";
+    const data =
+        image.data;
 
-    ctx.fillRect(
+
+    for(
+        let y=0;
+        y<canvas.height;
+        y++
+    ){
+
+        for(
+            let x=0;
+            x<canvas.width;
+            x++
+        ){
+
+            const nx =
+                x/canvas.width;
+
+            const ny =
+                y/canvas.height;
+
+
+            const n =
+                Math.sin(
+                    nx*31+
+                    Math.sin(ny*8)*3
+                )
+                +
+                Math.sin(
+                    nx*67+
+                    ny*19
+                )*.45
+                +
+                Math.sin(
+                    nx*121-
+                    ny*43
+                )*.22
+                +
+                Math.sin(
+                    (nx+ny)*210
+                )*.08;
+
+
+            let r,g,b;
+
+
+            if(world==="Moon"){
+
+                const base =
+                    116+n*15;
+
+                r=base;
+                g=base;
+                b=base+5;
+
+            }else{
+
+                const base =
+                    105+n*17;
+
+                r=base+25;
+                g=base-7;
+                b=base-18;
+            }
+
+
+            const index =
+                (y*canvas.width+x)*4;
+
+
+            data[index] =
+                Math.max(
+                    0,
+                    Math.min(
+                        255,
+                        r
+                    )
+                );
+
+            data[index+1] =
+                Math.max(
+                    0,
+                    Math.min(
+                        255,
+                        g
+                    )
+                );
+
+            data[index+2] =
+                Math.max(
+                    0,
+                    Math.min(
+                        255,
+                        b
+                    )
+                );
+
+            data[index+3]=255;
+        }
+    }
+
+
+    ctx.putImageData(
+        image,
         0,
-        0,
-        canvas.width,
-        canvas.height
+        0
     );
+
+
+    const craterCount =
+        world==="Moon"
+        ? 170
+        : 105;
+
+
+    for(
+        let i=0;
+        i<craterCount;
+        i++
+    ){
+
+        const x =
+            Math.random()*
+            canvas.width;
+
+        const y =
+            Math.random()*
+            canvas.height;
+
+        const radius =
+            randomBetween(
+                world==="Moon"
+                ? 2
+                : 3,
+
+                world==="Moon"
+                ? 18
+                : 14
+            );
+
+
+        const gradient =
+            ctx.createRadialGradient(
+                x-radius*.25,
+                y-radius*.25,
+                radius*.15,
+                x,
+                y,
+                radius
+            );
+
+
+        gradient.addColorStop(
+            0,
+            "rgba(20,20,22,.25)"
+        );
+
+        gradient.addColorStop(
+            .65,
+            "rgba(40,40,44,.16)"
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(255,255,255,0)"
+        );
+
+
+        ctx.fillStyle=gradient;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            radius,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+    }
 
 
     const texture =
@@ -1666,301 +1922,16 @@ function createEmergencyTexture(
             .capabilities
             .getMaxAnisotropy();
 
-
     return texture;
 }
 
-
-/* =========================================================
-   MOON
-========================================================= */
-
-async function loadRealMoon(){
-
-    /*
-       NASA CGI Moon Kit.
-       LROC WAC global colour map.
-
-       This is an actual NASA lunar map,
-       not generated noise.
-    */
-
-    const colorURL =
-        "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg";
-
-
-    /*
-       NASA LDEM.
-
-       Real lunar elevation data.
-    */
-
-    const elevationURL =
-        "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_3_8bit.jpg";
-
-
-    const colorImage =
-        await loadImageSafe(
-            colorURL,
-            20000
-        );
-
-
-    const elevationImage =
-        await loadImageSafe(
-            elevationURL,
-            20000
-        );
-
-
-    return{
-
-        color:
-            makeTexture(
-                colorImage,
-                THREE.sRGBEncoding
-            ),
-
-        elevation:
-            makeTexture(
-                elevationImage,
-                THREE.LinearEncoding
-            )
-    };
-}
-
-
-/* =========================================================
-   MARS NASA TREK TILES
-========================================================= */
-
-const MARS_TILE_BASE =
-    "https://trek.nasa.gov/tiles/Mars/EQ/";
-
-
-/*
-   NASA's documented equirectangular tile
-   scheme starts with:
-
-   zoom 0 = 2 columns x 1 row
-   zoom 1 = 4 columns x 2 rows
-   zoom 2 = 8 columns x 4 rows
-*/
-
-
-async function loadMarsTiles(
-    layer,
-    zoomLevel=2
-){
-
-    const columns =
-        Math.pow(
-            2,
-            zoomLevel+1
-        );
-
-    const rows =
-        Math.pow(
-            2,
-            zoomLevel
-        );
-
-
-    const tileSize=256;
-
-
-    const canvas =
-        document.createElement(
-            "canvas"
-        );
-
-    canvas.width =
-        columns*tileSize;
-
-    canvas.height =
-        rows*tileSize;
-
-
-    const ctx =
-        canvas.getContext(
-            "2d"
-        );
-
-
-    const requests=[];
-
-
-    for(
-        let row=0;
-        row<rows;
-        row++
-    ){
-
-        for(
-            let column=0;
-            column<columns;
-            column++
-        ){
-
-            const url =
-                MARS_TILE_BASE+
-                layer+
-                "/1.0.0/default/default028mm/"+
-                zoomLevel+
-                "/"+
-                row+
-                "/"+
-                column+
-                ".jpg";
-
-
-            requests.push({
-
-                row,
-                column,
-                url
-
-            });
-        }
-    }
-
-
-    let loaded=0;
-
-
-    for(
-        const request
-        of requests
-    ){
-
-        try{
-
-            const image =
-                await loadImageSafe(
-                    request.url,
-                    12000
-                );
-
-
-            ctx.drawImage(
-                image,
-                request.column*tileSize,
-                request.row*tileSize,
-                tileSize,
-                tileSize
-            );
-
-
-            loaded++;
-
-        }catch(error){
-
-            console.warn(
-                "Mars tile unavailable:",
-                request.url
-            );
-
-        }
-    }
-
-
-    /*
-       We need enough tiles for a useful globe.
-       NASA's global layer should normally provide
-       full coverage.
-    */
-
-    if(
-        loaded <
-        requests.length*.60
-    ){
-
-        throw new Error(
-            "Insufficient NASA Mars tile coverage"
-        );
-    }
-
-
-    return canvas;
-}
-
-
-/* =========================================================
-   REAL MARS
-========================================================= */
-
-async function loadRealMars(){
-
-    /*
-       NASA MGS MOC Atlas
-       Global Color Mosaic
-
-       Layer documented by NASA Mars Trek.
-    */
-
-    const colorCanvas =
-        await loadMarsTiles(
-            "msss_atlas_simp_clon",
-            2
-        );
-
-
-    /*
-       NASA MGS MOLA +
-       Mars Express HRSC
-       Color Hillshade Blend.
-
-       This gives the real geographic/topographic
-       structure: giant basins, volcanoes,
-       canyons, crater systems, etc.
-    */
-
-    const reliefCanvas =
-        await loadMarsTiles(
-            "Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw",
-            2
-        );
-
-
-    return{
-
-        color:
-            makeTexture(
-                colorCanvas,
-                THREE.sRGBEncoding
-            ),
-
-        relief:
-            makeTexture(
-                reliefCanvas,
-                THREE.LinearEncoding
-            )
-    };
-}
-
-
-/* =========================================================
-   PLANET BUILD
-========================================================= */
 
 let currentWorld="Moon";
 
 let planetMesh=null;
 
 
-/*
-   These references allow old textures
-   to be disposed safely when switching worlds.
-*/
-
-let activeTextures=[];
-
-
-async function buildPlanet(world){
-
-    /*
-       Remove old planet.
-    */
+function buildPlanet(world){
 
     if(planetMesh){
 
@@ -1973,35 +1944,12 @@ async function buildPlanet(world){
         if(
             planetMesh.material.map
         ){
-
             planetMesh.material.map.dispose();
         }
 
-        if(
-            planetMesh.material.bumpMap
-        ){
-
-            planetMesh.material.bumpMap.dispose();
-        }
-
-        if(
-            planetMesh.material.displacementMap
-        ){
-
-            planetMesh.material.displacementMap.dispose();
-        }
-
         planetMesh.material.dispose();
-
-        planetMesh=null;
     }
 
-
-    /*
-       Keep the ORIGINAL sphere dimensions
-       and resolution so rotation / zoom /
-       positioning remain unchanged.
-    */
 
     const geometry =
         new THREE.SphereGeometry(
@@ -2011,28 +1959,17 @@ async function buildPlanet(world){
         );
 
 
-    /*
-       Show an emergency surface immediately.
-       The real planetary data loads afterwards.
-    */
-
-    const emergencyTexture =
-        createEmergencyTexture(
+    const texture =
+        createPlanetTexture(
             world
         );
 
 
     const material =
         new THREE.MeshStandardMaterial({
-
-            map:
-                emergencyTexture,
-
-            roughness:
-                .96,
-
-            metalness:
-                .02
+            map:texture,
+            roughness:.96,
+            metalness:.02
         });
 
 
@@ -2048,150 +1985,11 @@ async function buildPlanet(world){
     );
 
 
-    /*
-       ORIGINAL ROTATION.
-    */
-
     planetGroup.rotation.set(
         .05,
         -.5,
         0
     );
-
-
-    /*
-       Load real geography asynchronously.
-       This does NOT touch camera, zoom,
-       position or rotation mechanics.
-    */
-
-    try{
-
-        if(world==="Moon"){
-
-            const data =
-                await loadRealMoon();
-
-
-            /*
-               World may have changed while
-               the network request was running.
-            */
-
-            if(
-                currentWorld!=="Moon" ||
-                planetMesh===null
-            ){
-
-                data.color.dispose();
-                data.elevation.dispose();
-
-                return;
-            }
-
-
-            material.map =
-                data.color;
-
-            material.bumpMap =
-                data.elevation;
-
-            material.displacementMap =
-                data.elevation;
-
-
-            /*
-               Subtle real relief.
-
-               We deliberately keep the scale
-               restrained because the LDEM is
-               real height information and the
-               Moon must not look like a rubber ball.
-            */
-
-            material.bumpScale =
-                1.25;
-
-            material.displacementScale =
-                1.35;
-
-            material.displacementBias =
-                -.675;
-
-
-            material.needsUpdate=true;
-
-
-            activeTextures.push(
-                data.color,
-                data.elevation
-            );
-
-
-        }else{
-
-            const data =
-                await loadRealMars();
-
-
-            if(
-                currentWorld!=="Mars" ||
-                planetMesh===null
-            ){
-
-                data.color.dispose();
-                data.relief.dispose();
-
-                return;
-            }
-
-
-            material.map =
-                data.color;
-
-
-            /*
-               The NASA MOLA/HRSC hillshade
-               contains actual terrain relief.
-
-               Use it as bump rather than inventing
-               crater geometry.
-            */
-
-            material.bumpMap =
-                data.relief;
-
-            material.bumpScale =
-                1.15;
-
-
-            material.roughness =
-                .97;
-
-
-            material.needsUpdate=true;
-
-
-            activeTextures.push(
-                data.color,
-                data.relief
-            );
-        }
-
-
-    }catch(error){
-
-        console.warn(
-            "Real planetary data could not be loaded:",
-            error
-        );
-
-        /*
-           The original page remains alive.
-           Nothing happens to zoom,
-           rotation or camera.
-        */
-    }
 }
 
 
@@ -2452,9 +2250,6 @@ renderer.domElement.addEventListener(
 
 /* =========================================================
    ZOOM
-
-   THIS IS THE ORIGINAL ZOOM CODE.
-   DO NOT CHANGE.
 ========================================================= */
 
 let zoomDistance=520;
@@ -2742,6 +2537,10 @@ function animate(){
     );
 
 
+    /* -----------------------------------------------
+       ZOOM
+    ----------------------------------------------- */
+
     zoomDistance +=
         (
             targetZoom-
@@ -2752,6 +2551,10 @@ function animate(){
     camera.position.z =
         zoomDistance;
 
+
+    /* -----------------------------------------------
+       PLANET
+    ----------------------------------------------- */
 
     if(!dragging){
 
@@ -2770,8 +2573,16 @@ function animate(){
         velocityY*.25;
 
 
+    /* -----------------------------------------------
+       SAFE PLANET POSITION
+    ----------------------------------------------- */
+
     updatePlanetSafePosition();
 
+
+    /* -----------------------------------------------
+       RENDER
+    ----------------------------------------------- */
 
     renderer.render(
         scene,
@@ -2815,4 +2626,3 @@ window.addEventListener(
 
 </body>
 </html>
-```
