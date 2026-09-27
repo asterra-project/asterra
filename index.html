@@ -8,27 +8,24 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
     --bg:#030405;
-    --panel:rgba(7,9,12,.86);
-    --line:rgba(255,255,255,.11);
+    --line:rgba(255,255,255,.10);
     --line-soft:rgba(255,255,255,.06);
     --text:#f5f7fa;
     --muted:#89909a;
-    --muted2:#59616c;
-    --accent:#dce4ec;
 }
 
 *{
     box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     margin:0;
@@ -50,19 +47,87 @@ body{
     position:fixed;
     inset:0;
     overflow:hidden;
+
     background:
-        radial-gradient(circle at 72% 42%,rgba(34,43,54,.11),transparent 30%),
-        radial-gradient(circle at 25% 75%,rgba(26,30,35,.09),transparent 32%),
+        radial-gradient(
+            ellipse 42% 28% at 72% 43%,
+            rgba(215,225,235,.045),
+            transparent 70%
+        ),
+        radial-gradient(
+            ellipse 30% 20% at 30% 76%,
+            rgba(190,205,220,.025),
+            transparent 72%
+        ),
         #030405;
 }
 
-#spaceCanvas{
+/* =========================================================
+   DISTANT WHITE COSMIC HAZE
+========================================================= */
+
+.cosmic-haze{
+    position:absolute;
+    inset:-20%;
+    z-index:0;
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            ellipse 24% 9% at 76% 32%,
+            rgba(255,255,255,.045),
+            transparent 72%
+        ),
+        radial-gradient(
+            ellipse 31% 10% at 68% 38%,
+            rgba(225,235,245,.025),
+            transparent 74%
+        ),
+        radial-gradient(
+            ellipse 18% 7% at 38% 68%,
+            rgba(255,255,255,.022),
+            transparent 72%
+        );
+
+    filter:blur(30px);
+
+    transform:
+        rotate(-8deg)
+        scale(1.15);
+}
+
+/* subtle moving distant haze */
+
+.cosmic-haze::after{
+    content:"";
     position:absolute;
     inset:0;
-    width:100%;
-    height:100%;
-    display:block;
-    z-index:1;
+
+    background:
+        radial-gradient(
+            ellipse 35% 7% at 60% 42%,
+            rgba(255,255,255,.018),
+            transparent 75%
+        );
+
+    filter:blur(20px);
+
+    animation:
+        hazeDrift 24s ease-in-out infinite alternate;
+}
+
+@keyframes hazeDrift{
+
+    0%{
+        transform:translate3d(-2%,0,0) scale(1);
+        opacity:.65;
+    }
+
+    100%{
+        transform:translate3d(3%,1%,0) scale(1.04);
+        opacity:1;
+    }
+
 }
 
 /* =========================================================
@@ -72,151 +137,58 @@ body{
 #stars{
     position:absolute;
     inset:0;
-    z-index:0;
+    z-index:1;
     overflow:hidden;
     pointer-events:none;
 }
 
 .star{
     position:absolute;
+
     border-radius:50%;
+
     background:#fff;
-    transform:translate(-50%,-50%);
-    will-change:opacity,transform;
+
+    transform:
+        translate(-50%,-50%);
+
+    will-change:
+        opacity,
+        transform;
 }
 
 .star.glow{
     box-shadow:
         0 0 4px rgba(255,255,255,.55),
-        0 0 10px rgba(255,255,255,.18);
+        0 0 9px rgba(255,255,255,.20);
 }
 
 /* =========================================================
-   COMET
+   THREE CANVAS
 ========================================================= */
 
-#cometLayer{
+#spaceCanvas{
     position:absolute;
     inset:0;
+
+    width:100%;
+    height:100%;
+
+    display:block;
+
     z-index:2;
-    pointer-events:none;
-    overflow:hidden;
-}
-
-.comet{
-    position:absolute;
-    width:1px;
-    height:1px;
-    opacity:0;
-    transform:translate3d(0,0,0);
-}
-
-.comet .coma{
-    position:absolute;
-    width:22px;
-    height:22px;
-    left:-11px;
-    top:-11px;
-    border-radius:50%;
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,1) 0%,
-            rgba(230,241,255,.92) 12%,
-            rgba(177,204,232,.32) 30%,
-            rgba(100,140,180,.08) 58%,
-            transparent 74%
-        );
-    filter:blur(.2px);
-}
-
-.comet .core{
-    position:absolute;
-    width:4px;
-    height:4px;
-    left:-2px;
-    top:-2px;
-    border-radius:50%;
-    background:#fff;
-    box-shadow:
-        0 0 5px #fff,
-        0 0 12px rgba(205,228,255,.9),
-        0 0 24px rgba(157,197,238,.45);
-}
-
-.comet .tail-main{
-    position:absolute;
-    width:150px;
-    height:16px;
-    left:-146px;
-    top:-8px;
-    background:
-        linear-gradient(
-            90deg,
-            rgba(210,232,255,0),
-            rgba(184,214,243,.035) 18%,
-            rgba(191,219,247,.12) 52%,
-            rgba(224,240,255,.34) 87%,
-            rgba(255,255,255,.66) 100%
-        );
-    clip-path:polygon(
-        0 48%,
-        82% 28%,
-        100% 50%,
-        82% 72%
-    );
-    filter:blur(1.4px);
-    transform-origin:right center;
-}
-
-.comet .tail-soft{
-    position:absolute;
-    width:230px;
-    height:34px;
-    left:-226px;
-    top:-17px;
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(160,194,225,.018) 18%,
-            rgba(180,210,238,.055) 55%,
-            rgba(225,240,255,.17) 96%
-        );
-    clip-path:polygon(
-        0 49%,
-        90% 38%,
-        100% 50%,
-        90% 62%
-    );
-    filter:blur(5px);
-}
-
-.comet .tail-thin{
-    position:absolute;
-    width:260px;
-    height:2px;
-    left:-255px;
-    top:-1px;
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(183,214,244,.06) 35%,
-            rgba(222,238,255,.27) 86%,
-            rgba(255,255,255,.7)
-        );
-    filter:blur(.6px);
 }
 
 /* =========================================================
-   MAIN INTERFACE
+   INTERFACE
 ========================================================= */
 
 .interface{
     position:absolute;
     inset:0;
+
     z-index:10;
+
     pointer-events:none;
 }
 
@@ -225,31 +197,41 @@ body{
 }
 
 /* =========================================================
-   TOP BRAND
+   BRAND
 ========================================================= */
 
 .brand{
     position:absolute;
+
     left:42px;
     top:34px;
+
     z-index:20;
 }
 
 .brand-main{
     font-family:Manrope,Inter,sans-serif;
+
     font-size:30px;
     line-height:1;
+
     letter-spacing:.27em;
+
     font-weight:800;
+
     color:#fff;
 }
 
 .brand-sub{
     margin-top:11px;
+
     font-size:10px;
     line-height:1;
+
     letter-spacing:.29em;
+
     color:#7d858f;
+
     font-weight:600;
 }
 
@@ -259,20 +241,29 @@ body{
 
 .top-nav{
     position:absolute;
+
     top:38px;
     right:42px;
+
     display:flex;
     align-items:center;
+
     gap:34px;
 }
 
 .nav-item{
     position:relative;
+
     font-size:10px;
+
     font-weight:700;
+
     letter-spacing:.18em;
+
     color:#727a84;
+
     cursor:pointer;
+
     transition:.25s;
 }
 
@@ -284,14 +275,53 @@ body{
     color:#f2f4f7;
 }
 
-.nav-item.active:after{
+.nav-item.active::after{
     content:"";
+
     position:absolute;
+
     left:0;
     right:0;
+
     bottom:-9px;
+
     height:1px;
+
     background:#e7edf3;
+}
+
+/* =========================================================
+   CORNER SYSTEM LABELS
+========================================================= */
+
+.corner-detail{
+    position:absolute;
+
+    top:116px;
+    left:42px;
+
+    font-size:7px;
+
+    letter-spacing:.2em;
+
+    color:#3f474f;
+
+    font-weight:700;
+}
+
+.corner-detail-right{
+    position:absolute;
+
+    top:116px;
+    right:42px;
+
+    font-size:7px;
+
+    letter-spacing:.2em;
+
+    color:#3f474f;
+
+    font-weight:700;
 }
 
 /* =========================================================
@@ -300,114 +330,167 @@ body{
 
 .hero{
     position:absolute;
+
     left:42px;
     top:50%;
+
     transform:translateY(-54%);
+
     width:430px;
 }
 
 .eyebrow{
     display:flex;
     align-items:center;
+
     gap:10px;
+
     margin-bottom:19px;
+
     font-size:9px;
+
     letter-spacing:.24em;
+
     font-weight:700;
+
     color:#737c87;
 }
 
 .eyebrow-line{
     width:28px;
     height:1px;
+
     background:#7d8792;
 }
 
 .hero h1{
     margin:0;
+
     font-family:Manrope,Inter,sans-serif;
+
     font-size:59px;
+
     line-height:.98;
+
     letter-spacing:-.055em;
+
     font-weight:700;
+
     color:#f7f8fa;
 }
 
 .hero h1 span{
     display:block;
+
     color:#858d97;
 }
 
 .hero-copy{
     margin-top:25px;
+
     width:385px;
+
     font-size:13px;
+
     line-height:1.75;
+
     color:#858d97;
+
     font-weight:400;
 }
 
 .hero-actions{
     display:flex;
     align-items:center;
+
     gap:14px;
+
     margin-top:28px;
 }
 
 .primary-btn{
     height:43px;
+
     padding:0 20px;
+
     border:1px solid rgba(255,255,255,.2);
+
     background:#f0f2f4;
+
     color:#080a0c;
+
     font-size:10px;
+
     font-weight:800;
+
     letter-spacing:.15em;
+
     cursor:pointer;
+
     transition:.25s;
 }
 
 .primary-btn:hover{
     background:#fff;
+
     transform:translateY(-1px);
 }
 
 .secondary-btn{
     height:43px;
+
     padding:0 18px;
+
     border:1px solid rgba(255,255,255,.1);
+
     background:rgba(255,255,255,.025);
+
     color:#a0a7b0;
+
     font-size:10px;
+
     font-weight:700;
+
     letter-spacing:.13em;
+
     cursor:pointer;
+
     transition:.25s;
 }
 
 .secondary-btn:hover{
     color:#fff;
-    border-color:rgba(255,255,255,.22);
+
+    border-color:
+        rgba(255,255,255,.22);
 }
 
 /* =========================================================
-   RIGHT DATA PANEL
+   RIGHT ASSET PANEL
 ========================================================= */
 
 .asset-panel{
     position:absolute;
+
     right:42px;
     top:50%;
+
     transform:translateY(-48%);
+
     width:290px;
+
     padding:20px 20px 18px;
-    border:1px solid rgba(255,255,255,.1);
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
     background:
         linear-gradient(
             180deg,
             rgba(13,16,20,.77),
             rgba(5,7,9,.68)
         );
+
     backdrop-filter:blur(14px);
 }
 
@@ -415,37 +498,53 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
+
     padding-bottom:15px;
-    border-bottom:1px solid var(--line-soft);
+
+    border-bottom:
+        1px solid var(--line-soft);
 }
 
 .panel-heading-left{
     font-size:9px;
+
     letter-spacing:.19em;
+
     font-weight:800;
+
     color:#9da5ae;
 }
 
 .live{
     display:flex;
     align-items:center;
+
     gap:6px;
+
     font-size:8px;
+
     letter-spacing:.15em;
+
     color:#68717b;
+
     font-weight:700;
 }
 
 .live-dot{
     width:5px;
     height:5px;
+
     border-radius:50%;
+
     background:#dbe7f2;
-    box-shadow:0 0 7px rgba(220,235,250,.65);
+
+    box-shadow:
+        0 0 7px rgba(220,235,250,.65);
 }
 
 .world-title{
     margin-top:18px;
+
     display:flex;
     justify-content:space-between;
     align-items:end;
@@ -453,83 +552,128 @@ body{
 
 .world-name{
     font-family:Manrope,Inter,sans-serif;
+
     font-size:29px;
+
     letter-spacing:-.03em;
+
     font-weight:700;
 }
 
 .world-code{
     font-size:8px;
+
     letter-spacing:.18em;
+
     color:#59616b;
+
     font-weight:700;
 }
 
 .panel-grid{
     margin-top:19px;
+
     display:grid;
+
     grid-template-columns:1fr 1fr;
-    border-top:1px solid var(--line-soft);
-    border-left:1px solid var(--line-soft);
+
+    border-top:
+        1px solid var(--line-soft);
+
+    border-left:
+        1px solid var(--line-soft);
 }
 
 .metric{
     min-height:64px;
+
     padding:12px 11px;
-    border-right:1px solid var(--line-soft);
-    border-bottom:1px solid var(--line-soft);
+
+    border-right:
+        1px solid var(--line-soft);
+
+    border-bottom:
+        1px solid var(--line-soft);
 }
 
 .metric-label{
     font-size:8px;
+
     letter-spacing:.15em;
+
     color:#59616b;
+
     font-weight:700;
 }
 
 .metric-value{
     margin-top:8px;
+
     font-size:14px;
+
     font-weight:700;
+
     color:#dce1e6;
 }
 
 .panel-footer{
     display:flex;
+
     justify-content:space-between;
+
     align-items:end;
+
     margin-top:17px;
 }
 
 .price-label{
     font-size:8px;
+
     letter-spacing:.16em;
+
     color:#59616b;
+
     font-weight:700;
 }
 
 .price{
     margin-top:5px;
+
     font-family:Manrope,Inter,sans-serif;
+
     font-size:22px;
+
     font-weight:700;
+
     letter-spacing:-.03em;
 }
 
 .acquire{
     height:35px;
+
     padding:0 14px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.045);
+
+    border:
+        1px solid rgba(255,255,255,.14);
+
+    background:
+        rgba(255,255,255,.045);
+
     color:#cbd1d8;
+
     font-size:8px;
+
     letter-spacing:.15em;
+
     font-weight:800;
+
     cursor:pointer;
 }
 
 .acquire:hover{
-    border-color:rgba(255,255,255,.35);
+    border-color:
+        rgba(255,255,255,.35);
+
     color:#fff;
 }
 
@@ -539,78 +683,116 @@ body{
 
 .world-selector{
     position:absolute;
+
     left:42px;
     bottom:145px;
+
     width:215px;
 }
 
 .selector-title{
     font-size:8px;
+
     letter-spacing:.21em;
+
     color:#5f6872;
+
     font-weight:800;
+
     margin-bottom:10px;
 }
 
 .world-buttons{
     display:flex;
+
     gap:6px;
 }
 
 .world-btn{
     min-width:92px;
+
     height:38px;
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.025);
+
     color:#737c86;
+
     font-size:9px;
+
     letter-spacing:.15em;
+
     font-weight:800;
+
     cursor:pointer;
+
     transition:.25s;
 }
 
 .world-btn:hover{
     color:#dce2e8;
-    border-color:rgba(255,255,255,.18);
+
+    border-color:
+        rgba(255,255,255,.18);
 }
 
 .world-btn.active{
-    background:rgba(255,255,255,.09);
+    background:
+        rgba(255,255,255,.09);
+
     color:#f0f2f4;
-    border-color:rgba(255,255,255,.19);
+
+    border-color:
+        rgba(255,255,255,.19);
 }
 
 /* =========================================================
-   SELECTED PLOT
+   PLOT CARD
 ========================================================= */
 
 .plot-card{
     position:absolute;
+
     right:42px;
     bottom:145px;
+
     width:290px;
 }
 
 .plot-label{
     font-size:8px;
+
     letter-spacing:.2em;
+
     color:#59616b;
+
     font-weight:800;
+
     margin-bottom:10px;
 }
 
 .plot-inner{
-    border-top:1px solid rgba(255,255,255,.1);
-    border-bottom:1px solid rgba(255,255,255,.1);
+    border-top:
+        1px solid rgba(255,255,255,.1);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.1);
+
     padding:13px 0;
+
     display:flex;
+
     justify-content:space-between;
 }
 
 .plot-id{
     font-family:Manrope,Inter,sans-serif;
+
     font-size:17px;
+
     font-weight:700;
 }
 
@@ -620,34 +802,51 @@ body{
 
 .status-top{
     font-size:8px;
+
     letter-spacing:.13em;
+
     color:#65707b;
+
     font-weight:700;
 }
 
 .status-bottom{
     margin-top:5px;
+
     font-size:9px;
+
     letter-spacing:.08em;
+
     color:#c5ccd3;
+
     font-weight:700;
 }
 
 /* =========================================================
-   BOTTOM MARKET BAR
+   BOTTOM BAR
 ========================================================= */
 
 .market-bar{
     position:absolute;
+
     left:0;
     right:0;
     bottom:0;
+
     height:84px;
-    border-top:1px solid rgba(255,255,255,.08);
-    background:rgba(4,6,8,.93);
+
+    border-top:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        rgba(4,6,8,.93);
+
     backdrop-filter:blur(15px);
+
     display:flex;
+
     align-items:center;
+
     padding:0 42px;
 }
 
@@ -657,85 +856,86 @@ body{
 
 .market-label{
     font-size:8px;
+
     letter-spacing:.2em;
+
     color:#555e68;
+
     font-weight:800;
 }
 
 .market-title{
     margin-top:7px;
+
     font-family:Manrope,Inter,sans-serif;
+
     font-size:14px;
+
     font-weight:700;
 }
 
 .market-data{
     flex:1;
+
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     max-width:650px;
 }
 
 .market-item{
     padding-left:28px;
-    border-left:1px solid rgba(255,255,255,.07);
+
+    border-left:
+        1px solid rgba(255,255,255,.07);
 }
 
 .market-item-label{
     font-size:8px;
+
     letter-spacing:.15em;
+
     color:#555e68;
+
     font-weight:700;
 }
 
 .market-item-value{
     margin-top:6px;
+
     font-size:12px;
+
     font-weight:700;
+
     color:#cfd5dc;
 }
 
 .controls-hint{
     margin-left:auto;
+
     text-align:right;
 }
 
 .controls-hint-top{
     font-size:8px;
+
     letter-spacing:.18em;
+
     color:#555e68;
+
     font-weight:700;
 }
 
 .controls-hint-bottom{
     margin-top:6px;
+
     font-size:9px;
+
     color:#8b949e;
+
     letter-spacing:.08em;
-}
-
-/* =========================================================
-   CORNER TECH DETAILS
-========================================================= */
-
-.corner-detail{
-    position:absolute;
-    top:116px;
-    left:42px;
-    font-size:7px;
-    letter-spacing:.2em;
-    color:#3f474f;
-    font-weight:700;
-}
-
-.corner-detail-right{
-    position:absolute;
-    top:116px;
-    right:42px;
-    font-size:7px;
-    letter-spacing:.2em;
-    color:#3f474f;
-    font-weight:700;
 }
 
 /* =========================================================
@@ -758,13 +958,11 @@ body{
     }
 
     .brand,
-    .world-selector,
-    .plot-card{
+    .world-selector{
         left:25px;
     }
 
     .plot-card{
-        left:auto;
         right:25px;
     }
 
@@ -775,6 +973,7 @@ body{
     .market-bar{
         padding:0 25px;
     }
+
 }
 
 @media(max-width:760px){
@@ -839,6 +1038,7 @@ body{
     .controls-hint{
         display:none;
     }
+
 }
 
 </style>
@@ -848,9 +1048,9 @@ body{
 
 <div id="space">
 
-    <div id="stars"></div>
+    <div class="cosmic-haze"></div>
 
-    <div id="cometLayer"></div>
+    <div id="stars"></div>
 
     <canvas id="spaceCanvas"></canvas>
 
@@ -859,17 +1059,38 @@ body{
         <!-- BRAND -->
 
         <div class="brand">
-            <div class="brand-main">ASTERRA</div>
-            <div class="brand-sub">OWN YOUR WORLD.</div>
+
+            <div class="brand-main">
+                ASTERRA
+            </div>
+
+            <div class="brand-sub">
+                OWN YOUR WORLD.
+            </div>
+
         </div>
+
 
         <!-- NAV -->
 
         <div class="top-nav">
-            <div class="nav-item active">UNIVERSE</div>
-            <div class="nav-item">EXCHANGE</div>
-            <div class="nav-item">PORTFOLIO</div>
+
+            <div class="nav-item active">
+                UNIVERSE
+            </div>
+
+            <div class="nav-item">
+                EXCHANGE
+            </div>
+
+            <div class="nav-item">
+                PORTFOLIO
+            </div>
+
         </div>
+
+
+        <!-- SYSTEM LABELS -->
 
         <div class="corner-detail">
             ASTERRA / DIGITAL SURFACE SYSTEM
@@ -879,24 +1100,38 @@ body{
             SYSTEM STATUS / ONLINE
         </div>
 
+
         <!-- HERO -->
 
         <section class="hero">
 
             <div class="eyebrow">
+
                 <span class="eyebrow-line"></span>
+
                 LIVE SURFACE
+
             </div>
+
 
             <h1>
+
                 ENTER THE
-                <span>UNIVERSE.</span>
+
+                <span>
+                    UNIVERSE.
+                </span>
+
             </h1>
 
+
             <div class="hero-copy">
+
                 Discover finite digital plots across the Moon and Mars.
                 Collect, explore and build your own place inside ASTERRA.
+
             </div>
+
 
             <div class="hero-actions">
 
@@ -912,7 +1147,8 @@ body{
 
         </section>
 
-        <!-- ASSET PANEL -->
+
+        <!-- RIGHT PANEL -->
 
         <aside class="asset-panel">
 
@@ -923,58 +1159,114 @@ body{
                 </div>
 
                 <div class="live">
+
                     <span class="live-dot"></span>
+
                     LIVE
+
                 </div>
 
             </div>
 
+
             <div class="world-title">
 
-                <div class="world-name" id="worldName">
+                <div
+                    class="world-name"
+                    id="worldName"
+                >
                     MARS
                 </div>
 
-                <div class="world-code" id="worldCode">
+                <div
+                    class="world-code"
+                    id="worldCode"
+                >
                     MR / 01
                 </div>
 
             </div>
 
+
             <div class="panel-grid">
 
                 <div class="metric">
-                    <div class="metric-label">SUPPLY</div>
-                    <div class="metric-value" id="supplyValue">
+
+                    <div class="metric-label">
+                        SUPPLY
+                    </div>
+
+                    <div
+                        class="metric-value"
+                        id="supplyValue"
+                    >
                         1,220,000
                     </div>
+
                 </div>
 
+
                 <div class="metric">
-                    <div class="metric-label">AVAILABLE</div>
-                    <div class="metric-value" id="availableValue">
+
+                    <div class="metric-label">
+                        AVAILABLE
+                    </div>
+
+                    <div
+                        class="metric-value"
+                        id="availableValue"
+                    >
                         1,220,000
                     </div>
+
                 </div>
 
-                <div class="metric">
-                    <div class="metric-label">REGION</div>
-                    <div class="metric-value">GLOBAL</div>
-                </div>
 
                 <div class="metric">
-                    <div class="metric-label">STATUS</div>
-                    <div class="metric-value">ACTIVE</div>
+
+                    <div class="metric-label">
+                        REGION
+                    </div>
+
+                    <div class="metric-value">
+                        GLOBAL
+                    </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                    <div class="metric-label">
+                        STATUS
+                    </div>
+
+                    <div class="metric-value">
+                        ACTIVE
+                    </div>
+
                 </div>
 
             </div>
 
+
             <div class="panel-footer">
 
                 <div>
-                    <div class="price-label">BASE PRICE</div>
-                    <div class="price" id="basePrice">$199</div>
+
+                    <div class="price-label">
+                        BASE PRICE
+                    </div>
+
+                    <div
+                        class="price"
+                        id="basePrice"
+                    >
+                        $199
+                    </div>
+
                 </div>
+
 
                 <button class="acquire">
                     ACQUIRE PLOT
@@ -984,6 +1276,7 @@ body{
 
         </aside>
 
+
         <!-- WORLD SELECTOR -->
 
         <div class="world-selector">
@@ -991,6 +1284,7 @@ body{
             <div class="selector-title">
                 SELECT WORLD
             </div>
+
 
             <div class="world-buttons">
 
@@ -1012,7 +1306,8 @@ body{
 
         </div>
 
-        <!-- PLOT -->
+
+        <!-- SELECTED PLOT -->
 
         <div class="plot-card">
 
@@ -1020,15 +1315,20 @@ body{
                 SELECTED PLOT
             </div>
 
+
             <div class="plot-inner">
 
                 <div>
+
                     <div class="plot-id">
                         MR-08421
                     </div>
+
                 </div>
 
+
                 <div class="plot-status">
+
                     <div class="status-top">
                         DIGITAL SURFACE ASSET
                     </div>
@@ -1036,11 +1336,13 @@ body{
                     <div class="status-bottom">
                         AVAILABLE
                     </div>
+
                 </div>
 
             </div>
 
         </div>
+
 
         <!-- BOTTOM BAR -->
 
@@ -1057,6 +1359,7 @@ body{
                 </div>
 
             </div>
+
 
             <div class="market-data">
 
@@ -1075,6 +1378,7 @@ body{
 
                 </div>
 
+
                 <div class="market-item">
 
                     <div class="market-item-label">
@@ -1089,6 +1393,7 @@ body{
                     </div>
 
                 </div>
+
 
                 <div class="market-item">
 
@@ -1106,6 +1411,7 @@ body{
                 </div>
 
             </div>
+
 
             <div class="controls-hint">
 
@@ -1131,125 +1437,203 @@ body{
 <script>
 
 /* =========================================================
-   ASTERRA — DIGITAL UNIVERSE ENGINE
+   ASTERRA — SPACE ENGINE
 ========================================================= */
-
-const canvas = document.getElementById("spaceCanvas");
-const starsContainer = document.getElementById("stars");
-const cometLayer = document.getElementById("cometLayer");
 
 
 /* =========================================================
-   RANDOM STAR FIELD
+   STARS
 ========================================================= */
 
+const starsContainer =
+    document.getElementById("stars");
+
 const stars = [];
+
 
 function createStars(){
 
     starsContainer.innerHTML = "";
 
+    stars.length = 0;
+
+
     const count =
         Math.min(
-            290,
+            300,
             Math.max(
-                190,
-                Math.floor(window.innerWidth * window.innerHeight / 8500)
+                200,
+                Math.floor(
+                    window.innerWidth *
+                    window.innerHeight /
+                    8200
+                )
             )
         );
 
+
     for(let i=0;i<count;i++){
 
-        const star = document.createElement("div");
+        const star =
+            document.createElement("div");
+
 
         star.className =
-            "star" +
-            (Math.random() > .88 ? " glow" : "");
+            "star";
+
+
+        const large =
+            Math.random() > .91;
+
 
         const size =
-            Math.random() < .84
-                ? .5 + Math.random() * 1.25
-                : 1.35 + Math.random() * 1.5;
+            large
+                ? 1.35 + Math.random()*1.55
+                : .45 + Math.random()*1.15;
 
-        star.style.width = size + "px";
-        star.style.height = size + "px";
+
+        star.style.width =
+            size + "px";
+
+        star.style.height =
+            size + "px";
+
+
+        /*
+           Completely random distribution.
+           No grid / no pattern.
+        */
 
         star.style.left =
-            (Math.random() * 100) + "%";
+            Math.random()*100 + "%";
 
         star.style.top =
-            (Math.random() * 100) + "%";
+            Math.random()*100 + "%";
 
-        star.style.opacity =
-            .18 + Math.random() * .58;
+
+        if(
+            large ||
+            Math.random() > .88
+        ){
+
+            star.classList.add(
+                "glow"
+            );
+
+        }
+
 
         const data = {
 
             element:star,
 
             base:
-                .20 + Math.random() * .48,
+                large
+                    ? .30 + Math.random()*.35
+                    : .16 + Math.random()*.40,
 
             amplitude:
-                .10 + Math.random() * .42,
+                large
+                    ? .22 + Math.random()*.38
+                    : .10 + Math.random()*.38,
 
             speed:
-                .35 + Math.random() * 1.8,
+                .28 + Math.random()*1.9,
 
             phase:
-                Math.random() * Math.PI * 2,
+                Math.random() *
+                Math.PI *
+                2,
 
-            size:size,
+            secondPhase:
+                Math.random() *
+                Math.PI *
+                2,
 
-            pulse:
-                Math.random() * Math.PI * 2
+            size:size
 
         };
 
-        stars.push(data);
+
+        starsContainer.appendChild(
+            star
+        );
+
+        stars.push(
+            data
+        );
 
     }
 
 }
 
+
 createStars();
 
 
 /* =========================================================
-   STAR TWINKLE ENGINE
+   STAR TWINKLING
 ========================================================= */
 
 function animateStars(time){
 
-    const seconds = time * .001;
+    const t =
+        time * .001;
 
-    for(let i=0;i<stars.length;i++){
 
-        const s = stars[i];
+    for(
+        let i=0;
+        i<stars.length;
+        i++
+    ){
 
-        const wave =
-            (Math.sin(
-                seconds * s.speed +
-                s.phase
-            ) + 1) / 2;
+        const s =
+            stars[i];
+
+
+        const primary =
+            (
+                Math.sin(
+                    t*s.speed +
+                    s.phase
+                ) + 1
+            ) / 2;
+
 
         const secondary =
-            (Math.sin(
-                seconds * s.speed * .43 +
-                s.pulse
-            ) + 1) / 2;
+            (
+                Math.sin(
+                    t*s.speed*.37 +
+                    s.secondPhase
+                ) + 1
+            ) / 2;
+
+
+        /*
+           Different stars reach different
+           brightness levels independently.
+        */
 
         const brightness =
             s.base +
             s.amplitude *
-            (wave * .72 + secondary * .28);
+            (
+                primary*.72 +
+                secondary*.28
+            );
+
 
         const scale =
-            .78 +
-            wave * .42;
+            .72 +
+            primary*.48;
+
 
         s.element.style.opacity =
-            Math.min(1,brightness);
+            Math.min(
+                1,
+                brightness
+            );
+
 
         s.element.style.transform =
             `translate(-50%,-50%) scale(${scale})`;
@@ -1263,15 +1647,25 @@ function animateStars(time){
    THREE.JS
 ========================================================= */
 
-const scene = new THREE.Scene();
+const canvas =
+    document.getElementById(
+        "spaceCanvas"
+    );
+
+
+const scene =
+    new THREE.Scene();
+
 
 const camera =
     new THREE.PerspectiveCamera(
         42,
-        window.innerWidth / window.innerHeight,
+        window.innerWidth /
+        window.innerHeight,
         .1,
         4000
     );
+
 
 camera.position.set(
     0,
@@ -1293,13 +1687,18 @@ const renderer =
 
 
 renderer.setPixelRatio(
-    Math.min(window.devicePixelRatio,2)
+    Math.min(
+        window.devicePixelRatio,
+        2
+    )
 );
+
 
 renderer.setSize(
     window.innerWidth,
     window.innerHeight
 );
+
 
 renderer.outputEncoding =
     THREE.sRGBEncoding;
@@ -1315,7 +1714,9 @@ const ambient =
         .48
     );
 
-scene.add(ambient);
+scene.add(
+    ambient
+);
 
 
 const keyLight =
@@ -1324,13 +1725,17 @@ const keyLight =
         2.5
     );
 
+
 keyLight.position.set(
     -300,
     160,
     400
 );
 
-scene.add(keyLight);
+
+scene.add(
+    keyLight
+);
 
 
 const fillLight =
@@ -1339,39 +1744,57 @@ const fillLight =
         .34
     );
 
+
 fillLight.position.set(
     350,
     -100,
     250
 );
 
-scene.add(fillLight);
+
+scene.add(
+    fillLight
+);
 
 
 /* =========================================================
-   PLANET
+   PLANET GROUP
 ========================================================= */
 
 const planetGroup =
     new THREE.Group();
 
+
+/*
+   Slightly left from the previous version.
+   This gives the zoomed planet more room
+   before the right-side information panel.
+*/
+
 planetGroup.position.set(
-    105,
+    70,
     0,
     0
 );
 
-scene.add(planetGroup);
+
+scene.add(
+    planetGroup
+);
 
 
-let currentWorld = "mars";
+let currentWorld =
+    "mars";
 
 
 const worldData = {
 
     mars:{
+
         supply:"1,220,000",
+
         price:"$199",
+
         code:"MR / 01",
 
         colors:[
@@ -1385,9 +1808,13 @@ const worldData = {
 
     },
 
+
     moon:{
+
         supply:"320,000",
+
         price:"$149",
+
         code:"MN / 01",
 
         colors:[
@@ -1404,52 +1831,72 @@ const worldData = {
 };
 
 
-/* =========================================================
-   PLANET CREATION
-========================================================= */
-
 let planetMesh = null;
 let craterGroup = null;
 let markerGroup = null;
 
 
+/* =========================================================
+   SEEDED RANDOM
+========================================================= */
+
 function seededRandom(seed){
 
-    let x =
-        Math.sin(seed * 12.9898) *
+    const x =
+        Math.sin(
+            seed*12.9898
+        ) *
         43758.5453;
 
-    return x - Math.floor(x);
+
+    return x -
+        Math.floor(x);
 
 }
 
+
+/* =========================================================
+   PLANET
+========================================================= */
 
 function createPlanet(world){
 
     if(planetMesh){
 
-        planetGroup.remove(planetMesh);
+        planetGroup.remove(
+            planetMesh
+        );
+
         planetMesh.geometry.dispose();
 
     }
 
+
     if(craterGroup){
 
-        planetGroup.remove(craterGroup);
+        planetGroup.remove(
+            craterGroup
+        );
 
     }
+
 
     if(markerGroup){
 
-        planetGroup.remove(markerGroup);
+        planetGroup.remove(
+            markerGroup
+        );
 
     }
+
 
     const data =
         worldData[world];
 
 
-    const radius = 130;
+    const radius =
+        130;
+
 
     const geometry =
         new THREE.SphereGeometry(
@@ -1466,37 +1913,68 @@ function createPlanet(world){
     const colors = [];
 
 
-    for(let i=0;i<pos.count;i++){
+    for(
+        let i=0;
+        i<pos.count;
+        i++
+    ){
 
-        const x = pos.getX(i);
-        const y = pos.getY(i);
-        const z = pos.getZ(i);
+        const x =
+            pos.getX(i);
 
-        const nx = x / radius;
-        const ny = y / radius;
-        const nz = z / radius;
+        const y =
+            pos.getY(i);
+
+        const z =
+            pos.getZ(i);
+
+
+        const nx =
+            x/radius;
+
+        const ny =
+            y/radius;
+
+        const nz =
+            z/radius;
 
 
         let noise =
-            Math.sin(nx*8.3 + ny*4.7) * .5 +
-            Math.sin(nz*13.2 - nx*3.1) * .25 +
-            Math.sin(ny*18.1 + nz*5.7) * .15;
+            Math.sin(
+                nx*8.3 +
+                ny*4.7
+            )*.5;
+
+
+        noise +=
+            Math.sin(
+                nz*13.2 -
+                nx*3.1
+            )*.25;
+
+
+        noise +=
+            Math.sin(
+                ny*18.1 +
+                nz*5.7
+            )*.15;
 
 
         noise +=
             Math.sin(
                 (nx+nz)*32
-            ) * .07;
+            )*.07;
 
 
         const index =
             Math.abs(
                 Math.floor(
-                    (noise + 1) *
+                    (noise+1) *
                     data.colors.length *
                     .48
                 )
-            ) % data.colors.length;
+            ) %
+            data.colors.length;
 
 
         const c =
@@ -1505,13 +1983,26 @@ function createPlanet(world){
 
         const shade =
             .82 +
-            noise * .13;
+            noise*.13;
 
 
         colors.push(
-            Math.min(255,c[0]*shade)/255,
-            Math.min(255,c[1]*shade)/255,
-            Math.min(255,c[2]*shade)/255
+
+            Math.min(
+                255,
+                c[0]*shade
+            )/255,
+
+            Math.min(
+                255,
+                c[1]*shade
+            )/255,
+
+            Math.min(
+                255,
+                c[2]*shade
+            )/255
+
         );
 
     }
@@ -1519,6 +2010,7 @@ function createPlanet(world){
 
     geometry.setAttribute(
         "color",
+
         new THREE.Float32BufferAttribute(
             colors,
             3
@@ -1564,48 +2056,62 @@ function createPlanet(world){
             : 38;
 
 
-    for(let i=0;i<craterCount;i++){
+    for(
+        let i=0;
+        i<craterCount;
+        i++
+    ){
 
         const u =
-            seededRandom(i*3.7+11);
+            seededRandom(
+                i*3.7+11
+            );
+
 
         const v =
-            seededRandom(i*7.1+31);
+            seededRandom(
+                i*7.1+31
+            );
 
 
         const theta =
-            u * Math.PI * 2;
+            u*Math.PI*2;
+
 
         const phi =
             Math.acos(
-                2*v - 1
+                2*v-1
             );
 
 
         const r =
-            radius + .55;
+            radius+.55;
 
 
         const x =
-            r *
-            Math.sin(phi) *
+            r*
+            Math.sin(phi)*
             Math.cos(theta);
 
+
         const y =
-            r *
+            r*
             Math.cos(phi);
 
+
         const z =
-            r *
-            Math.sin(phi) *
+            r*
+            Math.sin(phi)*
             Math.sin(theta);
 
 
         const size =
             2.5 +
-            seededRandom(i*9.4+4) *
+            seededRandom(
+                i*9.4+4
+            ) *
             (
-                world === "moon"
+                world==="moon"
                     ? 10
                     : 7
             );
@@ -1623,14 +2129,14 @@ function createPlanet(world){
                 new THREE.MeshBasicMaterial({
 
                     color:
-                        world === "moon"
+                        world==="moon"
                             ? 0x4c4c49
                             : 0x56261d,
 
                     transparent:true,
 
                     opacity:
-                        world === "moon"
+                        world==="moon"
                             ? .16
                             : .12,
 
@@ -1678,33 +2184,44 @@ function createPlanet(world){
         new THREE.Group();
 
 
-    for(let i=0;i<20;i++){
+    for(
+        let i=0;
+        i<20;
+        i++
+    ){
 
         const theta =
-            seededRandom(i*3.1+17) *
-            Math.PI * 2;
+            seededRandom(
+                i*3.1+17
+            ) *
+            Math.PI*2;
+
 
         const phi =
-            seededRandom(i*4.8+21) *
+            seededRandom(
+                i*4.8+21
+            ) *
             Math.PI;
 
 
         const r =
-            radius + 1.7;
+            radius+1.7;
 
 
         const x =
-            r *
-            Math.sin(phi) *
+            r*
+            Math.sin(phi)*
             Math.cos(theta);
 
+
         const y =
-            r *
+            r*
             Math.cos(phi);
 
+
         const z =
-            r *
-            Math.sin(phi) *
+            r*
+            Math.sin(phi)*
             Math.sin(theta);
 
 
@@ -1712,7 +2229,9 @@ function createPlanet(world){
             new THREE.Mesh(
 
                 new THREE.SphereGeometry(
-                    i===0 ? 1.8 : 1.1,
+                    i===0
+                        ? 1.8
+                        : 1.1,
                     12,
                     12
                 ),
@@ -1750,26 +2269,37 @@ function createPlanet(world){
 }
 
 
-createPlanet("mars");
+createPlanet(
+    "mars"
+);
 
 
 /* =========================================================
    ROTATION
 ========================================================= */
 
-let dragging = false;
-let previousX = 0;
-let previousY = 0;
+let dragging =
+    false;
+
+let previousX =
+    0;
+
+let previousY =
+    0;
 
 
 canvas.addEventListener(
     "pointerdown",
     e => {
 
-        dragging = true;
+        dragging =
+            true;
 
-        previousX = e.clientX;
-        previousY = e.clientY;
+        previousX =
+            e.clientX;
+
+        previousY =
+            e.clientY;
 
         canvas.setPointerCapture(
             e.pointerId
@@ -1783,20 +2313,26 @@ canvas.addEventListener(
     "pointermove",
     e => {
 
-        if(!dragging)return;
+        if(!dragging)
+            return;
+
 
         const dx =
-            e.clientX - previousX;
+            e.clientX -
+            previousX;
+
 
         const dy =
-            e.clientY - previousY;
+            e.clientY -
+            previousY;
 
 
         planetGroup.rotation.y +=
-            dx * .006;
+            dx*.006;
+
 
         planetGroup.rotation.x +=
-            dy * .003;
+            dy*.003;
 
 
         planetGroup.rotation.x =
@@ -1823,16 +2359,19 @@ canvas.addEventListener(
     "pointerup",
     () => {
 
-        dragging = false;
+        dragging =
+            false;
 
     }
 );
+
 
 canvas.addEventListener(
     "pointercancel",
     () => {
 
-        dragging = false;
+        dragging =
+            false;
 
     }
 );
@@ -1840,14 +2379,21 @@ canvas.addEventListener(
 
 /* =========================================================
    ZOOM
-   DO NOT CHANGE — USER APPROVED
+   EXACTLY THE SAME WORKING MECHANISM
 ========================================================= */
 
-let zoomDistance = 520;
-let targetZoom = 520;
+let zoomDistance =
+    520;
 
-const MIN_ZOOM = 475;
-const MAX_ZOOM = 760;
+let targetZoom =
+    520;
+
+
+const MIN_ZOOM =
+    475;
+
+const MAX_ZOOM =
+    760;
 
 
 canvas.addEventListener(
@@ -1856,8 +2402,10 @@ canvas.addEventListener(
 
         e.preventDefault();
 
+
         targetZoom +=
-            e.deltaY * .35;
+            e.deltaY*.35;
+
 
         targetZoom =
             Math.max(
@@ -1869,7 +2417,9 @@ canvas.addEventListener(
             );
 
     },
-    {passive:false}
+    {
+        passive:false
+    }
 );
 
 
@@ -1878,10 +2428,15 @@ canvas.addEventListener(
 ========================================================= */
 
 const marsBtn =
-    document.getElementById("marsBtn");
+    document.getElementById(
+        "marsBtn"
+    );
+
 
 const moonBtn =
-    document.getElementById("moonBtn");
+    document.getElementById(
+        "moonBtn"
+    );
 
 
 function setWorld(world){
@@ -1889,17 +2444,21 @@ function setWorld(world){
     currentWorld =
         world;
 
-    createPlanet(world);
+
+    createPlanet(
+        world
+    );
 
 
     marsBtn.classList.toggle(
         "active",
-        world === "mars"
+        world==="mars"
     );
+
 
     moonBtn.classList.toggle(
         "active",
-        world === "moon"
+        world==="moon"
     );
 
 
@@ -1962,6 +2521,7 @@ marsBtn.addEventListener(
     () => setWorld("mars")
 );
 
+
 moonBtn.addEventListener(
     "click",
     () => setWorld("moon")
@@ -1969,260 +2529,30 @@ moonBtn.addEventListener(
 
 
 /* =========================================================
-   REALISTIC RARE COMET
-========================================================= */
-
-let cometActive = false;
-let nextCometTime =
-    performance.now() +
-    28000 +
-    Math.random()*28000;
-
-
-function launchComet(){
-
-    if(cometActive)return;
-
-    cometActive = true;
-
-
-    const comet =
-        document.createElement("div");
-
-    comet.className =
-        "comet";
-
-
-    comet.innerHTML = `
-
-        <div class="tail-soft"></div>
-        <div class="tail-main"></div>
-        <div class="tail-thin"></div>
-        <div class="coma"></div>
-        <div class="core"></div>
-
-    `;
-
-
-    cometLayer.appendChild(
-        comet
-    );
-
-
-    const startX =
-        window.innerWidth *
-        (
-            .05 +
-            Math.random()*.18
-        );
-
-
-    const startY =
-        window.innerHeight *
-        (
-            .08 +
-            Math.random()*.28
-        );
-
-
-    const endX =
-        window.innerWidth *
-        (
-            .76 +
-            Math.random()*.25
-        );
-
-
-    const endY =
-        window.innerHeight *
-        (
-            .58 +
-            Math.random()*.30
-        );
-
-
-    const distance =
-        Math.hypot(
-            endX-startX,
-            endY-startY
-        );
-
-
-    const duration =
-        9000 +
-        Math.random()*6000;
-
-
-    const startTime =
-        performance.now();
-
-
-    const size =
-        .75 +
-        Math.random()*.85;
-
-
-    comet.style.transform =
-        `scale(${size})`;
-
-
-    function animateComet(now){
-
-        const elapsed =
-            now - startTime;
-
-
-        let p =
-            elapsed / duration;
-
-
-        if(p >= 1){
-
-            comet.remove();
-
-            cometActive = false;
-
-            nextCometTime =
-                now +
-                50000 +
-                Math.random()*50000;
-
-            return;
-
-        }
-
-
-        /* smooth motion */
-
-        const ease =
-            p*p*(3-2*p);
-
-
-        /* slightly curved trajectory */
-
-        const curve =
-            Math.sin(
-                p * Math.PI
-            ) *
-            (
-                50 +
-                Math.random()*25
-            );
-
-
-        const x =
-            startX +
-            (endX-startX)*ease;
-
-
-        const y =
-            startY +
-            (endY-startY)*ease +
-            curve;
-
-
-        comet.style.left =
-            x + "px";
-
-        comet.style.top =
-            y + "px";
-
-
-        /* fade in / fade out */
-
-        let opacity = 1;
-
-
-        if(p < .12){
-
-            opacity =
-                p/.12;
-
-        }else if(p > .82){
-
-            opacity =
-                (1-p)/.18;
-
-        }
-
-
-        comet.style.opacity =
-            Math.max(
-                0,
-                Math.min(
-                    1,
-                    opacity
-                )
-            );
-
-
-        /* orient comet along trajectory */
-
-        const angle =
-            Math.atan2(
-                endY-startY,
-                endX-startX
-            );
-
-
-        const tailMain =
-            comet.querySelector(
-                ".tail-main"
-            );
-
-        const tailSoft =
-            comet.querySelector(
-                ".tail-soft"
-            );
-
-        const tailThin =
-            comet.querySelector(
-                ".tail-thin"
-            );
-
-
-        tailMain.style.transform =
-            `rotate(${angle}rad)`;
-
-
-        tailSoft.style.transform =
-            `rotate(${angle}rad)`;
-
-
-        tailThin.style.transform =
-            `rotate(${angle}rad)`;
-
-
-        requestAnimationFrame(
-            animateComet
-        );
-
-    }
-
-
-    requestAnimationFrame(
-        animateComet
-    );
-
-}
-
-
-/* =========================================================
-   ANIMATION LOOP
+   MAIN ANIMATION
 ========================================================= */
 
 function animate(time){
 
-    animateStars(time);
+    /*
+       Stars independently twinkle.
+    */
+
+    animateStars(
+        time
+    );
 
 
-    /* smooth approved zoom */
+    /*
+       APPROVED ZOOM:
+       values and mechanism unchanged.
+    */
 
     zoomDistance +=
         (
             targetZoom -
             zoomDistance
-        ) * .08;
+        )*.08;
 
 
     camera.position.z =
@@ -2230,9 +2560,11 @@ function animate(time){
 
 
     /*
-       Keep the planet visually above
-       the bottom market panel when zoomed.
-       Zoom itself remains untouched.
+       When zooming in:
+       1. move planet upward
+       2. move planet left
+       
+       The actual zoom remains unchanged.
     */
 
     const zoomFactor =
@@ -2246,7 +2578,7 @@ function animate(time){
         );
 
 
-    const clampedFactor =
+    const factor =
         Math.max(
             0,
             Math.min(
@@ -2256,30 +2588,36 @@ function animate(time){
         );
 
 
+    /*
+       Base X = 70.
+       At maximum zoom the planet moves
+       another 38 units to the left.
+    */
+
+    planetGroup.position.x =
+        70 -
+        factor*38;
+
+
+    /*
+       Lift planet slightly so the lower
+       edge stays clear of the bottom panel.
+    */
+
     planetGroup.position.y =
-        clampedFactor * 58;
+        factor*58;
 
 
-    /* automatic rotation */
+    /*
+       Automatic slow rotation.
+    */
 
     if(!dragging){
 
         planetGroup.rotation.y +=
-            currentWorld === "mars"
+            currentWorld==="mars"
                 ? .00030
                 : .00022;
-
-    }
-
-
-    /* rare comet */
-
-    if(
-        time >= nextCometTime &&
-        !cometActive
-    ){
-
-        launchComet();
 
     }
 
@@ -2313,6 +2651,7 @@ window.addEventListener(
         camera.aspect =
             window.innerWidth /
             window.innerHeight;
+
 
         camera.updateProjectionMatrix();
 
