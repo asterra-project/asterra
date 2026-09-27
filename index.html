@@ -3,465 +3,289 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ASTERRA — Own Your World</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
 }
 
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-    color:#fff;
-    font-family:Inter,Arial,sans-serif;
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-#space{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    background:#000;
+body {
+    position: relative;
 }
 
-.nebula{
-    position:absolute;
-    inset:-20%;
-    pointer-events:none;
-    z-index:1;
-    opacity:.45;
-    filter:blur(38px);
-}
-
-.nebula-main{
+/* SPACE */
+#space {
+    position: fixed;
+    inset: 0;
     background:
-        radial-gradient(
-            ellipse at 70% 40%,
-            rgba(70,100,150,.12),
-            transparent 58%
-        );
+        radial-gradient(circle at 72% 50%, rgba(35,55,80,.18), transparent 28%),
+        radial-gradient(circle at 25% 25%, rgba(30,40,65,.10), transparent 30%),
+        #000;
 }
 
-.nebula-secondary{
-    background:
-        radial-gradient(
-            ellipse at 20% 75%,
-            rgba(120,90,55,.06),
-            transparent 58%
-        );
+/* STARS */
+#stars {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
-.nebula-far{
-    background:
-        radial-gradient(
-            ellipse at 80% 90%,
-            rgba(90,110,145,.05),
-            transparent 52%
-        );
+/* THREE.JS */
+#scene {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
 }
 
-.nebula-ribbon{
-    background:
-        linear-gradient(
-            135deg,
-            transparent 20%,
-            rgba(150,160,180,.025) 50%,
-            transparent 70%
-        );
+/* UI */
+.ui {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
 }
 
-#starfield{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:3;
-    pointer-events:none;
+/* BRAND */
+.brand {
+    position: absolute;
+    left: 42px;
+    top: 34px;
 }
 
-#scene{
-    position:absolute;
-    inset:0;
-    z-index:4;
+.brand-name {
+    font-size: 27px;
+    font-weight: 700;
+    letter-spacing: 7px;
 }
 
-.ui{
-    position:absolute;
-    inset:0;
-    z-index:10;
-    pointer-events:none;
+.brand-sub {
+    margin-top: 7px;
+    color: #8e8e8e;
+    font-size: 10px;
+    letter-spacing: 3px;
 }
 
-.brand{
-    position:absolute;
-    top:34px;
-    left:42px;
+/* HERO */
+.hero {
+    position: absolute;
+    left: 42px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 390px;
 }
 
-.brand-name{
-    font-family:Manrope,sans-serif;
-    font-size:20px;
-    font-weight:800;
-    letter-spacing:.28em;
+.hero-small {
+    color: #8d9aaa;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 17px;
 }
 
-.brand-sub{
-    margin-top:6px;
-    font-size:9px;
-    letter-spacing:.32em;
-    color:rgba(255,255,255,.42);
+.hero h1 {
+    margin: 0;
+    font-size: 62px;
+    line-height: .95;
+    letter-spacing: -3px;
+    font-weight: 700;
 }
 
-.hero{
-    position:absolute;
-    left:42px;
-    top:50%;
-    transform:translateY(-50%);
-    width:420px;
+.hero p {
+    width: 330px;
+    color: #929292;
+    line-height: 1.65;
+    font-size: 14px;
+    margin-top: 24px;
 }
 
-.kicker{
-    font-size:10px;
-    letter-spacing:.3em;
-    color:rgba(255,255,255,.42);
-    margin-bottom:18px;
+.cta {
+    pointer-events: auto;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 13px 20px;
+    border: 1px solid rgba(255,255,255,.22);
+    background: rgba(255,255,255,.04);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: .2s;
 }
 
-.hero h1{
-    font-family:Manrope,sans-serif;
-    font-size:58px;
-    line-height:.98;
-    letter-spacing:-.045em;
-    font-weight:700;
+.cta:hover {
+    background: rgba(255,255,255,.12);
 }
 
-.hero p{
-    margin-top:24px;
-    max-width:390px;
-    color:rgba(255,255,255,.58);
-    font-size:13px;
-    line-height:1.75;
+/* WORLD SELECTOR */
+.world-panel {
+    pointer-events: auto;
+    position: absolute;
+    right: 38px;
+    top: 38px;
+    width: 205px;
 }
 
-.buttons{
-    display:flex;
-    gap:10px;
-    margin-top:30px;
-    pointer-events:auto;
+.world-title {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #777;
+    margin-bottom: 10px;
 }
 
-.btn{
-    height:42px;
-    padding:0 20px;
-    border:1px solid rgba(255,255,255,.18);
-    background:rgba(255,255,255,.035);
-    color:#fff;
-    font-size:10px;
-    letter-spacing:.15em;
-    cursor:pointer;
+.world-buttons {
+    display: flex;
+    gap: 7px;
 }
 
-.btn.primary{
-    background:#fff;
-    color:#000;
-    border-color:#fff;
+.world-btn {
+    flex: 1;
+    padding: 10px 5px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.35);
+    color: #777;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
 }
 
-.world-panel{
-    position:absolute;
-    right:40px;
-    top:50%;
-    transform:translateY(-50%);
-    width:260px;
-    padding:24px;
-    border:1px solid rgba(255,255,255,.11);
-    background:rgba(5,7,10,.48);
-    backdrop-filter:blur(14px);
-    pointer-events:auto;
+.world-btn.active {
+    color: #fff;
+    border-color: rgba(255,255,255,.42);
 }
 
-.panel-label{
-    font-size:9px;
-    letter-spacing:.25em;
-    color:rgba(255,255,255,.4);
-    margin-bottom:15px;
+/* PLOT CARD */
+.plot-card {
+    position: absolute;
+    right: 38px;
+    bottom: 65px;
+    width: 260px;
+    padding: 19px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(5,7,10,.78);
+    backdrop-filter: blur(10px);
+    display: none;
 }
 
-.world-tabs{
-    display:flex;
-    gap:7px;
-    margin-bottom:22px;
+.plot-card.visible {
+    display: block;
 }
 
-.world-tab{
-    flex:1;
-    height:34px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.1);
-    color:rgba(255,255,255,.55);
-    font-size:9px;
-    letter-spacing:.16em;
-    cursor:pointer;
+.plot-label {
+    color: #777;
+    font-size: 8px;
+    letter-spacing: 3px;
+    margin-bottom: 7px;
 }
 
-.world-tab.active{
-    background:#fff;
-    color:#000;
-    border-color:#fff;
+.plot-id {
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
 }
 
-.world-description{
-    min-height:58px;
-    color:rgba(255,255,255,.5);
-    font-size:11px;
-    line-height:1.65;
+.plot-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    font-size: 11px;
 }
 
-.stats{
-    margin-top:18px;
-    border-top:1px solid rgba(255,255,255,.08);
+.plot-row span:first-child {
+    color: #777;
 }
 
-.stat{
-    display:flex;
-    justify-content:space-between;
-    padding:12px 0;
-    border-bottom:1px solid rgba(255,255,255,.06);
+.plot-price {
+    margin-top: 15px;
+    font-size: 22px;
 }
 
-.stat span:first-child{
-    font-size:9px;
-    letter-spacing:.16em;
-    color:rgba(255,255,255,.35);
+.acquire {
+    pointer-events: auto;
+    width: 100%;
+    margin-top: 13px;
+    padding: 11px;
+    background: #fff;
+    border: 0;
+    color: #000;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
 }
 
-.stat span:last-child{
-    font-size:10px;
-    color:rgba(255,255,255,.82);
+/* BOTTOM */
+.bottom {
+    position: absolute;
+    left: 42px;
+    right: 42px;
+    bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    color: #555;
+    font-size: 9px;
+    letter-spacing: 2px;
 }
 
-.plot-card{
-    position:absolute;
-    right:40px;
-    bottom:100px;
-    width:290px;
-    padding:22px;
-    background:rgba(4,6,9,.9);
-    border:1px solid rgba(255,255,255,.18);
-    backdrop-filter:blur(18px);
-    pointer-events:auto;
-    opacity:0;
-    transform:translateY(12px);
-    transition:.25s ease;
+/* DRAG */
+.drag {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+    color: #555;
+    font-size: 9px;
+    letter-spacing: 2px;
 }
 
-.plot-card.visible{
-    opacity:1;
-    transform:translateY(0);
-}
-
-.plot-card-header{
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    margin-bottom:18px;
-}
-
-.plot-id{
-    font-family:Manrope,sans-serif;
-    font-size:20px;
-    font-weight:700;
-}
-
-.plot-status{
-    font-size:8px;
-    letter-spacing:.16em;
-    color:#7fd39b;
-    padding-top:5px;
-}
-
-.plot-world{
-    margin-top:5px;
-    font-size:9px;
-    letter-spacing:.2em;
-    color:rgba(255,255,255,.4);
-}
-
-.plot-data{
-    border-top:1px solid rgba(255,255,255,.08);
-}
-
-.plot-row{
-    display:flex;
-    justify-content:space-between;
-    padding:10px 0;
-    border-bottom:1px solid rgba(255,255,255,.06);
-}
-
-.plot-row span:first-child{
-    font-size:9px;
-    color:rgba(255,255,255,.35);
-    letter-spacing:.1em;
-}
-
-.plot-row span:last-child{
-    font-size:10px;
-    color:rgba(255,255,255,.8);
-}
-
-.plot-price{
-    margin-top:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
-}
-
-.price-label{
-    font-size:8px;
-    letter-spacing:.16em;
-    color:rgba(255,255,255,.35);
-}
-
-.price-value{
-    font-family:Manrope,sans-serif;
-    font-size:26px;
-    font-weight:700;
-}
-
-.acquire{
-    width:100%;
-    height:42px;
-    margin-top:18px;
-    border:1px solid #fff;
-    background:#fff;
-    color:#000;
-    font-size:9px;
-    letter-spacing:.18em;
-    cursor:pointer;
-}
-
-.acquire:disabled{
-    cursor:default;
-}
-
-.bottom-bar{
-    position:absolute;
-    left:42px;
-    right:42px;
-    bottom:25px;
-    height:48px;
-    border-top:1px solid rgba(255,255,255,.1);
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-between;
-}
-
-.bottom-left{
-    font-size:8px;
-    letter-spacing:.2em;
-    color:rgba(255,255,255,.32);
-}
-
-.bottom-right{
-    display:flex;
-    gap:28px;
-}
-
-.metric{
-    font-size:8px;
-    letter-spacing:.16em;
-    color:rgba(255,255,255,.35);
-}
-
-.metric strong{
-    color:rgba(255,255,255,.7);
-    font-weight:500;
-}
-
-.drag-hint{
-    position:absolute;
-    left:50%;
-    bottom:31px;
-    transform:translateX(-50%);
-    font-size:8px;
-    letter-spacing:.18em;
-    color:rgba(255,255,255,.27);
-}
-
-.data-credit{
-    position:absolute;
-    right:42px;
-    top:30px;
-    font-size:7px;
-    letter-spacing:.15em;
-    color:rgba(255,255,255,.18);
-}
-
-@media(max-width:900px){
-
-    .hero{
-        left:25px;
-        width:340px;
+/* MOBILE */
+@media(max-width: 800px) {
+    .hero {
+        left: 22px;
+        top: 45%;
+        width: 300px;
     }
 
-    .hero h1{
-        font-size:44px;
+    .hero h1 {
+        font-size: 43px;
     }
 
-    .world-panel{
-        right:20px;
-        width:230px;
+    .hero p {
+        width: 260px;
     }
 
-    .brand{
-        left:25px;
+    .brand {
+        left: 22px;
+        top: 22px;
     }
 
-    .bottom-bar{
-        left:25px;
-        right:25px;
-    }
-}
-
-@media(max-width:700px){
-
-    .hero{
-        top:30%;
-        width:calc(100% - 40px);
+    .world-panel {
+        right: 20px;
+        top: 22px;
     }
 
-    .hero h1{
-        font-size:38px;
+    .plot-card {
+        right: 20px;
+        bottom: 50px;
     }
 
-    .world-panel{
-        top:auto;
-        bottom:75px;
-        left:20px;
-        right:20px;
-        width:auto;
-        transform:none;
-    }
-
-    .plot-card{
-        left:20px;
-        right:20px;
-        bottom:20px;
-        width:auto;
-    }
-
-    .drag-hint,
-    .bottom-bar,
-    .data-credit{
-        display:none;
+    .bottom {
+        left: 22px;
+        right: 22px;
     }
 }
 </style>
@@ -470,14 +294,7 @@ html,body{
 <body>
 
 <div id="space">
-
-    <div class="nebula nebula-main"></div>
-    <div class="nebula nebula-secondary"></div>
-    <div class="nebula nebula-far"></div>
-    <div class="nebula nebula-ribbon"></div>
-
-    <canvas id="starfield"></canvas>
-
+    <canvas id="stars"></canvas>
     <div id="scene"></div>
 
     <div class="ui">
@@ -487,212 +304,89 @@ html,body{
             <div class="brand-sub">OWN YOUR WORLD.</div>
         </div>
 
-        <div class="data-credit">
-            PLANETARY SURFACE DATA
-        </div>
+        <div class="hero">
+            <div class="hero-small">VIRTUAL UNIVERSE</div>
 
-        <section class="hero">
-
-            <div class="kicker">
-                ASTERRA DIGITAL UNIVERSE
-            </div>
-
-            <h1>
-                ENTER THE<br>UNIVERSE
-            </h1>
+            <h1>ENTER<br>THE UNIVERSE</h1>
 
             <p>
-                Discover a digital universe built around finite planetary
-                surfaces, unique locations and collectible virtual property.
+                Explore digital worlds. Discover unique locations.
+                Own a place and build your virtual collection.
             </p>
 
-            <div class="buttons">
-
-                <button
-                    class="btn primary"
-                    id="discoverBtn">
-                    DISCOVER SURFACE
-                </button>
-
-                <button
-                    class="btn"
-                    id="exploreBtn">
-                    EXPLORE
-                </button>
-
+            <div class="cta" id="discover">
+                DISCOVER SURFACE
             </div>
+        </div>
 
-        </section>
+        <div class="world-panel">
+            <div class="world-title">SELECT WORLD</div>
 
-        <aside class="world-panel">
-
-            <div class="panel-label">
-                SELECT WORLD
-            </div>
-
-            <div class="world-tabs">
-
-                <button
-                    class="world-tab active"
-                    data-world="moon">
+            <div class="world-buttons">
+                <button class="world-btn active" id="moonBtn">
                     MOON
                 </button>
 
-                <button
-                    class="world-tab"
-                    data-world="mars">
+                <button class="world-btn" id="marsBtn">
                     MARS
                 </button>
+            </div>
+        </div>
 
+        <div class="plot-card" id="plotCard">
+
+            <div class="plot-label">SELECTED LOCATION</div>
+
+            <div class="plot-id" id="plotId">
+                M-00001
             </div>
 
-            <div
-                class="world-description"
-                id="worldDescription">
-                A finite digital surface inspired by Earth's closest
-                celestial neighbour.
+            <div class="plot-row">
+                <span>WORLD</span>
+                <span id="plotWorld">MOON</span>
             </div>
 
-            <div class="stats">
-
-                <div class="stat">
-                    <span>SUPPLY</span>
-                    <span id="supply">248,731</span>
-                </div>
-
-                <div class="stat">
-                    <span>AVAILABLE</span>
-                    <span id="available">248,731</span>
-                </div>
-
-                <div class="stat">
-                    <span>BASE PRICE</span>
-                    <span id="basePrice">$11</span>
-                </div>
-
-                <div class="stat">
-                    <span>STATUS</span>
-                    <span>ACTIVE</span>
-                </div>
-
+            <div class="plot-row">
+                <span>TERRAIN</span>
+                <span id="plotTerrain">PLAIN</span>
             </div>
 
-        </aside>
-
-        <div
-            class="plot-card"
-            id="plotCard">
-
-            <div class="plot-card-header">
-
-                <div>
-
-                    <div
-                        class="plot-id"
-                        id="plotId">
-                        PLOT M-00001
-                    </div>
-
-                    <div
-                        class="plot-world"
-                        id="plotWorld">
-                        MOON · SECTOR 01
-                    </div>
-
-                </div>
-
-                <div
-                    class="plot-status"
-                    id="plotStatus">
-                    AVAILABLE
-                </div>
-
+            <div class="plot-row">
+                <span>RARITY</span>
+                <span id="plotRarity">STANDARD</span>
             </div>
 
-            <div class="plot-data">
-
-                <div class="plot-row">
-                    <span>AREA</span>
-                    <span id="plotArea">1.42 km²</span>
-                </div>
-
-                <div class="plot-row">
-                    <span>COORDINATES</span>
-                    <span id="plotCoordinates">
-                        12.4° N · 38.2° E
-                    </span>
-                </div>
-
-                <div class="plot-row">
-                    <span>TERRAIN</span>
-                    <span id="plotTerrain">RIDGE</span>
-                </div>
-
-                <div class="plot-row">
-                    <span>RARITY</span>
-                    <span id="plotRarity">STANDARD</span>
-                </div>
-
+            <div class="plot-row">
+                <span>AREA</span>
+                <span>1 PLOT</span>
             </div>
 
-            <div class="plot-price">
-
-                <div class="price-label">
-                    CURRENT PRICE
-                </div>
-
-                <div
-                    class="price-value"
-                    id="plotPrice">
-                    $37
-                </div>
-
+            <div class="plot-price" id="plotPrice">
+                $11
             </div>
 
-            <button
-                class="acquire"
-                id="acquireBtn">
+            <button class="acquire" id="acquireBtn">
                 ACQUIRE PLOT
             </button>
 
         </div>
 
-        <div class="bottom-bar">
-
-            <div class="bottom-left">
-                ASTERRA DIGITAL UNIVERSE · SURFACE SCANNING
-            </div>
-
-            <div class="bottom-right">
-
-                <div class="metric">
-                    WORLD
-                    <strong id="worldMetric">MOON</strong>
-                </div>
-
-                <div class="metric">
-                    MODE
-                    <strong>EXPLORATION</strong>
-                </div>
-
-                <div class="metric">
-                    NETWORK
-                    <strong>ONLINE</strong>
-                </div>
-
-            </div>
-
+        <div class="bottom">
+            <div>ASTERRA EXCHANGE</div>
+            <div>MOON • MARS</div>
         </div>
 
-        <div class="drag-hint">
-            DRAG TO ROTATE · SCROLL TO ZOOM · CLICK A PLOT
+        <div class="drag">
+            DRAG TO ROTATE • SCROLL TO ZOOM
         </div>
 
     </div>
-
 </div>
 
+
+<!-- THREE.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 
 <script>
 
@@ -700,85 +394,54 @@ html,body{
    STARFIELD
 ========================================================= */
 
-const starCanvas =
-    document.getElementById("starfield");
+const starCanvas = document.getElementById("stars");
+const starCtx = starCanvas.getContext("2d");
 
-const starCtx =
-    starCanvas.getContext("2d");
+let stars = [];
 
-let stars=[];
+function resizeStars() {
 
-function createStars(){
+    starCanvas.width = window.innerWidth * devicePixelRatio;
+    starCanvas.height = window.innerHeight * devicePixelRatio;
 
-    stars=[];
+    starCanvas.style.width = window.innerWidth + "px";
+    starCanvas.style.height = window.innerHeight + "px";
 
-    const count=
-        Math.max(
-            300,
-            Math.min(
-                550,
-                Math.floor(
-                    window.innerWidth*
-                    window.innerHeight/
-                    6000
-                )
-            )
-        );
+    starCtx.setTransform(
+        devicePixelRatio,
+        0,
+        0,
+        devicePixelRatio,
+        0,
+        0
+    );
+}
 
-    for(let i=0;i<count;i++){
+function createStars() {
+
+    stars = [];
+
+    const count = Math.min(
+        420,
+        Math.max(220, Math.floor(window.innerWidth * 0.32))
+    );
+
+    for (let i = 0; i < count; i++) {
 
         stars.push({
-
-            x:Math.random(),
-            y:Math.random(),
-
-            r:.3+
-                Math.random()*
-                1.1,
-
-            a:.25+
-                Math.random()*
-                .65,
-
-            phase:
-                Math.random()*
-                Math.PI*2,
-
-            speed:
-                .15+
-                Math.random()*.8
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            size: Math.random() < .88
+                ? Math.random() * 1.2 + .2
+                : Math.random() * 1.8 + .7,
+            alpha: Math.random() * .65 + .2,
+            speed: Math.random() * .018 + .004,
+            phase: Math.random() * Math.PI * 2
         });
     }
 }
 
-function resizeStars(){
-
-    const dpr=
-        Math.min(
-            window.devicePixelRatio||1,
-            2
-        );
-
-    starCanvas.width=
-        window.innerWidth*dpr;
-
-    starCanvas.height=
-        window.innerHeight*dpr;
-
-    starCanvas.style.width=
-        window.innerWidth+"px";
-
-    starCanvas.style.height=
-        window.innerHeight+"px";
-
-    starCtx.setTransform(
-        dpr,0,0,dpr,0,0
-    );
-
-    createStars();
-}
-
-function drawStars(time){
+function drawStars(time) {
 
     starCtx.clearRect(
         0,
@@ -787,97 +450,58 @@ function drawStars(time){
         window.innerHeight
     );
 
-    for(const s of stars){
+    for (const s of stars) {
 
-        const pulse=
-            .72+
-            Math.sin(
-                time*s.speed+
-                s.phase
-            )*.28;
-
-        const x=
-            s.x*
-            window.innerWidth;
-
-        const y=
-            s.y*
-            window.innerHeight;
+        const twinkle =
+            s.alpha +
+            Math.sin(time * s.speed + s.phase) * .18;
 
         starCtx.beginPath();
 
-        starCtx.arc(
-            x,
-            y,
-            s.r,
-            0,
-            Math.PI*2
-        );
+        starCtx.fillStyle =
+            "rgba(255,255,255," +
+            Math.max(.05, twinkle) +
+            ")";
 
-        starCtx.fillStyle=
-            `rgba(255,255,255,${
-                s.a*pulse
-            })`;
+        starCtx.arc(
+            s.x,
+            s.y,
+            s.size,
+            0,
+            Math.PI * 2
+        );
 
         starCtx.fill();
     }
-
-    requestAnimationFrame(
-        drawStars
-    );
 }
-
-resizeStars();
-
-window.addEventListener(
-    "resize",
-    resizeStars
-);
-
-requestAnimationFrame(
-    drawStars
-);
 
 
 /* =========================================================
-   THREE.JS CORE
+   THREE.JS SETUP
 ========================================================= */
 
-const scene=
-    new THREE.Scene();
+const scene = new THREE.Scene();
 
-const camera=
-    new THREE.PerspectiveCamera(
-        42,
-        window.innerWidth/
-        window.innerHeight,
-        .1,
-        3000
-    );
-
-let zoomDistance=520;
-let targetZoom=520;
-
-const MIN_ZOOM=475;
-const MAX_ZOOM=760;
+const camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    2000
+);
 
 camera.position.set(
     0,
     0,
-    zoomDistance
+    560
 );
 
-const renderer=
-    new THREE.WebGLRenderer({
-        antialias:true,
-        alpha:true
-    });
+const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+});
 
 renderer.setPixelRatio(
-    Math.min(
-        window.devicePixelRatio||1,
-        2
-    )
+    Math.min(window.devicePixelRatio, 2)
 );
 
 renderer.setSize(
@@ -885,256 +509,234 @@ renderer.setSize(
     window.innerHeight
 );
 
-renderer.outputEncoding=
-    THREE.sRGBEncoding;
+renderer.outputEncoding = THREE.sRGBEncoding;
 
-document
-    .getElementById("scene")
-    .appendChild(
-        renderer.domElement
+document.getElementById("scene").appendChild(
+    renderer.domElement
+);
+
+
+/* =========================================================
+   LIGHTING
+========================================================= */
+
+const ambientLight = new THREE.AmbientLight(
+    0xffffff,
+    0.48
+);
+
+scene.add(ambientLight);
+
+
+const keyLight = new THREE.DirectionalLight(
+    0xffffff,
+    1.5
+);
+
+keyLight.position.set(
+    -300,
+    180,
+    400
+);
+
+scene.add(keyLight);
+
+
+const rimLight = new THREE.DirectionalLight(
+    0x5577aa,
+    0.45
+);
+
+rimLight.position.set(
+    300,
+    -100,
+    -250
+);
+
+scene.add(rimLight);
+
+
+/* =========================================================
+   PLANET GROUPS
+========================================================= */
+
+const planetGroup = new THREE.Group();
+
+scene.add(planetGroup);
+
+
+const plotGroup = new THREE.Group();
+
+planetGroup.add(plotGroup);
+
+
+/* =========================================================
+   PLANET
+========================================================= */
+
+let currentWorld = "MOON";
+let planet = null;
+
+
+/*
+   Simple procedural terrain.
+
+   Important:
+   This does NOT depend on external terrain files.
+   Therefore the planet cannot disappear because
+   a NASA/texture URL failed.
+*/
+
+function moonHeight(x, y, z) {
+
+    const length = Math.sqrt(x*x + y*y + z*z);
+
+    const nx = x / length;
+    const ny = y / length;
+    const nz = z / length;
+
+    let h = 0;
+
+    /* large craters */
+    h += Math.sin(nx * 14 + nz * 7) * 1.8;
+    h += Math.sin(ny * 19 - nx * 9) * 1.2;
+    h += Math.sin(nz * 26 + ny * 13) * .7;
+
+    /* polar variation */
+    h += Math.abs(ny) * 1.4;
+
+    return h;
+}
+
+
+function marsHeight(x, y, z) {
+
+    const length = Math.sqrt(x*x + y*y + z*z);
+
+    const nx = x / length;
+    const ny = y / length;
+    const nz = z / length;
+
+    let h = 0;
+
+    h += Math.sin(nx * 10 + nz * 8) * 2.4;
+    h += Math.sin(ny * 17 + nx * 6) * 1.7;
+    h += Math.sin(nz * 25 - ny * 10) * .9;
+
+    /* broad northern/southern differences */
+    h += ny * 2.2;
+
+    return h;
+}
+
+
+/* =========================================================
+   PLANET MATERIALS
+========================================================= */
+
+function createMoonMaterial() {
+
+    return new THREE.MeshStandardMaterial({
+
+        color: 0x8f8f8f,
+
+        roughness: .96,
+
+        metalness: 0,
+
+        flatShading: false
+    });
+}
+
+
+function createMarsMaterial() {
+
+    return new THREE.MeshStandardMaterial({
+
+        color: 0x9b4d35,
+
+        roughness: .94,
+
+        metalness: 0,
+
+        flatShading: false
+    });
+}
+
+
+/* =========================================================
+   CREATE PLANET
+========================================================= */
+
+function createPlanet() {
+
+    if (planet) {
+
+        planetGroup.remove(planet);
+
+        planet.geometry.dispose();
+
+        planet.material.dispose();
+
+        planet = null;
+    }
+
+    plotGroup.clear();
+
+    const radius = 145;
+
+    const geometry = new THREE.SphereGeometry(
+        radius,
+        128,
+        96
     );
 
+    const position = geometry.attributes.position;
 
-/* =========================================================
-   LIGHT
-========================================================= */
+    for (
+        let i = 0;
+        i < position.count;
+        i++
+    ) {
 
-scene.add(
-    new THREE.AmbientLight(
-        0xffffff,
-        1.15
-    )
-);
+        const x = position.getX(i);
+        const y = position.getY(i);
+        const z = position.getZ(i);
 
-const sun=
-    new THREE.DirectionalLight(
-        0xffffff,
-        2.4
-    );
+        let displacement;
 
-sun.position.set(
-    -250,
-    150,
-    300
-);
-
-scene.add(sun);
-
-const fill=
-    new THREE.DirectionalLight(
-        0x9bb8e5,
-        .32
-    );
-
-fill.position.set(
-    250,
-    -80,
-    100
-);
-
-scene.add(fill);
-
-
-/* =========================================================
-   GROUPS
-   IMPORTANT:
-   These are created BEFORE createPlanet().
-========================================================= */
-
-const planetGroup=
-    new THREE.Group();
-
-scene.add(
-    planetGroup
-);
-
-const plotGroup=
-    new THREE.Group();
-
-planetGroup.add(
-    plotGroup
-);
-
-
-/* =========================================================
-   WORLD
-========================================================= */
-
-let currentWorld="moon";
-
-let planet=null;
-
-let selectedPlot=null;
-let hoveredPlot=null;
-
-const plotMeshes=[];
-
-
-/* =========================================================
-   TEXTURES
-========================================================= */
-
-const textureLoader=
-    new THREE.TextureLoader();
-
-textureLoader.crossOrigin=
-    "anonymous";
-
-const MOON_COLOR=
-"https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg";
-
-const MOON_HEIGHT=
-"https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_3_8bit.jpg";
-
-const MARS_COLOR=
-"https://threejs.org/examples/textures/planets/mars_1k_color.jpg";
-
-
-/* =========================================================
-   PLANET CREATION
-========================================================= */
-
-function createPlanet(){
-
-    if(planet){
-
-        planetGroup.remove(
-            planet
-        );
-
-        if(planet.geometry)
-            planet.geometry.dispose();
-
-        if(planet.material){
-
-            if(
-                planet.material.map
-            ){
-                planet.material.map.dispose();
-            }
-
-            if(
-                planet.material.displacementMap &&
-                planet.material.displacementMap !==
-                planet.material.map
-            ){
-                planet.material.displacementMap.dispose();
-            }
-
-            planet.material.dispose();
+        if (currentWorld === "MOON") {
+            displacement = moonHeight(x,y,z);
+        } else {
+            displacement = marsHeight(x,y,z);
         }
 
-        planet=null;
+        const factor =
+            (radius + displacement) / radius;
+
+        position.setXYZ(
+            i,
+            x * factor,
+            y * factor,
+            z * factor
+        );
     }
 
-    /*
-     * IMPORTANT:
-     * texture loading is asynchronous,
-     * but the planet is created immediately
-     * using a valid fallback.
-     */
+    geometry.computeVertexNormals();
 
-    const colorUrl=
-        currentWorld==="moon"
-        ? MOON_COLOR
-        : MARS_COLOR;
+    const material =
+        currentWorld === "MOON"
+            ? createMoonMaterial()
+            : createMarsMaterial();
 
-    const colorTexture=
-        textureLoader.load(
-            colorUrl
-        );
-
-    colorTexture.encoding=
-        THREE.sRGBEncoding;
-
-    let heightTexture=null;
-
-    if(
-        currentWorld==="moon"
-    ){
-
-        heightTexture=
-            textureLoader.load(
-                MOON_HEIGHT
-            );
-
-    }
-
-    /*
-     * High resolution geometry.
-     * This prevents the polar area from
-     * looking like a crude low-poly ball.
-     */
-
-    const geometry=
-        new THREE.SphereGeometry(
-            145,
-            192,
-            128
-        );
-
-    let material;
-
-    if(
-        currentWorld==="moon"
-    ){
-
-        material=
-            new THREE.MeshStandardMaterial({
-
-                map:colorTexture,
-
-                displacementMap:
-                    heightTexture,
-
-                displacementScale:
-                    7,
-
-                displacementBias:
-                    -3.5,
-
-                roughness:.96,
-
-                metalness:0
-            });
-
-    }else{
-
-        material=
-            new THREE.MeshStandardMaterial({
-
-                map:colorTexture,
-
-                roughness:.9,
-
-                metalness:0
-            });
-    }
-
-    planet=
-        new THREE.Mesh(
-            geometry,
-            material
-        );
-
-    planetGroup.add(
-        planet
+    planet = new THREE.Mesh(
+        geometry,
+        material
     );
 
-    planetGroup.rotation.set(
-        .03,
-        -.55,
-        0
-    );
+    planetGroup.add(planet);
 
-    /*
-     * The plot layer is created AFTER
-     * the planet exists.
-     */
-
-    createPlotSurface();
-
-    updatePlanetPosition();
+    createPlots();
 }
 
 
@@ -1142,1060 +744,441 @@ function createPlanet(){
    PLOT SYSTEM
 ========================================================= */
 
-const LAT_ROWS=12;
-const LON_COLS=24;
+const plotMeshes = [];
 
-const PLOT_RADIUS=146.1;
+function createPlots() {
 
+    plotMeshes.length = 0;
 
-function latLonVector(
-    lat,
-    lon,
-    radius=PLOT_RADIUS
-){
+    plotGroup.clear();
 
-    const phi=
-        (90-lat)*
-        Math.PI/180;
+    /*
+       18 latitude bands
+       36 longitude sectors
 
-    const theta=
-        (lon+180)*
-        Math.PI/180;
+       = 648 visible plot cells
+    */
 
-    return new THREE.Vector3(
+    const latCount = 18;
+    const lonCount = 36;
 
-        -radius*
-        Math.sin(phi)*
-        Math.cos(theta),
+    const radius = 148;
 
-        radius*
-        Math.cos(phi),
+    for (let lat = 0; lat < latCount; lat++) {
 
-        radius*
-        Math.sin(phi)*
-        Math.sin(theta)
-    );
-}
+        const lat1 =
+            -Math.PI / 2 +
+            (lat / latCount) * Math.PI;
 
+        const lat2 =
+            -Math.PI / 2 +
+            ((lat + 1) / latCount) * Math.PI;
 
-function terrainFor(
-    lat,
-    lon
-){
+        for (let lon = 0; lon < lonCount; lon++) {
 
-    const value=
-        Math.sin(
-            lat*.13+
-            lon*.08
-        )+
-        Math.cos(
-            lat*.07-
-            lon*.11
-        );
+            const lon1 =
+                -Math.PI +
+                (lon / lonCount) * Math.PI * 2;
 
-    if(
-        currentWorld==="mars"
-    ){
+            const lon2 =
+                -Math.PI +
+                ((lon + 1) / lonCount) * Math.PI * 2;
 
-        if(value>1.15)
-            return "HIGHLAND";
+            const geometry =
+                createPlotGeometry(
+                    radius,
+                    lat1,
+                    lat2,
+                    lon1,
+                    lon2
+                );
 
-        if(value<-.95)
-            return "BASIN";
+            const material =
+                new THREE.MeshBasicMaterial({
+                    color: 0xffffff,
+                    transparent: true,
+                    opacity: 0.001,
+                    side: THREE.DoubleSide
+                });
 
-        if(
-            Math.abs(
-                Math.sin(
-                    lon*.045
-                )
-            )>.94
-        )
-            return "CANYON";
+            const mesh =
+                new THREE.Mesh(
+                    geometry,
+                    material
+                );
 
-        return "PLAIN";
+            mesh.userData = {
 
-    }else{
+                id:
+                    currentWorld === "MOON"
+                        ? "M-" +
+                          String(
+                              lat * lonCount + lon + 1
+                          ).padStart(5,"0")
+                        : "R-" +
+                          String(
+                              lat * lonCount + lon + 1
+                          ).padStart(5,"0"),
 
-        if(value>1.1)
-            return "RIDGE";
+                world: currentWorld,
 
-        if(value<-.8)
-            return "CRATER";
+                lat:
+                    ((lat1 + lat2) / 2) *
+                    180 / Math.PI,
 
-        if(
-            Math.abs(
-                Math.sin(
-                    lon*.06
-                )
-            )>.93
-        )
-            return "HIGHLAND";
+                lon:
+                    ((lon1 + lon2) / 2) *
+                    180 / Math.PI,
 
-        return "PLAIN";
+                terrain:
+                    getTerrain(
+                        (lat1 + lat2) / 2,
+                        (lon1 + lon2) / 2
+                    ),
+
+                rarity:
+                    getRarity(
+                        lat,
+                        lon
+                    ),
+
+                price:
+                    getPrice(
+                        lat,
+                        lon
+                    )
+            };
+
+            plotGroup.add(mesh);
+
+            plotMeshes.push(mesh);
+        }
     }
 }
 
 
-function rarityFor(
-    lat,
-    lon
-){
-
-    const value=
-        Math.abs(
-            Math.sin(
-                lat*.11+
-                lon*.047
-            )
-        );
-
-    if(value>.965)
-        return "SPECIAL";
-
-    if(value>.86)
-        return "PREMIUM";
-
-    if(value>.63)
-        return "RARE";
-
-    return "STANDARD";
-}
-
-
-function calculatePrice(
-    terrain,
-    rarity,
-    index
-){
-
-    const base=
-        currentWorld==="moon"
-        ? 11
-        : 21;
-
-    const terrainMultiplier={
-
-        RIDGE:1.45,
-        CRATER:1.32,
-        HIGHLAND:1.34,
-        BASIN:1.12,
-        CANYON:1.75,
-        PLAIN:1
-    };
-
-    const rarityMultiplier={
-
-        STANDARD:1,
-        RARE:1.55,
-        PREMIUM:2.25,
-        SPECIAL:4.1
-    };
-
-    const variation=
-        1+
-        Math.abs(
-            Math.sin(
-                index*7.731
-            )
-        )*.42;
-
-    return Math.round(
-        base*
-        (terrainMultiplier[terrain]||1)*
-        (rarityMultiplier[rarity]||1)*
-        variation
-    );
-}
-
-
-function buildPlotData(
-    index,
-    lat,
-    lon
-){
-
-    const terrain=
-        terrainFor(
-            lat,
-            lon
-        );
-
-    const rarity=
-        rarityFor(
-            lat,
-            lon
-        );
-
-    const sold=
-        Math.sin(
-            index*17.31+
-            lat*.7+
-            lon*.31
-        )>.78;
-
-    const area=
-        (
-            currentWorld==="moon"
-            ? 1.18
-            : 1.54
-        )+
-        Math.abs(
-            Math.sin(
-                index*2.41
-            )
-        )*1.9;
-
-    return {
-
-        index,
-
-        id:
-            currentWorld==="moon"
-            ? "M-"+
-              String(index+1)
-              .padStart(5,"0")
-            : "R-"+
-              String(index+1)
-              .padStart(5,"0"),
-
-        world:
-            currentWorld,
-
-        lat,
-        lon,
-
-        area,
-
-        terrain,
-        rarity,
-
-        price:
-            calculatePrice(
-                terrain,
-                rarity,
-                index
-            ),
-
-        sold
-    };
-}
-
-
 /* =========================================================
-   CREATE ONE SURFACE CELL
+   PLOT GEOMETRY
 ========================================================= */
 
-function createPlotCell(
+function createPlotGeometry(
+    radius,
     lat1,
     lat2,
     lon1,
-    lon2,
-    data
-){
+    lon2
+) {
 
-    const radius=
-        PLOT_RADIUS+.8;
+    const segments = 2;
 
-    const p1=
-        latLonVector(
-            lat1,
-            lon1,
-            radius
-        );
+    const positions = [];
+    const indices = [];
 
-    const p2=
-        latLonVector(
-            lat1,
-            lon2,
-            radius
-        );
+    for (let y = 0; y <= segments; y++) {
 
-    const p3=
-        latLonVector(
-            lat2,
-            lon2,
-            radius
-        );
+        const v = y / segments;
 
-    const p4=
-        latLonVector(
-            lat2,
-            lon1,
-            radius
-        );
+        const lat =
+            lat1 +
+            (lat2 - lat1) * v;
 
-    /*
-     * Surface patch.
-     */
+        for (let x = 0; x <= segments; x++) {
 
-    const vertices=[
+            const u = x / segments;
 
-        p1.x,p1.y,p1.z,
-        p2.x,p2.y,p2.z,
-        p4.x,p4.y,p4.z,
+            const lon =
+                lon1 +
+                (lon2 - lon1) * u;
 
-        p2.x,p2.y,p2.z,
-        p3.x,p3.y,p3.z,
-        p4.x,p4.y,p4.z
-    ];
+            const px =
+                radius *
+                Math.cos(lat) *
+                Math.cos(lon);
 
-    const geometry=
+            const py =
+                radius *
+                Math.sin(lat);
+
+            const pz =
+                radius *
+                Math.cos(lat) *
+                Math.sin(lon);
+
+            positions.push(
+                px,
+                py,
+                pz
+            );
+        }
+    }
+
+    for (let y = 0; y < segments; y++) {
+
+        for (let x = 0; x < segments; x++) {
+
+            const a =
+                y * (segments + 1) + x;
+
+            const b = a + 1;
+
+            const c =
+                a + (segments + 1);
+
+            const d = c + 1;
+
+            indices.push(
+                a,b,d,
+                a,d,c
+            );
+        }
+    }
+
+    const geometry =
         new THREE.BufferGeometry();
 
     geometry.setAttribute(
         "position",
         new THREE.Float32BufferAttribute(
-            vertices,
+            positions,
             3
         )
     );
 
+    geometry.setIndex(indices);
+
     geometry.computeVertexNormals();
 
-    const material=
-        new THREE.MeshBasicMaterial({
+    return geometry;
+}
 
-            color:
-                data.sold
-                ? 0x666666
-                : 0xffffff,
 
-            transparent:true,
+/* =========================================================
+   TERRAIN
+========================================================= */
 
-            opacity:
-                data.sold
-                ? .025
-                : .012,
+function getTerrain(lat, lon) {
 
-            side:
-                THREE.DoubleSide,
-
-            depthWrite:false
-        });
-
-    const mesh=
-        new THREE.Mesh(
-            geometry,
-            material
-        );
-
-    mesh.userData=data;
-
-    plotGroup.add(
-        mesh
+    const a = Math.sin(
+        lat * 7 +
+        lon * 3
     );
 
-    plotMeshes.push(
-        mesh
+    const b = Math.cos(
+        lon * 5 -
+        lat * 4
     );
 
-    /*
-     * Boundary.
-     */
+    if (Math.abs(lat) > 1.15) {
+        return "POLAR";
+    }
 
-    const lineGeometry=
-        new THREE.BufferGeometry()
-        .setFromPoints([
-            p1,
-            p2,
-            p3,
-            p4,
-            p1
-        ]);
+    if (a > .55) {
+        return "RIDGE";
+    }
 
-    const lineMaterial=
-        new THREE.LineBasicMaterial({
+    if (b > .65) {
+        return "CRATER";
+    }
 
-            color:0xffffff,
+    if (a < -.65) {
+        return "BASIN";
+    }
 
-            transparent:true,
+    if (b < -.55) {
+        return "HIGHLAND";
+    }
 
-            opacity:
-                data.sold
-                ? .06
-                : .12,
+    return "PLAIN";
+}
 
-            depthWrite:false
-        });
 
-    const line=
-        new THREE.Line(
-            lineGeometry,
-            lineMaterial
+/* =========================================================
+   RARITY
+========================================================= */
+
+function getRarity(lat, lon) {
+
+    const value =
+        (lat * 37 +
+         lon * 19) % 100;
+
+    if (value > 91) {
+        return "SPECIAL";
+    }
+
+    if (value > 76) {
+        return "PREMIUM";
+    }
+
+    if (value > 56) {
+        return "RARE";
+    }
+
+    return "STANDARD";
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+function getPrice(lat, lon) {
+
+    const base =
+        currentWorld === "MOON"
+            ? 11
+            : 21;
+
+    const variation =
+        Math.abs(
+            Math.sin(lat * 13 + lon * 7)
         );
 
-    line.userData.plot=
-        mesh;
+    const terrainBonus =
+        getTerrain(lat,lon) === "RIDGE"
+            ? 14
+            : getTerrain(lat,lon) === "CRATER"
+            ? 9
+            : getTerrain(lat,lon) === "BASIN"
+            ? 6
+            : 0;
 
-    plotGroup.add(
-        line
+    const rarity =
+        getRarity(
+            Math.round(lat),
+            Math.round(lon)
+        );
+
+    const rarityBonus =
+        rarity === "SPECIAL"
+            ? 60
+            : rarity === "PREMIUM"
+            ? 30
+            : rarity === "RARE"
+            ? 15
+            : 0;
+
+    return Math.floor(
+        base +
+        variation * 35 +
+        terrainBonus +
+        rarityBonus
     );
 }
 
 
 /* =========================================================
-   CREATE FULL SPHERICAL GRID
+   RAYCASTING
 ========================================================= */
 
-function createPlotSurface(){
-
-    /*
-     * Clear old plot objects.
-     */
-
-    while(
-        plotGroup.children.length
-    ){
-
-        const child=
-            plotGroup.children[0];
-
-        plotGroup.remove(
-            child
-        );
-
-        if(child.geometry)
-            child.geometry.dispose();
-
-        if(child.material)
-            child.material.dispose();
-    }
-
-    plotMeshes.length=0;
-
-    let index=0;
-
-    const step=
-        180/LAT_ROWS;
-
-    /*
-     * North polar row.
-     */
-
-    for(
-        let col=0;
-        col<LON_COLS;
-        col++
-    ){
-
-        const lon1=
-            -180+
-            col*
-            (360/LON_COLS);
-
-        const lon2=
-            -180+
-            (col+1)*
-            (360/LON_COLS);
-
-        const data=
-            buildPlotData(
-                index++,
-                90-step/2,
-                (lon1+lon2)/2
-            );
-
-        createPlotCell(
-            90,
-            90-step,
-            lon1,
-            lon2,
-            data
-        );
-    }
-
-    /*
-     * Middle rows.
-     */
-
-    for(
-        let row=1;
-        row<LAT_ROWS-1;
-        row++
-    ){
-
-        const lat1=
-            90-
-            row*step;
-
-        const lat2=
-            90-
-            (row+1)*step;
-
-        for(
-            let col=0;
-            col<LON_COLS;
-            col++
-        ){
-
-            const lon1=
-                -180+
-                col*
-                (360/LON_COLS);
-
-            const lon2=
-                -180+
-                (col+1)*
-                (360/LON_COLS);
-
-            const data=
-                buildPlotData(
-                    index++,
-                    (lat1+lat2)/2,
-                    (lon1+lon2)/2
-                );
-
-            createPlotCell(
-                lat1,
-                lat2,
-                lon1,
-                lon2,
-                data
-            );
-        }
-    }
-
-    /*
-     * South polar row.
-     */
-
-    for(
-        let col=0;
-        col<LON_COLS;
-        col++
-    ){
-
-        const lon1=
-            -180+
-            col*
-            (360/LON_COLS);
-
-        const lon2=
-            -180+
-            (col+1)*
-            (360/LON_COLS);
-
-        const data=
-            buildPlotData(
-                index++,
-                -90+step/2,
-                (lon1+lon2)/2
-            );
-
-        createPlotCell(
-            -90+step,
-            -90,
-            lon1,
-            lon2,
-            data
-        );
-    }
-}
-
-
-/* =========================================================
-   PLANET POSITION
-========================================================= */
-
-function updatePlanetPosition(){
-
-    if(
-        window.innerWidth<900
-    ){
-
-        planetGroup.position.x=0;
-        planetGroup.position.y=-85;
-
-    }else{
-
-        planetGroup.position.x=105;
-        planetGroup.position.y=0;
-    }
-}
-
-
-/* =========================================================
-   MOUSE / PLOT CLICK
-========================================================= */
-
-const raycaster=
+const raycaster =
     new THREE.Raycaster();
 
-const mouse=
+const mouse =
     new THREE.Vector2();
 
-function updateMouse(e){
+function selectPlot(event) {
 
-    const rect=
-        renderer.domElement
-        .getBoundingClientRect();
+    mouse.x =
+        (event.clientX /
+        window.innerWidth) * 2 - 1;
 
-    mouse.x=
-        (
-            (e.clientX-rect.left)/
-            rect.width
-        )*2-1;
+    mouse.y =
+        -(event.clientY /
+        window.innerHeight) * 2 + 1;
 
-    mouse.y=
-        -(
-            (e.clientY-rect.top)/
-            rect.height
-        )*2+1;
-}
+    raycaster.setFromCamera(
+        mouse,
+        camera
+    );
 
+    const hits =
+        raycaster.intersectObjects(
+            plotMeshes
+        );
 
-function resetPlot(
-    mesh
-){
-
-    if(!mesh)
+    if (!hits.length) {
         return;
+    }
 
-    const data=
-        mesh.userData;
-
-    mesh.material.color.setHex(
-        data.sold
-        ? 0x666666
-        : 0xffffff
-    );
-
-    mesh.material.opacity=
-        data.sold
-        ? .025
-        : .012;
-
-    mesh.scale.set(
-        1,
-        1,
-        1
+    showPlot(
+        hits[0].object.userData
     );
 }
-
-
-function highlightPlot(
-    mesh,
-    selected
-){
-
-    if(!mesh)
-        return;
-
-    mesh.material.color.setHex(
-        selected
-        ? 0xffffff
-        : 0x9dbdff
-    );
-
-    mesh.material.opacity=
-        selected
-        ? .22
-        : .10;
-
-    mesh.scale.set(
-        1.004,
-        1.004,
-        1.004
-    );
-}
-
-
-renderer.domElement.addEventListener(
-    "pointermove",
-    e=>{
-
-        updateMouse(e);
-
-        raycaster.setFromCamera(
-            mouse,
-            camera
-        );
-
-        const hits=
-            raycaster.intersectObjects(
-                plotMeshes,
-                false
-            );
-
-        const hit=
-            hits.length
-            ? hits[0].object
-            : null;
-
-        if(
-            hoveredPlot &&
-            hoveredPlot!==selectedPlot &&
-            hoveredPlot!==hit
-        ){
-
-            resetPlot(
-                hoveredPlot
-            );
-        }
-
-        hoveredPlot=hit;
-
-        if(
-            hoveredPlot &&
-            hoveredPlot!==selectedPlot
-        ){
-
-            highlightPlot(
-                hoveredPlot,
-                false
-            );
-        }
-
-        renderer.domElement.style.cursor=
-            hit
-            ? "pointer"
-            : "grab";
-    }
-);
-
-
-renderer.domElement.addEventListener(
-    "click",
-    e=>{
-
-        updateMouse(e);
-
-        raycaster.setFromCamera(
-            mouse,
-            camera
-        );
-
-        const hits=
-            raycaster.intersectObjects(
-                plotMeshes,
-                false
-            );
-
-        if(!hits.length)
-            return;
-
-        selectPlot(
-            hits[0].object
-        );
-    }
-);
 
 
 /* =========================================================
    PLOT CARD
 ========================================================= */
 
-const plotCard=
-    document.getElementById(
-        "plotCard"
-    );
+function showPlot(data) {
 
-const plotId=
-    document.getElementById(
-        "plotId"
-    );
+    document.getElementById("plotCard")
+        .classList.add("visible");
 
-const plotWorld=
-    document.getElementById(
-        "plotWorld"
-    );
+    document.getElementById("plotId")
+        .textContent = data.id;
 
-const plotStatus=
-    document.getElementById(
-        "plotStatus"
-    );
+    document.getElementById("plotWorld")
+        .textContent = data.world;
 
-const plotArea=
-    document.getElementById(
-        "plotArea"
-    );
+    document.getElementById("plotTerrain")
+        .textContent = data.terrain;
 
-const plotCoordinates=
-    document.getElementById(
-        "plotCoordinates"
-    );
+    document.getElementById("plotRarity")
+        .textContent = data.rarity;
 
-const plotTerrain=
-    document.getElementById(
-        "plotTerrain"
-    );
+    document.getElementById("plotPrice")
+        .textContent = "$" + data.price;
 
-const plotRarity=
-    document.getElementById(
-        "plotRarity"
-    );
-
-const plotPrice=
-    document.getElementById(
-        "plotPrice"
-    );
-
-const acquireBtn=
-    document.getElementById(
-        "acquireBtn"
-    );
-
-
-function selectPlot(
-    mesh
-){
-
-    if(selectedPlot){
-
-        resetPlot(
-            selectedPlot
-        );
-    }
-
-    selectedPlot=mesh;
-
-    highlightPlot(
-        selectedPlot,
-        true
-    );
-
-    const data=
-        mesh.userData;
-
-    plotId.textContent=
-        "PLOT "+
-        data.id;
-
-    plotWorld.textContent=
-        data.world.toUpperCase()+
-        " · SECTOR "+
-        String(
-            Math.floor(
-                data.index/
-                LON_COLS
-            )+1
-        ).padStart(
-            2,
-            "0"
-        );
-
-    plotStatus.textContent=
-        data.sold
-        ? "SOLD"
-        : "AVAILABLE";
-
-    plotStatus.style.color=
-        data.sold
-        ? "rgba(255,255,255,.4)"
-        : "#7fd39b";
-
-    plotArea.textContent=
-        data.area.toFixed(2)+
-        " km²";
-
-    plotCoordinates.textContent=
-        formatLatitude(
-            data.lat
-        )+
-        " · "+
-        formatLongitude(
-            data.lon
-        );
-
-    plotTerrain.textContent=
-        data.terrain;
-
-    plotRarity.textContent=
-        data.rarity;
-
-    plotPrice.textContent=
-        "$"+
-        data.price;
-
-    acquireBtn.disabled=
-        data.sold;
-
-    acquireBtn.style.opacity=
-        data.sold
-        ? ".35"
-        : "1";
-
-    acquireBtn.textContent=
-        data.sold
-        ? "PLOT SOLD"
-        : "ACQUIRE PLOT";
-
-    plotCard.classList.add(
-        "visible"
-    );
+    selectedPlot = data;
 }
 
 
-function formatLatitude(
-    lat
-){
-
-    return (
-        Math.abs(lat).toFixed(1)+
-        "° "+
-        (
-            lat>=0
-            ? "N"
-            : "S"
-        )
-    );
-}
-
-
-function formatLongitude(
-    lon
-){
-
-    return (
-        Math.abs(lon).toFixed(1)+
-        "° "+
-        (
-            lon>=0
-            ? "E"
-            : "W"
-        )
-    );
-}
+let selectedPlot = null;
 
 
 /* =========================================================
-   ACQUIRE
+   WORLD SWITCHING
 ========================================================= */
 
-acquireBtn.addEventListener(
-    "click",
-    ()=>{
+function switchWorld(world) {
 
-        if(!selectedPlot)
-            return;
+    currentWorld = world;
 
-        if(
-            selectedPlot.userData.sold
-        )
-            return;
-
-        acquireBtn.textContent=
-            "RESERVING...";
-
-        setTimeout(
-            ()=>{
-
-                acquireBtn.textContent=
-                    "DEMO — CHECKOUT NEXT";
-
-            },
-            650
+    document.getElementById("moonBtn")
+        .classList.toggle(
+            "active",
+            world === "MOON"
         );
-    }
-);
+
+    document.getElementById("marsBtn")
+        .classList.toggle(
+            "active",
+            world === "MARS"
+        );
+
+    document.getElementById("plotCard")
+        .classList.remove("visible");
+
+    createPlanet();
+}
 
 
-/* =========================================================
-   WORLD SWITCH
-========================================================= */
-
-const worldData={
-
-    moon:{
-        description:
-            "A finite digital surface inspired by Earth's closest celestial neighbour.",
-        supply:"248,731",
-        available:"248,731",
-        base:"$11"
-    },
-
-    mars:{
-        description:
-            "A finite digital surface inspired by the red planet and its iconic terrain.",
-        supply:"591,427",
-        available:"591,427",
-        base:"$21"
-    }
-};
-
-const worldDescription=
-    document.getElementById(
-        "worldDescription"
-    );
-
-const supply=
-    document.getElementById(
-        "supply"
-    );
-
-const available=
-    document.getElementById(
-        "available"
-    );
-
-const basePrice=
-    document.getElementById(
-        "basePrice"
-    );
-
-const worldMetric=
-    document.getElementById(
-        "worldMetric"
+document.getElementById("moonBtn")
+    .addEventListener(
+        "click",
+        function() {
+            switchWorld("MOON");
+        }
     );
 
 
-document
-    .querySelectorAll(".world-tab")
-    .forEach(
-        tab=>{
-
-            tab.addEventListener(
-                "click",
-                ()=>{
-
-                    document
-                        .querySelectorAll(
-                            ".world-tab"
-                        )
-                        .forEach(
-                            t=>
-                                t.classList.remove(
-                                    "active"
-                                )
-                        );
-
-                    tab.classList.add(
-                        "active"
-                    );
-
-                    currentWorld=
-                        tab.dataset.world;
-
-                    const data=
-                        worldData[
-                            currentWorld
-                        ];
-
-                    worldDescription.textContent=
-                        data.description;
-
-                    supply.textContent=
-                        data.supply;
-
-                    available.textContent=
-                        data.available;
-
-                    basePrice.textContent=
-                        data.base;
-
-                    worldMetric.textContent=
-                        currentWorld.toUpperCase();
-
-                    plotCard.classList.remove(
-                        "visible"
-                    );
-
-                    selectedPlot=null;
-                    hoveredPlot=null;
-
-                    createPlanet();
-                }
-            );
+document.getElementById("marsBtn")
+    .addEventListener(
+        "click",
+        function() {
+            switchWorld("MARS");
         }
     );
 
@@ -2204,98 +1187,74 @@ document
    ROTATION
 ========================================================= */
 
-let dragging=false;
+let dragging = false;
 
-let previousX=0;
-let previousY=0;
+let previousX = 0;
+let previousY = 0;
 
-let velocityX=0;
-let velocityY=0;
+let rotationVelocityX = 0;
+let rotationVelocityY = 0;
 
 
 renderer.domElement.addEventListener(
     "pointerdown",
-    e=>{
+    function(event) {
 
-        dragging=true;
+        dragging = true;
 
-        previousX=e.clientX;
-        previousY=e.clientY;
+        previousX = event.clientX;
+        previousY = event.clientY;
 
-        renderer.domElement.style.cursor=
-            "grabbing";
-
-        try{
-
-            renderer.domElement
-                .setPointerCapture(
-                    e.pointerId
-                );
-
-        }catch(error){}
+        renderer.domElement.setPointerCapture(
+            event.pointerId
+        );
     }
 );
 
 
 renderer.domElement.addEventListener(
     "pointermove",
-    e=>{
+    function(event) {
 
-        if(!dragging)
+        if (!dragging) {
             return;
+        }
 
-        const dx=
-            e.clientX-
-            previousX;
+        const dx =
+            event.clientX - previousX;
 
-        const dy=
-            e.clientY-
-            previousY;
+        const dy =
+            event.clientY - previousY;
 
-        velocityY=
-            dx*.004;
+        previousX = event.clientX;
+        previousY = event.clientY;
 
-        velocityX=
-            dy*.004;
+        rotationVelocityY = dx * .004;
+        rotationVelocityX = dy * .004;
 
-        planetGroup.rotation.y+=
-            dx*.004;
+        planetGroup.rotation.y +=
+            rotationVelocityY;
 
-        planetGroup.rotation.x+=
-            dy*.004;
+        planetGroup.rotation.x +=
+            rotationVelocityX;
 
-        planetGroup.rotation.x=
+        planetGroup.rotation.x =
             Math.max(
-                -1.15,
+                -1.25,
                 Math.min(
-                    1.15,
+                    1.25,
                     planetGroup.rotation.x
                 )
             );
-
-        previousX=e.clientX;
-        previousY=e.clientY;
     }
 );
 
 
 renderer.domElement.addEventListener(
     "pointerup",
-    e=>{
+    function() {
 
-        dragging=false;
-
-        renderer.domElement.style.cursor=
-            "grab";
-
-        try{
-
-            renderer.domElement
-                .releasePointerCapture(
-                    e.pointerId
-                );
-
-        }catch(error){}
+        dragging = false;
     }
 );
 
@@ -2304,16 +1263,25 @@ renderer.domElement.addEventListener(
    ZOOM
 ========================================================= */
 
+let zoomDistance = 560;
+
+let targetZoom = 560;
+
+const MIN_ZOOM = 430;
+
+const MAX_ZOOM = 760;
+
+
 renderer.domElement.addEventListener(
     "wheel",
-    e=>{
+    function(event) {
 
-        e.preventDefault();
+        event.preventDefault();
 
-        targetZoom+=
-            e.deltaY*.35;
+        targetZoom +=
+            event.deltaY * .35;
 
-        targetZoom=
+        targetZoom =
             Math.max(
                 MIN_ZOOM,
                 Math.min(
@@ -2321,36 +1289,54 @@ renderer.domElement.addEventListener(
                     targetZoom
                 )
             );
-
     },
-    {passive:false}
+    { passive:false }
 );
 
 
 /* =========================================================
-   BUTTONS
+   DISCOVER BUTTON
 ========================================================= */
 
-document
-    .getElementById(
-        "discoverBtn"
-    )
+document.getElementById("discover")
     .addEventListener(
         "click",
-        ()=>{
-            targetZoom=500;
+        function() {
+
+            targetZoom = 480;
+
+            document.querySelector(".hero")
+                .style.opacity = ".65";
         }
     );
 
 
-document
-    .getElementById(
-        "exploreBtn"
-    )
+/* =========================================================
+   ACQUIRE
+========================================================= */
+
+document.getElementById("acquireBtn")
     .addEventListener(
         "click",
-        ()=>{
-            targetZoom=475;
+        function() {
+
+            const button =
+                document.getElementById(
+                    "acquireBtn"
+                );
+
+            button.textContent =
+                "RESERVING...";
+
+            setTimeout(
+                function() {
+
+                    button.textContent =
+                        "DEMO — CHECKOUT NEXT";
+
+                },
+                700
+            );
         }
     );
 
@@ -2359,43 +1345,44 @@ document
    ANIMATION
 ========================================================= */
 
-function animate(){
+function animate(time) {
 
     requestAnimationFrame(
         animate
     );
 
-    zoomDistance+=
-        (
-            targetZoom-
-            zoomDistance
-        )*.08;
+    drawStars(time);
 
-    camera.position.z=
+    if (!dragging) {
+
+        planetGroup.rotation.y +=
+            rotationVelocityY;
+
+        planetGroup.rotation.x +=
+            rotationVelocityX;
+
+        rotationVelocityY *= .94;
+        rotationVelocityX *= .94;
+    }
+
+    zoomDistance +=
+        (targetZoom - zoomDistance) *
+        .08;
+
+    camera.position.z =
         zoomDistance;
 
-    if(!dragging){
-
-        planetGroup.rotation.y+=
-            .00045;
-
-        planetGroup.rotation.x+=
-            velocityX*.03;
-
-        planetGroup.rotation.y+=
-            velocityY*.03;
-
-        velocityX*=.94;
-        velocityY*=.94;
-    }
+    camera.lookAt(
+        0,
+        0,
+        0
+    );
 
     renderer.render(
         scene,
         camera
     );
 }
-
-animate();
 
 
 /* =========================================================
@@ -2404,10 +1391,10 @@ animate();
 
 window.addEventListener(
     "resize",
-    ()=>{
+    function() {
 
-        camera.aspect=
-            window.innerWidth/
+        camera.aspect =
+            window.innerWidth /
             window.innerHeight;
 
         camera.updateProjectionMatrix();
@@ -2417,16 +1404,24 @@ window.addEventListener(
             window.innerHeight
         );
 
-        renderer.setPixelRatio(
-            Math.min(
-                window.devicePixelRatio||1,
-                2
-            )
-        );
+        resizeStars();
 
-        updatePlanetPosition();
+        createStars();
     }
 );
+
+
+/* =========================================================
+   START
+========================================================= */
+
+resizeStars();
+
+createStars();
+
+createPlanet();
+
+animate(0);
 
 </script>
 
