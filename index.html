@@ -820,6 +820,9 @@ h1{
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 
+<!-- NASA MOON GLB LOADER -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
 <script>
 
 /* =========================================================
@@ -905,11 +908,6 @@ function createCosmicStars(){
 
     cosmicStars.length = 0;
 
-    /*
-       Sparse background.
-       Most stars are extremely faint.
-    */
-
     const count =
         Math.min(
             620,
@@ -929,14 +927,8 @@ function createCosmicStars(){
         const layer =
             Math.random();
 
-
         let radius;
         let brightness;
-
-
-        /*
-           Deep background stars.
-        */
 
         if(layer < .76){
 
@@ -953,10 +945,6 @@ function createCosmicStars(){
                 );
         }
 
-        /*
-           Medium distance.
-        */
-
         else if(layer < .96){
 
             radius =
@@ -971,10 +959,6 @@ function createCosmicStars(){
                     .68
                 );
         }
-
-        /*
-           Rare prominent stars.
-        */
 
         else{
 
@@ -1035,18 +1019,8 @@ function createCosmicStars(){
                     1
                 ),
 
-            /*
-               Only a very small percentage
-               get an optical halo.
-            */
-
             halo:
                 Math.random()<.025,
-
-            /*
-               Only the rarest stars receive
-               diffraction-like optical rays.
-            */
 
             diffraction:
                 Math.random()<.009
@@ -1176,11 +1150,6 @@ function drawStar(star,time){
         );
 
 
-    /*
-       Mostly stable brightness.
-       Only subtle natural variation.
-    */
-
     let intensity =
         star.brightness *
         (
@@ -1202,10 +1171,6 @@ function drawStar(star,time){
             )
         );
 
-
-    /*
-       Tiny depth drift.
-    */
 
     const driftX =
         Math.sin(
@@ -1239,10 +1204,6 @@ function drawStar(star,time){
         driftY;
 
 
-    /*
-       Main point.
-    */
-
     starCtx.beginPath();
 
     starCtx.arc(
@@ -1261,10 +1222,6 @@ function drawStar(star,time){
 
     starCtx.fill();
 
-
-    /*
-       Extremely rare soft halo.
-    */
 
     if(
         star.halo &&
@@ -1322,11 +1279,6 @@ function drawStar(star,time){
         starCtx.fill();
     }
 
-
-    /*
-       Almost invisible optical diffraction
-       on only a handful of bright stars.
-    */
 
     if(
         star.diffraction &&
@@ -1528,12 +1480,6 @@ function renderStarfield(now){
     );
 
 
-    /*
-       Extremely subtle deep-space haze.
-       This sits behind the stars and creates
-       a photographic rather than graphic look.
-    */
-
     const haze =
         starCtx.createRadialGradient(
             starWidth*.72,
@@ -1576,10 +1522,6 @@ function renderStarfield(now){
 
     drawDust(time);
 
-
-    /*
-       Draw the stars in depth order.
-    */
 
     for(
         const star
@@ -1710,17 +1652,11 @@ scene.add(
 );
 
 
-function createPlanetTexture(world){
+/* =========================================================
+   MARS TEXTURE
+========================================================= */
 
-    /*
-       =====================================================
-       ONLY MOON TEXTURE IS CHANGED
-       =====================================================
-
-       NASA LROC WAC global lunar color mosaic.
-       Everything else remains exactly as before.
-    */
-
+function createMarsTexture(){
 
     const canvas =
         document.createElement("canvas");
@@ -1731,237 +1667,301 @@ function createPlanetTexture(world){
     const ctx =
         canvas.getContext("2d");
 
-
-    /*
-       Mars remains exactly the original
-       procedural texture.
-    */
-
-    if(world!=="Moon"){
-
-        const image =
-            ctx.createImageData(
-                canvas.width,
-                canvas.height
-            );
-
-        const data =
-            image.data;
-
-
-        for(
-            let y=0;
-            y<canvas.height;
-            y++
-        ){
-
-            for(
-                let x=0;
-                x<canvas.width;
-                x++
-            ){
-
-                const nx =
-                    x/canvas.width;
-
-                const ny =
-                    y/canvas.height;
-
-
-                const n =
-                    Math.sin(
-                        nx*31+
-                        Math.sin(ny*8)*3
-                    )
-                    +
-                    Math.sin(
-                        nx*67+
-                        ny*19
-                    )*.45
-                    +
-                    Math.sin(
-                        nx*121-
-                        ny*43
-                    )*.22
-                    +
-                    Math.sin(
-                        (nx+ny)*210
-                    )*.08;
-
-
-                const base =
-                    105+n*17;
-
-
-                const r=base+25;
-                const g=base-7;
-                const b=base-18;
-
-
-                const index =
-                    (y*canvas.width+x)*4;
-
-
-                data[index] =
-                    Math.max(
-                        0,
-                        Math.min(
-                            255,
-                            r
-                        )
-                    );
-
-                data[index+1] =
-                    Math.max(
-                        0,
-                        Math.min(
-                            255,
-                            g
-                        )
-                    );
-
-                data[index+2] =
-                    Math.max(
-                        0,
-                        Math.min(
-                            255,
-                            b
-                        )
-                    );
-
-                data[index+3]=255;
-            }
-        }
-
-
-        ctx.putImageData(
-            image,
-            0,
-            0
+    const image =
+        ctx.createImageData(
+            canvas.width,
+            canvas.height
         );
 
+    const data =
+        image.data;
 
-        const craterCount=105;
 
+    for(
+        let y=0;
+        y<canvas.height;
+        y++
+    ){
 
         for(
-            let i=0;
-            i<craterCount;
-            i++
+            let x=0;
+            x<canvas.width;
+            x++
         ){
 
-            const x =
-                Math.random()*
-                canvas.width;
+            const nx =
+                x/canvas.width;
 
-            const y =
-                Math.random()*
-                canvas.height;
+            const ny =
+                y/canvas.height;
 
-            const radius =
-                randomBetween(
-                    3,
-                    14
+
+            const n =
+                Math.sin(
+                    nx*31+
+                    Math.sin(ny*8)*3
+                )
+                +
+                Math.sin(
+                    nx*67+
+                    ny*19
+                )*.45
+                +
+                Math.sin(
+                    nx*121-
+                    ny*43
+                )*.22
+                +
+                Math.sin(
+                    (nx+ny)*210
+                )*.08;
+
+
+            const base =
+                105+n*17;
+
+
+            const r=base+25;
+            const g=base-7;
+            const b=base-18;
+
+
+            const index =
+                (y*canvas.width+x)*4;
+
+
+            data[index] =
+                Math.max(
+                    0,
+                    Math.min(
+                        255,
+                        r
+                    )
                 );
 
-
-            const gradient =
-                ctx.createRadialGradient(
-                    x-radius*.25,
-                    y-radius*.25,
-                    radius*.15,
-                    x,
-                    y,
-                    radius
+            data[index+1] =
+                Math.max(
+                    0,
+                    Math.min(
+                        255,
+                        g
+                    )
                 );
 
+            data[index+2] =
+                Math.max(
+                    0,
+                    Math.min(
+                        255,
+                        b
+                    )
+                );
 
-            gradient.addColorStop(
-                0,
-                "rgba(20,20,22,.25)"
-            );
-
-            gradient.addColorStop(
-                .65,
-                "rgba(40,40,44,.16)"
-            );
-
-            gradient.addColorStop(
-                1,
-                "rgba(255,255,255,0)"
-            );
-
-
-            ctx.fillStyle=gradient;
-
-            ctx.beginPath();
-
-            ctx.arc(
-                x,
-                y,
-                radius,
-                0,
-                Math.PI*2
-            );
-
-            ctx.fill();
+            data[index+3]=255;
         }
-
-
-        const texture =
-            new THREE.CanvasTexture(
-                canvas
-            );
-
-        texture.anisotropy =
-            renderer
-                .capabilities
-                .getMaxAnisotropy();
-
-        return texture;
     }
 
 
-    /*
-       NASA 2025 LROC WAC global color map.
+    ctx.putImageData(
+        image,
+        0,
+        0
+    );
 
-       This is the actual lunar geographic surface map,
-       not a procedural recreation.
-    */
 
-    const moonTexture =
-        new THREE.TextureLoader().load(
-            "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg"
+    const craterCount=105;
+
+
+    for(
+        let i=0;
+        i<craterCount;
+        i++
+    ){
+
+        const x =
+            Math.random()*
+            canvas.width;
+
+        const y =
+            Math.random()*
+            canvas.height;
+
+        const radius =
+            randomBetween(
+                3,
+                14
+            );
+
+
+        const gradient =
+            ctx.createRadialGradient(
+                x-radius*.25,
+                y-radius*.25,
+                radius*.15,
+                x,
+                y,
+                radius
+            );
+
+
+        gradient.addColorStop(
+            0,
+            "rgba(20,20,22,.25)"
+        );
+
+        gradient.addColorStop(
+            .65,
+            "rgba(40,40,44,.16)"
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(255,255,255,0)"
         );
 
 
-    moonTexture.encoding =
-        THREE.sRGBEncoding;
+        ctx.fillStyle=gradient;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            radius,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+    }
 
 
-    moonTexture.anisotropy =
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+    texture.anisotropy =
         renderer
             .capabilities
             .getMaxAnisotropy();
 
-
-    moonTexture.wrapS =
-        THREE.ClampToEdgeWrapping;
-
-    moonTexture.wrapT =
-        THREE.ClampToEdgeWrapping;
-
-
-    return moonTexture;
+    return texture;
 }
+
+
+/* =========================================================
+   NASA LRO MOON
+========================================================= */
+
+/*
+   Official NASA LRO model.
+
+   This is NOT a flat sphere texture.
+
+   NASA's model contains:
+   - LROC lunar colour imagery
+   - actual lunar height/topography
+   - real crater geometry
+   - real maria/highlands geography
+
+   NASA file:
+   Moon_NASA_LRO_8k_Topo_Small.glb
+   Size: 77.7 MB
+*/
+
+const NASA_MOON_URL =
+    "https://svs.gsfc.nasa.gov/vis/a010000/a014900/a014959/Moon_NASA_LRO_8k_Topo_Small.glb";
+
+const moonLoader =
+    new THREE.GLTFLoader();
 
 
 let currentWorld="Moon";
 
 let planetMesh=null;
 
+let planetBuildToken=0;
+
+
+/* =========================================================
+   SAFE OBJECT DISPOSAL
+========================================================= */
+
+function disposePlanetObject(object){
+
+    if(!object){
+        return;
+    }
+
+
+    object.traverse(
+        child=>{
+
+            if(child.geometry){
+
+                child.geometry.dispose();
+            }
+
+
+            if(child.material){
+
+                const materials =
+                    Array.isArray(child.material)
+                    ? child.material
+                    : [child.material];
+
+
+                materials.forEach(
+                    material=>{
+
+                        if(material.map){
+
+                            material.map.dispose();
+                        }
+
+                        if(material.normalMap){
+
+                            material.normalMap.dispose();
+                        }
+
+                        if(material.roughnessMap){
+
+                            material.roughnessMap.dispose();
+                        }
+
+                        if(material.metalnessMap){
+
+                            material.metalnessMap.dispose();
+                        }
+
+                        if(material.emissiveMap){
+
+                            material.emissiveMap.dispose();
+                        }
+
+                        material.dispose();
+                    }
+                );
+            }
+        }
+    );
+}
+
+
+/* =========================================================
+   BUILD PLANET
+========================================================= */
 
 function buildPlanet(world){
+
+    const buildToken =
+        ++planetBuildToken;
+
+
+    /* -----------------------------------------------
+       Remove current planet
+    ----------------------------------------------- */
 
     if(planetMesh){
 
@@ -1969,17 +1969,235 @@ function buildPlanet(world){
             planetMesh
         );
 
-        planetMesh.geometry.dispose();
+        disposePlanetObject(
+            planetMesh
+        );
 
-        if(
-            planetMesh.material.map
-        ){
-            planetMesh.material.map.dispose();
-        }
-
-        planetMesh.material.dispose();
+        planetMesh=null;
     }
 
+
+    /* -----------------------------------------------
+       NASA MOON
+    ----------------------------------------------- */
+
+    if(world==="Moon"){
+
+        /*
+           Keep the existing group rotation exactly
+           as before.
+        */
+
+        planetGroup.rotation.set(
+            .05,
+            -.5,
+            0
+        );
+
+
+        /*
+           Load the real NASA LRO topographic model.
+        */
+
+        moonLoader.load(
+
+            NASA_MOON_URL,
+
+            gltf=>{
+
+                /*
+                   If the user switched to Mars while
+                   the 77.7 MB model was loading,
+                   discard the late Moon instead of
+                   putting it back into the scene.
+                */
+
+                if(
+                    buildToken!==planetBuildToken ||
+                    currentWorld!=="Moon"
+                ){
+
+                    disposePlanetObject(
+                        gltf.scene
+                    );
+
+                    return;
+                }
+
+
+                const moon =
+                    gltf.scene;
+
+
+                /*
+                   Find the actual dimensions of the
+                   NASA model.
+                */
+
+                const box =
+                    new THREE.Box3()
+                        .setFromObject(
+                            moon
+                        );
+
+
+                const size =
+                    box.getSize(
+                        new THREE.Vector3()
+                    );
+
+
+                const maxDimension =
+                    Math.max(
+                        size.x,
+                        size.y,
+                        size.z
+                    );
+
+
+                /*
+                   Scale the NASA Moon so its
+                   diameter matches the original
+                   PLANET_RADIUS * 2.
+
+                   The visual size of the page
+                   therefore stays unchanged.
+                */
+
+                const scale =
+                    (
+                        PLANET_RADIUS*2
+                    )/
+                    maxDimension;
+
+
+                moon.scale.setScalar(
+                    scale
+                );
+
+
+                /*
+                   Center the NASA model precisely
+                   around the same origin used by
+                   the original SphereGeometry.
+                */
+
+                const scaledBox =
+                    new THREE.Box3()
+                        .setFromObject(
+                            moon
+                        );
+
+
+                const center =
+                    scaledBox.getCenter(
+                        new THREE.Vector3()
+                    );
+
+
+                moon.position.sub(
+                    center
+                );
+
+
+                /*
+                   NASA model uses its own materials.
+                   Enable correct sRGB handling for
+                   its colour textures.
+                */
+
+                moon.traverse(
+                    child=>{
+
+                        if(
+                            child.isMesh &&
+                            child.material
+                        ){
+
+                            const materials =
+                                Array.isArray(
+                                    child.material
+                                )
+                                ? child.material
+                                : [child.material];
+
+
+                            materials.forEach(
+                                material=>{
+
+                                    if(
+                                        material.map
+                                    ){
+
+                                        material.map.encoding =
+                                            THREE.sRGBEncoding;
+
+                                        material.map.anisotropy =
+                                            renderer
+                                                .capabilities
+                                                .getMaxAnisotropy();
+
+                                        material.map.needsUpdate =
+                                            true;
+                                    }
+
+
+                                    /*
+                                       Keep the Moon matte,
+                                       just like the original.
+                                    */
+
+                                    if(
+                                        "roughness"
+                                        in material
+                                    ){
+
+                                        material.roughness=.96;
+                                    }
+
+                                    if(
+                                        "metalness"
+                                        in material
+                                    ){
+
+                                        material.metalness=.02;
+                                    }
+                                }
+                            );
+                        }
+                    }
+                );
+
+
+                planetMesh =
+                    moon;
+
+
+                planetGroup.add(
+                    planetMesh
+                );
+            },
+
+            undefined,
+
+            error=>{
+
+                console.error(
+                    "NASA Moon model failed to load:",
+                    error
+                );
+            }
+        );
+
+
+        return;
+    }
+
+
+    /* -----------------------------------------------
+       MARS
+       Original Mars appearance preserved.
+    ----------------------------------------------- */
 
     const geometry =
         new THREE.SphereGeometry(
@@ -1990,9 +2208,7 @@ function buildPlanet(world){
 
 
     const texture =
-        createPlanetTexture(
-            world
-        );
+        createMarsTexture();
 
 
     const material =
