@@ -8,120 +8,101 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
-:root{
-    --bg:#030405;
-    --text:#f5f7fa;
-    --muted:#89909a;
-}
-
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html,
 body{
     width:100%;
     height:100%;
-    margin:0;
     overflow:hidden;
-    background:#030405;
+    background:#020305;
     color:#fff;
     font-family:Inter,Arial,sans-serif;
 }
 
-body{
-    position:relative;
-}
-
 /* =========================================================
-   SPACE
+   BACKGROUND
 ========================================================= */
 
 #space{
     position:fixed;
     inset:0;
     overflow:hidden;
-
     background:
         radial-gradient(
-            ellipse 40% 28% at 66% 42%,
-            rgba(220,230,240,.035),
-            transparent 72%
+            ellipse at 68% 44%,
+            rgba(255,255,255,.055) 0%,
+            rgba(255,255,255,.018) 18%,
+            rgba(0,0,0,0) 48%
         ),
         radial-gradient(
-            ellipse 30% 20% at 34% 72%,
-            rgba(190,205,220,.022),
-            transparent 75%
+            ellipse at 82% 70%,
+            rgba(180,190,210,.035) 0%,
+            rgba(0,0,0,0) 42%
         ),
-        #030405;
+        #020305;
 }
 
-/* =========================================================
-   DISTANT COSMIC HAZE
-========================================================= */
+/* distant cosmic haze */
 
-.cosmic-haze{
+.haze{
     position:absolute;
-    inset:-20%;
-    z-index:0;
     pointer-events:none;
-
-    background:
-        radial-gradient(
-            ellipse 32% 8% at 75% 33%,
-            rgba(255,255,255,.042),
-            transparent 74%
-        ),
-        radial-gradient(
-            ellipse 28% 7% at 66% 39%,
-            rgba(230,238,245,.025),
-            transparent 75%
-        ),
-        radial-gradient(
-            ellipse 18% 6% at 38% 69%,
-            rgba(255,255,255,.018),
-            transparent 75%
-        );
-
-    filter:blur(32px);
-
-    transform:rotate(-8deg) scale(1.15);
+    border-radius:50%;
+    filter:blur(55px);
+    opacity:.38;
 }
 
-.cosmic-haze::after{
-    content:"";
-
-    position:absolute;
-    inset:0;
-
+.haze.one{
+    width:650px;
+    height:260px;
+    left:46%;
+    top:18%;
+    transform:rotate(-12deg);
     background:
         radial-gradient(
-            ellipse 34% 7% at 59% 42%,
-            rgba(255,255,255,.018),
-            transparent 76%
+            ellipse,
+            rgba(255,255,255,.10) 0%,
+            rgba(210,220,235,.045) 32%,
+            rgba(0,0,0,0) 72%
         );
-
-    filter:blur(25px);
-
-    animation:hazeDrift 26s ease-in-out infinite alternate;
 }
 
-@keyframes hazeDrift{
+.haze.two{
+    width:800px;
+    height:220px;
+    left:52%;
+    top:62%;
+    transform:rotate(14deg);
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.055) 0%,
+            rgba(180,190,210,.025) 35%,
+            rgba(0,0,0,0) 75%
+        );
+}
 
-    from{
-        transform:translateX(-2%) scale(1);
-        opacity:.65;
-    }
-
-    to{
-        transform:translateX(3%) scale(1.04);
-        opacity:1;
-    }
-
+.haze.three{
+    width:500px;
+    height:180px;
+    left:8%;
+    top:72%;
+    transform:rotate(-8deg);
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.035),
+            transparent 72%
+        );
 }
 
 /* =========================================================
@@ -131,753 +112,401 @@ body{
 #stars{
     position:absolute;
     inset:0;
-    z-index:1;
-    overflow:hidden;
     pointer-events:none;
 }
 
 .star{
     position:absolute;
-
     border-radius:50%;
-
     background:#fff;
-
     transform:translate(-50%,-50%);
-
-    will-change:
-        opacity,
-        transform;
+    opacity:.35;
+    will-change:opacity,transform;
 }
 
-.star.glow{
+.star.small{
+    box-shadow:0 0 3px rgba(255,255,255,.45);
+}
+
+.star.medium{
     box-shadow:
-        0 0 4px rgba(255,255,255,.55),
-        0 0 10px rgba(255,255,255,.20);
+        0 0 5px rgba(255,255,255,.7),
+        0 0 10px rgba(255,255,255,.18);
+}
+
+.star.large{
+    box-shadow:
+        0 0 7px rgba(255,255,255,.9),
+        0 0 16px rgba(255,255,255,.28);
 }
 
 /* =========================================================
-   THREE CANVAS
+   3D CANVAS
 ========================================================= */
 
 #spaceCanvas{
     position:absolute;
     inset:0;
-
     width:100%;
     height:100%;
-
     display:block;
-
     z-index:2;
-}
-
-/* =========================================================
-   INTERFACE
-========================================================= */
-
-.interface{
-    position:absolute;
-    inset:0;
-
-    z-index:10;
-
-    pointer-events:none;
-}
-
-.interface *{
     pointer-events:auto;
 }
 
 /* =========================================================
-   BRAND
+   TOP NAV
 ========================================================= */
 
-.brand{
+.topbar{
     position:absolute;
-
     left:42px;
-    top:34px;
-}
-
-.brand-main{
-    font-family:Manrope,Inter,sans-serif;
-
-    font-size:30px;
-    line-height:1;
-
-    letter-spacing:.27em;
-
-    font-weight:800;
-}
-
-.brand-sub{
-    margin-top:11px;
-
-    font-size:10px;
-    line-height:1;
-
-    letter-spacing:.29em;
-
-    color:#7d858f;
-
-    font-weight:600;
-}
-
-/* =========================================================
-   NAV
-========================================================= */
-
-.top-nav{
-    position:absolute;
-
-    top:38px;
     right:42px;
+    top:30px;
+    height:54px;
 
     display:flex;
-    gap:34px;
+    align-items:center;
+    justify-content:space-between;
+
+    z-index:20;
+    pointer-events:none;
 }
 
-.nav-item{
-    position:relative;
+.brand{
+    pointer-events:auto;
+}
 
+.brand-name{
+    font-family:Manrope,Arial,sans-serif;
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:.22em;
+    line-height:1;
+}
+
+.brand-tag{
+    margin-top:9px;
     font-size:10px;
-    font-weight:700;
-
-    letter-spacing:.18em;
-
-    color:#727a84;
-
-    cursor:pointer;
-
-    transition:.25s;
+    font-weight:600;
+    letter-spacing:.28em;
+    color:rgba(255,255,255,.52);
 }
 
-.nav-item:hover{
+.nav{
+    display:flex;
+    gap:30px;
+    pointer-events:auto;
+}
+
+.nav span{
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.18em;
+    color:rgba(255,255,255,.48);
+    cursor:pointer;
+    transition:.2s;
+}
+
+.nav span:hover{
     color:#fff;
 }
 
-.nav-item.active{
-    color:#f2f4f7;
-}
-
-.nav-item.active::after{
-    content:"";
-
-    position:absolute;
-
-    left:0;
-    right:0;
-    bottom:-9px;
-
-    height:1px;
-
-    background:#e7edf3;
-}
-
 /* =========================================================
-   SMALL SYSTEM LABELS
-========================================================= */
-
-.corner-detail{
-    position:absolute;
-
-    left:42px;
-    top:116px;
-
-    font-size:7px;
-
-    letter-spacing:.2em;
-
-    color:#3f474f;
-
-    font-weight:700;
-}
-
-.corner-detail-right{
-    position:absolute;
-
-    right:42px;
-    top:116px;
-
-    font-size:7px;
-
-    letter-spacing:.2em;
-
-    color:#3f474f;
-
-    font-weight:700;
-}
-
-/* =========================================================
-   HERO
+   LEFT HERO
 ========================================================= */
 
 .hero{
     position:absolute;
-
     left:42px;
     top:50%;
+    transform:translateY(-52%);
 
-    transform:translateY(-54%);
+    width:390px;
 
-    width:430px;
+    z-index:15;
+    pointer-events:none;
 }
 
 .eyebrow{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:12px;
 
-    margin-bottom:19px;
+    margin-bottom:24px;
 
-    font-size:9px;
-
-    letter-spacing:.24em;
-
+    font-size:10px;
     font-weight:700;
-
-    color:#737c87;
+    letter-spacing:.24em;
+    color:rgba(255,255,255,.46);
 }
 
 .eyebrow-line{
-    width:28px;
+    width:32px;
     height:1px;
-
-    background:#7d8792;
+    background:rgba(255,255,255,.32);
 }
 
 .hero h1{
-    margin:0;
-
-    font-family:Manrope,Inter,sans-serif;
-
-    font-size:59px;
-    line-height:.98;
-
-    letter-spacing:-.055em;
-
+    font-family:Manrope,Arial,sans-serif;
+    font-size:50px;
+    line-height:1.02;
     font-weight:700;
-
-    color:#f7f8fa;
+    letter-spacing:-.045em;
+    max-width:390px;
 }
 
-.hero h1 span{
-    display:block;
-
-    color:#858d97;
-}
-
-.hero-copy{
-    margin-top:25px;
-
-    width:385px;
+.hero p{
+    margin-top:22px;
+    width:340px;
 
     font-size:13px;
     line-height:1.75;
+    font-weight:400;
 
-    color:#858d97;
+    color:rgba(255,255,255,.55);
 }
 
 .hero-actions{
+    margin-top:34px;
     display:flex;
-    gap:14px;
-
-    margin-top:28px;
+    gap:10px;
 }
 
-.primary-btn,
-.secondary-btn{
+.btn{
     height:43px;
+    padding:0 19px;
 
-    padding:0 20px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.035);
 
-    font-size:10px;
-
-    font-weight:800;
-
-    letter-spacing:.15em;
-
-    cursor:pointer;
-
-    transition:.25s;
-}
-
-.primary-btn{
-    border:1px solid rgba(255,255,255,.2);
-
-    background:#f0f2f4;
-
-    color:#080a0c;
-}
-
-.primary-btn:hover{
-    background:#fff;
-}
-
-.secondary-btn{
-    border:1px solid rgba(255,255,255,.1);
-
-    background:rgba(255,255,255,.025);
-
-    color:#a0a7b0;
-}
-
-.secondary-btn:hover{
     color:#fff;
 
-    border-color:
-        rgba(255,255,255,.22);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.14em;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    pointer-events:auto;
+    cursor:pointer;
+
+    transition:.22s;
+}
+
+.btn:hover{
+    background:rgba(255,255,255,.09);
+    border-color:rgba(255,255,255,.3);
+}
+
+.btn.primary{
+    background:#fff;
+    color:#050607;
+    border-color:#fff;
+}
+
+.btn.primary:hover{
+    background:#e8e8e8;
 }
 
 /* =========================================================
-   RIGHT PANEL
+   RIGHT INFORMATION PANEL
 ========================================================= */
 
-.asset-panel{
+.side-panel{
     position:absolute;
 
     right:42px;
     top:50%;
-
-    transform:translateY(-48%);
+    transform:translateY(-50%);
 
     width:290px;
 
-    padding:20px;
-
-    border:
-        1px solid rgba(255,255,255,.1);
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(13,16,20,.77),
-            rgba(5,7,9,.68)
-        );
-
-    backdrop-filter:blur(14px);
+    z-index:15;
+    pointer-events:none;
 }
 
-.panel-heading{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding-bottom:15px;
-
-    border-bottom:
-        1px solid rgba(255,255,255,.06);
-}
-
-.panel-heading-left{
+.panel-label{
     font-size:9px;
-
-    letter-spacing:.19em;
-
-    font-weight:800;
-
-    color:#9da5ae;
-}
-
-.live{
-    display:flex;
-    align-items:center;
-
-    gap:6px;
-
-    font-size:8px;
-
-    letter-spacing:.15em;
-
-    color:#68717b;
-
     font-weight:700;
+    letter-spacing:.2em;
+    color:rgba(255,255,255,.4);
+    margin-bottom:12px;
 }
 
-.live-dot{
-    width:5px;
-    height:5px;
-
-    border-radius:50%;
-
-    background:#dbe7f2;
-
-    box-shadow:
-        0 0 7px rgba(220,235,250,.65);
+.asset-card{
+    border:1px solid rgba(255,255,255,.11);
+    background:rgba(5,7,10,.58);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
 }
 
-.world-title{
-    margin-top:18px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:end;
+.asset-top{
+    padding:20px 20px 17px;
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.world-name{
-    font-family:Manrope,Inter,sans-serif;
-
-    font-size:29px;
-
-    letter-spacing:-.03em;
-
+.asset-title{
+    font-family:Manrope,Arial,sans-serif;
+    font-size:21px;
     font-weight:700;
+    letter-spacing:-.02em;
 }
 
-.world-code{
-    font-size:8px;
-
-    letter-spacing:.18em;
-
-    color:#59616b;
-
-    font-weight:700;
+.asset-sub{
+    margin-top:6px;
+    font-size:10px;
+    color:rgba(255,255,255,.4);
+    letter-spacing:.13em;
 }
 
-.panel-grid{
-    margin-top:19px;
-
+.stats{
     display:grid;
-
     grid-template-columns:1fr 1fr;
-
-    border-top:
-        1px solid rgba(255,255,255,.06);
-
-    border-left:
-        1px solid rgba(255,255,255,.06);
 }
 
-.metric{
-    min-height:64px;
-
-    padding:12px 11px;
-
-    border-right:
-        1px solid rgba(255,255,255,.06);
-
-    border-bottom:
-        1px solid rgba(255,255,255,.06);
+.stat{
+    padding:17px 20px;
+    border-bottom:1px solid rgba(255,255,255,.07);
 }
 
-.metric-label{
+.stat:nth-child(odd){
+    border-right:1px solid rgba(255,255,255,.07);
+}
+
+.stat-label{
     font-size:8px;
-
-    letter-spacing:.15em;
-
-    color:#59616b;
-
     font-weight:700;
+    letter-spacing:.17em;
+    color:rgba(255,255,255,.34);
 }
 
-.metric-value{
+.stat-value{
     margin-top:8px;
-
-    font-size:14px;
-
+    font-family:Manrope,Arial,sans-serif;
+    font-size:16px;
     font-weight:700;
-
-    color:#dce1e6;
 }
 
-.panel-footer{
+.world-switch{
     display:flex;
-
-    justify-content:space-between;
-    align-items:end;
-
-    margin-top:17px;
-}
-
-.price-label{
-    font-size:8px;
-
-    letter-spacing:.16em;
-
-    color:#59616b;
-
-    font-weight:700;
-}
-
-.price{
-    margin-top:5px;
-
-    font-family:Manrope,Inter,sans-serif;
-
-    font-size:22px;
-
-    font-weight:700;
-}
-
-.acquire{
-    height:35px;
-
-    padding:0 14px;
-
-    border:
-        1px solid rgba(255,255,255,.14);
-
-    background:
-        rgba(255,255,255,.045);
-
-    color:#cbd1d8;
-
-    font-size:8px;
-
-    letter-spacing:.15em;
-
-    font-weight:800;
-
-    cursor:pointer;
-}
-
-/* =========================================================
-   WORLD SELECTOR
-========================================================= */
-
-.world-selector{
-    position:absolute;
-
-    left:42px;
-    bottom:145px;
-
-    width:215px;
-}
-
-.selector-title{
-    margin-bottom:10px;
-
-    font-size:8px;
-
-    letter-spacing:.21em;
-
-    color:#5f6872;
-
-    font-weight:800;
-}
-
-.world-buttons{
-    display:flex;
-    gap:6px;
+    gap:7px;
+    padding:14px;
 }
 
 .world-btn{
-    min-width:92px;
-
+    flex:1;
     height:38px;
 
-    border:
-        1px solid rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.025);
 
-    background:
-        rgba(255,255,255,.025);
-
-    color:#737c86;
+    color:rgba(255,255,255,.48);
 
     font-size:9px;
-
+    font-weight:700;
     letter-spacing:.15em;
 
-    font-weight:800;
-
     cursor:pointer;
+    pointer-events:auto;
 }
 
 .world-btn.active{
-    background:
-        rgba(255,255,255,.09);
-
-    color:#f0f2f4;
-
-    border-color:
-        rgba(255,255,255,.19);
-}
-
-/* =========================================================
-   PLOT CARD
-========================================================= */
-
-.plot-card{
-    position:absolute;
-
-    right:42px;
-    bottom:145px;
-
-    width:290px;
-}
-
-.plot-label{
-    margin-bottom:10px;
-
-    font-size:8px;
-
-    letter-spacing:.2em;
-
-    color:#59616b;
-
-    font-weight:800;
-}
-
-.plot-inner{
-    display:flex;
-
-    justify-content:space-between;
-
-    padding:13px 0;
-
-    border-top:
-        1px solid rgba(255,255,255,.1);
-
-    border-bottom:
-        1px solid rgba(255,255,255,.1);
-}
-
-.plot-id{
-    font-family:Manrope,Inter,sans-serif;
-
-    font-size:17px;
-
-    font-weight:700;
-}
-
-.plot-status{
-    text-align:right;
-}
-
-.status-top{
-    font-size:8px;
-
-    letter-spacing:.13em;
-
-    color:#65707b;
-
-    font-weight:700;
-}
-
-.status-bottom{
-    margin-top:5px;
-
-    font-size:9px;
-
-    color:#c5ccd3;
-
-    font-weight:700;
+    background:#fff;
+    color:#050607;
+    border-color:#fff;
 }
 
 /* =========================================================
    BOTTOM BAR
 ========================================================= */
 
-.market-bar{
+.bottom-bar{
     position:absolute;
 
-    left:0;
-    right:0;
-    bottom:0;
+    left:42px;
+    right:42px;
+    bottom:28px;
 
-    height:84px;
+    height:58px;
 
-    border-top:
-        1px solid rgba(255,255,255,.08);
-
-    background:
-        rgba(4,6,8,.94);
-
-    backdrop-filter:blur(15px);
+    border-top:1px solid rgba(255,255,255,.10);
 
     display:flex;
-    align-items:center;
+    align-items:flex-end;
+    justify-content:space-between;
 
-    padding:0 42px;
+    z-index:20;
+    pointer-events:none;
 }
 
-.market-left{
-    width:210px;
+.bottom-left{
+    padding-bottom:2px;
 }
 
-.market-label{
+.bottom-caption{
     font-size:8px;
-
+    font-weight:700;
     letter-spacing:.2em;
-
-    color:#555e68;
-
-    font-weight:800;
+    color:rgba(255,255,255,.3);
 }
 
-.market-title{
-    margin-top:7px;
+.bottom-title{
+    margin-top:5px;
 
-    font-family:Manrope,Inter,sans-serif;
-
-    font-size:14px;
-
-    font-weight:700;
-}
-
-.market-data{
-    flex:1;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    max-width:650px;
-}
-
-.market-item{
-    padding-left:28px;
-
-    border-left:
-        1px solid rgba(255,255,255,.07);
-}
-
-.market-item-label{
-    font-size:8px;
-
-    letter-spacing:.15em;
-
-    color:#555e68;
-
-    font-weight:700;
-}
-
-.market-item-value{
-    margin-top:6px;
-
+    font-family:Manrope,Arial,sans-serif;
     font-size:12px;
-
-    font-weight:700;
-
-    color:#cfd5dc;
+    font-weight:600;
+    letter-spacing:.04em;
 }
 
-.controls-hint{
-    margin-left:auto;
+.bottom-right{
+    display:flex;
+    gap:34px;
+    padding-bottom:2px;
+}
 
+.metric{
     text-align:right;
 }
 
-.controls-hint-top{
+.metric-label{
     font-size:8px;
-
-    letter-spacing:.18em;
-
-    color:#555e68;
-
     font-weight:700;
+    letter-spacing:.16em;
+    color:rgba(255,255,255,.28);
 }
 
-.controls-hint-bottom{
-    margin-top:6px;
+.metric-value{
+    margin-top:5px;
+    font-family:Manrope,Arial,sans-serif;
+    font-size:12px;
+    font-weight:600;
+}
 
-    font-size:9px;
+/* =========================================================
+   PLANET HELPER
+========================================================= */
 
-    color:#8b949e;
+.planet-caption{
+    position:absolute;
+    z-index:12;
+    left:50%;
+    top:50%;
 
-    letter-spacing:.08em;
+    transform:translate(-50%,145px);
+
+    pointer-events:none;
+
+    font-size:8px;
+    font-weight:700;
+    letter-spacing:.23em;
+
+    color:rgba(255,255,255,.32);
+
+    opacity:.8;
 }
 
 /* =========================================================
@@ -887,93 +516,60 @@ body{
 @media(max-width:1050px){
 
     .hero{
-        width:360px;
+        width:330px;
     }
 
     .hero h1{
-        font-size:48px;
+        font-size:42px;
     }
 
-    .asset-panel{
-        right:25px;
-        width:260px;
+    .side-panel{
+        width:250px;
     }
 
-    .brand,
-    .world-selector{
-        left:25px;
-    }
-
-    .plot-card{
-        right:25px;
-    }
-
-    .top-nav{
-        right:25px;
-    }
-
-    .market-bar{
-        padding:0 25px;
+    .nav{
+        gap:18px;
     }
 
 }
 
-@media(max-width:760px){
+@media(max-width:800px){
 
-    .top-nav{
-        display:none;
-    }
-
-    .brand{
+    .topbar,
+    .bottom-bar{
         left:22px;
-        top:23px;
+        right:22px;
     }
 
-    .brand-main{
-        font-size:24px;
+    .topbar{
+        top:20px;
     }
 
     .hero{
         left:22px;
-        top:45%;
-
+        top:auto;
+        bottom:105px;
+        transform:none;
         width:300px;
     }
 
     .hero h1{
-        font-size:39px;
+        font-size:34px;
     }
 
-    .hero-copy{
-        width:280px;
+    .hero p{
+        width:290px;
         font-size:11px;
     }
 
-    .asset-panel{
-        right:18px;
-        top:20%;
-
+    .side-panel{
+        right:22px;
+        top:92px;
         transform:none;
-
-        width:230px;
+        width:220px;
     }
 
-    .world-selector{
-        left:22px;
-        bottom:110px;
-    }
-
-    .plot-card{
-        display:none;
-    }
-
-    .market-bar{
-        height:65px;
-        padding:0 18px;
-    }
-
-    .market-data,
-    .controls-hint{
+    .nav{
         display:none;
     }
 
@@ -986,374 +582,181 @@ body{
 
 <div id="space">
 
-    <div class="cosmic-haze"></div>
+    <div class="haze one"></div>
+    <div class="haze two"></div>
+    <div class="haze three"></div>
 
     <div id="stars"></div>
 
     <canvas id="spaceCanvas"></canvas>
 
-
-    <div class="interface">
-
-        <!-- BRAND -->
+    <!-- TOP -->
+    <div class="topbar">
 
         <div class="brand">
-
-            <div class="brand-main">
-                ASTERRA
-            </div>
-
-            <div class="brand-sub">
-                OWN YOUR WORLD.
-            </div>
-
+            <div class="brand-name">ASTERRA</div>
+            <div class="brand-tag">OWN YOUR WORLD.</div>
         </div>
 
-
-        <!-- NAV -->
-
-        <div class="top-nav">
-
-            <div class="nav-item active">
-                UNIVERSE
-            </div>
-
-            <div class="nav-item">
-                EXCHANGE
-            </div>
-
-            <div class="nav-item">
-                PORTFOLIO
-            </div>
-
+        <div class="nav">
+            <span>UNIVERSE</span>
+            <span>EXCHANGE</span>
+            <span>PORTFOLIO</span>
         </div>
 
+    </div>
 
-        <div class="corner-detail">
-            ASTERRA / DIGITAL SURFACE SYSTEM
+
+    <!-- LEFT -->
+    <section class="hero">
+
+        <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            DIGITAL WORLDS
         </div>
 
-        <div class="corner-detail-right">
-            SYSTEM STATUS / ONLINE
+        <h1>
+            ENTER THE<br>
+            UNIVERSE
+        </h1>
+
+        <p>
+            Discover a new digital frontier.
+            Explore planetary surfaces, select
+            unique locations and build your
+            collection inside ASTERRA.
+        </p>
+
+        <div class="hero-actions">
+            <div class="btn primary">
+                DISCOVER SURFACE
+            </div>
+
+            <div class="btn">
+                EXPLORE
+            </div>
         </div>
 
-
-        <!-- HERO -->
-
-        <section class="hero">
-
-            <div class="eyebrow">
-
-                <span class="eyebrow-line"></span>
-
-                LIVE SURFACE
-
-            </div>
+    </section>
 
 
-            <h1>
+    <!-- RIGHT PANEL -->
+    <aside class="side-panel">
 
-                ENTER THE
+        <div class="panel-label">
+            SELECT WORLD
+        </div>
 
-                <span>
-                    UNIVERSE.
-                </span>
+        <div class="asset-card">
 
-            </h1>
-
-
-            <div class="hero-copy">
-
-                Discover finite digital plots across the Moon and Mars.
-                Collect, explore and build your own place inside ASTERRA.
-
-            </div>
-
-
-            <div class="hero-actions">
-
-                <button class="primary-btn">
-                    DISCOVER SURFACE
-                </button>
-
-                <button class="secondary-btn">
-                    EXPLORE →
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- RIGHT INFORMATION PANEL -->
-
-        <aside class="asset-panel">
-
-            <div class="panel-heading">
-
-                <div class="panel-heading-left">
-                    CURRENT WORLD
+            <div class="asset-top">
+                <div class="asset-title" id="worldName">
+                    MOON
                 </div>
 
-                <div class="live">
-
-                    <span class="live-dot"></span>
-
-                    LIVE
-
+                <div class="asset-sub" id="worldSub">
+                    LUNAR SURFACE
                 </div>
-
             </div>
 
+            <div class="stats">
 
-            <div class="world-title">
-
-                <div
-                    class="world-name"
-                    id="worldName"
-                >
-                    MARS
-                </div>
-
-                <div
-                    class="world-code"
-                    id="worldCode"
-                >
-                    MR / 01
-                </div>
-
-            </div>
-
-
-            <div class="panel-grid">
-
-                <div class="metric">
-
-                    <div class="metric-label">
+                <div class="stat">
+                    <div class="stat-label">
                         SUPPLY
                     </div>
-
-                    <div
-                        class="metric-value"
-                        id="supplyValue"
-                    >
-                        1,220,000
+                    <div class="stat-value">
+                        793,548
                     </div>
-
                 </div>
 
-
-                <div class="metric">
-
-                    <div class="metric-label">
+                <div class="stat">
+                    <div class="stat-label">
                         AVAILABLE
                     </div>
-
-                    <div
-                        class="metric-value"
-                        id="availableValue"
-                    >
-                        1,220,000
+                    <div class="stat-value">
+                        793,548
                     </div>
-
                 </div>
 
-
-                <div class="metric">
-
-                    <div class="metric-label">
-                        REGION
-                    </div>
-
-                    <div class="metric-value">
-                        GLOBAL
-                    </div>
-
-                </div>
-
-
-                <div class="metric">
-
-                    <div class="metric-label">
-                        STATUS
-                    </div>
-
-                    <div class="metric-value">
-                        ACTIVE
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="panel-footer">
-
-                <div>
-
-                    <div class="price-label">
+                <div class="stat">
+                    <div class="stat-label">
                         BASE PRICE
                     </div>
-
-                    <div
-                        class="price"
-                        id="basePrice"
-                    >
-                        $199
+                    <div class="stat-value">
+                        $11
                     </div>
-
                 </div>
 
-
-                <button class="acquire">
-                    ACQUIRE PLOT
-                </button>
+                <div class="stat">
+                    <div class="stat-label">
+                        STATUS
+                    </div>
+                    <div class="stat-value">
+                        OPEN
+                    </div>
+                </div>
 
             </div>
 
-        </aside>
-
-
-        <!-- WORLD SELECTOR -->
-
-        <div class="world-selector">
-
-            <div class="selector-title">
-                SELECT WORLD
-            </div>
-
-
-            <div class="world-buttons">
+            <div class="world-switch">
 
                 <button
                     class="world-btn active"
-                    id="marsBtn"
-                >
-                    MARS
+                    id="moonBtn">
+                    MOON
                 </button>
 
                 <button
                     class="world-btn"
-                    id="moonBtn"
-                >
-                    MOON
+                    id="marsBtn">
+                    MARS
                 </button>
 
             </div>
 
         </div>
 
+    </aside>
 
-        <!-- PLOT -->
 
-        <div class="plot-card">
+    <!-- BOTTOM -->
+    <div class="bottom-bar">
 
-            <div class="plot-label">
-                SELECTED PLOT
+        <div class="bottom-left">
+
+            <div class="bottom-caption">
+                ASTERRA DIGITAL UNIVERSE
             </div>
 
-
-            <div class="plot-inner">
-
-                <div class="plot-id">
-                    MR-08421
-                </div>
-
-
-                <div class="plot-status">
-
-                    <div class="status-top">
-                        DIGITAL SURFACE ASSET
-                    </div>
-
-                    <div class="status-bottom">
-                        AVAILABLE
-                    </div>
-
-                </div>
-
+            <div class="bottom-title">
+                SURFACE SCANNING
             </div>
 
         </div>
 
+        <div class="bottom-right">
 
-        <!-- BOTTOM -->
-
-        <div class="market-bar">
-
-            <div class="market-left">
-
-                <div class="market-label">
-                    ASTERRA SYSTEM
+            <div class="metric">
+                <div class="metric-label">
+                    WORLD
                 </div>
 
-                <div class="market-title">
-                    Digital Surface Infrastructure
+                <div
+                    class="metric-value"
+                    id="bottomWorld">
+                    MOON
                 </div>
-
             </div>
 
+            <div class="metric">
 
-            <div class="market-data">
-
-                <div class="market-item">
-
-                    <div class="market-item-label">
-                        TOTAL SUPPLY
-                    </div>
-
-                    <div
-                        class="market-item-value"
-                        id="bottomSupply"
-                    >
-                        1,220,000
-                    </div>
-
+                <div class="metric-label">
+                    MODE
                 </div>
 
-
-                <div class="market-item">
-
-                    <div class="market-item-label">
-                        AVAILABLE
-                    </div>
-
-                    <div
-                        class="market-item-value"
-                        id="bottomAvailable"
-                    >
-                        1,220,000
-                    </div>
-
-                </div>
-
-
-                <div class="market-item">
-
-                    <div class="market-item-label">
-                        BASE PRICE
-                    </div>
-
-                    <div
-                        class="market-item-value"
-                        id="bottomPrice"
-                    >
-                        $199
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="controls-hint">
-
-                <div class="controls-hint-top">
-                    SURFACE SCANNING
-                </div>
-
-                <div class="controls-hint-bottom">
-                    DRAG TO ROTATE · SCROLL TO ZOOM
+                <div class="metric-value">
+                    EXPLORATION
                 </div>
 
             </div>
@@ -1370,301 +773,123 @@ body{
 <script>
 
 /* =========================================================
-   ASTERRA ENGINE
+   STARFIELD
+   RANDOM POSITIONS + INDIVIDUAL TWINKLE
 ========================================================= */
 
+const starContainer = document.getElementById("stars");
 
-/* =========================================================
-   RANDOM STARS
-========================================================= */
+const starObjects = [];
 
-const starsContainer =
-    document.getElementById("stars");
+const STAR_COUNT = 320;
 
-const stars = [];
+for(let i=0;i<STAR_COUNT;i++){
 
+    const star = document.createElement("div");
 
-function createStars(){
+    const r = Math.random();
 
-    starsContainer.innerHTML = "";
+    let size;
 
-    stars.length = 0;
-
-
-    const count =
-        Math.min(
-            300,
-            Math.max(
-                200,
-                Math.floor(
-                    window.innerWidth *
-                    window.innerHeight /
-                    8200
-                )
-            )
-        );
-
-
-    for(
-        let i=0;
-        i<count;
-        i++
-    ){
-
-        const star =
-            document.createElement("div");
-
-
-        star.className =
-            "star";
-
-
-        const large =
-            Math.random() > .91;
-
-
-        const size =
-            large
-                ? 1.35 + Math.random()*1.55
-                : .45 + Math.random()*1.15;
-
-
-        star.style.width =
-            size+"px";
-
-        star.style.height =
-            size+"px";
-
-
-        star.style.left =
-            Math.random()*100+"%";
-
-        star.style.top =
-            Math.random()*100+"%";
-
-
-        if(
-            large ||
-            Math.random()>.88
-        ){
-
-            star.classList.add(
-                "glow"
-            );
-
-        }
-
-
-        starsContainer.appendChild(
-            star
-        );
-
-
-        stars.push({
-
-            element:star,
-
-            base:
-                large
-                    ? .30+Math.random()*.35
-                    : .16+Math.random()*.40,
-
-            amplitude:
-                large
-                    ? .22+Math.random()*.38
-                    : .10+Math.random()*.38,
-
-            speed:
-                .28+Math.random()*1.9,
-
-            phase:
-                Math.random()*Math.PI*2,
-
-            secondPhase:
-                Math.random()*Math.PI*2
-
-        });
-
+    if(r < .80){
+        size = .7 + Math.random()*1.2;
+        star.className = "star small";
+    }
+    else if(r < .96){
+        size = 1.5 + Math.random()*1.3;
+        star.className = "star medium";
+    }
+    else{
+        size = 2.5 + Math.random()*2;
+        star.className = "star large";
     }
 
-}
+    star.style.width = size+"px";
+    star.style.height = size+"px";
 
+    star.style.left = (Math.random()*100)+"%";
+    star.style.top = (Math.random()*100)+"%";
 
-createStars();
+    /*
+       Random initial opacity.
+    */
 
+    const base = .18 + Math.random()*.42;
 
-function animateStars(time){
+    star.style.opacity = base;
 
-    const t =
-        time*.001;
+    starContainer.appendChild(star);
 
+    starObjects.push({
+        element:star,
 
-    for(
-        let i=0;
-        i<stars.length;
-        i++
-    ){
+        base:base,
 
-        const s =
-            stars[i];
+        amplitude:
+            .15 + Math.random()*.42,
 
+        speed:
+            .0007 + Math.random()*.002,
 
-        const a =
-            (
-                Math.sin(
-                    t*s.speed+
-                    s.phase
-                )+1
-            )/2;
-
-
-        const b =
-            (
-                Math.sin(
-                    t*s.speed*.37+
-                    s.secondPhase
-                )+1
-            )/2;
-
-
-        const brightness =
-            s.base+
-            s.amplitude*
-            (
-                a*.72+
-                b*.28
-            );
-
-
-        const scale =
-            .72+
-            a*.48;
-
-
-        s.element.style.opacity =
-            Math.min(
-                1,
-                brightness
-            );
-
-
-        s.element.style.transform =
-            `translate(-50%,-50%) scale(${scale})`;
-
-    }
-
+        phase:
+            Math.random()*Math.PI*2
+    });
 }
 
 
 /* =========================================================
-   THREE
+   THREE.JS
 ========================================================= */
 
 const canvas =
-    document.getElementById(
-        "spaceCanvas"
-    );
-
+    document.getElementById("spaceCanvas");
 
 const scene =
     new THREE.Scene();
 
-
 const camera =
     new THREE.PerspectiveCamera(
         42,
-        window.innerWidth /
-        window.innerHeight,
+        window.innerWidth/window.innerHeight,
         .1,
         4000
     );
 
 
-camera.position.set(
-    0,
-    10,
-    520
-);
+/*
+   IMPORTANT:
+
+   This zoom range stays essentially the same
+   as the working version.
+*/
+
+let zoomDistance = 520;
+let targetZoom = 520;
+
+const MIN_ZOOM = 475;
+const MAX_ZOOM = 760;
+
+camera.position.set(0,0,zoomDistance);
 
 
 const renderer =
     new THREE.WebGLRenderer({
-
         canvas:canvas,
-
         antialias:true,
-
         alpha:true
-
     });
 
-
 renderer.setPixelRatio(
-    Math.min(
-        window.devicePixelRatio,
-        2
-    )
+    Math.min(window.devicePixelRatio,2)
 );
-
 
 renderer.setSize(
     window.innerWidth,
     window.innerHeight
 );
 
-
 renderer.outputEncoding =
     THREE.sRGBEncoding;
-
-
-/* =========================================================
-   LIGHT
-========================================================= */
-
-scene.add(
-    new THREE.AmbientLight(
-        0x555555,
-        .48
-    )
-);
-
-
-const keyLight =
-    new THREE.DirectionalLight(
-        0xffffff,
-        2.5
-    );
-
-
-keyLight.position.set(
-    -300,
-    160,
-    400
-);
-
-
-scene.add(
-    keyLight
-);
-
-
-const fillLight =
-    new THREE.DirectionalLight(
-        0x9caabd,
-        .34
-    );
-
-
-fillLight.position.set(
-    350,
-    -100,
-    250
-);
-
-
-scene.add(
-    fillLight
-);
 
 
 /* =========================================================
@@ -1674,229 +899,158 @@ scene.add(
 const planetGroup =
     new THREE.Group();
 
+scene.add(planetGroup);
 
-scene.add(
-    planetGroup
-);
-
-
-let currentWorld =
-    "mars";
+const PLANET_RADIUS = 130;
 
 
-const PLANET_RADIUS =
-    130;
+/* =========================================================
+   WORLD COLORS
+========================================================= */
 
+const worlds = {
 
-const worldData = {
-
-    mars:{
-        supply:"1,220,000",
-        price:"$199",
-        code:"MR / 01",
+    moon:{
+        name:"MOON",
+        sub:"LUNAR SURFACE",
         colors:[
-            [112,45,31],
-            [143,62,39],
-            [91,36,28],
-            [171,79,48],
-            [77,31,25],
-            [126,53,36]
+            0x858585,
+            0xa4a4a4,
+            0x6e6e6e,
+            0xb8b8b8,
+            0x565656
         ]
     },
 
-    moon:{
-        supply:"320,000",
-        price:"$149",
-        code:"MN / 01",
+    mars:{
+        name:"MARS",
+        sub:"MARTIAN SURFACE",
         colors:[
-            [116,116,112],
-            [144,143,138],
-            [82,82,80],
-            [164,163,157],
-            [98,98,95],
-            [127,126,122]
+            0x8e4c35,
+            0xb05f43,
+            0x713827,
+            0xc47555,
+            0x5a2c21
         ]
     }
 
 };
 
-
-let planetMesh = null;
-let craterGroup = null;
-let markerGroup = null;
+let currentWorld = "moon";
 
 
 /* =========================================================
-   RANDOM
+   PLANET GENERATION
 ========================================================= */
 
-function seededRandom(seed){
-
-    const x =
-        Math.sin(
-            seed*12.9898
-        )*43758.5453;
+let planetMesh;
+let craterGroup;
+let markerGroup;
 
 
-    return x-
-        Math.floor(x);
+function randomWorldColor(colors){
+
+    return colors[
+        Math.floor(
+            Math.random()*colors.length
+        )
+    ];
 
 }
 
 
-/* =========================================================
-   CREATE PLANET
-========================================================= */
+function buildPlanet(worldKey){
 
-function createPlanet(world){
+    if(planetMesh)
+        planetGroup.remove(planetMesh);
 
-    if(planetMesh){
+    if(craterGroup)
+        planetGroup.remove(craterGroup);
 
-        planetGroup.remove(
-            planetMesh
-        );
-
-        planetMesh.geometry.dispose();
-        planetMesh.material.dispose();
-
-    }
+    if(markerGroup)
+        planetGroup.remove(markerGroup);
 
 
-    if(craterGroup){
-
-        planetGroup.remove(
-            craterGroup
-        );
-
-    }
+    const world =
+        worlds[worldKey];
 
 
-    if(markerGroup){
-
-        planetGroup.remove(
-            markerGroup
-        );
-
-    }
-
-
-    const data =
-        worldData[world];
-
+    /* -----------------------------------------
+       GEOMETRY
+    ----------------------------------------- */
 
     const geometry =
         new THREE.SphereGeometry(
             PLANET_RADIUS,
             96,
-            96
+            64
         );
 
 
-    const pos =
+    const position =
         geometry.attributes.position;
 
-
-    const colors = [];
-
-
-    for(
-        let i=0;
-        i<pos.count;
-        i++
-    ){
-
-        const x =
-            pos.getX(i);
-
-        const y =
-            pos.getY(i);
-
-        const z =
-            pos.getZ(i);
+    const colors =
+        [];
 
 
-        const nx =
-            x/PLANET_RADIUS;
+    /*
+       Surface variation.
+    */
 
-        const ny =
-            y/PLANET_RADIUS;
+    for(let i=0;i<position.count;i++){
 
-        const nz =
-            z/PLANET_RADIUS;
+        const x = position.getX(i);
+        const y = position.getY(i);
+        const z = position.getZ(i);
 
+        const length =
+            Math.sqrt(x*x+y*y+z*z);
 
-        let noise =
-            Math.sin(
-                nx*8.3+
-                ny*4.7
-            )*.5;
+        const nx=x/length;
+        const ny=y/length;
+        const nz=z/length;
 
+        const noise =
+            Math.sin(nx*11.4)
+            *Math.cos(ny*9.2)
+            *Math.sin(nz*13.1);
 
-        noise +=
-            Math.sin(
-                nz*13.2-
-                nx*3.1
-            )*.25;
+        const noise2 =
+            Math.sin(nx*25.0+ny*8.0)
+            *Math.cos(nz*18.0);
 
+        const displacement =
+            noise*.7 + noise2*.25;
 
-        noise +=
-            Math.sin(
-                ny*18.1+
-                nz*5.7
-            )*.15;
-
-
-        noise +=
-            Math.sin(
-                (nx+nz)*32
-            )*.07;
-
-
-        const index =
-            Math.abs(
-                Math.floor(
-                    (noise+1)*
-                    data.colors.length*
-                    .48
-                )
-            )%
-            data.colors.length;
-
-
-        const c =
-            data.colors[index];
-
-
-        const shade =
-            .82+
-            noise*.13;
-
-
-        colors.push(
-
-            Math.min(
-                255,
-                c[0]*shade
-            )/255,
-
-            Math.min(
-                255,
-                c[1]*shade
-            )/255,
-
-            Math.min(
-                255,
-                c[2]*shade
-            )/255
-
+        position.setXYZ(
+            i,
+            x + nx*displacement,
+            y + ny*displacement,
+            z + nz*displacement
         );
 
+
+        const baseColor =
+            new THREE.Color(
+                randomWorldColor(world.colors)
+            );
+
+        const factor =
+            .84 + Math.random()*.26;
+
+        baseColor.multiplyScalar(factor);
+
+        colors.push(
+            baseColor.r,
+            baseColor.g,
+            baseColor.b
+        );
     }
 
 
     geometry.setAttribute(
         "color",
-
         new THREE.Float32BufferAttribute(
             colors,
             3
@@ -1909,10 +1063,11 @@ function createPlanet(world){
 
             vertexColors:true,
 
-            roughness:.91,
+            roughness:.95,
 
-            metalness:.02
+            metalness:0,
 
+            flatShading:false
         });
 
 
@@ -1921,7 +1076,6 @@ function createPlanet(world){
             geometry,
             material
         );
-
 
     planetGroup.add(
         planetMesh
@@ -1935,118 +1089,78 @@ function createPlanet(world){
     craterGroup =
         new THREE.Group();
 
-
-    const craterCount =
-        world==="moon"
-            ? 54
-            : 38;
+    planetGroup.add(
+        craterGroup
+    );
 
 
-    for(
-        let i=0;
-        i<craterCount;
-        i++
-    ){
-
-        const u =
-            seededRandom(
-                i*3.7+11
-            );
-
-
-        const v =
-            seededRandom(
-                i*7.1+31
-            );
-
-
-        const theta =
-            u*Math.PI*2;
-
+    for(let i=0;i<85;i++){
 
         const phi =
             Math.acos(
-                2*v-1
+                2*Math.random()-1
             );
 
+        const theta =
+            Math.random()*Math.PI*2;
 
-        const r =
-            PLANET_RADIUS+.55;
-
+        const radius =
+            PLANET_RADIUS+.4;
 
         const x =
-            r*
-            Math.sin(phi)*
-            Math.cos(theta);
-
+            radius*Math.sin(phi)*Math.cos(theta);
 
         const y =
-            r*
-            Math.cos(phi);
-
+            radius*Math.cos(phi);
 
         const z =
-            r*
-            Math.sin(phi)*
-            Math.sin(theta);
+            radius*Math.sin(phi)*Math.sin(theta);
 
 
         const size =
-            2.5+
-            seededRandom(
-                i*9.4+4
-            )*
-            (
-                world==="moon"
-                    ?10
-                    :7
+            2 + Math.random()*9;
+
+
+        const ringGeometry =
+            new THREE.RingGeometry(
+                size*.55,
+                size,
+                24
             );
+
+
+        const ringMaterial =
+            new THREE.MeshBasicMaterial({
+
+                color:
+                    worldKey==="mars"
+                    ? 0x542a20
+                    : 0x454545,
+
+                transparent:true,
+
+                opacity:
+                    .15 + Math.random()*.17,
+
+                side:
+                    THREE.DoubleSide
+            });
 
 
         const ring =
             new THREE.Mesh(
-
-                new THREE.RingGeometry(
-                    size*.55,
-                    size,
-                    24
-                ),
-
-                new THREE.MeshBasicMaterial({
-
-                    color:
-                        world==="moon"
-                            ?0x4c4c49
-                            :0x56261d,
-
-                    transparent:true,
-
-                    opacity:
-                        world==="moon"
-                            ?.16
-                            :.12,
-
-                    side:
-                        THREE.DoubleSide,
-
-                    depthWrite:false
-
-                })
-
+                ringGeometry,
+                ringMaterial
             );
 
 
         ring.position.set(
-            x,
-            y,
-            z
+            x,y,z
         );
 
 
         ring.lookAt(
-            x*1.03,
-            y*1.03,
-            z*1.03
+            new THREE.Vector3(0,0,0)
         );
 
 
@@ -2057,11 +1171,6 @@ function createPlanet(world){
     }
 
 
-    planetGroup.add(
-        craterGroup
-    );
-
-
     /* =====================================================
        MARKERS
     ===================================================== */
@@ -2069,118 +1178,393 @@ function createPlanet(world){
     markerGroup =
         new THREE.Group();
 
-
-    for(
-        let i=0;
-        i<20;
-        i++
-    ){
-
-        const theta =
-            seededRandom(
-                i*3.1+17
-            )*
-            Math.PI*2;
-
-
-        const phi =
-            seededRandom(
-                i*4.8+21
-            )*
-            Math.PI;
-
-
-        const r =
-            PLANET_RADIUS+1.7;
-
-
-        const x =
-            r*
-            Math.sin(phi)*
-            Math.cos(theta);
-
-
-        const y =
-            r*
-            Math.cos(phi);
-
-
-        const z =
-            r*
-            Math.sin(phi)*
-            Math.sin(theta);
-
-
-        const marker =
-            new THREE.Mesh(
-
-                new THREE.SphereGeometry(
-                    i===0
-                        ?1.8
-                        :1.1,
-                    12,
-                    12
-                ),
-
-                new THREE.MeshBasicMaterial({
-
-                    color:
-                        i===0
-                            ?0xffffff
-                            :0x9aa9b8
-
-                })
-
-            );
-
-
-        marker.position.set(
-            x,
-            y,
-            z
-        );
-
-
-        markerGroup.add(
-            marker
-        );
-
-    }
-
-
     planetGroup.add(
         markerGroup
     );
+
+
+    for(let i=0;i<8;i++){
+
+        const phi =
+            Math.acos(
+                2*Math.random()-1
+            );
+
+        const theta =
+            Math.random()*Math.PI*2;
+
+        const radius =
+            PLANET_RADIUS+2;
+
+        const x =
+            radius*Math.sin(phi)*Math.cos(theta);
+
+        const y =
+            radius*Math.cos(phi);
+
+        const z =
+            radius*Math.sin(phi)*Math.sin(theta);
+
+
+        const dotGeometry =
+            new THREE.SphereGeometry(
+                1.8,
+                10,
+                10
+            );
+
+
+        const dotMaterial =
+            new THREE.MeshBasicMaterial({
+                color:0xffffff,
+                transparent:true,
+                opacity:.8
+            });
+
+
+        const dot =
+            new THREE.Mesh(
+                dotGeometry,
+                dotMaterial
+            );
+
+
+        dot.position.set(
+            x,y,z
+        );
+
+        markerGroup.add(
+            dot
+        );
+
+    }
 
 }
 
 
 /* =========================================================
-   INITIAL PLANET
+   LIGHTING
 ========================================================= */
 
-createPlanet(
-    "mars"
+const ambient =
+    new THREE.AmbientLight(
+        0xffffff,
+        .32
+    );
+
+scene.add(
+    ambient
 );
+
+
+const sun =
+    new THREE.DirectionalLight(
+        0xffffff,
+        2.4
+    );
+
+sun.position.set(
+    -260,
+    170,
+    300
+);
+
+scene.add(
+    sun
+);
+
+
+const rim =
+    new THREE.DirectionalLight(
+        0xb8c5ff,
+        .35
+    );
+
+rim.position.set(
+    280,
+    -80,
+    -240
+);
+
+scene.add(
+    rim
+);
+
+
+/* =========================================================
+   PLANET POSITION
+========================================================= */
+
+/*
+   The planet is intentionally placed LEFT
+   of the center of the safe visual zone.
+
+   It is NOT allowed to move into the UI.
+*/
+
+let planetScreenX = .57;
+let planetScreenY = .47;
+
+
+/*
+   Convert desired screen position to world position.
+*/
+
+function screenToWorld(
+    screenX,
+    screenY,
+    distance
+){
+
+    const width =
+        window.innerWidth;
+
+    const height =
+        window.innerHeight;
+
+
+    const ndcX =
+        (screenX/width)*2-1;
+
+    const ndcY =
+        -(screenY/height)*2+1;
+
+
+    const vFov =
+        THREE.MathUtils.degToRad(
+            camera.fov
+        );
+
+    const visibleHeight =
+        2*Math.tan(vFov/2)*distance;
+
+    const visibleWidth =
+        visibleHeight*camera.aspect;
+
+
+    return {
+        x:ndcX*visibleWidth/2,
+        y:ndcY*visibleHeight/2
+    };
+
+}
+
+
+/* =========================================================
+   SAFE PLANET POSITION
+========================================================= */
+
+/*
+   THIS is the important part.
+
+   The planet's visible radius is calculated at
+   the CURRENT zoom level.
+
+   Then we reserve hard UI exclusion zones:
+
+   LEFT:
+   hero text
+
+   RIGHT:
+   information panel
+
+   BOTTOM:
+   bottom bar
+
+   TOP:
+   top navigation
+
+   The planet center is then mathematically clamped
+   so its projected edge cannot enter those zones.
+*/
+
+function updatePlanetSafePosition(){
+
+    const width =
+        window.innerWidth;
+
+    const height =
+        window.innerHeight;
+
+
+    /*
+       Current visible planet radius in pixels.
+    */
+
+    const distance =
+        zoomDistance;
+
+
+    const vFov =
+        THREE.MathUtils.degToRad(
+            camera.fov
+        );
+
+
+    const visibleHeight =
+        2*Math.tan(vFov/2)*distance;
+
+
+    const pixelsPerWorld =
+        height/visibleHeight;
+
+
+    const projectedRadius =
+        PLANET_RADIUS*pixelsPerWorld;
+
+
+    /*
+       UI exclusion zones.
+    */
+
+    let leftBoundary =
+        42+390+35;
+
+    let rightBoundary =
+        width-42-290-35;
+
+    let topBoundary =
+        115;
+
+    let bottomBoundary =
+        height-100;
+
+
+    /*
+       Extra safety margin.
+    */
+
+    const margin = 18;
+
+    leftBoundary += margin;
+    rightBoundary -= margin;
+    topBoundary += margin;
+    bottomBoundary -= margin;
+
+
+    /*
+       Available safe rectangle.
+
+       We NEVER allow the planet edge to
+       cross these boundaries.
+    */
+
+    let minX =
+        leftBoundary+projectedRadius;
+
+    let maxX =
+        rightBoundary-projectedRadius;
+
+    let minY =
+        topBoundary+projectedRadius;
+
+    let maxY =
+        bottomBoundary-projectedRadius;
+
+
+    /*
+       If the screen is narrow and the planet
+       physically cannot fit at this zoom,
+       we move the camera target area rather
+       than letting the planet overlap UI.
+
+       This preserves the zoom control itself.
+    */
+
+    if(minX>maxX){
+
+        const middle =
+            (leftBoundary+rightBoundary)/2;
+
+        minX =
+            middle;
+
+        maxX =
+            middle;
+
+    }
+
+
+    if(minY>maxY){
+
+        const middle =
+            (topBoundary+bottomBoundary)/2;
+
+        minY =
+            middle;
+
+        maxY =
+            middle;
+
+    }
+
+
+    /*
+       Preferred location.
+
+       Slightly LEFT, as requested.
+    */
+
+    const preferredX =
+        width*.57;
+
+    const preferredY =
+        height*.48;
+
+
+    const finalX =
+        Math.max(
+            minX,
+            Math.min(
+                maxX,
+                preferredX
+            )
+        );
+
+
+    const finalY =
+        Math.max(
+            minY,
+            Math.min(
+                maxY,
+                preferredY
+            )
+        );
+
+
+    const world =
+        screenToWorld(
+            finalX,
+            finalY,
+            distance
+        );
+
+
+    planetGroup.position.x =
+        world.x;
+
+    planetGroup.position.y =
+        world.y;
+
+    planetGroup.position.z =
+        0;
+
+}
 
 
 /* =========================================================
    DRAG ROTATION
 ========================================================= */
 
-let dragging =
-    false;
+let dragging = false;
 
-let previousX =
-    0;
-
-let previousY =
-    0;
+let previousX = 0;
+let previousY = 0;
 
 
 canvas.addEventListener(
     "pointerdown",
-    e => {
+    e=>{
 
         dragging=true;
 
@@ -2197,39 +1581,22 @@ canvas.addEventListener(
 
 canvas.addEventListener(
     "pointermove",
-    e => {
+    e=>{
 
         if(!dragging)
             return;
 
-
         const dx =
-            e.clientX-
-            previousX;
-
+            e.clientX-previousX;
 
         const dy =
-            e.clientY-
-            previousY;
-
+            e.clientY-previousY;
 
         planetGroup.rotation.y +=
             dx*.006;
 
-
         planetGroup.rotation.x +=
             dy*.003;
-
-
-        planetGroup.rotation.x =
-            Math.max(
-                -.65,
-                Math.min(
-                    .65,
-                    planetGroup.rotation.x
-                )
-            );
-
 
         previousX=e.clientX;
         previousY=e.clientY;
@@ -2240,7 +1607,7 @@ canvas.addEventListener(
 
 canvas.addEventListener(
     "pointerup",
-    () => {
+    ()=>{
         dragging=false;
     }
 );
@@ -2248,7 +1615,7 @@ canvas.addEventListener(
 
 canvas.addEventListener(
     "pointercancel",
-    () => {
+    ()=>{
         dragging=false;
     }
 );
@@ -2256,33 +1623,16 @@ canvas.addEventListener(
 
 /* =========================================================
    ZOOM
-   DO NOT CHANGE
 ========================================================= */
-
-let zoomDistance =
-    520;
-
-let targetZoom =
-    520;
-
-
-const MIN_ZOOM =
-    475;
-
-const MAX_ZOOM =
-    760;
-
 
 canvas.addEventListener(
     "wheel",
-    e => {
+    e=>{
 
         e.preventDefault();
 
-
         targetZoom +=
             e.deltaY*.35;
-
 
         targetZoom =
             Math.max(
@@ -2294,287 +1644,168 @@ canvas.addEventListener(
             );
 
     },
-    {
-        passive:false
+    {passive:false}
+);
+
+
+/* =========================================================
+   WORLD SWITCH
+========================================================= */
+
+const moonBtn =
+    document.getElementById("moonBtn");
+
+const marsBtn =
+    document.getElementById("marsBtn");
+
+const worldName =
+    document.getElementById("worldName");
+
+const worldSub =
+    document.getElementById("worldSub");
+
+const bottomWorld =
+    document.getElementById("bottomWorld");
+
+
+function setWorld(world){
+
+    currentWorld=world;
+
+    buildPlanet(world);
+
+
+    if(world==="moon"){
+
+        moonBtn.classList.add("active");
+        marsBtn.classList.remove("active");
+
+    }
+    else{
+
+        marsBtn.classList.add("active");
+        moonBtn.classList.remove("active");
+
+    }
+
+
+    worldName.textContent =
+        worlds[world].name;
+
+    worldSub.textContent =
+        worlds[world].sub;
+
+    bottomWorld.textContent =
+        worlds[world].name;
+
+}
+
+
+moonBtn.addEventListener(
+    "click",
+    ()=>{
+        setWorld("moon");
+    }
+);
+
+
+marsBtn.addEventListener(
+    "click",
+    ()=>{
+        setWorld("mars");
     }
 );
 
 
 /* =========================================================
-   IMPORTANT:
-   SAFE PLANET POSITION
+   INITIAL PLANET
 ========================================================= */
 
-/*
-   The planet must live in the open central area.
-
-   We calculate its projected radius on screen
-   and then place its CENTER so that the whole
-   sphere remains inside the safe zone.
-
-   This is what prevents the planet from
-   jumping over text/panels.
-*/
-
-function updateSafePlanetPosition(){
-
-    const width =
-        window.innerWidth;
-
-    const height =
-        window.innerHeight;
-
-
-    /*
-       Approximate projected planet radius.
-       This uses the actual camera distance
-       and camera FOV.
-    */
-
-    const fovRadians =
-        camera.fov*
-        Math.PI/
-        180;
-
-
-    const projectedRadius =
-        (
-            PLANET_RADIUS/
-            Math.tan(
-                fovRadians/2
-            )
-        )/
-        zoomDistance;
-
-
-    const radiusPixels =
-        (
-            projectedRadius*
-            height/
-            2
-        );
-
-
-    /*
-       UI safe zones.
-    */
-
-    let leftSafe =
-        42+430+55;
-
-
-    let rightSafe =
-        width-42-290-55;
-
-
-    /*
-       On smaller screens the text and panel
-       compress, so use a more flexible gap.
-    */
-
-    if(width<1200){
-
-        leftSafe =
-            Math.min(
-                leftSafe,
-                width*.38
-            );
-
-        rightSafe =
-            Math.max(
-                rightSafe,
-                width*.62
-            );
-
-    }
-
-
-    /*
-       Vertical safe area.
-
-       Keep away from:
-       - top branding
-       - hero text
-       - bottom bar
-    */
-
-    const topSafe =
-        Math.max(
-            165,
-            height*.18
-        );
-
-
-    const bottomSafe =
-        height-
-        84-
-        32;
-
-
-    /*
-       Ideal center of the free area.
-    */
-
-    let centerX =
-        (
-            leftSafe+
-            rightSafe
-        )/2;
-
-
-    let centerY =
-        (
-            topSafe+
-            bottomSafe
-        )/2;
-
-
-    /*
-       Make sure the complete sphere
-       stays inside the horizontal area.
-    */
-
-    const minCenterX =
-        leftSafe+
-        radiusPixels;
-
-
-    const maxCenterX =
-        rightSafe-
-        radiusPixels;
-
-
-    /*
-       If the available area is large enough,
-       clamp normally.
-    */
-
-    if(
-        minCenterX<=maxCenterX
-    ){
-
-        centerX =
-            Math.max(
-                minCenterX,
-                Math.min(
-                    maxCenterX,
-                    centerX
-                )
-            );
-
-    }
-    else{
-
-        /*
-           Very narrow screens:
-           prioritize keeping the planet
-           away from the right information panel.
-        */
-
-        centerX =
-            width*.53;
-
-    }
-
-
-    /*
-       Vertical clamping.
-    */
-
-    const minCenterY =
-        topSafe+
-        radiusPixels;
-
-
-    const maxCenterY =
-        bottomSafe-
-        radiusPixels;
-
-
-    if(
-        minCenterY<=maxCenterY
-    ){
-
-        centerY =
-            Math.max(
-                minCenterY,
-                Math.min(
-                    maxCenterY,
-                    centerY
-                )
-            );
-
-    }
-    else{
-
-        centerY =
-            height*.43;
-
-    }
-
-
-    /*
-       Convert screen coordinates
-       back into the Three.js world.
-
-       x:
-       screen center = 0
-
-       y:
-       screen center = 0
-       and positive world Y is upward.
-    */
-
-    const worldX =
-        (
-            centerX-
-            width/2
-        )*
-        zoomDistance/
-        height*
-        2*
-        Math.tan(
-            fovRadians/2
-        )*
-        camera.aspect;
-
-
-    const worldY =
-        -(
-            centerY-
-            height/2
-        )*
-        zoomDistance/
-        height*
-        2*
-        Math.tan(
-            fovRadians/2
-        );
-
-
-    planetGroup.position.x =
-        worldX;
-
-    planetGroup.position.y =
-        worldY;
-
-}
+buildPlanet("moon");
 
 
 /* =========================================================
-   MAIN LOOP
+   ANIMATION
 ========================================================= */
 
-function animate(time){
+const clock =
+    new THREE.Clock();
 
-    animateStars(
-        time
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
     );
 
 
-    /*
-       SAME ZOOM FEEL.
-    */
+    const time =
+        performance.now();
+
+
+    /* -----------------------------------------
+       STAR TWINKLING
+    ----------------------------------------- */
+
+    for(
+        let i=0;
+        i<starObjects.length;
+        i++
+    ){
+
+        const s =
+            starObjects[i];
+
+        const wave =
+            Math.sin(
+                time*s.speed+
+                s.phase
+            );
+
+        const secondary =
+            Math.sin(
+                time*s.speed*.47+
+                s.phase*1.73
+            )*.35;
+
+        let opacity =
+            s.base+
+            wave*s.amplitude+
+            secondary*s.amplitude*.3;
+
+
+        opacity =
+            Math.max(
+                .05,
+                Math.min(
+                    .95,
+                    opacity
+                )
+            );
+
+
+        s.element.style.opacity =
+            opacity;
+
+
+        /*
+           Very subtle scale variation
+           makes brighter stars feel alive.
+        */
+
+        const scale =
+            1+
+            Math.max(0,wave)*.18;
+
+        s.element.style.transform =
+            `translate(-50%,-50%) scale(${scale})`;
+
+    }
+
+
+    /* -----------------------------------------
+       ZOOM
+    ----------------------------------------- */
 
     zoomDistance +=
         (
@@ -2588,25 +1819,26 @@ function animate(time){
 
 
     /*
-       The important part:
-       every frame the planet is recalculated
-       against the current screen size,
-       camera distance and UI safe zones.
+       Recalculate planet position EVERY FRAME.
+
+       This means when the user zooms in,
+       the planet is immediately repositioned
+       to remain inside the safe UI area.
     */
 
-    updateSafePlanetPosition();
+    updatePlanetSafePosition();
 
 
-    /*
-       Slow automatic rotation.
-    */
+    /* -----------------------------------------
+       ROTATION
+    ----------------------------------------- */
 
     if(!dragging){
 
         planetGroup.rotation.y +=
             currentWorld==="mars"
-                ? .00030
-                : .00022;
+            ? .00030
+            : .00022;
 
     }
 
@@ -2616,121 +1848,10 @@ function animate(time){
         camera
     );
 
-
-    requestAnimationFrame(
-        animate
-    );
-
 }
 
 
-requestAnimationFrame(
-    animate
-);
-
-
-/* =========================================================
-   WORLD SWITCH
-========================================================= */
-
-const marsBtn =
-    document.getElementById(
-        "marsBtn"
-    );
-
-const moonBtn =
-    document.getElementById(
-        "moonBtn"
-    );
-
-
-function setWorld(world){
-
-    currentWorld =
-        world;
-
-
-    createPlanet(
-        world
-    );
-
-
-    marsBtn.classList.toggle(
-        "active",
-        world==="mars"
-    );
-
-
-    moonBtn.classList.toggle(
-        "active",
-        world==="moon"
-    );
-
-
-    const d =
-        worldData[world];
-
-
-    document.getElementById(
-        "worldName"
-    ).textContent =
-        world.toUpperCase();
-
-
-    document.getElementById(
-        "worldCode"
-    ).textContent =
-        d.code;
-
-
-    document.getElementById(
-        "supplyValue"
-    ).textContent =
-        d.supply;
-
-
-    document.getElementById(
-        "availableValue"
-    ).textContent =
-        d.supply;
-
-
-    document.getElementById(
-        "basePrice"
-    ).textContent =
-        d.price;
-
-
-    document.getElementById(
-        "bottomSupply"
-    ).textContent =
-        d.supply;
-
-
-    document.getElementById(
-        "bottomAvailable"
-    ).textContent =
-        d.supply;
-
-
-    document.getElementById(
-        "bottomPrice"
-    ).textContent =
-        d.price;
-
-}
-
-
-marsBtn.addEventListener(
-    "click",
-    () => setWorld("mars")
-);
-
-
-moonBtn.addEventListener(
-    "click",
-    () => setWorld("moon")
-);
+animate();
 
 
 /* =========================================================
@@ -2739,12 +1860,11 @@ moonBtn.addEventListener(
 
 window.addEventListener(
     "resize",
-    () => {
+    ()=>{
 
         camera.aspect =
             window.innerWidth/
             window.innerHeight;
-
 
         camera.updateProjectionMatrix();
 
@@ -2755,10 +1875,17 @@ window.addEventListener(
         );
 
 
-        createStars();
+        updatePlanetSafePosition();
 
     }
 );
+
+
+/* =========================================================
+   FIRST POSITION
+========================================================= */
+
+updatePlanetSafePosition();
 
 </script>
 
