@@ -732,7 +732,7 @@ h1{
         </aside>
 
         <div class="drag-hint">
-            DRAG TO ROTATE · SCROLL TO ZOOM
+            DRAG TO ROTATE · SCROLL TO ZOOM · DOUBLE-CLICK TO FOCUS
         </div>
 
         <div class="bottom">
@@ -1414,17 +1414,6 @@ let planetLoadToken=
 
 /* =========================================================
    REAL EQUIRECTANGULAR SURFACE MAPS
-=========================================================
-
-   These are real global planetary surface maps.
-
-   Moon:
-   Solar System Scope map based on NASA imagery/elevation.
-
-   Mars:
-   Solar System Scope map based on NASA imagery/elevation.
-
-   Both are equirectangular 2048x1024 maps.
 ========================================================= */
 
 const WORLD_TEXTURES={
@@ -1452,19 +1441,16 @@ function disposePlanet(){
     );
 
     if(planetMesh.geometry){
-
         planetMesh.geometry.dispose();
     }
 
     if(planetMesh.material){
 
         if(planetMesh.material.map){
-
             planetMesh.material.map.dispose();
         }
 
         if(planetMesh.material.bumpMap){
-
             planetMesh.material.bumpMap.dispose();
         }
 
@@ -1484,41 +1470,24 @@ function createPlanetMaterial(
     texture
 ){
 
-    /*
-       The actual geographical map is the
-       material map.
+    return new THREE.MeshStandardMaterial({
 
-       A subtle bump layer is also created
-       from the same real surface image.
+        map:texture,
 
-       This gives the sphere visual surface
-       relief without inventing artificial
-       crater positions.
-    */
+        roughness:
+            world==="Moon"
+            ?1.0
+            :.96,
 
-    const material=
-        new THREE.MeshStandardMaterial({
+        metalness:0,
 
-            map:texture,
+        bumpMap:texture,
 
-            roughness:
-                world==="Moon"
-                ?1.0
-                :.96,
-
-            metalness:
-                0,
-
-            bumpMap:
-                texture,
-
-            bumpScale:
-                world==="Moon"
-                ?1.15
-                :.72
-        });
-
-    return material;
+        bumpScale:
+            world==="Moon"
+            ?1.15
+            :.72
+    });
 }
 
 
@@ -1538,24 +1507,12 @@ function buildPlanet(world){
 
     disposePlanet();
 
-    /*
-       Dense sphere so the geographical map
-       remains smooth at the current zoom.
-    */
-
     const geometry=
         new THREE.SphereGeometry(
             PLANET_RADIUS,
             192,
             128
         );
-
-    /*
-       Start with a neutral material.
-
-       This means the planet is still visible
-       while the real map is downloading.
-    */
 
     const initialMaterial=
         new THREE.MeshStandardMaterial({
@@ -1570,8 +1527,7 @@ function buildPlanet(world){
                 ?1
                 :.96,
 
-            metalness:
-                0
+            metalness:0
         });
 
     planetMesh=
@@ -1594,10 +1550,6 @@ function buildPlanet(world){
     );
 
 
-    /* =====================================================
-       LOAD REAL SURFACE MAP
-    ===================================================== */
-
     const loader=
         new THREE.TextureLoader();
 
@@ -1611,18 +1563,12 @@ function buildPlanet(world){
 
         function(texture){
 
-            /*
-               Ignore an old asynchronous load
-               if the user switched worlds.
-            */
-
             if(
                 thisLoadToken!==
                 planetLoadToken
             ){
 
                 texture.dispose();
-
                 return;
             }
 
@@ -1632,14 +1578,8 @@ function buildPlanet(world){
             ){
 
                 texture.dispose();
-
                 return;
             }
-
-
-            /* ---------------------------------------------
-               Texture settings
-            --------------------------------------------- */
 
             texture.encoding=
                 THREE.sRGBEncoding;
@@ -1661,11 +1601,6 @@ function buildPlanet(world){
             texture.magFilter=
                 THREE.LinearFilter;
 
-
-            /* ---------------------------------------------
-               Replace neutral material
-            --------------------------------------------- */
-
             const oldMaterial=
                 planetMesh.material;
 
@@ -1680,36 +1615,13 @@ function buildPlanet(world){
 
             oldMaterial.dispose();
 
-
-            /*
-               Important:
-
-               The geographical map itself is now
-               wrapped directly around SphereGeometry
-               through its UV coordinates.
-            */
-
             planetMesh.material.needsUpdate=
                 true;
         },
 
-        function(xhr){
-
-            /*
-               Loading progress intentionally omitted.
-               The page remains responsive.
-            */
-        },
+        function(){},
 
         function(error){
-
-            /*
-               Keep the planet visible if the external
-               texture provider is unavailable.
-
-               The neutral sphere is not allowed to
-               crash the application.
-            */
 
             console.warn(
                 "Surface map could not be loaded:",
@@ -1719,11 +1631,6 @@ function buildPlanet(world){
         }
     );
 }
-
-
-/* =========================================================
-   INITIAL MOON
-========================================================= */
 
 buildPlanet("Moon");
 
@@ -1820,7 +1727,6 @@ document
                     world===
                     currentWorld
                 ){
-
                     return;
                 }
 
@@ -1884,6 +1790,9 @@ let velocityX=
 let velocityY=
     0;
 
+let focusAnimating=
+    false;
+
 
 renderer.domElement.addEventListener(
     "pointerdown",
@@ -1891,6 +1800,9 @@ renderer.domElement.addEventListener(
 
         dragging=
             true;
+
+        focusAnimating=
+            false;
 
         previousX=
             e.clientX;
@@ -1990,7 +1902,7 @@ renderer.domElement.addEventListener(
 
 
 /* =========================================================
-   ZOOM
+   DEEP ZOOM
 ========================================================= */
 
 let zoomDistance=
@@ -1999,19 +1911,46 @@ let zoomDistance=
 let targetZoom=
     520;
 
+
+/*
+   150 = very close surface inspection.
+
+   We deliberately stay slightly outside
+   the 130 radius sphere so the camera never
+   enters the planet.
+*/
+
 const MIN_ZOOM=
-    475;
+    150;
 
 const MAX_ZOOM=
     760;
 
 
-window.addEventListener(
+/* =========================================================
+   WHEEL ZOOM
+========================================================= */
+
+renderer.domElement.addEventListener(
     "wheel",
     e=>{
 
+        e.preventDefault();
+
+        /*
+           Adaptive zoom:
+           close to the planet the steps become
+           smaller, giving much better control.
+        */
+
+        const factor=
+            targetZoom<260
+            ?0.55
+            :.85;
+
         targetZoom+=
-            e.deltaY*.35;
+            e.deltaY*
+            factor;
 
         targetZoom=
             Math.max(
@@ -2024,7 +1963,137 @@ window.addEventListener(
 
     },
     {
-        passive:true
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   RAYCASTER
+========================================================= */
+
+const raycaster=
+    new THREE.Raycaster();
+
+const pointer=
+    new THREE.Vector2();
+
+
+/* =========================================================
+   DOUBLE CLICK → FOCUS SURFACE
+========================================================= */
+
+renderer.domElement.addEventListener(
+    "dblclick",
+    e=>{
+
+        if(!planetMesh){
+            return;
+        }
+
+        const rect=
+            renderer.domElement.getBoundingClientRect();
+
+        pointer.x=
+            (
+                (e.clientX-rect.left)/
+                rect.width
+            )*
+            2-
+            1;
+
+        pointer.y=
+            -(
+                (
+                    (e.clientY-rect.top)/
+                    rect.height
+                )*
+                2-
+                1
+            );
+
+        raycaster.setFromCamera(
+            pointer,
+            camera
+        );
+
+        const intersections=
+            raycaster.intersectObject(
+                planetMesh,
+                false
+            );
+
+        if(!intersections.length){
+            return;
+        }
+
+        const hit=
+            intersections[0];
+
+        /*
+           The hit point is in local planet
+           coordinates.
+
+           We convert its surface normal into
+           world space and rotate the entire
+           planet so this exact place faces
+           the camera.
+        */
+
+        const localPoint=
+            hit.point.clone();
+
+        const localNormal=
+            localPoint.normalize();
+
+        const worldNormal=
+            localNormal
+                .clone()
+                .applyQuaternion(
+                    planetGroup.quaternion
+                )
+                .normalize();
+
+        const planetCenter=
+            new THREE.Vector3();
+
+        planetGroup.getWorldPosition(
+            planetCenter
+        );
+
+        const cameraDirection=
+            camera.position
+                .clone()
+                .sub(planetCenter)
+                .normalize();
+
+        const correction=
+            new THREE.Quaternion();
+
+        correction.setFromUnitVectors(
+            worldNormal,
+            cameraDirection
+        );
+
+        planetGroup.quaternion.premultiply(
+            correction
+        );
+
+        /*
+           Bring the selected region very close.
+        */
+
+        targetZoom=
+            175;
+
+        focusAnimating=
+            true;
+
+        velocityX=
+            0;
+
+        velocityY=
+            0;
     }
 );
 
@@ -2164,6 +2233,14 @@ function updatePlanetSafePosition(){
         bottomBoundary-
         projectedRadius;
 
+    /*
+       When the planet becomes larger than
+       the available UI area, we stop trying
+       to keep the whole sphere visible.
+
+       This is important for deep surface zoom.
+    */
+
     if(minX>maxX){
 
         const middle=
@@ -2227,6 +2304,20 @@ function updatePlanetSafePosition(){
             distance
         );
 
+    /*
+       During deep surface inspection,
+       don't move the planet aggressively.
+       This keeps the selected geography
+       visually stable.
+    */
+
+    if(
+        focusAnimating &&
+        zoomDistance<250
+    ){
+        return;
+    }
+
     planetGroup.position.x=
         world.x;
 
@@ -2249,7 +2340,10 @@ document
         ()=>{
 
             targetZoom=
-                MIN_ZOOM;
+                185;
+
+            focusAnimating=
+                true;
         }
     );
 
@@ -2263,8 +2357,11 @@ document
             targetZoom=
                 Math.max(
                     MIN_ZOOM,
-                    targetZoom-35
+                    targetZoom-80
                 );
+
+            focusAnimating=
+                true;
         }
     );
 
@@ -2288,10 +2385,22 @@ function animate(){
     camera.position.z=
         zoomDistance;
 
+    /*
+       Normal exploration rotation.
+
+       While focusing on a selected location
+       we stop automatic rotation so the selected
+       geographical area stays in view.
+    */
+
     if(!dragging){
 
-        planetGroup.rotation.y+=
-            .0008;
+        if(!focusAnimating){
+
+            planetGroup.rotation.y+=
+                .0008;
+
+        }
 
         velocityX*=.94;
         velocityY*=.94;
@@ -2311,6 +2420,18 @@ function animate(){
                 planetGroup.rotation.x
             )
         );
+
+    /*
+       Once the user moves the planet manually,
+       return to normal exploration mode.
+    */
+
+    if(
+        dragging &&
+        focusAnimating
+    ){
+        focusAnimating=false;
+    }
 
     updatePlanetSafePosition();
 
