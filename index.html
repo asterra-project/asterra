@@ -515,6 +515,143 @@ h1 {
     color: rgba(255,255,255,.23);
 }
 
+/* =========================================================
+   PROPERTY PANEL
+========================================================= */
+
+.property-panel {
+    position: absolute;
+    top: 50%;
+    right: 42px;
+    transform: translateY(-50%);
+
+    width: 290px;
+
+    padding: 22px;
+
+    background: rgba(5,7,10,.88);
+    border: 1px solid rgba(255,255,255,.14);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity .22s ease,
+        visibility .22s ease;
+
+    z-index: 30;
+}
+
+.property-panel.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.property-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 22px;
+}
+
+.property-kicker {
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: .22em;
+    color: rgba(255,255,255,.38);
+}
+
+.property-close {
+    width: 24px;
+    height: 24px;
+
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.025);
+    color: rgba(255,255,255,.65);
+
+    font-size: 16px;
+    line-height: 20px;
+
+    cursor: pointer;
+}
+
+.property-close:hover {
+    background: rgba(255,255,255,.08);
+    color: #fff;
+}
+
+.property-world {
+    font-family: Manrope, sans-serif;
+    font-size: 27px;
+    font-weight: 700;
+    letter-spacing: -.035em;
+}
+
+.property-id {
+    margin-top: 5px;
+
+    font-size: 9px;
+    letter-spacing: .14em;
+    color: rgba(255,255,255,.38);
+}
+
+.property-data {
+    margin-top: 22px;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.property-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    min-height: 39px;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.property-label {
+    font-size: 8px;
+    letter-spacing: .13em;
+    color: rgba(255,255,255,.35);
+}
+
+.property-value {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-align: right;
+}
+
+.property-select {
+    width: 100%;
+    height: 42px;
+
+    margin-top: 20px;
+
+    border: 1px solid #fff;
+    background: #fff;
+    color: #050608;
+
+    font-family: Inter, sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .16em;
+
+    cursor: pointer;
+}
+
+.property-select:hover {
+    background: #e9edf2;
+}
+
 @media (max-width: 1000px) {
 
     .hero {
@@ -526,6 +663,11 @@ h1 {
     }
 
     .world-panel {
+        right: 28px;
+        width: 245px;
+    }
+
+    .property-panel {
         right: 28px;
         width: 245px;
     }
@@ -557,6 +699,14 @@ h1 {
     }
 
     .world-panel {
+        top: auto;
+        bottom: 100px;
+        right: 20px;
+        width: 210px;
+        transform: none;
+    }
+
+    .property-panel {
         top: auto;
         bottom: 100px;
         right: 20px;
@@ -732,6 +882,135 @@ h1 {
                 </div>
 
             </div>
+
+        </aside>
+
+        <!-- =====================================================
+             PROPERTY PANEL
+        ====================================================== -->
+
+        <aside
+            class="property-panel"
+            id="propertyPanel"
+        >
+
+            <div class="property-header">
+
+                <div>
+                    <div class="property-kicker">
+                        SELECTED LOCATION
+                    </div>
+
+                    <div
+                        class="property-world"
+                        id="propertyWorld"
+                    >
+                        MOON
+                    </div>
+
+                    <div
+                        class="property-id"
+                        id="propertyId"
+                    >
+                        AST-MOON-000000
+                    </div>
+                </div>
+
+                <button
+                    class="property-close"
+                    id="propertyClose"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="property-data">
+
+                <div class="property-row">
+
+                    <span class="property-label">
+                        LATITUDE
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyLat"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="property-row">
+
+                    <span class="property-label">
+                        LONGITUDE
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyLon"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="property-row">
+
+                    <span class="property-label">
+                        AREA
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyArea"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="property-row">
+
+                    <span class="property-label">
+                        STATUS
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyStatus"
+                    >
+                        AVAILABLE
+                    </span>
+
+                </div>
+
+                <div class="property-row">
+
+                    <span class="property-label">
+                        PRICE
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyPrice"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+            <button
+                class="property-select"
+                id="propertySelect"
+            >
+                SELECT PLOT
+            </button>
 
         </aside>
 
@@ -1416,6 +1695,676 @@ let planetLoadToken =
 
 
 /* =========================================================
+   PLOT SELECTION
+========================================================= */
+
+const PLOT_GRID_LAT =
+    180;
+
+const PLOT_GRID_LON =
+    360;
+
+let selectedPlot =
+    null;
+
+let plotBoundary =
+    null;
+
+let plotMarker =
+    null;
+
+const raycaster =
+    new THREE.Raycaster();
+
+const pointer =
+    new THREE.Vector2();
+
+let pointerStartX =
+    0;
+
+let pointerStartY =
+    0;
+
+let hasDragged =
+    false;
+
+function generatePlotId(
+    world,
+    latitude,
+    longitude
+) {
+
+    const latCell =
+        Math.floor(
+            (
+                latitude + 90
+            ) *
+            PLOT_GRID_LAT /
+            180
+        );
+
+    const lonCell =
+        Math.floor(
+            (
+                longitude + 180
+            ) *
+            PLOT_GRID_LON /
+            360
+        );
+
+    const worldCode =
+        world === "Moon"
+            ? "MOON"
+            : "MARS";
+
+    const cellNumber =
+        latCell *
+        PLOT_GRID_LON +
+        lonCell +
+        1;
+
+    return (
+        "AST-" +
+        worldCode +
+        "-" +
+        String(cellNumber)
+            .padStart(6, "0")
+    );
+}
+
+function formatCoordinate(
+    value,
+    positive,
+    negative
+) {
+
+    const direction =
+        value >= 0
+            ? positive
+            : negative;
+
+    return (
+        Math.abs(value)
+            .toFixed(4) +
+        "° " +
+        direction
+    );
+}
+
+function getWorldRadiusKm(
+    world
+) {
+
+    /*
+       Mean planetary radii.
+       Used only to calculate the
+       prototype plot-cell area.
+    */
+
+    return world === "Moon"
+        ? 1737.4
+        : 3389.5;
+}
+
+function getPlotArea(
+    world,
+    latitude
+) {
+
+    const radius =
+        getWorldRadiusKm(world);
+
+    const latHeight =
+        Math.PI *
+        radius /
+        PLOT_GRID_LAT;
+
+    const latRadians =
+        THREE.MathUtils.degToRad(
+            latitude
+        );
+
+    const lonWidth =
+        (
+            2 *
+            Math.PI *
+            radius /
+            PLOT_GRID_LON
+        ) *
+        Math.cos(latRadians);
+
+    const area =
+        Math.abs(
+            latHeight *
+            lonWidth
+        );
+
+    return (
+        area.toFixed(2) +
+        " km²"
+    );
+}
+
+function latLonToVector(
+    latitude,
+    longitude,
+    radius
+) {
+
+    const lat =
+        THREE.MathUtils.degToRad(
+            latitude
+        );
+
+    const lon =
+        THREE.MathUtils.degToRad(
+            longitude
+        );
+
+    return new THREE.Vector3(
+
+        radius *
+        Math.cos(lat) *
+        Math.cos(lon),
+
+        radius *
+        Math.sin(lat),
+
+        radius *
+        Math.cos(lat) *
+        Math.sin(lon)
+    );
+}
+
+function disposePlotVisuals() {
+
+    if (plotBoundary) {
+
+        planetGroup.remove(
+            plotBoundary
+        );
+
+        if (
+            plotBoundary.geometry
+        ) {
+            plotBoundary.geometry.dispose();
+        }
+
+        if (
+            plotBoundary.material
+        ) {
+            plotBoundary.material.dispose();
+        }
+
+        plotBoundary =
+            null;
+    }
+
+    if (plotMarker) {
+
+        planetGroup.remove(
+            plotMarker
+        );
+
+        if (
+            plotMarker.geometry
+        ) {
+            plotMarker.geometry.dispose();
+        }
+
+        if (
+            plotMarker.material
+        ) {
+            plotMarker.material.dispose();
+        }
+
+        plotMarker =
+            null;
+    }
+}
+
+function createPlotBoundary(
+    latitude,
+    longitude
+) {
+
+    disposePlotVisuals();
+
+    const latIndex =
+        Math.floor(
+            (
+                latitude + 90
+            ) *
+            PLOT_GRID_LAT /
+            180
+        );
+
+    const lonIndex =
+        Math.floor(
+            (
+                longitude + 180
+            ) *
+            PLOT_GRID_LON /
+            360
+        );
+
+    const latMin =
+        -90 +
+        latIndex *
+        (
+            180 /
+            PLOT_GRID_LAT
+        );
+
+    const latMax =
+        -90 +
+        (
+            latIndex + 1
+        ) *
+        (
+            180 /
+            PLOT_GRID_LAT
+        );
+
+    const lonMin =
+        -180 +
+        lonIndex *
+        (
+            360 /
+            PLOT_GRID_LON
+        );
+
+    const lonMax =
+        -180 +
+        (
+            lonIndex + 1
+        ) *
+        (
+            360 /
+            PLOT_GRID_LON
+        );
+
+    const points = [];
+
+    const samples = 12;
+
+    for (let i = 0; i <= samples; i++) {
+
+        const t =
+            i /
+            samples;
+
+        points.push(
+            latLonToVector(
+                latMin,
+                lonMin +
+                (
+                    lonMax -
+                    lonMin
+                ) * t,
+                PLANET_RADIUS + .8
+            )
+        );
+    }
+
+    for (let i = 1; i <= samples; i++) {
+
+        const t =
+            i /
+            samples;
+
+        points.push(
+            latLonToVector(
+                latMin +
+                (
+                    latMax -
+                    latMin
+                ) * t,
+                lonMax,
+                PLANET_RADIUS + .8
+            )
+        );
+    }
+
+    for (let i = 1; i <= samples; i++) {
+
+        const t =
+            i /
+            samples;
+
+        points.push(
+            latLonToVector(
+                latMax,
+                lonMax -
+                (
+                    lonMax -
+                    lonMin
+                ) * t,
+                PLANET_RADIUS + .8
+            )
+        );
+    }
+
+    for (let i = 1; i <= samples; i++) {
+
+        const t =
+            i /
+            samples;
+
+        points.push(
+            latLonToVector(
+                latMax -
+                (
+                    latMax -
+                    latMin
+                ) * t,
+                lonMin,
+                PLANET_RADIUS + .8
+            )
+        );
+    }
+
+    const geometry =
+        new THREE.BufferGeometry();
+
+    geometry.setFromPoints(
+        points
+    );
+
+    const material =
+        new THREE.LineBasicMaterial({
+
+            color: 0xffffff,
+            transparent: true,
+            opacity: .9
+        });
+
+    plotBoundary =
+        new THREE.LineLoop(
+            geometry,
+            material
+        );
+
+    planetGroup.add(
+        plotBoundary
+    );
+
+    const markerPosition =
+        latLonToVector(
+            latitude,
+            longitude,
+            PLANET_RADIUS + 1.8
+        );
+
+    const markerGeometry =
+        new THREE.SphereGeometry(
+            1.8,
+            12,
+            8
+        );
+
+    const markerMaterial =
+        new THREE.MeshBasicMaterial({
+
+            color: 0xffffff
+        });
+
+    plotMarker =
+        new THREE.Mesh(
+            markerGeometry,
+            markerMaterial
+        );
+
+    plotMarker.position.copy(
+        markerPosition
+    );
+
+    planetGroup.add(
+        plotMarker
+    );
+}
+
+function getSurfaceCoordinates(
+    event
+) {
+
+    if (!planetMesh) {
+        return null;
+    }
+
+    const rect =
+        renderer.domElement
+            .getBoundingClientRect();
+
+    pointer.x =
+        (
+            (
+                event.clientX -
+                rect.left
+            ) /
+            rect.width
+        ) *
+        2 -
+        1;
+
+    pointer.y =
+        -(
+            (
+                (
+                    event.clientY -
+                    rect.top
+                ) /
+                rect.height
+            ) *
+            2 -
+            1
+        );
+
+    raycaster.setFromCamera(
+        pointer,
+        camera
+    );
+
+    const intersections =
+        raycaster.intersectObject(
+            planetMesh,
+            false
+        );
+
+    if (!intersections.length) {
+        return null;
+    }
+
+    const intersection =
+        intersections[0];
+
+    const localPoint =
+        planetMesh.worldToLocal(
+            intersection.point.clone()
+        );
+
+    const radius =
+        localPoint.length();
+
+    const latitude =
+        THREE.MathUtils.radToDeg(
+            Math.asin(
+                localPoint.y /
+                radius
+            )
+        );
+
+    let longitude =
+        THREE.MathUtils.radToDeg(
+            Math.atan2(
+                localPoint.z,
+                localPoint.x
+            )
+        );
+
+    if (longitude > 180) {
+        longitude -= 360;
+    }
+
+    if (longitude < -180) {
+        longitude += 360;
+    }
+
+    return {
+        latitude,
+        longitude
+    };
+}
+
+
+/* =========================================================
+   PROPERTY PANEL UI
+========================================================= */
+
+const propertyPanel =
+    document.getElementById(
+        "propertyPanel"
+    );
+
+const propertyWorld =
+    document.getElementById(
+        "propertyWorld"
+    );
+
+const propertyId =
+    document.getElementById(
+        "propertyId"
+    );
+
+const propertyLat =
+    document.getElementById(
+        "propertyLat"
+    );
+
+const propertyLon =
+    document.getElementById(
+        "propertyLon"
+    );
+
+const propertyArea =
+    document.getElementById(
+        "propertyArea"
+    );
+
+const propertyStatus =
+    document.getElementById(
+        "propertyStatus"
+    );
+
+const propertyPrice =
+    document.getElementById(
+        "propertyPrice"
+    );
+
+function showProperty(
+    surface
+) {
+
+    const plotId =
+        generatePlotId(
+            currentWorld,
+            surface.latitude,
+            surface.longitude
+        );
+
+    selectedPlot = {
+
+        world:
+            currentWorld,
+
+        latitude:
+            surface.latitude,
+
+        longitude:
+            surface.longitude,
+
+        plotId,
+
+        area:
+            getPlotArea(
+                currentWorld,
+                surface.latitude
+            )
+    };
+
+    propertyWorld.textContent =
+        currentWorld.toUpperCase();
+
+    propertyId.textContent =
+        plotId;
+
+    propertyLat.textContent =
+        formatCoordinate(
+            surface.latitude,
+            "N",
+            "S"
+        );
+
+    propertyLon.textContent =
+        formatCoordinate(
+            surface.longitude,
+            "E",
+            "W"
+        );
+
+    propertyArea.textContent =
+        selectedPlot.area;
+
+    propertyStatus.textContent =
+        "AVAILABLE";
+
+    propertyPrice.textContent =
+        worldData[currentWorld].price;
+
+    createPlotBoundary(
+        surface.latitude,
+        surface.longitude
+    );
+
+    propertyPanel.classList.add(
+        "visible"
+    );
+}
+
+function closeProperty() {
+
+    selectedPlot =
+        null;
+
+    disposePlotVisuals();
+
+    propertyPanel.classList.remove(
+        "visible"
+    );
+}
+
+document
+    .getElementById("propertyClose")
+    .addEventListener(
+        "click",
+        closeProperty
+    );
+
+document
+    .getElementById("propertySelect")
+    .addEventListener(
+        "click",
+        () => {
+
+            /*
+               Purchase flow intentionally not
+               implemented at this stage.
+            */
+        }
+    );
+
+
+/* =========================================================
    REAL EQUIRECTANGULAR SURFACE MAPS
 ========================================================= */
 
@@ -1507,6 +2456,8 @@ function buildPlanet(world) {
 
     const thisLoadToken =
         planetLoadToken;
+
+    closeProperty();
 
     disposePlanet();
 
@@ -1814,6 +2765,15 @@ renderer.domElement.addEventListener(
         dragging =
             true;
 
+        hasDragged =
+            false;
+
+        pointerStartX =
+            e.clientX;
+
+        pointerStartY =
+            e.clientY;
+
         previousX =
             e.clientX;
 
@@ -1840,6 +2800,22 @@ renderer.domElement.addEventListener(
 
         if (!dragging) {
             return;
+        }
+
+        const totalDx =
+            e.clientX -
+            pointerStartX;
+
+        const totalDy =
+            e.clientY -
+            pointerStartY;
+
+        if (
+            Math.abs(totalDx) > 5 ||
+            Math.abs(totalDy) > 5
+        ) {
+            hasDragged =
+                true;
         }
 
         const dx =
@@ -1895,6 +2871,21 @@ renderer.domElement.addEventListener(
                 );
 
         } catch (err) {}
+
+        if (!hasDragged) {
+
+            const surface =
+                getSurfaceCoordinates(
+                    e
+                );
+
+            if (surface) {
+
+                showProperty(
+                    surface
+                );
+            }
+        }
     }
 );
 
@@ -1903,6 +2894,9 @@ renderer.domElement.addEventListener(
     () => {
 
         dragging =
+            false;
+
+        hasDragged =
             false;
     }
 );
