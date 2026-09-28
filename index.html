@@ -11,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -23,13 +22,2178 @@ body{
     width:100%;
     height:100%;
     overflow:hidden;
+    background:#010204;
+    color:#f5f7fa;
+    font-family:Inter,Arial,sans-serif;
+}
+
+body{
+    user-select:none;
+}
+
+#space{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            ellipse 75% 70% at 73% 48%,
+            rgba(255,255,255,.035),
+            transparent 66%
+        ),
+        radial-gradient(
+            ellipse 55% 90% at 92% 18%,
+            rgba(180,195,220,.018),
+            transparent 72%
+        ),
+        #010204;
+}
+
+.nebula{
+    position:absolute;
+    pointer-events:none;
+    z-index:1;
+    border-radius:50%;
+    mix-blend-mode:screen;
+}
+
+.nebula-main{
+    width:1100px;
+    height:570px;
+    right:-100px;
+    top:3%;
+
+    background:
+        radial-gradient(
+            ellipse at 42% 52%,
+            rgba(255,255,255,.075) 0%,
+            rgba(225,232,242,.043) 17%,
+            rgba(170,185,205,.020) 37%,
+            transparent 72%
+        );
+
+    filter:blur(48px);
+    opacity:.9;
+
+    transform:rotate(-14deg);
+
+    animation:
+        nebulaDrift1 30s ease-in-out infinite alternate;
+}
+
+.nebula-secondary{
+    width:850px;
+    height:330px;
+    right:4%;
+    top:37%;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 50%,
+            rgba(255,255,255,.052),
+            rgba(210,220,235,.023) 30%,
+            transparent 70%
+        );
+
+    filter:blur(42px);
+    opacity:.75;
+
+    transform:rotate(-22deg);
+
+    animation:
+        nebulaDrift2 38s ease-in-out infinite alternate;
+}
+
+.nebula-far{
+    width:1400px;
+    height:400px;
+    right:-350px;
+    top:8%;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(245,248,255,.027),
+            rgba(210,220,235,.012) 35%,
+            transparent 70%
+        );
+
+    filter:blur(65px);
+    opacity:.75;
+    transform:rotate(8deg);
+}
+
+.nebula-ribbon{
+    width:1400px;
+    height:220px;
+    right:-250px;
+    top:52%;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255,255,255,.036),
+            rgba(210,220,235,.014) 30%,
+            transparent 70%
+        );
+
+    filter:blur(36px);
+    transform:rotate(-17deg);
+    opacity:.7;
+
+    animation:
+        nebulaDrift3 44s ease-in-out infinite alternate;
+}
+
+.nebula-cloud-a{
+    width:500px;
+    height:300px;
+    right:24%;
+    top:18%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.040),
+            rgba(210,220,235,.016) 32%,
+            transparent 72%
+        );
+
+    filter:blur(38px);
+    opacity:.65;
+    transform:rotate(-30deg);
+}
+
+.nebula-cloud-b{
+    width:600px;
+    height:230px;
+    right:6%;
+    bottom:11%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.032),
+            rgba(190,200,215,.013) 35%,
+            transparent 72%
+        );
+
+    filter:blur(40px);
+    opacity:.65;
+    transform:rotate(13deg);
+}
+
+@keyframes nebulaDrift1{
+    from{
+        transform:translate3d(0,0,0) rotate(-14deg) scale(1);
+    }
+
+    to{
+        transform:translate3d(-30px,14px,0) rotate(-10deg) scale(1.035);
+    }
+}
+
+@keyframes nebulaDrift2{
+    from{
+        transform:translate3d(0,0,0) rotate(-22deg);
+    }
+
+    to{
+        transform:translate3d(22px,-14px,0) rotate(-18deg);
+    }
+}
+
+@keyframes nebulaDrift3{
+    from{
+        transform:translate3d(0,0,0) rotate(-17deg);
+    }
+
+    to{
+        transform:translate3d(-28px,13px,0) rotate(-13deg);
+    }
+}
+
+#starfield{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:3;
+    pointer-events:none;
+}
+
+#scene{
+    position:fixed;
+    inset:0;
+    z-index:4;
+    pointer-events:auto;
+}
+
+canvas{
+    display:block;
+}
+
+.ui{
+    position:fixed;
+    inset:0;
+    z-index:10;
+    pointer-events:none;
+}
+
+.topbar{
+    position:absolute;
+    top:32px;
+    left:42px;
+    right:42px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.brand{
+    font-family:Manrope,sans-serif;
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:.18em;
+}
+
+.brand-sub{
+    margin-top:7px;
+    font-size:9px;
+    letter-spacing:.26em;
+    color:rgba(255,255,255,.42);
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:9px;
+    letter-spacing:.16em;
+    color:rgba(255,255,255,.48);
+}
+
+.status-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 12px rgba(255,255,255,.7);
+}
+
+.hero{
+    position:absolute;
+    left:42px;
+    top:50%;
+    transform:translateY(-52%);
+    width:370px;
+}
+
+.kicker{
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.28em;
+    color:rgba(255,255,255,.42);
+    margin-bottom:17px;
+}
+
+h1{
+    font-family:Manrope,sans-serif;
+    font-size:58px;
+    line-height:.98;
+    letter-spacing:-.055em;
+    font-weight:700;
+    margin-bottom:24px;
+}
+
+.hero-text{
+    width:330px;
+    color:rgba(255,255,255,.56);
+    font-size:13px;
+    line-height:1.75;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:30px;
+    pointer-events:auto;
+}
+
+.btn{
+    height:42px;
+    padding:0 18px;
+
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.035);
+    color:#fff;
+
+    font-family:Inter,sans-serif;
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.16em;
+
+    cursor:pointer;
+    transition:.2s ease;
+}
+
+.btn:hover{
+    background:rgba(255,255,255,.09);
+    border-color:rgba(255,255,255,.28);
+}
+
+.btn.primary{
+    background:#fff;
+    color:#050608;
+    border-color:#fff;
+}
+
+.btn.primary:hover{
+    background:#e9edf2;
+}
+
+.world-panel{
+    position:absolute;
+    top:50%;
+    right:42px;
+    transform:translateY(-50%);
+    width:290px;
+}
+
+.panel-label{
+    font-size:9px;
+    letter-spacing:.24em;
+    color:rgba(255,255,255,.38);
+    margin-bottom:13px;
+}
+
+.world-tabs{
+    display:flex;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    pointer-events:auto;
+}
+
+.world-tab{
+    padding:0 0 13px;
+    margin-right:25px;
+
+    border:0;
+    background:none;
+
+    color:rgba(255,255,255,.35);
+
+    font-family:Inter,sans-serif;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.17em;
+
+    cursor:pointer;
+    position:relative;
+}
+
+.world-tab.active{
+    color:#fff;
+}
+
+.world-tab.active::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:-1px;
+    height:1px;
+    background:#fff;
+}
+
+.world-info{
+    padding-top:23px;
+}
+
+.world-name{
+    font-family:Manrope,sans-serif;
+    font-size:31px;
+    font-weight:700;
+    letter-spacing:-.035em;
+}
+
+.world-description{
+    margin-top:9px;
+    font-size:11px;
+    line-height:1.65;
+    color:rgba(255,255,255,.42);
+}
+
+.stats{
+    margin-top:28px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.stat{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    min-height:43px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.stat-label{
+    font-size:9px;
+    letter-spacing:.13em;
+    color:rgba(255,255,255,.36);
+}
+
+.stat-value{
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.06em;
+}
+
+.status-live{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.status-live::before{
+    content:"";
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 9px rgba(255,255,255,.7);
+}
+
+.property-panel{
+    position:absolute;
+    top:50%;
+    right:42px;
+    transform:translateY(-50%);
+
+    width:290px;
+    padding:20px;
+
+    background:rgba(7,9,13,.92);
+    border:1px solid rgba(255,255,255,.14);
+
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+
+    transition:
+        opacity .2s ease,
+        visibility .2s ease;
+
+    z-index:30;
+}
+
+.property-panel.visible{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+}
+
+.property-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    padding-bottom:17px;
+    border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+.property-kicker{
+    font-size:8px;
+    letter-spacing:.22em;
+    color:rgba(255,255,255,.38);
+    margin-bottom:8px;
+}
+
+.property-world{
+    font-family:Manrope,sans-serif;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:-.025em;
+}
+
+.property-id{
+    margin-top:5px;
+    font-size:8px;
+    letter-spacing:.14em;
+    color:rgba(255,255,255,.42);
+}
+
+.property-close{
+    width:25px;
+    height:25px;
+
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.035);
+
+    color:rgba(255,255,255,.65);
+
+    font-family:Arial,sans-serif;
+    font-size:18px;
+    line-height:1;
+
+    cursor:pointer;
+}
+
+.property-close:hover{
+    background:rgba(255,255,255,.09);
+    color:#fff;
+}
+
+.property-data{
+    margin-top:5px;
+}
+
+.property-row{
+    min-height:39px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.property-label{
+    font-size:8px;
+    letter-spacing:.14em;
+    color:rgba(255,255,255,.34);
+}
+
+.property-value{
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.06em;
+    color:rgba(255,255,255,.82);
+}
+
+.property-select{
+    width:100%;
+    height:40px;
+
+    margin-top:17px;
+
+    border:1px solid #fff;
+    background:#fff;
+    color:#050608;
+
+    font-family:Inter,sans-serif;
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.16em;
+
+    cursor:pointer;
+}
+
+.property-select:hover{
+    background:#e9edf2;
+}
+
+.surface-status{
+    position:absolute;
+    left:50%;
+    top:28px;
+    transform:translateX(-50%);
+
+    padding:7px 12px;
+
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(3,5,8,.55);
+
+    backdrop-filter:blur(8px);
+
+    font-size:7px;
+    letter-spacing:.17em;
+    color:rgba(255,255,255,.28);
+
+    opacity:.0;
+    transition:opacity .3s ease;
+}
+
+.surface-status.visible{
+    opacity:1;
+}
+
+.bottom{
+    position:absolute;
+    left:42px;
+    right:42px;
+    bottom:28px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+}
+
+.bottom-left{
+    font-size:8px;
+    letter-spacing:.22em;
+    color:rgba(255,255,255,.30);
+}
+
+.bottom-right{
+    display:flex;
+    gap:30px;
+}
+
+.metric{
+    text-align:right;
+}
+
+.metric-label{
+    font-size:7px;
+    letter-spacing:.18em;
+    color:rgba(255,255,255,.28);
+    margin-bottom:5px;
+}
+
+.metric-value{
+    font-size:9px;
+    letter-spacing:.1em;
+    color:rgba(255,255,255,.58);
+}
+
+.drag-hint{
+    position:absolute;
+    left:50%;
+    bottom:31px;
+    transform:translateX(-50%);
+
+    font-size:7px;
+    letter-spacing:.2em;
+    color:rgba(255,255,255,.23);
+}
+
+@media(max-width:1000px){
+
+    .hero{
+        width:320px;
+    }
+
+    h1{
+        font-size:46px;
+    }
+
+    .world-panel,
+    .property-panel{
+        right:28px;
+        width:245px;
+    }
+
+    .topbar,
+    .bottom{
+        left:28px;
+        right:28px;
+    }
+
+    .hero{
+        left:28px;
+    }
+}
+
+@media(max-width:760px){
+
+    .hero{
+        top:42%;
+        width:280px;
+    }
+
+    h1{
+        font-size:38px;
+    }
+
+    .hero-text{
+        width:260px;
+    }
+
+    .world-panel,
+    .property-panel{
+        top:auto;
+        bottom:100px;
+        right:20px;
+        width:210px;
+        transform:none;
+    }
+
+    .topbar{
+        left:20px;
+        right:20px;
+    }
+
+    .bottom{
+        left:20px;
+        right:20px;
+    }
+
+    .bottom-right{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="space">
+
+    <div class="nebula nebula-main"></div>
+    <div class="nebula nebula-secondary"></div>
+    <div class="nebula nebula-far"></div>
+    <div class="nebula nebula-ribbon"></div>
+    <div class="nebula nebula-cloud-a"></div>
+    <div class="nebula nebula-cloud-b"></div>
+
+    <canvas id="starfield"></canvas>
+
+    <div id="scene"></div>
+
+    <div class="ui">
+
+        <div class="topbar">
+
+            <div>
+                <div class="brand">ASTERRA</div>
+                <div class="brand-sub">OWN YOUR WORLD.</div>
+            </div>
+
+            <div class="top-right">
+                <div class="status">
+                    <span class="status-dot"></span>
+                    SYSTEM ONLINE
+                </div>
+            </div>
+
+        </div>
+
+        <section class="hero">
+
+            <div class="kicker">
+                ASTERRA DIGITAL UNIVERSE
+            </div>
+
+            <h1>
+                ENTER THE<br>UNIVERSE
+            </h1>
+
+            <div class="hero-text">
+                Discover a digital universe built around finite planetary
+                surfaces, unique locations and collectible virtual property.
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="btn primary"
+                    id="discoverBtn"
+                >
+                    DISCOVER SURFACE
+                </button>
+
+                <button
+                    class="btn"
+                    id="exploreBtn"
+                >
+                    EXPLORE
+                </button>
+
+            </div>
+
+        </section>
+
+        <aside class="world-panel">
+
+            <div class="panel-label">
+                SELECT WORLD
+            </div>
+
+            <div class="world-tabs">
+
+                <button
+                    class="world-tab active"
+                    data-world="Moon"
+                >
+                    MOON
+                </button>
+
+                <button
+                    class="world-tab"
+                    data-world="Mars"
+                >
+                    MARS
+                </button>
+
+            </div>
+
+            <div class="world-info">
+
+                <div
+                    class="world-name"
+                    id="worldName"
+                >
+                    MOON
+                </div>
+
+                <div
+                    class="world-description"
+                    id="worldDescription"
+                >
+                    A finite digital surface inspired by Earth's closest
+                    celestial neighbour.
+                </div>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <span class="stat-label">SUPPLY</span>
+                        <span class="stat-value" id="supply">
+                            248,731
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-label">AVAILABLE</span>
+                        <span class="stat-value" id="available">
+                            248,731
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-label">BASE PRICE</span>
+                        <span class="stat-value" id="price">
+                            $11
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-label">STATUS</span>
+                        <span class="stat-value status-live">
+                            ACTIVE
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+        <aside
+            class="property-panel"
+            id="propertyPanel"
+        >
+
+            <div class="property-header">
+
+                <div>
+
+                    <div class="property-kicker">
+                        SELECTED LOCATION
+                    </div>
+
+                    <div
+                        class="property-world"
+                        id="propertyWorld"
+                    >
+                        MOON
+                    </div>
+
+                    <div
+                        class="property-id"
+                        id="propertyId"
+                    >
+                        AST-MOON-000001
+                    </div>
+
+                </div>
+
+                <button
+                    class="property-close"
+                    id="propertyClose"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="property-data">
+
+                <div class="property-row">
+                    <span class="property-label">
+                        LATITUDE
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyLat"
+                    >
+                        0.000° N
+                    </span>
+                </div>
+
+                <div class="property-row">
+                    <span class="property-label">
+                        LONGITUDE
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyLon"
+                    >
+                        0.000° E
+                    </span>
+                </div>
+
+                <div class="property-row">
+                    <span class="property-label">
+                        AREA
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyArea"
+                    >
+                        —
+                    </span>
+                </div>
+
+                <div class="property-row">
+                    <span class="property-label">
+                        STATUS
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyStatus"
+                    >
+                        AVAILABLE
+                    </span>
+                </div>
+
+                <div class="property-row">
+                    <span class="property-label">
+                        PRICE
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyPrice"
+                    >
+                        $11
+                    </span>
+                </div>
+
+            </div>
+
+            <button
+                class="property-select"
+                id="propertySelect"
+            >
+                SELECT PLOT
+            </button>
+
+        </aside>
+
+        <div
+            class="surface-status"
+            id="surfaceStatus"
+        >
+            LOADING TERRAIN DATA
+        </div>
+
+        <div class="drag-hint">
+            DRAG TO ROTATE · SCROLL TO ZOOM
+        </div>
+
+        <div class="bottom">
+
+            <div class="bottom-left">
+                ASTERRA DIGITAL UNIVERSE · SURFACE SCANNING
+            </div>
+
+            <div class="bottom-right">
+
+                <div class="metric">
+                    <div class="metric-label">WORLD</div>
+                    <div
+                        class="metric-value"
+                        id="bottomWorld"
+                    >
+                        MOON
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-label">MODE</div>
+                    <div class="metric-value">
+                        EXPLORATION
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-label">NETWORK</div>
+                    <div class="metric-value">
+                        ONLINE
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/geotiff@3.0.5/dist-browser/geotiff.min.js"></script>
+
+<script>
+
+if(typeof THREE === "undefined"){
+    throw new Error("ASTERRA: Three.js failed to load.");
+}
+
+if(typeof GeoTIFF === "undefined"){
+    throw new Error("ASTERRA: GeoTIFF.js failed to load.");
+}
+
+
+/* =========================================================
+   STARFIELD
+========================================================= */
+
+const starCanvas =
+    document.getElementById("starfield");
+
+const starCtx =
+    starCanvas.getContext(
+        "2d",
+        {alpha:true}
+    );
+
+let starWidth = 0;
+let starHeight = 0;
+let starDpr = 1;
+
+const cosmicStars = [];
+const cosmicDust = [];
+
+function randomBetween(a,b){
+    return a + Math.random() * (b-a);
+}
+
+function stellarColor(type,alpha){
+
+    if(type === 0){
+        return `rgba(255,255,255,${alpha})`;
+    }
+
+    if(type === 1){
+        return `rgba(214,228,255,${alpha})`;
+    }
+
+    if(type === 2){
+        return `rgba(255,244,224,${alpha})`;
+    }
+
+    return `rgba(238,242,255,${alpha})`;
+}
+
+function createCosmicStars(){
+
+    cosmicStars.length = 0;
+
+    const count =
+        Math.min(
+            620,
+            Math.max(
+                360,
+                Math.floor(
+                    window.innerWidth *
+                    window.innerHeight /
+                    2500
+                )
+            )
+        );
+
+    for(let i=0;i<count;i++){
+
+        const layer =
+            Math.random();
+
+        let radius;
+        let brightness;
+
+        if(layer < .76){
+
+            radius =
+                randomBetween(.28,.72);
+
+            brightness =
+                randomBetween(.12,.38);
+
+        }else if(layer < .96){
+
+            radius =
+                randomBetween(.65,1.15);
+
+            brightness =
+                randomBetween(.28,.68);
+
+        }else{
+
+            radius =
+                randomBetween(1.05,1.9);
+
+            brightness =
+                randomBetween(.55,.95);
+        }
+
+        cosmicStars.push({
+
+            x:Math.random(),
+            y:Math.random(),
+
+            radius,
+            brightness,
+
+            phase:
+                Math.random() *
+                Math.PI * 2,
+
+            speed:
+                randomBetween(.18,1.15),
+
+            pulse:
+                randomBetween(.025,.22),
+
+            type:
+                Math.random() < .84
+                    ? 0
+                    : (Math.random() < .55 ? 1 : 2),
+
+            depth:
+                randomBetween(.15,1)
+        });
+    }
+}
+
+function createCosmicDust(){
+
+    cosmicDust.length = 0;
+
+    for(let i=0;i<85;i++){
+
+        cosmicDust.push({
+
+            x:Math.random(),
+            y:Math.random(),
+
+            radius:
+                randomBetween(.25,1.1),
+
+            alpha:
+                randomBetween(.018,.075),
+
+            phase:
+                Math.random() *
+                Math.PI * 2,
+
+            speed:
+                randomBetween(.01,.035)
+        });
+    }
+}
+
+function resizeStarfield(){
+
+    starDpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+    starWidth =
+        window.innerWidth;
+
+    starHeight =
+        window.innerHeight;
+
+    starCanvas.width =
+        starWidth * starDpr;
+
+    starCanvas.height =
+        starHeight * starDpr;
+
+    starCanvas.style.width =
+        starWidth + "px";
+
+    starCanvas.style.height =
+        starHeight + "px";
+
+    starCtx.setTransform(
+        starDpr,
+        0,
+        0,
+        starDpr,
+        0,
+        0
+    );
+
+    createCosmicStars();
+    createCosmicDust();
+}
+
+resizeStarfield();
+
+const cosmicClock =
+    performance.now();
+
+function renderStarfield(now){
+
+    const time =
+        (now-cosmicClock)/1000;
+
+    starCtx.clearRect(
+        0,
+        0,
+        starWidth,
+        starHeight
+    );
+
+    const haze =
+        starCtx.createRadialGradient(
+            starWidth*.72,
+            starHeight*.48,
+            0,
+            starWidth*.72,
+            starHeight*.48,
+            Math.max(
+                starWidth,
+                starHeight
+            )*.72
+        );
+
+    haze.addColorStop(
+        0,
+        "rgba(205,215,230,.018)"
+    );
+
+    haze.addColorStop(
+        .35,
+        "rgba(150,165,185,.008)"
+    );
+
+    haze.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+    starCtx.fillStyle = haze;
+
+    starCtx.fillRect(
+        0,
+        0,
+        starWidth,
+        starHeight
+    );
+
+    for(const dust of cosmicDust){
+
+        const x =
+            dust.x * starWidth;
+
+        const y =
+            dust.y * starHeight;
+
+        const pulse =
+            (
+                Math.sin(
+                    time*dust.speed+
+                    dust.phase
+                )+1
+            )*.5;
+
+        const alpha =
+            dust.alpha*
+            (.72+pulse*.28);
+
+        const gradient =
+            starCtx.createRadialGradient(
+                x,
+                y,
+                0,
+                x,
+                y,
+                dust.radius*4
+            );
+
+        gradient.addColorStop(
+            0,
+            `rgba(220,230,245,${alpha})`
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(220,230,245,0)"
+        );
+
+        starCtx.fillStyle =
+            gradient;
+
+        starCtx.beginPath();
+
+        starCtx.arc(
+            x,
+            y,
+            dust.radius*4,
+            0,
+            Math.PI*2
+        );
+
+        starCtx.fill();
+    }
+
+    for(const star of cosmicStars){
+
+        const twinkle =
+            Math.sin(
+                time*star.speed+
+                star.phase
+            );
+
+        const secondary =
+            Math.sin(
+                time*star.speed*.37+
+                star.phase*1.71
+            );
+
+        let intensity =
+            star.brightness*
+            (
+                1+
+                twinkle*star.pulse+
+                secondary*star.pulse*.28
+            );
+
+        intensity =
+            Math.max(
+                .025,
+                Math.min(1,intensity)
+            );
+
+        const driftX =
+            Math.sin(
+                time*.008+
+                star.phase
+            )*
+            star.depth*.35;
+
+        const driftY =
+            Math.cos(
+                time*.006+
+                star.phase
+            )*
+            star.depth*.22;
+
+        const x =
+            star.x*starWidth+
+            driftX;
+
+        const y =
+            star.y*starHeight+
+            driftY;
+
+        starCtx.beginPath();
+
+        starCtx.arc(
+            x,
+            y,
+            star.radius,
+            0,
+            Math.PI*2
+        );
+
+        starCtx.fillStyle =
+            stellarColor(
+                star.type,
+                intensity
+            );
+
+        starCtx.fill();
+    }
+
+    requestAnimationFrame(
+        renderStarfield
+    );
+}
+
+requestAnimationFrame(
+    renderStarfield
+);
+
+
+/* =========================================================
+   THREE
+========================================================= */
+
+const scene =
+    new THREE.Scene();
+
+const camera =
+    new THREE.PerspectiveCamera(
+        42,
+        window.innerWidth/window.innerHeight,
+        .05,
+        4000
+    );
+
+camera.position.set(
+    0,
+    0,
+    520
+);
+
+let renderer;
+
+try{
+
+    renderer =
+        new THREE.WebGLRenderer({
+
+            antialias:true,
+            alpha:true,
+
+            powerPreference:
+                "high-performance"
+        });
+
+}catch(error){
+
+    console.error(error);
+
+    throw new Error(
+        "ASTERRA requires WebGL support."
+    );
+}
+
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    )
+);
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+if("outputEncoding" in renderer){
+    renderer.outputEncoding =
+        THREE.sRGBEncoding;
+}
+
+renderer.domElement.style.touchAction =
+    "none";
+
+renderer.domElement.style.cursor =
+    "grab";
+
+document
+    .getElementById("scene")
+    .appendChild(
+        renderer.domElement
+    );
+
+
+/* =========================================================
+   LIGHTING
+========================================================= */
+
+const ambient =
+    new THREE.AmbientLight(
+        0xffffff,
+        .24
+    );
+
+scene.add(ambient);
+
+const keyLight =
+    new THREE.DirectionalLight(
+        0xffffff,
+        2.75
+    );
+
+keyLight.position.set(
+    -300,
+    180,
+    380
+);
+
+scene.add(keyLight);
+
+const secondaryLight =
+    new THREE.DirectionalLight(
+        0xd9e3f4,
+        .38
+    );
+
+secondaryLight.position.set(
+    280,
+    40,
+    -300
+);
+
+scene.add(secondaryLight);
+
+const grazingLight =
+    new THREE.DirectionalLight(
+        0xffffff,
+        .72
+    );
+
+grazingLight.position.set(
+    -80,
+    -220,
+    320
+);
+
+scene.add(grazingLight);
+
+
+/* =========================================================
+   PLANET
+========================================================= */
+
+const PLANET_RADIUS =
+    130;
+
+const planetGroup =
+    new THREE.Group();
+
+scene.add(
+    planetGroup
+);
+
+const terrainRoot =
+    new THREE.Group();
+
+planetGroup.add(
+    terrainRoot
+);
+
+let currentWorld =
+    "Moon";
+
+let planetLoadToken =
+    0;
+
+
+/* =========================================================
+   ZOOM
+========================================================= */
+
+let zoomDistance =
+    520;
+
+let targetZoom =
+    520;
+
+const MIN_ZOOM =
+    145;
+
+const MAX_ZOOM =
+    760;
+
+
+/* =========================================================
+   DEM
+========================================================= */
+
+const DEM_CONFIG = {
+
+    Moon:{
+
+        url:
+            "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_64.tif",
+
+        width:
+            23040,
+
+        height:
+            11520,
+
+        metersPerUnit:
+            1000,
+
+        /*
+            Physical lunar relief is subtle at this
+            display scale. Keep the enhancement moderate.
+        */
+
+        exaggeration:
+            3.4,
+
+        fallback:
+            "https://upload.wikimedia.org/wikipedia/commons/2/26/Solarsystemscope_texture_2k_moon.jpg"
+    },
+
+    Mars:{
+
+        url:
+            "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_MOLA_DEM_mosaic_global_463m.tif",
+
+        width:
+            46080,
+
+        height:
+            23040,
+
+        metersPerUnit:
+            1,
+
+        exaggeration:
+            2.8,
+
+        fallback:
+            "https://upload.wikimedia.org/wikipedia/commons/4/46/Solarsystemscope_texture_2k_mars.jpg"
+    }
+};
+
+
+/* =========================================================
+   HIGH DETAIL TERRAIN SETTINGS
+========================================================= */
+
+const TERRAIN = {
+
+    maxLevel:
+        8,
+
+    /*
+        Moon LDEM64 contains roughly 64 samples/degree.
+        At close LOD a 97x97 mesh preserves considerably
+        more of the native DEM signal than 65x65.
+    */
+
+    samplesPerTile:
+        97,
+
+    /*
+        Close Moon tiles use native-resolution nearest
+        DEM sampling instead of bilinear averaging.
+    */
+
+    moonNativeSamplingLevel:
+        5,
+
+    updateInterval:
+        100,
+
+    lastUpdate:
+        0,
+
+    tiles:
+        new Map(),
+
+    visibleKeys:
+        new Set(),
+
+    cacheLimit:
+        180,
+
+    demFiles:
+        new Map(),
+
+    loading:
+        0
+};
+
+
+/* =========================================================
+   PLOT
+========================================================= */
+
+const PLOT_GRID_LAT =
+    180;
+
+const PLOT_GRID_LON =
+    360;
+
+const raycaster =
+    new THREE.Raycaster();
+
+let selectedPlot =
+    null;
+
+let plotBoundary =
+    null;
+
+let plotMarker =
+    null;
+
+
+/* =========================================================
+   WORLD DATA
+========================================================= */
+
+const worldData = {
+
+    Moon:{
+
+        description:
+            "A finite digital surface inspired by Earth's closest celestial neighbour.",
+
+        supply:
+            "248,731",
+
+        available:
+            "248,731",
+
+        price:
+            "$11"
+    },
+
+    Mars:{
+
+        description:
+            "A finite digital surface inspired by the red planet and its iconic terrain.",
+
+        supply:
+            "591,427",
+
+        available:
+            "591,427",
+
+        price:
+            "$21"
+    }
+};
+
+
+/* =========================================================
+   UI
+========================================================= */
+
+const worldName =
+    document.getElementById(
+        "worldName"
+    );
+
+const worldDescription =
+    document.getElementById(
+        "worldDescription"
+    );
+
+const supply =
+    document.getElementById(
+        "supply"
+    );
+
+const available =
+    document.getElementById(
+        "available"
+    );
+
+const price =
+    document.getElementById(
+        "price"
+    );
+
+const bottomWorld =
+    document.getElementById(
+        "bottomWorld"
+    );
+
+const propertyPanel =
+    document.getElementById(
+        "propertyPanel"
+    );
+
+const propertyClose =
+    document.getElementById(
+        "propertyClose"
+    );
+
+const propertyWorld =
+    document.getElementById(
+        "propertyWorld"
+    );
+
+const propertyId =
+    document.getElementById(
+        "propertyId"
+    );
+
+const propertyLat =
+    document.getElementById(
+        "propertyLat"
+    );
+
+const propertyLon =
+    document.getElementById(
+        "propertyLon"
+    );
+
+const propertyArea =
+    document.getElementById(
+        "propertyArea"
+    );
+
+const propertyStatus =
+    document.getElementById(
+        "propertyStatus"
+    );
+
+const propertyPrice =
+    document.getElementById(
+        "propertyPrice"
+    );
+
+const propertySelect =
+    document.getElementById(
+        "propertySelect"
+    );
+
+const surfaceStatus =
+    document.getElementById(
+        "surfaceStatus"
+    );
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+let surfaceStatusTimer =
+    null;
+
+function setSurfaceStatus(
+    text,
+    visible
+){
+
+    surfaceStatus.textContent =
+        text;
+
+    surfaceStatus.classList.toggle(
+        "visible",
+        visible
+    );
+
+    clearTimeout(
+        surfaceStatusTimer
+    );
+
+    if(visible){
+
+        surfaceStatusTimer =
+            setTimeout(
+                ()=>{
+                    surfaceStatus.classList.remove(
+                        "visible"
+                    );
+                },
+                2200
+            );
+    }
+}
+
+
+/* =========================================================
+   DEM FILE
+========================================================= */
+
+async function getDEMFile(
+    world
+){
+
+    if(
+        TERRAIN.demFiles.has(
+            world
+        )
+    ){
+        return TERRAIN.demFiles.get(
+            world
+        );
+    }
+
+    const config =
+        DEM_CONFIG[world];
+
+    try{
+
+        setSurfaceStatus(
+            "OPENING GLOBAL DEM",
+            true
+        );
+
+        const tiff =
+            await GeoTIFF.fromUrl(
+                config.url,
+                {
+                    allowFullFile:false,
+                    maxRanges:32
+                }
+            );
+
+        const image =
+            await tiff.getImage();
+
+        const file = {
+            tiff,
+            image
+        };
+
+        TERRAIN.demFiles.set(
+            world,
+            file
+        );
+
+        return file;
+
+    }catch(error){
+
+        console.warn(
+            "ASTERRA DEM unavailable:",
+            world,
+            error
+        );
+
+        TERRAIN.demFiles.set(
+            world,
+            null
+        );
+
+        return null;
+    }
+}
+
+
+/* =========================================================
+   DEM WINDOW
+========================================================= */
+
+async function readDEMWindow(
+    world,
+    lonMin,
+    latMin,
+    lonMax,
+    latMax,
+    size,
+    level
+){
+
+    const config =
+        DEM_CONFIG[world];
+
+    const dem =
+        await getDEMFile(
+            world
+        );
+
+    if(!dem){
+        return null;
+    }
+
+    let x0 =
+        (
+            lonMin+180
+        )/
+        360*
+        config.width;
+
+    let x1 =
+        (
+            lonMax+180
+        )/
+        360*
+        config.width;
+
+    let y0 =
+        (
+            90-latMax
+        )/
+        180*
+        config.height;
+
+    let y1 =
+        (
+            90-latMin
+        )/
+        180*
+        config.height;
+
+    x0 =
+        Math.floor(
+            Math.max(
+                0,
+                Math.min(
+                    config.width-1,
+                    x0
+                )
+            )
+        );
+
+    x1 =
+        Math.ceil(
+            Math.max(
+                x0+2,
+                Math.min(
+                    config.width,
+                    x1
+                )
+            )
+        );
+
+    y0 =
+        Math.floor(
+            Math.max(
+                0,
+                Math.min(
+                    config.height-1,
+                    y0
+                )
+            )
+        );
+
+    y1 =
+        Math.ceil(
+            Math.max(
+                y0+2,
+                Math.min(
+                    config.height,
+                    y1
+                )
+            )
+        );
+
+    /*
+        This is the critical change.
+
+        Bilinear interpolation averages neighbouring
+        DEM samples and destroys small craters and
+        sharp local height changes.
+
+        For Moon close LODs we use nearest sampling,
+        preserving the native DEM relief.
+
+        Mars keeps bilinear behaviour.
+    */
+
+    const useNativeMoonSampling =
+        world === "Moon" &&
+        level >= TERRAIN.moonNativeSamplingLevel;
+
+    const resampleMethod =
+        useNativeMoonSampling
+            ? "nearest"
+            : "bilinear";
+
+    try{
+
+        const result =
+            await dem.image.readRasters({
+
+                window:[
+                    x0,
+                    y0,
+                    x1,
+                    y1
+                ],
+
+                width:
+                    size,
+
+                height:
+                    size,
+
+                resampleMethod,
+
+                interleave:
+                    false
+            });
+
+        return {
+
+            values:
+                result[0],
+
+            width:
+                result.width,
+
+            height:
+                result.height,
+
+            sampling:
+                resampleMethod
+
+        };
+
+    }catch(error){
+
+        console.warn(
+            "ASTERRA DEM window failed:",
+            world,
+            level,
+            error
+        );
+
+        return null;
+    }
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>ASTERRA — Own Your World</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
     background:#000;
     color:#fff;
     font-family:Inter,Arial,sans-serif;
 }
 
 body{
-    position:relative;
+    user-select:none;
 }
 
 #space{
@@ -38,14 +2202,9 @@ body{
     overflow:hidden;
     background:
         radial-gradient(
-            circle at 62% 45%,
-            rgba(40,55,85,.13),
+            ellipse at 53% 48%,
+            rgba(39,53,77,.18),
             transparent 38%
-        ),
-        radial-gradient(
-            circle at 18% 78%,
-            rgba(30,40,70,.09),
-            transparent 32%
         ),
         #000;
 }
@@ -56,459 +2215,567 @@ body{
     width:100%;
     height:100%;
     pointer-events:none;
-}
-
-.nebula{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(70px);
-    pointer-events:none;
-    opacity:.18;
-}
-
-.nebula.one{
-    width:500px;
-    height:320px;
-    left:-160px;
-    top:20%;
-    background:rgba(75,90,150,.20);
-}
-
-.nebula.two{
-    width:480px;
-    height:300px;
-    right:-160px;
-    bottom:10%;
-    background:rgba(120,60,90,.13);
+    z-index:0;
 }
 
 #scene{
     position:absolute;
     inset:0;
-    z-index:2;
+    z-index:1;
 }
 
 #scene canvas{
     display:block;
+    width:100%;
+    height:100%;
 }
 
-/* =========================================================
-   TOP BAR
-========================================================= */
+.nebula{
+    position:absolute;
+    pointer-events:none;
+    filter:blur(34px);
+    opacity:.25;
+    z-index:0;
+}
+
+.nebula-main{
+    width:55vw;
+    height:24vw;
+    left:20vw;
+    top:29vh;
+    transform:rotate(-18deg);
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(74,101,145,.20),
+            transparent 68%
+        );
+}
+
+.nebula-secondary{
+    width:38vw;
+    height:18vw;
+    right:4vw;
+    top:12vh;
+    transform:rotate(22deg);
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(96,67,118,.16),
+            transparent 70%
+        );
+}
+
+.nebula-far{
+    width:45vw;
+    height:25vw;
+    left:-8vw;
+    bottom:4vh;
+    transform:rotate(15deg);
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(48,76,116,.15),
+            transparent 70%
+        );
+}
+
+.nebula-ribbon{
+    width:70vw;
+    height:9vw;
+    left:14vw;
+    top:52vh;
+    transform:rotate(-14deg);
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(100,111,137,.12),
+            transparent 68%
+        );
+}
+
+.nebula-cloud-a{
+    width:30vw;
+    height:18vw;
+    left:5vw;
+    top:8vh;
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(81,58,112,.13),
+            transparent 68%
+        );
+}
+
+.nebula-cloud-b{
+    width:35vw;
+    height:20vw;
+    right:-4vw;
+    bottom:-3vh;
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(58,78,112,.13),
+            transparent 68%
+        );
+}
 
 .topbar{
     position:absolute;
+    top:24px;
+    left:42px;
+    right:42px;
+    height:48px;
     z-index:20;
-    top:0;
-    left:0;
-    right:0;
-    height:82px;
     display:flex;
     align-items:center;
-    padding:0 42px;
+    justify-content:space-between;
     pointer-events:none;
 }
 
 .brand{
     display:flex;
     align-items:center;
-    gap:12px;
-    font-family:Manrope,sans-serif;
-    font-weight:800;
-    letter-spacing:.16em;
-    font-size:17px;
-    pointer-events:auto;
+    gap:13px;
 }
 
-.brandMark{
-    width:27px;
-    height:27px;
+.brand-mark{
+    width:29px;
+    height:29px;
     border:1px solid rgba(255,255,255,.7);
     border-radius:50%;
     position:relative;
 }
 
-.brandMark:before,
-.brandMark:after{
+.brand-mark:before,
+.brand-mark:after{
     content:"";
     position:absolute;
-    inset:6px;
-    border:1px solid rgba(255,255,255,.35);
+    inset:5px;
+    border:1px solid rgba(255,255,255,.32);
     border-radius:50%;
 }
 
-.brandMark:after{
+.brand-mark:after{
     inset:12px;
     background:#fff;
     border:0;
+    box-shadow:0 0 15px rgba(255,255,255,.6);
+}
+
+.brand-name{
+    font-family:Manrope,sans-serif;
+    font-weight:800;
+    font-size:16px;
+    letter-spacing:.24em;
+}
+
+.brand-sub{
+    margin-left:2px;
+    color:rgba(255,255,255,.38);
+    font-size:8px;
+    letter-spacing:.24em;
+}
+
+.system-status{
+    font-size:9px;
+    letter-spacing:.18em;
+    color:rgba(255,255,255,.44);
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.status-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#dce8ff;
+    box-shadow:0 0 12px rgba(220,232,255,.8);
 }
 
 .hero{
     position:absolute;
-    left:50%;
-    top:36px;
-    transform:translateX(-50%);
-    text-align:center;
-    pointer-events:none;
-}
-
-.hero h1{
-    font-family:Manrope,sans-serif;
-    font-size:14px;
-    font-weight:700;
-    letter-spacing:.22em;
-    text-transform:uppercase;
-    opacity:.72;
-}
-
-.hero p{
-    margin-top:7px;
-    font-size:11px;
-    color:rgba(255,255,255,.42);
-    letter-spacing:.08em;
-}
-
-/* =========================================================
-   WORLD PANEL
-========================================================= */
-
-.worldPanel{
-    position:absolute;
-    z-index:20;
+    z-index:15;
     left:42px;
     top:115px;
     width:350px;
-    padding:26px 26px 24px;
-    border:1px solid rgba(255,255,255,.10);
-    background:rgba(5,7,12,.72);
-    backdrop-filter:blur(18px);
-    border-radius:16px;
-    box-shadow:0 20px 80px rgba(0,0,0,.4);
 }
 
 .eyebrow{
     font-size:9px;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    color:rgba(255,255,255,.38);
+    letter-spacing:.26em;
+    color:rgba(255,255,255,.42);
+    margin-bottom:15px;
 }
 
-.worldTabs{
+.hero h1{
+    font-family:Manrope,sans-serif;
+    font-size:38px;
+    line-height:1.02;
+    letter-spacing:-.045em;
+    margin:0 0 14px;
+    font-weight:800;
+}
+
+.hero p{
+    margin:0;
+    max-width:310px;
+    color:rgba(255,255,255,.50);
+    font-size:12px;
+    line-height:1.75;
+}
+
+.hero-buttons{
     display:flex;
-    gap:7px;
-    margin-top:15px;
+    gap:9px;
+    margin-top:24px;
+}
+
+.action-btn{
+    height:39px;
+    padding:0 15px;
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.035);
+    color:#fff;
+    border-radius:7px;
+    font-family:Inter,sans-serif;
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.13em;
+    cursor:pointer;
+    transition:.2s ease;
+    backdrop-filter:blur(12px);
+}
+
+.action-btn:hover{
+    border-color:rgba(255,255,255,.45);
+    background:rgba(255,255,255,.08);
+}
+
+.action-btn.primary{
+    background:#fff;
+    color:#050505;
+    border-color:#fff;
+}
+
+.action-btn.primary:hover{
+    background:#e9edf2;
+}
+
+.world-panel{
+    position:absolute;
+    z-index:18;
+    right:42px;
+    top:115px;
+    width:250px;
+    border:1px solid rgba(255,255,255,.11);
+    background:rgba(5,7,10,.64);
+    backdrop-filter:blur(20px);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.world-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .world-tab{
-    border:1px solid rgba(255,255,255,.11);
-    background:rgba(255,255,255,.035);
-    color:rgba(255,255,255,.52);
-    border-radius:9px;
-    padding:9px 14px;
+    height:43px;
+    border:0;
+    color:rgba(255,255,255,.4);
+    background:transparent;
+    font-size:9px;
+    letter-spacing:.18em;
     cursor:pointer;
-    font-size:10px;
-    letter-spacing:.12em;
-    transition:.2s ease;
-}
-
-.world-tab:hover{
-    color:#fff;
-    border-color:rgba(255,255,255,.24);
 }
 
 .world-tab.active{
     color:#fff;
-    border-color:rgba(255,255,255,.42);
-    background:rgba(255,255,255,.09);
+    background:rgba(255,255,255,.055);
 }
 
-#worldName{
-    margin-top:23px;
+.world-info{
+    padding:17px;
+}
+
+.world-info h2{
+    margin:0 0 6px;
     font-family:Manrope,sans-serif;
-    font-size:29px;
-    letter-spacing:.05em;
-    font-weight:800;
+    font-size:21px;
+    letter-spacing:-.025em;
 }
 
-#worldDescription{
-    margin-top:9px;
-    color:rgba(255,255,255,.48);
-    font-size:11px;
-    line-height:1.65;
+.world-info p{
+    margin:0 0 16px;
+    font-size:10px;
+    line-height:1.6;
+    color:rgba(255,255,255,.4);
 }
 
-.worldStats{
+.world-stats{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:9px;
-    margin-top:21px;
-}
-
-.stat{
+    gap:1px;
     border:1px solid rgba(255,255,255,.07);
-    background:rgba(255,255,255,.025);
-    border-radius:9px;
-    padding:11px 12px;
+    background:rgba(255,255,255,.06);
 }
 
-.stat span{
+.world-stat{
+    background:rgba(4,5,7,.72);
+    padding:11px 10px;
+}
+
+.world-stat span{
     display:block;
-    color:rgba(255,255,255,.34);
-    font-size:8px;
-    letter-spacing:.13em;
-    text-transform:uppercase;
+    font-size:7px;
+    letter-spacing:.14em;
+    color:rgba(255,255,255,.35);
+    margin-bottom:5px;
 }
 
-.stat strong{
-    display:block;
-    margin-top:6px;
-    font-family:Manrope,sans-serif;
-    font-size:14px;
-}
-
-.actions{
-    display:flex;
-    gap:8px;
-    margin-top:17px;
-}
-
-.actionButton{
-    flex:1;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.055);
-    color:#fff;
-    border-radius:9px;
-    padding:11px 12px;
-    font-size:9px;
+.world-stat strong{
+    font-size:11px;
     font-weight:600;
-    letter-spacing:.11em;
-    text-transform:uppercase;
-    cursor:pointer;
-    transition:.2s ease;
 }
 
-.actionButton:hover{
-    background:rgba(255,255,255,.11);
-    border-color:rgba(255,255,255,.3);
+.surface-status{
+    position:absolute;
+    left:50%;
+    bottom:92px;
+    transform:translateX(-50%);
+    z-index:19;
+    padding:8px 13px;
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(4,5,7,.68);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    font-size:8px;
+    letter-spacing:.17em;
+    color:rgba(255,255,255,.64);
+    opacity:0;
+    transition:opacity .25s ease;
+    pointer-events:none;
+    white-space:nowrap;
 }
 
-/* =========================================================
-   PROPERTY PANEL
-========================================================= */
+.surface-status.visible{
+    opacity:1;
+}
 
-#propertyPanel{
+.property-panel{
     position:absolute;
     z-index:30;
     right:42px;
-    top:115px;
-    width:260px;
-    padding:23px;
-    border:1px solid rgba(255,255,255,.11);
-    background:rgba(5,7,12,.78);
-    backdrop-filter:blur(18px);
-    border-radius:16px;
-    transform:translateX(25px);
+    bottom:108px;
+    width:290px;
+    padding:17px;
+    border:1px solid rgba(255,255,255,.15);
+    background:rgba(5,7,10,.82);
+    backdrop-filter:blur(22px);
+    border-radius:12px;
     opacity:0;
+    transform:translateY(10px);
     pointer-events:none;
     transition:.25s ease;
 }
 
-#propertyPanel.visible{
+.property-panel.visible{
     opacity:1;
-    transform:translateX(0);
+    transform:translateY(0);
     pointer-events:auto;
 }
 
-.propertyHeader{
+.property-header{
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
 }
 
-.propertyHeader span{
+.property-title{
+    font-size:8px;
+    letter-spacing:.19em;
+    color:rgba(255,255,255,.4);
+}
+
+.property-close{
+    border:0;
+    background:transparent;
+    color:rgba(255,255,255,.45);
+    font-size:18px;
+    line-height:1;
+    cursor:pointer;
+}
+
+.property-world{
+    font-family:Manrope,sans-serif;
+    font-size:22px;
+    font-weight:800;
+    margin-bottom:4px;
+}
+
+.property-id{
     font-size:9px;
     color:rgba(255,255,255,.38);
-    letter-spacing:.16em;
+    letter-spacing:.1em;
 }
 
-#propertyClose{
-    width:27px;
-    height:27px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.12);
-    background:transparent;
-    color:#fff;
-    cursor:pointer;
-}
-
-#propertyWorld{
-    margin-top:18px;
-    font-size:10px;
-    letter-spacing:.16em;
-    color:rgba(255,255,255,.45);
-}
-
-#propertyId{
-    margin-top:6px;
-    font-family:Manrope,sans-serif;
-    font-size:20px;
-    font-weight:700;
-}
-
-.propertyRows{
-    margin-top:19px;
+.property-grid{
+    margin-top:15px;
     display:grid;
-    gap:11px;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.07);
 }
 
-.propertyRow{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
+.property-item{
+    padding:10px;
+    background:rgba(3,4,6,.75);
+}
+
+.property-item span{
+    display:block;
+    color:rgba(255,255,255,.32);
+    font-size:7px;
+    letter-spacing:.12em;
+    margin-bottom:5px;
+}
+
+.property-item strong{
     font-size:10px;
+    font-weight:500;
 }
 
-.propertyRow span:first-child{
-    color:rgba(255,255,255,.34);
-}
-
-.propertyRow span:last-child{
-    color:rgba(255,255,255,.82);
-    text-align:right;
-}
-
-.propertyPrice{
-    margin-top:19px;
-    padding-top:17px;
-    border-top:1px solid rgba(255,255,255,.08);
-}
-
-.propertyPrice small{
-    display:block;
-    font-size:8px;
-    color:rgba(255,255,255,.35);
-    letter-spacing:.14em;
-}
-
-#propertyPrice{
-    display:block;
-    margin-top:5px;
+.property-price{
+    margin-top:12px;
     font-family:Manrope,sans-serif;
     font-size:24px;
+    font-weight:800;
 }
 
-#propertySelect{
+.select-plot{
     width:100%;
-    margin-top:16px;
-    padding:12px;
-    border:1px solid rgba(255,255,255,.18);
+    height:38px;
+    margin-top:12px;
+    border:1px solid rgba(255,255,255,.2);
     background:#fff;
     color:#000;
-    border-radius:8px;
+    border-radius:6px;
     font-size:9px;
+    letter-spacing:.13em;
     font-weight:700;
-    letter-spacing:.12em;
-    text-transform:uppercase;
     cursor:pointer;
 }
 
-/* =========================================================
-   STATUS
-========================================================= */
-
-#surfaceStatus{
+.bottom-bar{
     position:absolute;
-    z-index:25;
-    left:50%;
-    bottom:105px;
-    transform:translateX(-50%) translateY(8px);
-    padding:9px 15px;
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:30px;
-    background:rgba(4,6,10,.72);
-    backdrop-filter:blur(14px);
-    color:rgba(255,255,255,.72);
-    font-size:8px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    opacity:0;
-    pointer-events:none;
-    transition:.25s ease;
-}
-
-#surfaceStatus.visible{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
-}
-
-/* =========================================================
-   BOTTOM
-========================================================= */
-
-.bottomBar{
-    position:absolute;
-    z-index:20;
+    z-index:18;
     left:42px;
     right:42px;
-    bottom:25px;
-    height:52px;
+    bottom:27px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:flex-end;
     pointer-events:none;
 }
 
-.bottomLeft{
+.bottom-metrics{
     display:flex;
-    align-items:center;
-    gap:10px;
+    gap:28px;
+}
+
+.metric span{
+    display:block;
+    font-size:7px;
+    letter-spacing:.17em;
+    color:rgba(255,255,255,.29);
+    margin-bottom:5px;
+}
+
+.metric strong{
     font-size:9px;
-    letter-spacing:.14em;
-    color:rgba(255,255,255,.35);
+    font-weight:500;
+    color:rgba(255,255,255,.68);
 }
 
-.bottomDot{
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:rgba(255,255,255,.55);
+.drag-hint{
+    font-size:8px;
+    letter-spacing:.15em;
+    color:rgba(255,255,255,.25);
 }
 
-.bottomRight{
-    font-size:9px;
-    color:rgba(255,255,255,.30);
-    letter-spacing:.12em;
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:800px){
+@media(max-width:900px){
 
     .topbar{
-        padding:0 20px;
-    }
-
-    .worldPanel{
-        left:18px;
-        top:90px;
-        width:280px;
-    }
-
-    #propertyPanel{
-        right:18px;
-        top:90px;
-        width:245px;
+        left:20px;
+        right:20px;
     }
 
     .hero{
+        left:20px;
+        top:95px;
+        width:270px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .world-panel{
+        right:20px;
+        top:95px;
+        width:215px;
+    }
+
+    .property-panel{
+        right:20px;
+        bottom:90px;
+    }
+
+    .bottom-bar{
+        left:20px;
+        right:20px;
+    }
+}
+
+@media(max-width:650px){
+
+    .hero{
+        width:230px;
+    }
+
+    .hero p{
         display:none;
     }
 
-    .bottomBar{
-        left:18px;
-        right:18px;
+    .hero-buttons{
+        margin-top:14px;
+    }
+
+    .world-panel{
+        top:auto;
+        bottom:105px;
+        right:20px;
+        width:190px;
+    }
+
+    .property-panel{
+        left:20px;
+        right:20px;
+        width:auto;
+        bottom:20px;
+    }
+
+    .bottom-bar{
+        display:none;
+    }
+
+    .system-status{
+        display:none;
     }
 }
 
@@ -519,34 +2786,84 @@ body{
 
 <div id="space">
 
-    <canvas id="starfield"></canvas>
+    <div class="nebula nebula-main"></div>
+    <div class="nebula nebula-secondary"></div>
+    <div class="nebula nebula-far"></div>
+    <div class="nebula nebula-ribbon"></div>
+    <div class="nebula nebula-cloud-a"></div>
+    <div class="nebula nebula-cloud-b"></div>
 
-    <div class="nebula one"></div>
-    <div class="nebula two"></div>
+    <canvas id="starfield"></canvas>
 
     <div id="scene"></div>
 
     <div class="topbar">
 
         <div class="brand">
-            <div class="brandMark"></div>
-            ASTERRA
+
+            <div class="brand-mark"></div>
+
+            <div>
+                <div class="brand-name">
+                    ASTERRA
+                </div>
+
+                <div class="brand-sub">
+                    OWN YOUR WORLD
+                </div>
+            </div>
+
         </div>
 
-        <div class="hero">
-            <h1>Explore the universe</h1>
-            <p>Enter a virtual universe. Own a place. Build your world.</p>
+        <div class="system-status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
         </div>
 
     </div>
 
-    <div class="worldPanel">
+
+    <section class="hero">
 
         <div class="eyebrow">
-            SELECT WORLD
+            ASTERRA DIGITAL UNIVERSE
         </div>
 
-        <div class="worldTabs">
+        <h1>
+            ENTER THE<br>
+            UNIVERSE.
+        </h1>
+
+        <p>
+            Explore finite digital surfaces inspired by real
+            celestial terrain. Discover a location, inspect
+            its surface and select your plot.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                id="discoverBtn"
+                class="action-btn primary"
+            >
+                DISCOVER SURFACE
+            </button>
+
+            <button
+                id="exploreBtn"
+                class="action-btn"
+            >
+                EXPLORE
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section class="world-panel">
+
+        <div class="world-tabs">
 
             <button
                 class="world-tab active"
@@ -564,136 +2881,148 @@ body{
 
         </div>
 
-        <div id="worldName">
-            MOON
+        <div class="world-info">
+
+            <h2 id="worldName">
+                MOON
+            </h2>
+
+            <p id="worldDescription"></p>
+
+            <div class="world-stats">
+
+                <div class="world-stat">
+                    <span>FINITE SUPPLY</span>
+                    <strong id="supply">—</strong>
+                </div>
+
+                <div class="world-stat">
+                    <span>AVAILABLE</span>
+                    <strong id="available">—</strong>
+                </div>
+
+                <div class="world-stat">
+                    <span>BASE PRICE</span>
+                    <strong id="price">—</strong>
+                </div>
+
+                <div class="world-stat">
+                    <span>STATUS</span>
+                    <strong>ONLINE</strong>
+                </div>
+
+            </div>
+
         </div>
 
-        <div id="worldDescription">
-            A finite digital surface inspired by Earth's closest celestial neighbour.
-        </div>
+    </section>
 
-        <div class="worldStats">
 
-            <div class="stat">
-                <span>Supply</span>
-                <strong id="supply">248,731</strong>
+    <section
+        id="propertyPanel"
+        class="property-panel"
+    >
+
+        <div class="property-header">
+
+            <div class="property-title">
+                SELECTED LOCATION
             </div>
-
-            <div class="stat">
-                <span>Available</span>
-                <strong id="available">248,731</strong>
-            </div>
-
-            <div class="stat">
-                <span>From</span>
-                <strong id="price">$11</strong>
-            </div>
-
-            <div class="stat">
-                <span>Surface</span>
-                <strong>REAL DEM</strong>
-            </div>
-
-        </div>
-
-        <div class="actions">
 
             <button
-                class="actionButton"
-                id="discoverBtn"
+                id="propertyClose"
+                class="property-close"
             >
-                Discover
-            </button>
-
-            <button
-                class="actionButton"
-                id="exploreBtn"
-            >
-                Explore
-            </button>
-
-        </div>
-
-    </div>
-
-    <div id="propertyPanel">
-
-        <div class="propertyHeader">
-
-            <span>VIRTUAL PROPERTY</span>
-
-            <button id="propertyClose">
                 ×
             </button>
 
         </div>
 
-        <div id="propertyWorld">
+        <div
+            id="propertyWorld"
+            class="property-world"
+        >
             MOON
         </div>
 
-        <div id="propertyId">
-            AST-MOON-000001
+        <div
+            id="propertyId"
+            class="property-id"
+        >
+            —
         </div>
 
-        <div class="propertyRows">
+        <div class="property-grid">
 
-            <div class="propertyRow">
-                <span>Latitude</span>
-                <span id="propertyLat">0.000° N</span>
+            <div class="property-item">
+                <span>LATITUDE</span>
+                <strong id="propertyLat">—</strong>
             </div>
 
-            <div class="propertyRow">
-                <span>Longitude</span>
-                <span id="propertyLon">0.000° E</span>
+            <div class="property-item">
+                <span>LONGITUDE</span>
+                <strong id="propertyLon">—</strong>
             </div>
 
-            <div class="propertyRow">
-                <span>Area</span>
-                <span id="propertyArea">0 km²</span>
+            <div class="property-item">
+                <span>AREA</span>
+                <strong id="propertyArea">—</strong>
             </div>
 
-            <div class="propertyRow">
-                <span>Status</span>
-                <span id="propertyStatus">AVAILABLE</span>
+            <div class="property-item">
+                <span>STATUS</span>
+                <strong id="propertyStatus">—</strong>
             </div>
-
-        </div>
-
-        <div class="propertyPrice">
-
-            <small>PRICE</small>
-
-            <strong id="propertyPrice">
-                $11
-            </strong>
 
         </div>
 
-        <button id="propertySelect">
-            Select property
+        <div
+            id="propertyPrice"
+            class="property-price"
+        >
+            —
+        </div>
+
+        <button
+            id="propertySelect"
+            class="select-plot"
+        >
+            SELECT PLOT
         </button>
 
-    </div>
+    </section>
 
-    <div id="surfaceStatus">
+
+    <div
+        id="surfaceStatus"
+        class="surface-status"
+    >
         LOADING HIGH RESOLUTION DEM
     </div>
 
-    <div class="bottomBar">
 
-        <div class="bottomLeft">
+    <div class="bottom-bar">
 
-            <span class="bottomDot"></span>
+        <div class="bottom-metrics">
 
-            <span>
-                ASTERRA /
-                <span id="bottomWorld">MOON</span>
-            </span>
+            <div class="metric">
+                <span>WORLD</span>
+                <strong id="bottomWorld">MOON</strong>
+            </div>
+
+            <div class="metric">
+                <span>SURFACE</span>
+                <strong>REAL DEM TERRAIN</strong>
+            </div>
+
+            <div class="metric">
+                <span>MODE</span>
+                <strong>INTERACTIVE EXPLORATION</strong>
+            </div>
 
         </div>
 
-        <div class="bottomRight">
+        <div class="drag-hint">
             DRAG TO ROTATE · SCROLL TO ZOOM
         </div>
 
@@ -702,10 +3031,8 @@ body{
 </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/geotiff@2.1.3/dist-browser/geotiff.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/geotiff@3.0.5/dist-browser/geotiff.min.js"></script>
 
 <script>
 
@@ -723,18 +3050,22 @@ const starCtx =
         "2d"
     );
 
-const cosmicStars = [];
-const cosmicDust = [];
+let cosmicStars = [];
+let cosmicDust = [];
 
 function resizeStarfield(){
 
+    const dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
     starCanvas.width =
-        window.innerWidth *
-        (window.devicePixelRatio || 1);
+        window.innerWidth*dpr;
 
     starCanvas.height =
-        window.innerHeight *
-        (window.devicePixelRatio || 1);
+        window.innerHeight*dpr;
 
     starCanvas.style.width =
         window.innerWidth+"px";
@@ -743,70 +3074,88 @@ function resizeStarfield(){
         window.innerHeight+"px";
 
     starCtx.setTransform(
-        window.devicePixelRatio || 1,
+        dpr,
         0,
         0,
-        window.devicePixelRatio || 1,
+        dpr,
         0,
         0
     );
 
-    if(!cosmicStars.length){
+    cosmicStars =
+        [];
 
-        for(
-            let i=0;
-            i<420;
-            i++
-        ){
+    cosmicDust =
+        [];
 
-            cosmicStars.push({
+    const count =
+        Math.min(
+            650,
+            Math.floor(
+                window.innerWidth*
+                window.innerHeight/
+                2100
+            )
+        );
 
-                x:
-                    Math.random()*
-                    window.innerWidth,
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
 
-                y:
-                    Math.random()*
-                    window.innerHeight,
+        cosmicStars.push({
 
-                r:
-                    Math.random()*1.5+.2,
+            x:
+                Math.random()*
+                window.innerWidth,
 
-                a:
-                    Math.random()*.75+.12,
+            y:
+                Math.random()*
+                window.innerHeight,
 
-                tw:
-                    Math.random()*Math.PI*2
-            });
-        }
+            r:
+                Math.random()*
+                1.15+.15,
 
-        for(
-            let i=0;
-            i<80;
-            i++
-        ){
+            a:
+                Math.random()*
+                .65+.18,
 
-            cosmicDust.push({
+            tw:
+                Math.random()*
+                Math.PI*2
+        });
+    }
 
-                x:
-                    Math.random()*
-                    window.innerWidth,
+    for(
+        let i=0;
+        i<90;
+        i++
+    ){
 
-                y:
-                    Math.random()*
-                    window.innerHeight,
+        cosmicDust.push({
 
-                r:
-                    Math.random()*2+.4,
+            x:
+                Math.random()*
+                window.innerWidth,
 
-                a:
-                    Math.random()*.12
-            });
-        }
+            y:
+                Math.random()*
+                window.innerHeight,
+
+            r:
+                Math.random()*2+.4,
+
+            a:
+                Math.random()*.12
+        });
     }
 }
 
-function renderStarfield(time){
+function renderStarfield(
+    time
+){
 
     starCtx.clearRect(
         0,
@@ -947,7 +3296,7 @@ document
 const ambient =
     new THREE.AmbientLight(
         0xffffff,
-        .18
+        .24
     );
 
 scene.add(
@@ -957,7 +3306,7 @@ scene.add(
 const keyLight =
     new THREE.DirectionalLight(
         0xffffff,
-        2.25
+        2.75
     );
 
 keyLight.position.set(
@@ -973,7 +3322,7 @@ scene.add(
 const secondaryLight =
     new THREE.DirectionalLight(
         0xd9e3f4,
-        .28
+        .38
     );
 
 secondaryLight.position.set(
@@ -989,7 +3338,7 @@ scene.add(
 const grazingLight =
     new THREE.DirectionalLight(
         0xffffff,
-        .45
+        .72
     );
 
 grazingLight.position.set(
@@ -1107,23 +3456,14 @@ const TERRAIN = {
     maxLevel:
         8,
 
-    distantSamples:
+    samplesPerTile:
         97,
-
-    mediumSamples:
-        113,
-
-    closeSamples:
-        129,
 
     moonNativeSamplingLevel:
         5,
 
-    nearestSamplingLevel:
-        5,
-
     updateInterval:
-        90,
+        100,
 
     lastUpdate:
         0,
@@ -1135,7 +3475,7 @@ const TERRAIN = {
         new Set(),
 
     cacheLimit:
-        120,
+        180,
 
     demFiles:
         new Map(),
@@ -1327,7 +3667,7 @@ function setSurfaceStatus(
                         "visible"
                     );
                 },
-                3200
+                3000
             );
     }
 }
@@ -1358,7 +3698,7 @@ async function getDEMFile(
     try{
 
         setSurfaceStatus(
-            "OPENING GLOBAL REAL DEM",
+            "OPENING GLOBAL DEM",
             true
         );
 
@@ -1369,6 +3709,7 @@ async function getDEMFile(
 
                 {
                     allowFullFile:false,
+
                     maxRanges:64
                 }
             );
@@ -1434,11 +3775,14 @@ async function getDEMFile(
 async function readDEMWindow(
 
     world,
+
     lonMin,
     latMin,
     lonMax,
     latMax,
+
     size,
+
     level
 
 ){
@@ -1463,56 +3807,19 @@ async function readDEMWindow(
         dem.height ||
         config.height;
 
-    /*
-        Global equirectangular DEM.
-
-        Longitude is wrapped so tiles crossing
-        the ±180° seam remain valid.
-    */
-
-    let wrappedLonMin =
-        lonMin;
-
-    let wrappedLonMax =
-        lonMax;
-
-    while(
-        wrappedLonMin < -180
-    ){
-
-        wrappedLonMin += 360;
-        wrappedLonMax += 360;
-    }
-
-    while(
-        wrappedLonMin >= 180
-    ){
-
-        wrappedLonMin -= 360;
-        wrappedLonMax -= 360;
-    }
-
     let x0 =
         (
-            wrappedLonMin+180
+            lonMin+180
         )/
         360*
         width;
 
     let x1 =
         (
-            wrappedLonMax+180
+            lonMax+180
         )/
         360*
         width;
-
-    /*
-        Normal tile does not cross the seam.
-    */
-
-    if(x1<=x0){
-        x1 += width;
-    }
 
     let y0 =
         (
@@ -1527,6 +3834,28 @@ async function readDEMWindow(
         )/
         180*
         height;
+
+    x0 =
+        Math.floor(
+            Math.max(
+                0,
+                Math.min(
+                    width-1,
+                    x0
+                )
+            )
+        );
+
+    x1 =
+        Math.ceil(
+            Math.max(
+                x0+2,
+                Math.min(
+                    width,
+                    x1
+                )
+            )
+        );
 
     y0 =
         Math.floor(
@@ -1550,20 +3879,25 @@ async function readDEMWindow(
             )
         );
 
+
     /*
-        High LOD deliberately uses nearest DEM
-        sampling. No artificial interpolation is
-        introduced into close terrain.
+        At close range we deliberately avoid
+        bilinear smoothing.
+
+        This preserves small craters,
+        crater rims and abrupt terrain
+        transitions from the DEM.
     */
 
-    const useNearest =
+    const useNativeSampling =
         level >=
-        TERRAIN.nearestSamplingLevel;
+        TERRAIN.moonNativeSamplingLevel;
 
     const resampleMethod =
-        useNearest
+        useNativeSampling
             ? "nearest"
             : "bilinear";
+
 
     try{
 
@@ -1571,9 +3905,9 @@ async function readDEMWindow(
             await dem.image.readRasters({
 
                 window:[
-                    Math.floor(x0),
+                    x0,
                     y0,
-                    Math.ceil(x1),
+                    x1,
                     y1
                 ],
 
@@ -1606,92 +3940,14 @@ async function readDEMWindow(
 
     }catch(error){
 
-        /*
-            A seam tile can require a second read.
-            If the first request fails, retry using
-            the normalized longitude interval.
-        */
+        console.warn(
+            "ASTERRA DEM window failed:",
+            world,
+            level,
+            error
+        );
 
-        try{
-
-            const nx0 =
-                Math.max(
-                    0,
-                    Math.min(
-                        width-2,
-                        Math.floor(
-                            (
-                                lonMin+180
-                            )/
-                            360*
-                            width
-                        )
-                    )
-                );
-
-            const nx1 =
-                Math.min(
-                    width,
-                    Math.ceil(
-                        (
-                            lonMax+180
-                        )/
-                        360*
-                        width
-                    )
-                );
-
-            const result =
-                await dem.image.readRasters({
-
-                    window:[
-                        nx0,
-                        y0,
-                        Math.max(
-                            nx0+2,
-                            nx1
-                        ),
-                        y1
-                    ],
-
-                    width:
-                        size,
-
-                    height:
-                        size,
-
-                    resampleMethod,
-
-                    interleave:
-                        false
-                });
-
-            return {
-
-                values:
-                    result[0],
-
-                width:
-                    result.width,
-
-                height:
-                    result.height,
-
-                sampling:
-                    resampleMethod
-            };
-
-        }catch(secondError){
-
-            console.warn(
-                "ASTERRA DEM window failed:",
-                world,
-                level,
-                secondError
-            );
-
-            return null;
-        }
+        return null;
     }
 }
 
@@ -1720,7 +3976,6 @@ function tileDimensions(
     };
 }
 
-
 function normalizeTileX(
     x,
     cols
@@ -1734,7 +3989,6 @@ function normalizeTileX(
 
     return x;
 }
-
 
 function tileBounds(
     level,
@@ -1780,7 +4034,6 @@ function tileBounds(
     };
 }
 
-
 function tileKey(
     level,
     x,
@@ -1809,29 +4062,7 @@ function tileKey(
 
 
 /* =========================================================
-   GRID RESOLUTION
-========================================================= */
-
-function getSamplesForLevel(
-    level
-){
-
-    if(level<=2){
-
-        return TERRAIN.distantSamples;
-    }
-
-    if(level<=5){
-
-        return TERRAIN.mediumSamples;
-    }
-
-    return TERRAIN.closeSamples;
-}
-
-
-/* =========================================================
-   LAT / LON
+   LAT/LON VECTOR
 ========================================================= */
 
 function latLonToVector(
@@ -1887,15 +4118,8 @@ function decodeElevation(
         config.metersPerUnit;
 
     if(!Number.isFinite(meters)){
-        meters=0;
+        meters = 0;
     }
-
-    /*
-        Keep real source range.
-
-        This is only a physical safety clamp,
-        not artificial terrain generation.
-    */
 
     meters =
         Math.max(
@@ -1908,7 +4132,6 @@ function decodeElevation(
 
     return meters;
 }
-
 
 function metersToScene(
     world,
@@ -1925,10 +4148,7 @@ function metersToScene(
 
     const scale =
         PLANET_RADIUS/
-        (
-            radiusKm*
-            1000
-        );
+        (radiusKm*1000);
 
     return (
         meters*
@@ -1939,490 +4159,12 @@ function metersToScene(
 
 
 /* =========================================================
-   REAL DEM TERRAIN ANALYSIS
+   DEM HILLSHADE TEXTURE
 ========================================================= */
 
-function analyzeDEM(
+function createDEMHillshadeTexture(
     world,
-    dem,
-    bounds,
-    size
-){
-
-    const values =
-        dem.values;
-
-    const slope =
-        new Float32Array(
-            size*size
-        );
-
-    const curvature =
-        new Float32Array(
-            size*size
-        );
-
-    const hillshade =
-        new Float32Array(
-            size*size
-        );
-
-    /*
-        Low-angle directional light.
-
-        This is applied to the real DEM gradient.
-        No procedural noise or fake displacement.
-    */
-
-    const sun =
-        new THREE.Vector3(
-            -.58,
-            -.34,
-            .74
-        ).normalize();
-
-    let maxAbsCurvature =
-        0;
-
-    /*
-        First pass:
-        calculate raw slope and curvature.
-    */
-
-    for(
-        let j=0;
-        j<size;
-        j++
-    ){
-
-        const jm =
-            Math.max(
-                0,
-                j-1
-            );
-
-        const jp =
-            Math.min(
-                size-1,
-                j+1
-            );
-
-        const v =
-            j/
-            (size-1);
-
-        const latitude =
-            bounds.latMax-
-            v*
-            (
-                bounds.latMax-
-                bounds.latMin
-            );
-
-        const latRad =
-            THREE.MathUtils.degToRad(
-                latitude
-            );
-
-        /*
-            Approximate physical DEM spacing.
-
-            Using actual planet circumference gives
-            a physical gradient rather than a screen-space
-            fake slope.
-        */
-
-        const worldRadius =
-            world === "Moon"
-                ? 1737.4*1000
-                : 3396.19*1000;
-
-        const dLat =
-            (
-                bounds.latMax-
-                bounds.latMin
-            )/
-            (size-1);
-
-        const dLon =
-            (
-                bounds.lonMax-
-                bounds.lonMin
-            )/
-            (size-1);
-
-        const northStep =
-            Math.max(
-                1,
-                worldRadius*
-                THREE.MathUtils.degToRad(
-                    Math.abs(dLat)
-                )
-            );
-
-        const eastStep =
-            Math.max(
-                1,
-                worldRadius*
-                Math.cos(latRad)*
-                THREE.MathUtils.degToRad(
-                    Math.abs(dLon)
-                )
-            );
-
-        for(
-            let i=0;
-            i<size;
-            i++
-        ){
-
-            const im =
-                Math.max(
-                    0,
-                    i-1
-                );
-
-            const ip =
-                Math.min(
-                    size-1,
-                    i+1
-                );
-
-            const index =
-                j*size+i;
-
-            const center =
-                decodeElevation(
-                    world,
-                    values[index]
-                );
-
-            const west =
-                decodeElevation(
-                    world,
-                    values[
-                        j*size+im
-                    ]
-                );
-
-            const east =
-                decodeElevation(
-                    world,
-                    values[
-                        j*size+ip
-                    ]
-                );
-
-            const north =
-                decodeElevation(
-                    world,
-                    values[
-                        jm*size+i
-                    ]
-                );
-
-            const south =
-                decodeElevation(
-                    world,
-                    values[
-                        jp*size+i
-                    ]
-                );
-
-            const dx =
-                (
-                    east-west
-                )/
-                Math.max(
-                    1,
-                    (
-                        ip-im
-                    )*
-                    eastStep
-                );
-
-            const dy =
-                (
-                    south-north
-                )/
-                Math.max(
-                    1,
-                    (
-                        jp-jm
-                    )*
-                    northStep
-                );
-
-            const gradient =
-                Math.sqrt(
-                    dx*dx+
-                    dy*dy
-                );
-
-            slope[index] =
-                Math.atan(
-                    gradient
-                );
-
-            /*
-                Discrete Laplacian.
-
-                Positive/negative curvature follows the
-                actual local DEM height field.
-            */
-
-            const laplacian =
-                (
-                    east+
-                    west+
-                    north+
-                    south-
-                    4*center
-                );
-
-            const localCurvature =
-                laplacian/
-                Math.max(
-                    1,
-                    northStep*northStep
-                );
-
-            curvature[index] =
-                localCurvature;
-
-            maxAbsCurvature =
-                Math.max(
-                    maxAbsCurvature,
-                    Math.abs(
-                        localCurvature
-                    )
-                );
-        }
-    }
-
-
-    /*
-        Second pass:
-        normalize curvature and calculate real
-        hillshade from the terrain gradient.
-    */
-
-    const curvatureScale =
-        Math.max(
-            1e-10,
-            maxAbsCurvature
-        );
-
-    for(
-        let j=0;
-        j<size;
-        j++
-    ){
-
-        const jm =
-            Math.max(
-                0,
-                j-1
-            );
-
-        const jp =
-            Math.min(
-                size-1,
-                j+1
-            );
-
-        const v =
-            j/
-            (size-1);
-
-        const latitude =
-            bounds.latMax-
-            v*
-            (
-                bounds.latMax-
-                bounds.latMin
-            );
-
-        const latRad =
-            THREE.MathUtils.degToRad(
-                latitude
-            );
-
-        const worldRadius =
-            world === "Moon"
-                ? 1737.4*1000
-                : 3396.19*1000;
-
-        const dLat =
-            (
-                bounds.latMax-
-                bounds.latMin
-            )/
-            (size-1);
-
-        const dLon =
-            (
-                bounds.lonMax-
-                bounds.lonMin
-            )/
-            (size-1);
-
-        const northStep =
-            Math.max(
-                1,
-                worldRadius*
-                THREE.MathUtils.degToRad(
-                    Math.abs(dLat)
-                )
-            );
-
-        const eastStep =
-            Math.max(
-                1,
-                worldRadius*
-                Math.cos(latRad)*
-                THREE.MathUtils.degToRad(
-                    Math.abs(dLon)
-                )
-            );
-
-        for(
-            let i=0;
-            i<size;
-            i++
-        ){
-
-            const im =
-                Math.max(
-                    0,
-                    i-1
-                );
-
-            const ip =
-                Math.min(
-                    size-1,
-                    i+1
-                );
-
-            const index =
-                j*size+i;
-
-            const west =
-                decodeElevation(
-                    world,
-                    values[
-                        j*size+im
-                    ]
-                );
-
-            const east =
-                decodeElevation(
-                    world,
-                    values[
-                        j*size+ip
-                    ]
-                );
-
-            const north =
-                decodeElevation(
-                    world,
-                    values[
-                        jm*size+i
-                    ]
-                );
-
-            const south =
-                decodeElevation(
-                    world,
-                    values[
-                        jp*size+i
-                    ]
-                );
-
-            const dx =
-                (
-                    east-west
-                )/
-                Math.max(
-                    1,
-                    (
-                        ip-im
-                    )*
-                    eastStep
-                );
-
-            const dy =
-                (
-                    south-north
-                )/
-                Math.max(
-                    1,
-                    (
-                        jp-jm
-                    )*
-                    northStep
-                );
-
-            /*
-                Terrain normal in local tangent coordinates.
-            */
-
-            const normal =
-                new THREE.Vector3(
-                    -dx,
-                    -dy,
-                    1
-                ).normalize();
-
-            /*
-                Hillshade is directly derived from
-                the DEM-derived normal.
-            */
-
-            const shade =
-                Math.max(
-                    0,
-                    normal.dot(
-                        sun
-                    )
-                );
-
-            hillshade[index] =
-                shade;
-
-            /*
-                Normalize curvature to [-1,1].
-                It is later used only as subtle
-                visual contrast, not as geometry.
-            */
-
-            curvature[index] =
-                THREE.MathUtils.clamp(
-                    curvature[index]/
-                    curvatureScale,
-                    -1,
-                    1
-                );
-        }
-    }
-
-    return {
-
-        slope,
-        curvature,
-        hillshade
-    };
-}
-
-
-/* =========================================================
-   DEM VISUAL TEXTURE
-========================================================= */
-
-function createDEMSurfaceTexture(
-    world,
-    dem,
-    analysis
+    dem
 ){
 
     if(
@@ -2432,11 +4174,18 @@ function createDEMSurfaceTexture(
         return null;
     }
 
-    const size =
+    const width =
         dem.width;
 
     const height =
         dem.height;
+
+    if(
+        width<3 ||
+        height<3
+    ){
+        return null;
+    }
 
     const canvas =
         document.createElement(
@@ -2444,7 +4193,7 @@ function createDEMSurfaceTexture(
         );
 
     canvas.width =
-        size;
+        width;
 
     canvas.height =
         height;
@@ -2456,7 +4205,7 @@ function createDEMSurfaceTexture(
 
     const imageData =
         ctx.createImageData(
-            size,
+            width,
             height
         );
 
@@ -2465,6 +4214,7 @@ function createDEMSurfaceTexture(
 
     const values =
         dem.values;
+
 
     let min =
         Infinity;
@@ -2478,38 +4228,78 @@ function createDEMSurfaceTexture(
         i++
     ){
 
+        const raw =
+            values[i];
+
         if(
-            Number.isFinite(
-                values[i]
-            )
+            Number.isFinite(raw)
         ){
 
-            const h =
+            const meters =
                 decodeElevation(
                     world,
-                    values[i]
+                    raw
                 );
 
-            min =
-                Math.min(
-                    min,
-                    h
-                );
+            if(meters<min){
+                min=meters;
+            }
 
-            max =
-                Math.max(
-                    max,
-                    h
-                );
+            if(meters>max){
+                max=meters;
+            }
         }
     }
 
     if(
         !Number.isFinite(min) ||
-        !Number.isFinite(max)
+        !Number.isFinite(max) ||
+        max<=min
     ){
         return null;
     }
+
+
+    /*
+        Strong local relief shading.
+
+        The light direction is intentionally
+        low-angle. This makes crater rims,
+        mountains and canyon walls visible
+        instead of producing a flat sphere.
+    */
+
+    const lightX =
+        -.62;
+
+    const lightY =
+        -.30;
+
+    const lightZ =
+        .72;
+
+    const lightLength =
+        Math.sqrt(
+            lightX*lightX+
+            lightY*lightY+
+            lightZ*lightZ
+        );
+
+    const lx =
+        lightX/lightLength;
+
+    const ly =
+        lightY/lightLength;
+
+    const lz =
+        lightZ/lightLength;
+
+
+    const exaggeration =
+        world === "Moon"
+            ? .9
+            : .72;
+
 
     for(
         let y=0;
@@ -2517,119 +4307,205 @@ function createDEMSurfaceTexture(
         y++
     ){
 
+        const ym =
+            Math.max(
+                0,
+                y-1
+            );
+
+        const yp =
+            Math.min(
+                height-1,
+                y+1
+            );
+
         for(
             let x=0;
-            x<size;
+            x<width;
             x++
         ){
 
-            const index =
-                y*size+x;
-
-            const normalized =
-                THREE.MathUtils.clamp(
-                    (
-                        decodeElevation(
-                            world,
-                            values[index]
-                        )-
-                        min
-                    )/
-                    Math.max(
-                        1,
-                        max-min
-                    ),
+            const xm =
+                Math.max(
                     0,
-                    1
+                    x-1
                 );
 
-            const shade =
-                analysis &&
-                analysis.hillshade
-                    ? analysis.hillshade[index]
-                    : .5;
+            const xp =
+                Math.min(
+                    width-1,
+                    x+1
+                );
 
-            const curve =
-                analysis &&
-                analysis.curvature
-                    ? analysis.curvature[index]
-                    : 0;
+            const left =
+                decodeElevation(
+                    world,
+                    values[
+                        y*width+
+                        xm
+                    ]
+                );
+
+            const right =
+                decodeElevation(
+                    world,
+                    values[
+                        y*width+
+                        xp
+                    ]
+                );
+
+            const up =
+                decodeElevation(
+                    world,
+                    values[
+                        ym*width+
+                        x
+                    ]
+                );
+
+            const down =
+                decodeElevation(
+                    world,
+                    values[
+                        yp*width+
+                        x
+                    ]
+                );
+
+            const dx =
+                (
+                    right-
+                    left
+                )*
+                .00016*
+                exaggeration;
+
+            const dy =
+                (
+                    down-
+                    up
+                )*
+                .00016*
+                exaggeration;
+
+            let nx =
+                -dx;
+
+            let ny =
+                -dy;
+
+            let nz =
+                1;
+
+            const len =
+                Math.sqrt(
+                    nx*nx+
+                    ny*ny+
+                    nz*nz
+                );
+
+            nx/=len;
+            ny/=len;
+            nz/=len;
+
+            let shade =
+                nx*lx+
+                ny*ly+
+                nz*lz;
+
+            shade =
+                Math.max(
+                    -1,
+                    Math.min(
+                        1,
+                        shade
+                    )
+                );
 
             /*
-                Stronger than the old hillshade,
-                but still entirely derived from
-                the real elevation field.
+                Additional elevation contrast.
+                Kept subtle so the map remains
+                physically readable.
             */
 
-            let light =
-                .34+
-                shade*.72+
-                curve*.10;
-
-            light =
-                THREE.MathUtils.clamp(
-                    light,
-                    .16,
-                    1.18
+            const normalized =
+                (
+                    decodeElevation(
+                        world,
+                        values[
+                            y*width+x
+                        ]
+                    )-
+                    min
+                )/
+                (
+                    max-min
                 );
+
+            const relief =
+                (
+                    normalized-
+                    .5
+                )*
+                .18;
+
+            shade =
+                shade*.78+
+                relief;
+
+            const base =
+                .56+
+                shade*.34;
+
+            const index =
+                (
+                    y*width+x
+                )*4;
 
             let r;
             let g;
             let b;
 
-            if(
-                world === "Moon"
-            ){
-
-                const base =
-                    150+
-                    normalized*52;
+            if(world==="Moon"){
 
                 r =
                     base*
-                    light;
+                    220;
 
                 g =
-                    (
-                        base+2
-                    )*
-                    light;
+                    base*
+                    222;
 
                 b =
-                    (
-                        base+7
-                    )*
-                    light;
+                    base*
+                    226;
 
             }else{
 
-                const base =
-                    118+
-                    normalized*55;
+                const redBase =
+                    base*
+                    205;
+
+                const greenBase =
+                    base*
+                    116;
+
+                const blueBase =
+                    base*
+                    88;
 
                 r =
-                    (
-                        base+50
-                    )*
-                    light;
+                    redBase;
 
                 g =
-                    (
-                        base*.68
-                    )*
-                    light;
+                    greenBase;
 
                 b =
-                    (
-                        base*.54
-                    )*
-                    light;
+                    blueBase;
             }
 
-            const p =
-                index*4;
-
-            pixels[p] =
+            pixels[index] =
                 Math.max(
                     0,
                     Math.min(
@@ -2638,7 +4514,7 @@ function createDEMSurfaceTexture(
                     )
                 );
 
-            pixels[p+1] =
+            pixels[index+1] =
                 Math.max(
                     0,
                     Math.min(
@@ -2647,7 +4523,7 @@ function createDEMSurfaceTexture(
                     )
                 );
 
-            pixels[p+2] =
+            pixels[index+2] =
                 Math.max(
                     0,
                     Math.min(
@@ -2656,7 +4532,7 @@ function createDEMSurfaceTexture(
                     )
                 );
 
-            pixels[p+3] =
+            pixels[index+3] =
                 255;
         }
     }
@@ -2681,11 +4557,6 @@ function createDEMSurfaceTexture(
     texture.wrapT =
         THREE.ClampToEdgeWrapping;
 
-    /*
-        Close DEM texture should not become a
-        blurry interpolated image.
-    */
-
     texture.minFilter =
         THREE.LinearFilter;
 
@@ -2694,7 +4565,9 @@ function createDEMSurfaceTexture(
 
     texture.anisotropy =
         Math.min(
-            renderer.capabilities.getMaxAnisotropy(),
+            renderer
+                .capabilities
+                .getMaxAnisotropy(),
             4
         );
 
@@ -2711,8 +4584,7 @@ function createDEMSurfaceTexture(
 
 function createTerrainMaterial(
     world,
-    texture,
-    level
+    texture
 ){
 
     const material =
@@ -2743,17 +4615,6 @@ function createTerrainMaterial(
 
     material.side =
         THREE.FrontSide;
-
-    /*
-        Keep close terrain visually readable.
-        Geometry itself carries the actual relief.
-    */
-
-    if(level>=5){
-
-        material.roughness =
-            1;
-    }
 
     return material;
 }
@@ -2872,6 +4733,154 @@ function createFallbackSphere(
 
 
 /* =========================================================
+   NASA TEXTURE TILES
+========================================================= */
+
+const TEXTURE_TILE_CONFIG = {
+
+    Moon:{
+
+        base:
+            "https://moontrek.jpl.nasa.gov/trektiles/Moon/EQ/LRO_WAC_Mosaic_Global_303ppd_v02/1.0.0/default/default028mm"
+    },
+
+    Mars:{
+
+        base:
+            "https://trek.nasa.gov/tiles/Mars/EQ/Mars_MGS_MOLA_ClrShade_merge_global_463m/1.0.0/default/default028mm"
+    }
+};
+
+function getTextureTileUrl(
+    world,
+    level,
+    x,
+    y
+){
+
+    const dims =
+        tileDimensions(
+            level
+        );
+
+    const nx =
+        normalizeTileX(
+            x,
+            dims.cols
+        );
+
+    if(
+        y<0 ||
+        y>=dims.rows
+    ){
+        return null;
+    }
+
+    return (
+        TEXTURE_TILE_CONFIG[world].base+
+        "/"+
+        level+
+        "/"+
+        y+
+        "/"+
+        nx+
+        ".jpg"
+    );
+}
+
+function loadTileTexture(
+    world,
+    level,
+    x,
+    y
+){
+
+    /*
+        External colour tiles are now optional.
+
+        At high LOD they are deliberately not
+        requested because stretching a low-resolution
+        colour tile over high-resolution DEM geometry
+        was one of the main causes of the blurry look.
+    */
+
+    if(level > 4){
+
+        return Promise.resolve(
+            null
+        );
+    }
+
+    const url =
+        getTextureTileUrl(
+            world,
+            level,
+            x,
+            y
+        );
+
+    if(!url){
+        return Promise.resolve(null);
+    }
+
+    return new Promise(
+        resolve=>{
+
+            const loader =
+                new THREE.TextureLoader();
+
+            loader.setCrossOrigin(
+                "anonymous"
+            );
+
+            loader.load(
+
+                url,
+
+                texture=>{
+
+                    texture.encoding =
+                        THREE.sRGBEncoding;
+
+                    texture.wrapS =
+                        THREE.ClampToEdgeWrapping;
+
+                    texture.wrapT =
+                        THREE.ClampToEdgeWrapping;
+
+                    texture.minFilter =
+                        THREE.LinearMipmapLinearFilter;
+
+                    texture.magFilter =
+                        THREE.LinearFilter;
+
+                    texture.anisotropy =
+                        Math.min(
+                            renderer
+                                .capabilities
+                                .getMaxAnisotropy(),
+                            4
+                        );
+
+                    resolve(
+                        texture
+                    );
+                },
+
+                undefined,
+
+                ()=>{
+                    resolve(
+                        null
+                    );
+                }
+            );
+        }
+    );
+}
+
+
+/* =========================================================
    TERRAIN TILE CREATION
 ========================================================= */
 
@@ -2933,16 +4942,7 @@ async function loadTerrainTile(
             true,
 
         lastUsed:
-            performance.now(),
-
-        dem:
-            null,
-
-        analysis:
-            null,
-
-        texture:
-            null
+            performance.now()
     };
 
     TERRAIN.tiles.set(
@@ -2961,13 +4961,10 @@ async function loadTerrainTile(
 
     try{
 
-        const size =
-            getSamplesForLevel(
-                level
-            );
-
         /*
-            REAL DEM ONLY.
+            DEM is the primary source.
+
+            Colour texture is secondary.
         */
 
         const dem =
@@ -2980,7 +4977,7 @@ async function loadTerrainTile(
                 bounds.lonMax,
                 bounds.latMax,
 
-                size,
+                TERRAIN.samplesPerTile,
 
                 level
             );
@@ -3005,34 +5002,38 @@ async function loadTerrainTile(
             return record;
         }
 
+
         /*
-            Calculate slope, curvature and
-            hillshade from the actual DEM.
+            Generate local hillshade directly
+            from the same DEM used for geometry.
         */
 
-        const analysis =
-            analyzeDEM(
+        let reliefTexture =
+            createDEMHillshadeTexture(
                 world,
-                dem,
-                bounds,
-                size
+                dem
             );
-
-        record.analysis =
-            analysis;
 
 
         /*
-            DEM-derived surface texture.
-            No artificial bump/noise.
+            Use colour tile only for low LOD.
+            High LOD remains DEM-shaded.
         */
 
-        const reliefTexture =
-            createDEMSurfaceTexture(
-                world,
-                dem,
-                analysis
-            );
+        let colorTexture =
+            null;
+
+        if(level<=4){
+
+            colorTexture =
+                await loadTileTexture(
+                    world,
+                    level,
+                    record.x,
+                    y
+                );
+        }
+
 
         if(
             token !== planetLoadToken ||
@@ -3043,6 +5044,10 @@ async function loadTerrainTile(
                 reliefTexture.dispose();
             }
 
+            if(colorTexture){
+                colorTexture.dispose();
+            }
+
             TERRAIN.tiles.delete(
                 key
             );
@@ -3050,6 +5055,9 @@ async function loadTerrainTile(
             return null;
         }
 
+
+        const size =
+            TERRAIN.samplesPerTile;
 
         const geometry =
             new THREE.BufferGeometry();
@@ -3077,11 +5085,6 @@ async function loadTerrainTile(
             bounds.latMin;
 
 
-        /*
-            Build the displaced spherical geometry
-            directly from real DEM elevation.
-        */
-
         for(
             let j=0;
             j<size;
@@ -3094,8 +5097,7 @@ async function loadTerrainTile(
 
             const latitude =
                 bounds.latMax-
-                v*
-                latSpan;
+                v*latSpan;
 
             for(
                 let i=0;
@@ -3109,8 +5111,7 @@ async function loadTerrainTile(
 
                 const longitude =
                     bounds.lonMin+
-                    u*
-                    lonSpan;
+                    u*lonSpan;
 
                 const index =
                     j*size+i;
@@ -3221,24 +5222,44 @@ async function loadTerrainTile(
             indices
         );
 
-        /*
-            Normals are computed from the actual
-            displaced DEM geometry.
 
-            This is what makes crater rims,
-            mountains and valleys physically affect
-            the lighting.
+        /*
+            Normals are calculated from the
+            actual displaced surface.
+
+            This is essential for crater walls,
+            rims, mountains and valleys.
         */
 
         geometry.computeVertexNormals();
 
 
+        /*
+            DEM hillshade is the default close-range
+            visual surface.
+
+            At low levels the actual NASA colour
+            tile is used if available.
+        */
+
+        const materialTexture =
+            colorTexture ||
+            reliefTexture;
+
         const material =
             createTerrainMaterial(
                 world,
-                reliefTexture,
-                level
+                materialTexture
             );
+
+
+        /*
+            Add a little more contrast to the actual
+            geometric terrain without using a fake bump map.
+        */
+
+        material.roughness =
+            1;
 
         const mesh =
             new THREE.Mesh(
@@ -3254,15 +5275,6 @@ async function loadTerrainTile(
 
         mesh.userData.dem =
             true;
-
-        mesh.userData.level =
-            level;
-
-        mesh.userData.slope =
-            analysis.slope;
-
-        mesh.userData.curvature =
-            analysis.curvature;
 
 
         record.mesh =
@@ -3280,8 +5292,11 @@ async function loadTerrainTile(
         record.dem =
             dem;
 
-        record.texture =
+        record.reliefTexture =
             reliefTexture;
+
+        record.colorTexture =
+            colorTexture;
 
 
         terrainRoot.add(
@@ -3290,13 +5305,9 @@ async function loadTerrainTile(
 
 
         setSurfaceStatus(
-
             dem.sampling === "nearest"
-
-                ? "NATIVE DEM HIGH-DETAIL RELIEF ONLINE"
-
-                : "REAL DEM TERRAIN ONLINE",
-
+                ? "NATIVE HIGH-DETAIL RELIEF ONLINE"
+                : "HIGH RESOLUTION TERRAIN ONLINE",
             true
         );
 
@@ -3328,17 +5339,12 @@ async function loadTerrainTile(
 
 function getCameraDirectionLocal(){
 
-    const cameraWorld =
-        camera.getWorldDirection(
-            new THREE.Vector3()
-        ).normalize();
-
-    const localDirection =
+    const cameraLocal =
         planetGroup.worldToLocal(
             camera.position.clone()
         );
 
-    return localDirection.normalize();
+    return cameraLocal.normalize();
 }
 
 
@@ -3395,52 +5401,6 @@ function tileAngularDistance(
    LOD
 ========================================================= */
 
-function getMaximumUsefulLevel(){
-
-    /*
-        Distance mapping:
-
-        far:
-            levels 1–2
-
-        medium:
-            levels 3–5
-
-        close:
-            levels 6–8
-
-        Level 8 is only activated when the user
-        is genuinely close to the planet.
-    */
-
-    const factor =
-        THREE.MathUtils.clamp(
-            (
-                760-
-                zoomDistance
-            )/
-            (
-                760-
-                MIN_ZOOM
-            ),
-            0,
-            1
-        );
-
-    return Math.min(
-        TERRAIN.maxLevel,
-        Math.max(
-            1,
-            Math.floor(
-                1+
-                factor*
-                7
-            )
-        )
-    );
-}
-
-
 function shouldSplitTile(
     level,
     x,
@@ -3449,8 +5409,7 @@ function shouldSplitTile(
 ){
 
     if(
-        level >=
-        TERRAIN.maxLevel
+        level >= TERRAIN.maxLevel
     ){
         return false;
     }
@@ -3463,56 +5422,68 @@ function shouldSplitTile(
             cameraDirection
         );
 
-    /*
-        Back side of planet does not need deep LOD.
-    */
-
-    if(angle>1.38){
+    if(angle > 1.35){
         return false;
     }
 
-    const maxLevel =
-        getMaximumUsefulLevel();
+
+    const distanceFactor =
+        Math.max(
+            0,
+            Math.min(
+                1,
+                (
+                    760-
+                    zoomDistance
+                )/
+                615
+            )
+        );
+
+
+    /*
+        Keep level 8 only for genuinely close
+        inspection. This avoids loading huge numbers
+        of DEM windows on weaker computers.
+    */
+
+    const maxUsefulLevel =
+        Math.min(
+            TERRAIN.maxLevel,
+            Math.floor(
+                2+
+                distanceFactor*6
+            )
+        );
+
 
     if(
-        level>=maxLevel
+        level >= maxUsefulLevel
     ){
         return false;
     }
 
-    /*
-        Strongest refinement directly around the
-        point the camera is looking at.
-    */
-
-    if(angle<.25){
+    if(angle < .34){
         return true;
     }
 
     if(
-        angle<.48 &&
-        level<maxLevel-1
+        angle < .60 &&
+        level < maxUsefulLevel-1
     ){
         return true;
     }
 
     if(
-        angle<.72 &&
-        level<maxLevel-2
+        angle < .88 &&
+        level < maxUsefulLevel-2
     ){
         return true;
     }
 
     if(
-        angle<1.0 &&
-        level<maxLevel-3
-    ){
-        return true;
-    }
-
-    if(
-        angle<1.22 &&
-        level<maxLevel-4
+        angle < 1.12 &&
+        level < maxUsefulLevel-3
     ){
         return true;
     }
@@ -3661,13 +5632,10 @@ async function updateTerrainLOD(
         const key of desired
     ){
 
-        const existing =
-            TERRAIN.tiles.get(
-                key
-            );
-
         if(
-            !existing
+            !TERRAIN.tiles.has(
+                key
+            )
         ){
 
             const parts =
@@ -3712,12 +5680,9 @@ async function updateTerrainLOD(
     );
 
 
-    /*
-        Small batches protect weaker laptops.
-    */
-
     const batchSize =
-        2;
+        3;
+
 
     for(
         let i=0;
@@ -3732,7 +5697,6 @@ async function updateTerrainLOD(
             );
 
         await Promise.allSettled(
-
             batch.map(
                 item=>
                     loadTerrainTile(
@@ -3784,9 +5748,7 @@ function updateTerrainVisibility(){
                 key
             );
 
-        if(
-            record.mesh.visible
-        ){
+        if(record.mesh.visible){
 
             record.lastUsed =
                 performance.now();
@@ -3866,7 +5828,6 @@ function pruneTerrainCache(){
     }
 }
 
-
 function disposeTerrainRecord(
     record
 ){
@@ -3905,22 +5866,11 @@ function disposeTerrainRecord(
         record.mesh =
             null;
     }
-
-    if(record.texture){
-
-        /*
-            Normally the texture is already the
-            material map and has been disposed above.
-        */
-
-        record.texture =
-            null;
-    }
 }
 
 
 /* =========================================================
-   DISPOSE TERRAIN
+   DISPOSE
 ========================================================= */
 
 function disposeTerrain(){
@@ -3986,7 +5936,7 @@ function buildPlanet(
     );
 
     setSurfaceStatus(
-        "LOADING REAL HIGH RESOLUTION DEM",
+        "LOADING HIGH RESOLUTION DEM",
         true
     );
 
@@ -4063,7 +6013,6 @@ function screenToWorld(
     };
 }
 
-
 function updatePlanetSafePosition(){
 
     const width =
@@ -4103,13 +6052,13 @@ function updatePlanetSafePosition(){
 
     let leftBoundary =
         42+
-        350+
+        390+
         35;
 
     let rightBoundary =
         width-
         42-
-        260-
+        290-
         35;
 
     let topBoundary =
@@ -4243,7 +6192,6 @@ function formatCoordinate(
     );
 }
 
-
 function getWorldRadiusKm(
     world
 ){
@@ -4252,7 +6200,6 @@ function getWorldRadiusKm(
         ? 1737.4
         : 3389.5;
 }
-
 
 function getPlotCell(
     latitude,
@@ -4295,7 +6242,6 @@ function getPlotCell(
     };
 }
 
-
 function generatePlotId(
     world,
     latIndex,
@@ -4325,7 +6271,6 @@ function generatePlotId(
         )
     );
 }
-
 
 function getPlotAreaKm2(
     world,
@@ -4407,7 +6352,6 @@ function disposePlotVisuals(){
     }
 }
 
-
 function createPlotBoundary(
     latitude,
     longitude
@@ -4456,10 +6400,8 @@ function createPlotBoundary(
                 latMin,
                 lonMin+
                 (
-                    lonMax-
-                    lonMin
-                )*
-                t,
+                    lonMax-lonMin
+                )*t,
                 radius
             )
         );
@@ -4478,10 +6420,8 @@ function createPlotBoundary(
             latLonToVector(
                 latMin+
                 (
-                    latMax-
-                    latMin
-                )*
-                t,
+                    latMax-latMin
+                )*t,
                 lonMax,
                 radius
             )
@@ -4502,10 +6442,8 @@ function createPlotBoundary(
                 latMax,
                 lonMax-
                 (
-                    lonMax-
-                    lonMin
-                )*
-                t,
+                    lonMax-lonMin
+                )*t,
                 radius
             )
         );
@@ -4524,10 +6462,8 @@ function createPlotBoundary(
             latLonToVector(
                 latMax-
                 (
-                    latMax-
-                    latMin
-                )*
-                t,
+                    latMax-latMin
+                )*t,
                 lonMin,
                 radius
             )
@@ -4603,7 +6539,7 @@ function createPlotBoundary(
 
 
 /* =========================================================
-   SURFACE RAYCAST
+   RAYCAST
 ========================================================= */
 
 function getSurfaceCoordinates(
@@ -4843,7 +6779,6 @@ function showProperty(
     );
 }
 
-
 function closeProperty(){
 
     propertyPanel.classList.remove(
@@ -4920,7 +6855,7 @@ document
                         button.dataset.world;
 
                     if(
-                        world===
+                        world ===
                         currentWorld
                     ){
 
@@ -5236,7 +7171,6 @@ document
         }
     );
 
-
 document
     .getElementById(
         "exploreBtn"
@@ -5318,10 +7252,6 @@ function animate(
             )
         );
 
-
-    /*
-        LOD continuously follows zoom and rotation.
-    */
 
     updateTerrainLOD(
         false
