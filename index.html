@@ -1067,12 +1067,6 @@ h1{
 
 <script>
 
-/* =========================================================
-   ASTERRA
-   CINEMATIC PLANETARY TERRAIN
-   HIGH DETAIL DEM + ADAPTIVE LOD
-========================================================= */
-
 if(typeof THREE === "undefined"){
     throw new Error("ASTERRA: Three.js failed to load.");
 }
@@ -1518,19 +1512,6 @@ if("outputEncoding" in renderer){
         THREE.sRGBEncoding;
 }
 
-/*
-    Cinematic output without changing
-    the black ASTERRA interface.
-*/
-if("toneMapping" in renderer){
-
-    renderer.toneMapping =
-        THREE.ACESFilmicToneMapping;
-
-    renderer.toneMappingExposure =
-        1.08;
-}
-
 renderer.domElement.style.touchAction =
     "none";
 
@@ -1551,7 +1532,7 @@ document
 const ambient =
     new THREE.AmbientLight(
         0xffffff,
-        .19
+        .24
     );
 
 scene.add(ambient);
@@ -1559,37 +1540,31 @@ scene.add(ambient);
 const keyLight =
     new THREE.DirectionalLight(
         0xffffff,
-        2.55
+        2.75
     );
 
 keyLight.position.set(
-    -330,
-    155,
-    360
+    -300,
+    180,
+    380
 );
 
 scene.add(keyLight);
 
 const secondaryLight =
     new THREE.DirectionalLight(
-        0xcbd7ea,
+        0xd9e3f4,
         .38
     );
 
 secondaryLight.position.set(
     280,
-    65,
+    40,
     -300
 );
 
 scene.add(secondaryLight);
 
-/*
-    Low-angle light is intentionally kept strong.
-    It makes craters, cliffs and mountain slopes
-    readable from the camera without requiring
-    artificial geometry.
-*/
 const grazingLight =
     new THREE.DirectionalLight(
         0xffffff,
@@ -1597,9 +1572,9 @@ const grazingLight =
     );
 
 grazingLight.position.set(
-    -100,
-    -250,
-    330
+    -80,
+    -220,
+    320
 );
 
 scene.add(grazingLight);
@@ -1644,7 +1619,7 @@ let targetZoom =
     520;
 
 const MIN_ZOOM =
-    138;
+    145;
 
 const MAX_ZOOM =
     760;
@@ -1671,22 +1646,12 @@ const DEM_CONFIG = {
             1000,
 
         /*
-            Moon relief is physically much smaller
-            than the visual radius of the model.
-            3.4 made the surface too swollen.
-            This value preserves crater shape while
-            still making relief obvious.
+            Physical lunar relief is subtle at this
+            display scale. Keep the enhancement moderate.
         */
-        exaggeration:
-            2.35,
 
-        /*
-            Extra visual treatment is applied only
-            at close LOD and only to already-existing
-            DEM relief.
-        */
-        closeRelief:
-            1.18,
+        exaggeration:
+            3.4,
 
         fallback:
             "https://upload.wikimedia.org/wikipedia/commons/2/26/Solarsystemscope_texture_2k_moon.jpg"
@@ -1706,16 +1671,8 @@ const DEM_CONFIG = {
         metersPerUnit:
             1,
 
-        /*
-            Mars keeps strong relief because the
-            MOLA DEM contains major elevation
-            structures that benefit from exaggeration.
-        */
         exaggeration:
-            2.75,
-
-        closeRelief:
-            1.12,
+            2.8,
 
         fallback:
             "https://upload.wikimedia.org/wikipedia/commons/4/46/Solarsystemscope_texture_2k_mars.jpg"
@@ -1729,23 +1686,28 @@ const DEM_CONFIG = {
 
 const TERRAIN = {
 
-    /*
-        Level 8 gives the close camera access to
-        approximately 1.40625 degrees wide tiles.
-    */
     maxLevel:
         8,
 
     /*
-        81 x 81 vertices per tile.
-        This is a substantial increase over
-        the original 65 x 65 mesh.
+        Moon LDEM64 contains roughly 64 samples/degree.
+        At close LOD a 97x97 mesh preserves considerably
+        more of the native DEM signal than 65x65.
     */
+
     samplesPerTile:
-        81,
+        97,
+
+    /*
+        Close Moon tiles use native-resolution nearest
+        DEM sampling instead of bilinear averaging.
+    */
+
+    moonNativeSamplingLevel:
+        5,
 
     updateInterval:
-        160,
+        100,
 
     lastUpdate:
         0,
@@ -1757,19 +1719,13 @@ const TERRAIN = {
         new Set(),
 
     cacheLimit:
-        170,
+        180,
 
     demFiles:
         new Map(),
 
-    globalTextures:
-        new Map(),
-
     loading:
-        0,
-
-    lodUpdating:
-        false
+        0
 };
 
 
@@ -2034,83 +1990,6 @@ async function getDEMFile(
 
 
 /* =========================================================
-   GLOBAL SURFACE TEXTURE
-========================================================= */
-
-async function getGlobalTexture(
-    world
-){
-
-    if(
-        TERRAIN.globalTextures.has(
-            world
-        )
-    ){
-
-        return TERRAIN.globalTextures.get(
-            world
-        );
-    }
-
-    const url =
-        DEM_CONFIG[world].fallback;
-
-    return new Promise(
-        resolve=>{
-
-            const loader =
-                new THREE.TextureLoader();
-
-            loader.setCrossOrigin(
-                "anonymous"
-            );
-
-            loader.load(
-
-                url,
-
-                texture=>{
-
-                    texture.encoding =
-                        THREE.sRGBEncoding;
-
-                    texture.wrapS =
-                        THREE.RepeatWrapping;
-
-                    texture.wrapT =
-                        THREE.ClampToEdgeWrapping;
-
-                    texture.anisotropy =
-                        Math.min(
-                            renderer.capabilities.getMaxAnisotropy(),
-                            8
-                        );
-
-                    TERRAIN.globalTextures.set(
-                        world,
-                        texture
-                    );
-
-                    resolve(texture);
-                },
-
-                undefined,
-
-                ()=>{
-                    TERRAIN.globalTextures.set(
-                        world,
-                        null
-                    );
-
-                    resolve(null);
-                }
-            );
-        }
-    );
-}
-
-
-/* =========================================================
    DEM WINDOW
 ========================================================= */
 
@@ -2120,7 +1999,8 @@ async function readDEMWindow(
     latMin,
     lonMax,
     latMax,
-    size
+    size,
+    level
 ){
 
     const config =
@@ -2207,6 +2087,28 @@ async function readDEMWindow(
             )
         );
 
+    /*
+        This is the critical change.
+
+        Bilinear interpolation averages neighbouring
+        DEM samples and destroys small craters and
+        sharp local height changes.
+
+        For Moon close LODs we use nearest sampling,
+        preserving the native DEM relief.
+
+        Mars keeps bilinear behaviour.
+    */
+
+    const useNativeMoonSampling =
+        world === "Moon" &&
+        level >= TERRAIN.moonNativeSamplingLevel;
+
+    const resampleMethod =
+        useNativeMoonSampling
+            ? "nearest"
+            : "bilinear";
+
     try{
 
         const result =
@@ -2225,14 +2127,7 @@ async function readDEMWindow(
                 height:
                     size,
 
-                /*
-                    Bilinear interpolation is retained
-                    for continuity, but the denser 81x81
-                    grid preserves considerably more
-                    terrain information.
-                */
-                resampleMethod:
-                    "bilinear",
+                resampleMethod,
 
                 interleave:
                     false
@@ -2247,7 +2142,11 @@ async function readDEMWindow(
                 result.width,
 
             height:
-                result.height
+                result.height,
+
+            sampling:
+                resampleMethod
+
         };
 
     }catch(error){
@@ -2255,6 +2154,7 @@ async function readDEMWindow(
         console.warn(
             "ASTERRA DEM window failed:",
             world,
+            level,
             error
         );
 
@@ -2432,15 +2332,6 @@ function decodeElevation(
         meters = 0;
     }
 
-    /*
-        NASA LOLA Moon DEM:
-        values are relative to the reference
-        lunar radius in kilometres.
-
-        MOLA:
-        values are metres.
-    */
-
     meters =
         Math.max(
             -15000,
@@ -2453,101 +2344,9 @@ function decodeElevation(
     return meters;
 }
 
-
-/*
-    Compress only extreme planetary values.
-    This prevents a single very high/low pixel
-    from visually inflating a whole tile while
-    preserving normal crater and mountain relief.
-*/
-function shapeElevation(
-    world,
-    meters,
-    level
-){
-
-    if(!Number.isFinite(meters)){
-        return 0;
-    }
-
-    const config =
-        DEM_CONFIG[world];
-
-    const base =
-        world === "Moon"
-            ? 0.00042
-            : 0.00020;
-
-    /*
-        Soft saturation rather than hard clipping.
-        This is important for large lunar craters
-        and Martian volcanic terrain.
-    */
-    const normalized =
-        Math.tanh(
-            meters/
-            (
-                world === "Moon"
-                    ? 5500
-                    : 8500
-            )
-        );
-
-    const compressed =
-        normalized*
-        (
-            world === "Moon"
-                ? 6500
-                : 10500
-        );
-
-    /*
-        Blend real DEM elevation with compressed
-        elevation. Near-normal terrain remains
-        faithful while extreme outliers are softened.
-    */
-    let result =
-        meters*.72+
-        compressed*.28;
-
-    /*
-        Close LOD reveals more vertical relief,
-        but only after the geometry is already
-        based on real DEM values.
-    */
-    if(level >= 6){
-
-        const closeFactor =
-            Math.min(
-                1,
-                (level-5)/3
-            );
-
-        result *=
-            1+
-            (
-                config.closeRelief-1
-            )*
-            closeFactor;
-    }
-
-    /*
-        The tiny base variable intentionally keeps
-        the operation numerically stable and does
-        not add visible artificial terrain.
-    */
-    result +=
-        result*
-        base*
-        0;
-
-    return result;
-}
-
 function metersToScene(
     world,
-    meters,
-    level
+    meters
 ){
 
     const radiusKm =
@@ -2562,15 +2361,8 @@ function metersToScene(
         PLANET_RADIUS/
         (radiusKm*1000);
 
-    const shaped =
-        shapeElevation(
-            world,
-            meters,
-            level
-        );
-
     return (
-        shaped*
+        meters*
         scale*
         config.exaggeration
     );
@@ -2601,10 +2393,16 @@ function createTerrainMaterial(
                             : 0xa94d36
                     ),
 
+            /*
+                Moon is intentionally very rough.
+                Lower roughness can visually smear the
+                micro-relief through broad specular highlights.
+            */
+
             roughness:
                 world === "Moon"
-                    ? .98
-                    : .92,
+                    ? 1.0
+                    : .91,
 
             metalness:
                 0,
@@ -2654,8 +2452,8 @@ function createFallbackSphere(
     const geometry =
         new THREE.SphereGeometry(
             PLANET_RADIUS,
-            160,
-            112
+            128,
+            96
         );
 
     const material =
@@ -2707,7 +2505,7 @@ function createFallbackSphere(
                     renderer
                         .capabilities
                         .getMaxAnisotropy(),
-                    8
+                    4
                 );
 
             if(
@@ -2792,13 +2590,6 @@ function loadTileTexture(
     y
 ){
 
-    /*
-        Texture tiles are used through level 6.
-        At levels 7-8 the global surface texture
-        is used instead, preventing the close terrain
-        from becoming a flat grey/red surface.
-    */
-
     if(level > 6){
         return Promise.resolve(null);
     }
@@ -2840,6 +2631,12 @@ function loadTileTexture(
                     texture.wrapT =
                         THREE.ClampToEdgeWrapping;
 
+                    /*
+                        Keep the color texture smooth,
+                        but DO NOT use it to determine
+                        terrain geometry.
+                    */
+
                     texture.minFilter =
                         THREE.LinearMipmapLinearFilter;
 
@@ -2851,7 +2648,7 @@ function loadTileTexture(
                             renderer
                                 .capabilities
                                 .getMaxAnisotropy(),
-                            8
+                            4
                         );
 
                     resolve(
@@ -2867,98 +2664,6 @@ function loadTileTexture(
             );
         }
     );
-}
-
-
-/* =========================================================
-   TILE UV HELPERS
-========================================================= */
-
-function writeTileUVs(
-    uvs,
-    size,
-    bounds,
-    globalTexture
-){
-
-    const lonSpan =
-        bounds.lonMax-
-        bounds.lonMin;
-
-    const latSpan =
-        bounds.latMax-
-        bounds.latMin;
-
-    for(
-        let j=0;
-        j<size;
-        j++
-    ){
-
-        const v =
-            j/
-            (size-1);
-
-        const latitude =
-            bounds.latMax-
-            v*latSpan;
-
-        for(
-            let i=0;
-            i<size;
-            i++
-        ){
-
-            const u =
-                i/
-                (size-1);
-
-            const longitude =
-                bounds.lonMin+
-                u*lonSpan;
-
-            const index =
-                j*size+i;
-
-            if(globalTexture){
-
-                /*
-                    Global equirectangular UV.
-                    This keeps a continuous planetary
-                    surface when no high-resolution
-                    local image tile exists.
-                */
-
-                uvs[
-                    index*2
-                ] =
-                    (
-                        longitude+180
-                    )/
-                    360;
-
-                uvs[
-                    index*2+1
-                ] =
-                    (
-                        90-latitude
-                    )/
-                    180;
-
-            }else{
-
-                uvs[
-                    index*2
-                ] =
-                    u;
-
-                uvs[
-                    index*2+1
-                ] =
-                    1-v;
-            }
-        }
-    }
 }
 
 
@@ -3034,8 +2739,7 @@ async function loadTerrainTile(
 
         const [
             dem,
-            texture,
-            globalTexture
+            texture
         ] =
             await Promise.all([
 
@@ -3048,7 +2752,9 @@ async function loadTerrainTile(
                     bounds.lonMax,
                     bounds.latMax,
 
-                    TERRAIN.samplesPerTile
+                    TERRAIN.samplesPerTile,
+
+                    level
                 ),
 
                 loadTileTexture(
@@ -3056,10 +2762,6 @@ async function loadTerrainTile(
                     level,
                     record.x,
                     y
-                ),
-
-                getGlobalTexture(
-                    world
                 )
             ]);
 
@@ -3094,11 +2796,6 @@ async function loadTerrainTile(
             new THREE.BufferGeometry();
 
         const positions =
-            new Float32Array(
-                size*size*3
-            );
-
-        const normals =
             new Float32Array(
                 size*size*3
             );
@@ -3150,6 +2847,12 @@ async function loadTerrainTile(
                 const index =
                     j*size+i;
 
+                /*
+                    DEM values are now kept as close as
+                    possible to the native source samples.
+                    No additional smoothing is introduced.
+                */
+
                 const raw =
                     dem.values[index];
 
@@ -3162,8 +2865,7 @@ async function loadTerrainTile(
                 const terrainOffset =
                     metersToScene(
                         world,
-                        meters,
-                        level
+                        meters
                     );
 
                 const radius =
@@ -3191,15 +2893,18 @@ async function loadTerrainTile(
                     index*3+2
                 ] =
                     p.z;
+
+                uvs[
+                    index*2
+                ] =
+                    u;
+
+                uvs[
+                    index*2+1
+                ] =
+                    1-v;
             }
         }
-
-        writeTileUVs(
-            uvs,
-            size,
-            bounds,
-            texture ? null : globalTexture
-        );
 
         for(
             let j=0;
@@ -3241,14 +2946,6 @@ async function loadTerrainTile(
         );
 
         geometry.setAttribute(
-            "normal",
-            new THREE.BufferAttribute(
-                normals,
-                3
-            )
-        );
-
-        geometry.setAttribute(
             "uv",
             new THREE.BufferAttribute(
                 uvs,
@@ -3261,16 +2958,17 @@ async function loadTerrainTile(
         );
 
         /*
-            Three.js computes normals from the actual
-            displaced geometry. This is what makes the
-            real DEM produce light/shadow relief.
+            Recalculate normals AFTER the displaced
+            geometry exists. This makes crater walls,
+            rims and slopes respond correctly to light.
         */
+
         geometry.computeVertexNormals();
 
         const material =
             createTerrainMaterial(
                 world,
-                texture || globalTexture
+                texture
             );
 
         const mesh =
@@ -3284,14 +2982,6 @@ async function loadTerrainTile(
 
         mesh.userData.asterraTile =
             record;
-
-        /*
-            High LOD is allowed to use the global
-            equirectangular texture. Its geometry,
-            however, remains the high-resolution DEM.
-        */
-        mesh.userData.globalTexture =
-            !texture && !!globalTexture;
 
         record.mesh =
             mesh;
@@ -3310,8 +3000,8 @@ async function loadTerrainTile(
         );
 
         setSurfaceStatus(
-            level >= 6
-                ? "ULTRA HIGH RESOLUTION TERRAIN"
+            dem.sampling === "nearest"
+                ? "NATIVE LUNAR RELIEF ONLINE"
                 : "HIGH RESOLUTION TERRAIN ONLINE",
             true
         );
@@ -3427,46 +3117,34 @@ function shouldSplitTile(
             cameraDirection
         );
 
-    /*
-        Do not waste geometry on the far side.
-    */
-    if(angle > 1.42){
+    if(angle > 1.35){
         return false;
     }
 
     /*
-        138 = maximum close view.
-        The closer the camera, the more levels
-        are allowed.
+        Much stronger progression toward high LOD
+        when the user is actually close to the Moon.
     */
+
     const distanceFactor =
         Math.max(
             0,
             Math.min(
                 1,
                 (
-                    MAX_ZOOM-
+                    760-
                     zoomDistance
                 )/
-                (
-                    MAX_ZOOM-
-                    MIN_ZOOM
-                )
+                615
             )
         );
 
-    let maxUsefulLevel =
-        Math.floor(
-            2+
-            distanceFactor*6
-        );
-
-    maxUsefulLevel =
-        Math.max(
-            2,
-            Math.min(
-                TERRAIN.maxLevel,
-                maxUsefulLevel
+    const maxUsefulLevel =
+        Math.min(
+            TERRAIN.maxLevel,
+            Math.floor(
+                2+
+                distanceFactor*6
             )
         );
 
@@ -3476,38 +3154,27 @@ function shouldSplitTile(
         return false;
     }
 
-    /*
-        Central viewing cone gets the strongest
-        possible LOD.
-    */
-    if(angle < .24){
+    if(angle < .34){
         return true;
     }
 
     if(
-        angle < .43 &&
+        angle < .60 &&
         level < maxUsefulLevel-1
     ){
         return true;
     }
 
     if(
-        angle < .68 &&
+        angle < .88 &&
         level < maxUsefulLevel-2
     ){
         return true;
     }
 
     if(
-        angle < .94 &&
+        angle < 1.12 &&
         level < maxUsefulLevel-3
-    ){
-        return true;
-    }
-
-    if(
-        angle < 1.18 &&
-        level < maxUsefulLevel-4
     ){
         return true;
     }
@@ -3597,14 +3264,6 @@ async function updateTerrainLOD(
     force
 ){
 
-    /*
-        Prevent several asynchronous LOD passes from
-        running simultaneously while the camera moves.
-    */
-    if(TERRAIN.lodUpdating){
-        return;
-    }
-
     const now =
         performance.now();
 
@@ -3617,154 +3276,139 @@ async function updateTerrainLOD(
         return;
     }
 
-    TERRAIN.lodUpdating =
-        true;
-
     TERRAIN.lastUpdate =
         now;
 
-    try{
+    const token =
+        planetLoadToken;
 
-        const token =
-            planetLoadToken;
+    const cameraDirection =
+        getCameraDirectionLocal();
 
-        const cameraDirection =
-            getCameraDirectionLocal();
+    const desired =
+        new Set();
 
-        const desired =
-            new Set();
+    const rootDims =
+        tileDimensions(1);
 
-        const rootDims =
-            tileDimensions(1);
+    for(
+        let y=0;
+        y<rootDims.rows;
+        y++
+    ){
 
         for(
-            let y=0;
-            y<rootDims.rows;
-            y++
+            let x=0;
+            x<rootDims.cols;
+            x++
         ){
 
-            for(
-                let x=0;
-                x<rootDims.cols;
-                x++
-            ){
-
-                collectLeaves(
-                    1,
-                    x,
-                    y,
-                    cameraDirection,
-                    desired
-                );
-            }
+            collectLeaves(
+                1,
+                x,
+                y,
+                cameraDirection,
+                desired
+            );
         }
+    }
 
-        TERRAIN.visibleKeys =
-            desired;
+    TERRAIN.visibleKeys =
+        desired;
 
-        const missing =
-            [];
+    const missing =
+        [];
 
-        for(
-            const key of desired
+    for(
+        const key of desired
+    ){
+
+        if(
+            !TERRAIN.tiles.has(
+                key
+            )
         ){
 
-            if(
-                !TERRAIN.tiles.has(
-                    key
-                )
-            ){
+            const parts =
+                key.split(":");
 
-                const parts =
-                    key.split(":");
+            missing.push({
 
-                missing.push({
+                level:
+                    Number(parts[0]),
 
-                    level:
-                        Number(parts[0]),
+                x:
+                    Number(parts[1]),
 
-                    x:
-                        Number(parts[1]),
-
-                    y:
-                        Number(parts[2])
-                });
-            }
+                y:
+                    Number(parts[2])
+            });
         }
+    }
 
-        missing.sort(
-            (a,b)=>{
+    missing.sort(
+        (a,b)=>{
 
-                const da =
-                    tileAngularDistance(
-                        a.level,
-                        a.x,
-                        a.y,
-                        cameraDirection
-                    );
-
-                const db =
-                    tileAngularDistance(
-                        b.level,
-                        b.x,
-                        b.y,
-                        cameraDirection
-                    );
-
-                return da-db;
-            }
-        );
-
-        /*
-            More aggressive close-range streaming,
-            but still capped to avoid freezing the browser.
-        */
-        const batchSize =
-            4;
-
-        for(
-            let i=0;
-            i<missing.length;
-            i+=batchSize
-        ){
-
-            const batch =
-                missing.slice(
-                    i,
-                    i+batchSize
+            const da =
+                tileAngularDistance(
+                    a.level,
+                    a.x,
+                    a.y,
+                    cameraDirection
                 );
 
-            await Promise.allSettled(
-                batch.map(
-                    item=>
-                        loadTerrainTile(
-                            currentWorld,
-                            item.level,
-                            item.x,
-                            item.y,
-                            token
-                        )
-                )
+            const db =
+                tileAngularDistance(
+                    b.level,
+                    b.x,
+                    b.y,
+                    cameraDirection
+                );
+
+            return da-db;
+        }
+    );
+
+    const batchSize =
+        4;
+
+    for(
+        let i=0;
+        i<missing.length;
+        i+=batchSize
+    ){
+
+        const batch =
+            missing.slice(
+                i,
+                i+batchSize
             );
 
-            if(
-                token !== planetLoadToken
-            ){
-                return;
-            }
+        await Promise.allSettled(
+            batch.map(
+                item=>
+                    loadTerrainTile(
+                        currentWorld,
+                        item.level,
+                        item.x,
+                        item.y,
+                        token
+                    )
+            )
+        );
 
-            updateTerrainVisibility();
+        if(
+            token !== planetLoadToken
+        ){
+            return;
         }
 
         updateTerrainVisibility();
-
-        pruneTerrainCache();
-
-    }finally{
-
-        TERRAIN.lodUpdating =
-            false;
     }
+
+    updateTerrainVisibility();
+
+    pruneTerrainCache();
 }
 
 
@@ -3786,15 +3430,12 @@ function updateTerrainVisibility(){
             continue;
         }
 
-        const visible =
+        record.mesh.visible =
             TERRAIN.visibleKeys.has(
                 key
             );
 
-        record.mesh.visible =
-            visible;
-
-        if(visible){
+        if(record.mesh.visible){
             record.lastUsed =
                 performance.now();
         }
@@ -3901,21 +3542,7 @@ function disposeTerrainRecord(
                 record.mesh.material.map
             ){
 
-                /*
-                    Do not dispose global texture here.
-                    It is shared by many tiles.
-                */
-                const globalTexture =
-                    TERRAIN.globalTextures.get(
-                        record.world
-                    );
-
-                if(
-                    record.mesh.material.map !==
-                    globalTexture
-                ){
-                    record.mesh.material.map.dispose();
-                }
+                record.mesh.material.map.dispose();
             }
 
             record.mesh.material.dispose();
@@ -3954,9 +3581,6 @@ function disposeTerrain(){
 
     TERRAIN.lastUpdate =
         0;
-
-    TERRAIN.lodUpdating =
-        false;
 }
 
 
@@ -4510,9 +4134,6 @@ function createPlotBoundary(
         points.push(
             latLonToVector(
                 latMax-
-                (
-                    latMax-lonMin
-                )*0+
                 (
                     latMax-latMin
                 )*t,
