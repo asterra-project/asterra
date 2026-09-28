@@ -1075,7 +1075,7 @@ document
 const ambient =
     new THREE.AmbientLight(
         0xffffff,
-        .13
+        .20
     );
 
 scene.add(
@@ -1084,14 +1084,14 @@ scene.add(
 
 const keyLight =
     new THREE.DirectionalLight(
-        0xfff7eb,
-        3.45
+        0xffffff,
+        3.10
     );
 
 keyLight.position.set(
-    -360,
-    105,
-    300
+    -300,
+    170,
+    380
 );
 
 scene.add(
@@ -1100,8 +1100,8 @@ scene.add(
 
 const secondaryLight =
     new THREE.DirectionalLight(
-        0xaec8ee,
-        .22
+        0xbfcce0,
+        .30
     );
 
 secondaryLight.position.set(
@@ -1116,14 +1116,14 @@ scene.add(
 
 const grazingLight =
     new THREE.DirectionalLight(
-        0xffd8b0,
-        1.18
+        0xffffff,
+        .95
     );
 
 grazingLight.position.set(
-    240,
-    -180,
-    120
+    -120,
+    -260,
+    300
 );
 
 scene.add(
@@ -1170,7 +1170,7 @@ let targetZoom =
     520;
 
 const MIN_ZOOM =
-    151;
+    145;
 
 const MAX_ZOOM =
     760;
@@ -1211,7 +1211,7 @@ const DEM_CONFIG = {
         */
 
         exaggeration:
-            7.2,
+            4.0,
 
         radiusKm:
             1737.4,
@@ -1244,7 +1244,7 @@ const DEM_CONFIG = {
             1,
 
         exaggeration:
-            6.0,
+            3.5,
 
         radiusKm:
             3396.19,
@@ -1267,19 +1267,19 @@ const DEM_CONFIG = {
 const TERRAIN = {
 
     maxLevel:
-        9,
+        8,
 
     samplesPerTile:
         97,
 
     highSamples:
-        161,
-
-    mediumSamples:
         129,
 
+    mediumSamples:
+        113,
+
     nativeSamplingLevel:
-        6,
+        5,
 
     updateInterval:
         90,
@@ -1294,7 +1294,7 @@ const TERRAIN = {
         new Set(),
 
     cacheLimit:
-        220,
+        180,
 
     demFiles:
         new Map(),
@@ -2320,7 +2320,7 @@ function createTerrainMaterial(
             const curvatureSignal =
                 Math.tanh(
                     curvature *
-                    420
+                    180
                 );
 
 
@@ -2340,7 +2340,7 @@ function createTerrainMaterial(
             const reliefSignal =
                 Math.tanh(
                     localRelief /
-                    42
+                    80
                 );
 
 
@@ -2376,26 +2376,26 @@ function createTerrainMaterial(
             */
 
             let tone =
-                .16 +
-                shade*.92;
+                .25 +
+                shade*.75;
 
             tone +=
                 curvatureSignal *
-                .16;
+                .085;
 
             tone +=
                 reliefSignal *
-                .11;
+                .065;
 
             tone +=
                 slopeSignal *
-                .10;
+                .055;
 
             tone =
                 THREE.MathUtils.clamp(
                     tone,
-                    .035,
-                    1.18
+                    .08,
+                    1.08
                 );
 
 
@@ -2570,13 +2570,13 @@ function createTerrainMaterial(
         true;
 
     texture.generateMipmaps =
-        true;
+        false;
 
     texture.minFilter =
-        THREE.LinearMipmapLinearFilter;
+        THREE.LinearFilter;
 
     texture.magFilter =
-        THREE.NearestFilter;
+        THREE.LinearFilter;
 
     texture.wrapS =
         THREE.ClampToEdgeWrapping;
@@ -2815,7 +2815,7 @@ function createTerrainTile(
                 texture,
 
             roughness:
-                .88,
+                .94,
 
             metalness:
                 0,
@@ -3119,7 +3119,7 @@ function getCurrentTerrainLevel(){
             1,
             Math.floor(
                 2 +
-                normalized*7
+                normalized*6
             )
         )
     );
