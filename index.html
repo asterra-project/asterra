@@ -11,6 +11,2171 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#010204;
+    color:#f5f7fa;
+    font-family:Inter,Arial,sans-serif;
+}
+
+body{
+    user-select:none;
+}
+
+#space{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            ellipse 75% 70% at 73% 48%,
+            rgba(255,255,255,.035),
+            transparent 66%
+        ),
+        radial-gradient(
+            ellipse 55% 90% at 92% 18%,
+            rgba(180,195,220,.018),
+            transparent 72%
+        ),
+        #010204;
+}
+
+.nebula{
+    position:absolute;
+    pointer-events:none;
+    z-index:1;
+    border-radius:50%;
+    mix-blend-mode:screen;
+}
+
+.nebula-main{
+    width:1100px;
+    height:570px;
+    right:-100px;
+    top:3%;
+
+    background:
+        radial-gradient(
+            ellipse at 42% 52%,
+            rgba(255,255,255,.075) 0%,
+            rgba(225,232,242,.043) 17%,
+            rgba(170,185,205,.020) 37%,
+            transparent 72%
+        );
+
+    filter:blur(48px);
+    opacity:.9;
+
+    transform:rotate(-14deg);
+
+    animation:
+        nebulaDrift1 30s ease-in-out infinite alternate;
+}
+
+.nebula-secondary{
+    width:850px;
+    height:330px;
+    right:4%;
+    top:37%;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 50%,
+            rgba(255,255,255,.052),
+            rgba(210,220,235,.023) 30%,
+            transparent 70%
+        );
+
+    filter:blur(42px);
+    opacity:.75;
+
+    transform:rotate(-22deg);
+
+    animation:
+        nebulaDrift2 38s ease-in-out infinite alternate;
+}
+
+.nebula-far{
+    width:1400px;
+    height:400px;
+    right:-350px;
+    top:8%;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(245,248,255,.027),
+            rgba(210,220,235,.012) 35%,
+            transparent 70%
+        );
+
+    filter:blur(65px);
+    opacity:.75;
+    transform:rotate(8deg);
+}
+
+.nebula-ribbon{
+    width:1400px;
+    height:220px;
+    right:-250px;
+    top:52%;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255,255,255,.036),
+            rgba(210,220,235,.014) 30%,
+            transparent 70%
+        );
+
+    filter:blur(36px);
+    transform:rotate(-17deg);
+    opacity:.7;
+
+    animation:
+        nebulaDrift3 44s ease-in-out infinite alternate;
+}
+
+.nebula-cloud-a{
+    width:500px;
+    height:300px;
+    right:24%;
+    top:18%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.040),
+            rgba(210,220,235,.016) 32%,
+            transparent 72%
+        );
+
+    filter:blur(38px);
+    opacity:.65;
+    transform:rotate(-30deg);
+}
+
+.nebula-cloud-b{
+    width:600px;
+    height:230px;
+    right:6%;
+    bottom:11%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.032),
+            rgba(190,200,215,.013) 35%,
+            transparent 72%
+        );
+
+    filter:blur(40px);
+    opacity:.65;
+    transform:rotate(13deg);
+}
+
+@keyframes nebulaDrift1{
+    from{
+        transform:translate3d(0,0,0) rotate(-14deg) scale(1);
+    }
+
+    to{
+        transform:translate3d(-30px,14px,0) rotate(-10deg) scale(1.035);
+    }
+}
+
+@keyframes nebulaDrift2{
+    from{
+        transform:translate3d(0,0,0) rotate(-22deg);
+    }
+
+    to{
+        transform:translate3d(22px,-14px,0) rotate(-18deg);
+    }
+}
+
+@keyframes nebulaDrift3{
+    from{
+        transform:translate3d(0,0,0) rotate(-17deg);
+    }
+
+    to{
+        transform:translate3d(-28px,13px,0) rotate(-13deg);
+    }
+}
+
+#starfield{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:3;
+    pointer-events:none;
+}
+
+#scene{
+    position:fixed;
+    inset:0;
+    z-index:4;
+    pointer-events:auto;
+}
+
+canvas{
+    display:block;
+}
+
+.ui{
+    position:fixed;
+    inset:0;
+    z-index:10;
+    pointer-events:none;
+}
+
+.topbar{
+    position:absolute;
+    top:32px;
+    left:42px;
+    right:42px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.brand{
+    font-family:Manrope,sans-serif;
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:.18em;
+}
+
+.brand-sub{
+    margin-top:7px;
+    font-size:9px;
+    letter-spacing:.26em;
+    color:rgba(255,255,255,.42);
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:9px;
+    letter-spacing:.16em;
+    color:rgba(255,255,255,.48);
+}
+
+.status-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 12px rgba(255,255,255,.7);
+}
+
+.hero{
+    position:absolute;
+    left:42px;
+    top:50%;
+    transform:translateY(-52%);
+    width:370px;
+}
+
+.kicker{
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.28em;
+    color:rgba(255,255,255,.42);
+    margin-bottom:17px;
+}
+
+h1{
+    font-family:Manrope,sans-serif;
+    font-size:58px;
+    line-height:.98;
+    letter-spacing:-.055em;
+    font-weight:700;
+    margin-bottom:24px;
+}
+
+.hero-text{
+    width:330px;
+    color:rgba(255,255,255,.56);
+    font-size:13px;
+    line-height:1.75;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:30px;
+    pointer-events:auto;
+}
+
+.btn{
+    height:42px;
+    padding:0 18px;
+
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.035);
+    color:#fff;
+
+    font-family:Inter,sans-serif;
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.16em;
+
+    cursor:pointer;
+    transition:.2s ease;
+}
+
+.btn:hover{
+    background:rgba(255,255,255,.09);
+    border-color:rgba(255,255,255,.28);
+}
+
+.btn.primary{
+    background:#fff;
+    color:#050608;
+    border-color:#fff;
+}
+
+.btn.primary:hover{
+    background:#e9edf2;
+}
+
+.world-panel{
+    position:absolute;
+    top:50%;
+    right:42px;
+    transform:translateY(-50%);
+    width:290px;
+}
+
+.panel-label{
+    font-size:9px;
+    letter-spacing:.24em;
+    color:rgba(255,255,255,.38);
+    margin-bottom:13px;
+}
+
+.world-tabs{
+    display:flex;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    pointer-events:auto;
+}
+
+.world-tab{
+    padding:0 0 13px;
+    margin-right:25px;
+
+    border:0;
+    background:none;
+
+    color:rgba(255,255,255,.35);
+
+    font-family:Inter,sans-serif;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.17em;
+
+    cursor:pointer;
+    position:relative;
+}
+
+.world-tab.active{
+    color:#fff;
+}
+
+.world-tab.active::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:-1px;
+    height:1px;
+    background:#fff;
+}
+
+.world-info{
+    padding-top:23px;
+}
+
+.world-name{
+    font-family:Manrope,sans-serif;
+    font-size:31px;
+    font-weight:700;
+    letter-spacing:-.035em;
+}
+
+.world-description{
+    margin-top:9px;
+    font-size:11px;
+    line-height:1.65;
+    color:rgba(255,255,255,.42);
+}
+
+.stats{
+    margin-top:28px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.stat{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    min-height:43px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.stat-label{
+    font-size:9px;
+    letter-spacing:.13em;
+    color:rgba(255,255,255,.36);
+}
+
+.stat-value{
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.06em;
+}
+
+.status-live{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.status-live::before{
+    content:"";
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 9px rgba(255,255,255,.7);
+}
+
+.property-panel{
+    position:absolute;
+    top:50%;
+    right:42px;
+    transform:translateY(-50%);
+
+    width:290px;
+    padding:20px;
+
+    background:rgba(7,9,13,.92);
+    border:1px solid rgba(255,255,255,.14);
+
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+
+    transition:
+        opacity .2s ease,
+        visibility .2s ease;
+
+    z-index:30;
+}
+
+.property-panel.visible{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+}
+
+.property-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    padding-bottom:17px;
+    border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+.property-kicker{
+    font-size:8px;
+    letter-spacing:.22em;
+    color:rgba(255,255,255,.38);
+    margin-bottom:8px;
+}
+
+.property-world{
+    font-family:Manrope,sans-serif;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:-.025em;
+}
+
+.property-id{
+    margin-top:5px;
+    font-size:8px;
+    letter-spacing:.14em;
+    color:rgba(255,255,255,.42);
+}
+
+.property-close{
+    width:25px;
+    height:25px;
+
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.035);
+
+    color:rgba(255,255,255,.65);
+
+    font-family:Arial,sans-serif;
+    font-size:18px;
+    line-height:1;
+
+    cursor:pointer;
+}
+
+.property-close:hover{
+    background:rgba(255,255,255,.09);
+    color:#fff;
+}
+
+.property-data{
+    margin-top:5px;
+}
+
+.property-row{
+    min-height:39px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.property-label{
+    font-size:8px;
+    letter-spacing:.14em;
+    color:rgba(255,255,255,.34);
+}
+
+.property-value{
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.06em;
+    color:rgba(255,255,255,.82);
+}
+
+.property-select{
+    width:100%;
+    height:40px;
+
+    margin-top:17px;
+
+    border:1px solid #fff;
+    background:#fff;
+    color:#050608;
+
+    font-family:Inter,sans-serif;
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.16em;
+
+    cursor:pointer;
+}
+
+.property-select:hover{
+    background:#e9edf2;
+}
+
+.surface-status{
+    position:absolute;
+    left:50%;
+    top:28px;
+    transform:translateX(-50%);
+
+    padding:7px 12px;
+
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(3,5,8,.55);
+
+    backdrop-filter:blur(8px);
+
+    font-size:7px;
+    letter-spacing:.17em;
+    color:rgba(255,255,255,.28);
+
+    opacity:.0;
+    transition:opacity .3s ease;
+}
+
+.surface-status.visible{
+    opacity:1;
+}
+
+.bottom{
+    position:absolute;
+    left:42px;
+    right:42px;
+    bottom:28px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+}
+
+.bottom-left{
+    font-size:8px;
+    letter-spacing:.22em;
+    color:rgba(255,255,255,.30);
+}
+
+.bottom-right{
+    display:flex;
+    gap:30px;
+}
+
+.metric{
+    text-align:right;
+}
+
+.metric-label{
+    font-size:7px;
+    letter-spacing:.18em;
+    color:rgba(255,255,255,.28);
+    margin-bottom:5px;
+}
+
+.metric-value{
+    font-size:9px;
+    letter-spacing:.1em;
+    color:rgba(255,255,255,.58);
+}
+
+.drag-hint{
+    position:absolute;
+    left:50%;
+    bottom:31px;
+    transform:translateX(-50%);
+
+    font-size:7px;
+    letter-spacing:.2em;
+    color:rgba(255,255,255,.23);
+}
+
+@media(max-width:1000px){
+
+    .hero{
+        width:320px;
+    }
+
+    h1{
+        font-size:46px;
+    }
+
+    .world-panel,
+    .property-panel{
+        right:28px;
+        width:245px;
+    }
+
+    .topbar,
+    .bottom{
+        left:28px;
+        right:28px;
+    }
+
+    .hero{
+        left:28px;
+    }
+}
+
+@media(max-width:760px){
+
+    .hero{
+        top:42%;
+        width:280px;
+    }
+
+    h1{
+        font-size:38px;
+    }
+
+    .hero-text{
+        width:260px;
+    }
+
+    .world-panel,
+    .property-panel{
+        top:auto;
+        bottom:100px;
+        right:20px;
+        width:210px;
+        transform:none;
+    }
+
+    .topbar{
+        left:20px;
+        right:20px;
+    }
+
+    .bottom{
+        left:20px;
+        right:20px;
+    }
+
+    .bottom-right{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="space">
+
+    <div class="nebula nebula-main"></div>
+    <div class="nebula nebula-secondary"></div>
+    <div class="nebula nebula-far"></div>
+    <div class="nebula nebula-ribbon"></div>
+    <div class="nebula nebula-cloud-a"></div>
+    <div class="nebula nebula-cloud-b"></div>
+
+    <canvas id="starfield"></canvas>
+
+    <div id="scene"></div>
+
+    <div class="ui">
+
+        <div class="topbar">
+
+            <div>
+                <div class="brand">ASTERRA</div>
+                <div class="brand-sub">OWN YOUR WORLD.</div>
+            </div>
+
+            <div class="top-right">
+                <div class="status">
+                    <span class="status-dot"></span>
+                    SYSTEM ONLINE
+                </div>
+            </div>
+
+        </div>
+
+        <section class="hero">
+
+            <div class="kicker">
+                ASTERRA DIGITAL UNIVERSE
+            </div>
+
+            <h1>
+                ENTER THE<br>UNIVERSE
+            </h1>
+
+            <div class="hero-text">
+                Discover a digital universe built around finite planetary
+                surfaces, unique locations and collectible virtual property.
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="btn primary"
+                    id="discoverBtn"
+                >
+                    DISCOVER SURFACE
+                </button>
+
+                <button
+                    class="btn"
+                    id="exploreBtn"
+                >
+                    EXPLORE
+                </button>
+
+            </div>
+
+        </section>
+
+        <aside class="world-panel">
+
+            <div class="panel-label">
+                SELECT WORLD
+            </div>
+
+            <div class="world-tabs">
+
+                <button
+                    class="world-tab active"
+                    data-world="Moon"
+                >
+                    MOON
+                </button>
+
+                <button
+                    class="world-tab"
+                    data-world="Mars"
+                >
+                    MARS
+                </button>
+
+            </div>
+
+            <div class="world-info">
+
+                <div
+                    class="world-name"
+                    id="worldName"
+                >
+                    MOON
+                </div>
+
+                <div
+                    class="world-description"
+                    id="worldDescription"
+                >
+                    A finite digital surface inspired by Earth's closest
+                    celestial neighbour.
+                </div>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <span class="stat-label">SUPPLY</span>
+                        <span class="stat-value" id="supply">
+                            248,731
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-label">AVAILABLE</span>
+                        <span class="stat-value" id="available">
+                            248,731
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-label">BASE PRICE</span>
+                        <span class="stat-value" id="price">
+                            $11
+                        </span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-label">STATUS</span>
+                        <span class="stat-value status-live">
+                            ACTIVE
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+        <aside
+            class="property-panel"
+            id="propertyPanel"
+        >
+
+            <div class="property-header">
+
+                <div>
+
+                    <div class="property-kicker">
+                        SELECTED LOCATION
+                    </div>
+
+                    <div
+                        class="property-world"
+                        id="propertyWorld"
+                    >
+                        MOON
+                    </div>
+
+                    <div
+                        class="property-id"
+                        id="propertyId"
+                    >
+                        AST-MOON-000001
+                    </div>
+
+                </div>
+
+                <button
+                    class="property-close"
+                    id="propertyClose"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="property-data">
+
+                <div class="property-row">
+                    <span class="property-label">
+                        LATITUDE
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyLat"
+                    >
+                        0.000° N
+                    </span>
+                </div>
+
+                <div class="property-row">
+                    <span class="property-label">
+                        LONGITUDE
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyLon"
+                    >
+                        0.000° E
+                    </span>
+                </div>
+
+                <div class="property-row">
+                    <span class="property-label">
+                        AREA
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyArea"
+                    >
+                        —
+                    </span>
+                </div>
+
+                <div class="property-row">
+                    <span class="property-label">
+                        STATUS
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyStatus"
+                    >
+                        AVAILABLE
+                    </span>
+                </div>
+
+                <div class="property-row">
+                    <span class="property-label">
+                        PRICE
+                    </span>
+
+                    <span
+                        class="property-value"
+                        id="propertyPrice"
+                    >
+                        $11
+                    </span>
+                </div>
+
+            </div>
+
+            <button
+                class="property-select"
+                id="propertySelect"
+            >
+                SELECT PLOT
+            </button>
+
+        </aside>
+
+        <div
+            class="surface-status"
+            id="surfaceStatus"
+        >
+            LOADING TERRAIN DATA
+        </div>
+
+        <div class="drag-hint">
+            DRAG TO ROTATE · SCROLL TO ZOOM
+        </div>
+
+        <div class="bottom">
+
+            <div class="bottom-left">
+                ASTERRA DIGITAL UNIVERSE · SURFACE SCANNING
+            </div>
+
+            <div class="bottom-right">
+
+                <div class="metric">
+                    <div class="metric-label">WORLD</div>
+                    <div
+                        class="metric-value"
+                        id="bottomWorld"
+                    >
+                        MOON
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-label">MODE</div>
+                    <div class="metric-value">
+                        EXPLORATION
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-label">NETWORK</div>
+                    <div class="metric-value">
+                        ONLINE
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/geotiff@3.0.5/dist-browser/geotiff.min.js"></script>
+
+<script>
+
+if(typeof THREE === "undefined"){
+    throw new Error("ASTERRA: Three.js failed to load.");
+}
+
+if(typeof GeoTIFF === "undefined"){
+    throw new Error("ASTERRA: GeoTIFF.js failed to load.");
+}
+
+
+/* =========================================================
+   STARFIELD
+========================================================= */
+
+const starCanvas =
+    document.getElementById("starfield");
+
+const starCtx =
+    starCanvas.getContext(
+        "2d",
+        {alpha:true}
+    );
+
+let starWidth = 0;
+let starHeight = 0;
+let starDpr = 1;
+
+const cosmicStars = [];
+const cosmicDust = [];
+
+function randomBetween(a,b){
+    return a + Math.random() * (b-a);
+}
+
+function stellarColor(type,alpha){
+
+    if(type === 0){
+        return `rgba(255,255,255,${alpha})`;
+    }
+
+    if(type === 1){
+        return `rgba(214,228,255,${alpha})`;
+    }
+
+    if(type === 2){
+        return `rgba(255,244,224,${alpha})`;
+    }
+
+    return `rgba(238,242,255,${alpha})`;
+}
+
+function createCosmicStars(){
+
+    cosmicStars.length = 0;
+
+    const count =
+        Math.min(
+            620,
+            Math.max(
+                360,
+                Math.floor(
+                    window.innerWidth *
+                    window.innerHeight /
+                    2500
+                )
+            )
+        );
+
+    for(let i=0;i<count;i++){
+
+        const layer =
+            Math.random();
+
+        let radius;
+        let brightness;
+
+        if(layer < .76){
+
+            radius =
+                randomBetween(.28,.72);
+
+            brightness =
+                randomBetween(.12,.38);
+
+        }else if(layer < .96){
+
+            radius =
+                randomBetween(.65,1.15);
+
+            brightness =
+                randomBetween(.28,.68);
+
+        }else{
+
+            radius =
+                randomBetween(1.05,1.9);
+
+            brightness =
+                randomBetween(.55,.95);
+        }
+
+        cosmicStars.push({
+
+            x:Math.random(),
+            y:Math.random(),
+
+            radius,
+            brightness,
+
+            phase:
+                Math.random() *
+                Math.PI * 2,
+
+            speed:
+                randomBetween(.18,1.15),
+
+            pulse:
+                randomBetween(.025,.22),
+
+            type:
+                Math.random() < .84
+                    ? 0
+                    : (Math.random() < .55 ? 1 : 2),
+
+            depth:
+                randomBetween(.15,1)
+        });
+    }
+}
+
+function createCosmicDust(){
+
+    cosmicDust.length = 0;
+
+    for(let i=0;i<85;i++){
+
+        cosmicDust.push({
+
+            x:Math.random(),
+            y:Math.random(),
+
+            radius:
+                randomBetween(.25,1.1),
+
+            alpha:
+                randomBetween(.018,.075),
+
+            phase:
+                Math.random() *
+                Math.PI * 2,
+
+            speed:
+                randomBetween(.01,.035)
+        });
+    }
+}
+
+function resizeStarfield(){
+
+    starDpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+    starWidth =
+        window.innerWidth;
+
+    starHeight =
+        window.innerHeight;
+
+    starCanvas.width =
+        starWidth * starDpr;
+
+    starCanvas.height =
+        starHeight * starDpr;
+
+    starCanvas.style.width =
+        starWidth + "px";
+
+    starCanvas.style.height =
+        starHeight + "px";
+
+    starCtx.setTransform(
+        starDpr,
+        0,
+        0,
+        starDpr,
+        0,
+        0
+    );
+
+    createCosmicStars();
+    createCosmicDust();
+}
+
+resizeStarfield();
+
+const cosmicClock =
+    performance.now();
+
+function renderStarfield(now){
+
+    const time =
+        (now-cosmicClock)/1000;
+
+    starCtx.clearRect(
+        0,
+        0,
+        starWidth,
+        starHeight
+    );
+
+    const haze =
+        starCtx.createRadialGradient(
+            starWidth*.72,
+            starHeight*.48,
+            0,
+            starWidth*.72,
+            starHeight*.48,
+            Math.max(
+                starWidth,
+                starHeight
+            )*.72
+        );
+
+    haze.addColorStop(
+        0,
+        "rgba(205,215,230,.018)"
+    );
+
+    haze.addColorStop(
+        .35,
+        "rgba(150,165,185,.008)"
+    );
+
+    haze.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+    starCtx.fillStyle = haze;
+
+    starCtx.fillRect(
+        0,
+        0,
+        starWidth,
+        starHeight
+    );
+
+    for(const dust of cosmicDust){
+
+        const x =
+            dust.x * starWidth;
+
+        const y =
+            dust.y * starHeight;
+
+        const pulse =
+            (
+                Math.sin(
+                    time*dust.speed+
+                    dust.phase
+                )+1
+            )*.5;
+
+        const alpha =
+            dust.alpha*
+            (.72+pulse*.28);
+
+        const gradient =
+            starCtx.createRadialGradient(
+                x,
+                y,
+                0,
+                x,
+                y,
+                dust.radius*4
+            );
+
+        gradient.addColorStop(
+            0,
+            `rgba(220,230,245,${alpha})`
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(220,230,245,0)"
+        );
+
+        starCtx.fillStyle =
+            gradient;
+
+        starCtx.beginPath();
+
+        starCtx.arc(
+            x,
+            y,
+            dust.radius*4,
+            0,
+            Math.PI*2
+        );
+
+        starCtx.fill();
+    }
+
+    for(const star of cosmicStars){
+
+        const twinkle =
+            Math.sin(
+                time*star.speed+
+                star.phase
+            );
+
+        const secondary =
+            Math.sin(
+                time*star.speed*.37+
+                star.phase*1.71
+            );
+
+        let intensity =
+            star.brightness*
+            (
+                1+
+                twinkle*star.pulse+
+                secondary*star.pulse*.28
+            );
+
+        intensity =
+            Math.max(
+                .025,
+                Math.min(1,intensity)
+            );
+
+        const driftX =
+            Math.sin(
+                time*.008+
+                star.phase
+            )*
+            star.depth*.35;
+
+        const driftY =
+            Math.cos(
+                time*.006+
+                star.phase
+            )*
+            star.depth*.22;
+
+        const x =
+            star.x*starWidth+
+            driftX;
+
+        const y =
+            star.y*starHeight+
+            driftY;
+
+        starCtx.beginPath();
+
+        starCtx.arc(
+            x,
+            y,
+            star.radius,
+            0,
+            Math.PI*2
+        );
+
+        starCtx.fillStyle =
+            stellarColor(
+                star.type,
+                intensity
+            );
+
+        starCtx.fill();
+    }
+
+    requestAnimationFrame(
+        renderStarfield
+    );
+}
+
+requestAnimationFrame(
+    renderStarfield
+);
+
+
+/* =========================================================
+   THREE
+========================================================= */
+
+const scene =
+    new THREE.Scene();
+
+const camera =
+    new THREE.PerspectiveCamera(
+        42,
+        window.innerWidth/window.innerHeight,
+        .05,
+        4000
+    );
+
+camera.position.set(
+    0,
+    0,
+    520
+);
+
+let renderer;
+
+try{
+
+    renderer =
+        new THREE.WebGLRenderer({
+
+            antialias:true,
+            alpha:true,
+
+            powerPreference:
+                "high-performance"
+        });
+
+}catch(error){
+
+    console.error(error);
+
+    throw new Error(
+        "ASTERRA requires WebGL support."
+    );
+}
+
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    )
+);
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+if("outputEncoding" in renderer){
+    renderer.outputEncoding =
+        THREE.sRGBEncoding;
+}
+
+renderer.domElement.style.touchAction =
+    "none";
+
+renderer.domElement.style.cursor =
+    "grab";
+
+document
+    .getElementById("scene")
+    .appendChild(
+        renderer.domElement
+    );
+
+
+/* =========================================================
+   LIGHTING
+========================================================= */
+
+const ambient =
+    new THREE.AmbientLight(
+        0xffffff,
+        .24
+    );
+
+scene.add(ambient);
+
+const keyLight =
+    new THREE.DirectionalLight(
+        0xffffff,
+        2.75
+    );
+
+keyLight.position.set(
+    -300,
+    180,
+    380
+);
+
+scene.add(keyLight);
+
+const secondaryLight =
+    new THREE.DirectionalLight(
+        0xd9e3f4,
+        .38
+    );
+
+secondaryLight.position.set(
+    280,
+    40,
+    -300
+);
+
+scene.add(secondaryLight);
+
+const grazingLight =
+    new THREE.DirectionalLight(
+        0xffffff,
+        .72
+    );
+
+grazingLight.position.set(
+    -80,
+    -220,
+    320
+);
+
+scene.add(grazingLight);
+
+
+/* =========================================================
+   PLANET
+========================================================= */
+
+const PLANET_RADIUS =
+    130;
+
+const planetGroup =
+    new THREE.Group();
+
+scene.add(
+    planetGroup
+);
+
+const terrainRoot =
+    new THREE.Group();
+
+planetGroup.add(
+    terrainRoot
+);
+
+let currentWorld =
+    "Moon";
+
+let planetLoadToken =
+    0;
+
+
+/* =========================================================
+   ZOOM
+========================================================= */
+
+let zoomDistance =
+    520;
+
+let targetZoom =
+    520;
+
+const MIN_ZOOM =
+    145;
+
+const MAX_ZOOM =
+    760;
+
+
+/* =========================================================
+   DEM
+========================================================= */
+
+const DEM_CONFIG = {
+
+    Moon:{
+
+        url:
+            "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_64.tif",
+
+        width:
+            23040,
+
+        height:
+            11520,
+
+        metersPerUnit:
+            1000,
+
+        /*
+            Physical lunar relief is subtle at this
+            display scale. Keep the enhancement moderate.
+        */
+
+        exaggeration:
+            3.4,
+
+        fallback:
+            "https://upload.wikimedia.org/wikipedia/commons/2/26/Solarsystemscope_texture_2k_moon.jpg"
+    },
+
+    Mars:{
+
+        url:
+            "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_MOLA_DEM_mosaic_global_463m.tif",
+
+        width:
+            46080,
+
+        height:
+            23040,
+
+        metersPerUnit:
+            1,
+
+        exaggeration:
+            2.8,
+
+        fallback:
+            "https://upload.wikimedia.org/wikipedia/commons/4/46/Solarsystemscope_texture_2k_mars.jpg"
+    }
+};
+
+
+/* =========================================================
+   HIGH DETAIL TERRAIN SETTINGS
+========================================================= */
+
+const TERRAIN = {
+
+    maxLevel:
+        8,
+
+    /*
+        Moon LDEM64 contains roughly 64 samples/degree.
+        At close LOD a 97x97 mesh preserves considerably
+        more of the native DEM signal than 65x65.
+    */
+
+    samplesPerTile:
+        97,
+
+    /*
+        Close Moon tiles use native-resolution nearest
+        DEM sampling instead of bilinear averaging.
+    */
+
+    moonNativeSamplingLevel:
+        5,
+
+    updateInterval:
+        100,
+
+    lastUpdate:
+        0,
+
+    tiles:
+        new Map(),
+
+    visibleKeys:
+        new Set(),
+
+    cacheLimit:
+        180,
+
+    demFiles:
+        new Map(),
+
+    loading:
+        0
+};
+
+
+/* =========================================================
+   PLOT
+========================================================= */
+
+const PLOT_GRID_LAT =
+    180;
+
+const PLOT_GRID_LON =
+    360;
+
+const raycaster =
+    new THREE.Raycaster();
+
+let selectedPlot =
+    null;
+
+let plotBoundary =
+    null;
+
+let plotMarker =
+    null;
+
+
+/* =========================================================
+   WORLD DATA
+========================================================= */
+
+const worldData = {
+
+    Moon:{
+
+        description:
+            "A finite digital surface inspired by Earth's closest celestial neighbour.",
+
+        supply:
+            "248,731",
+
+        available:
+            "248,731",
+
+        price:
+            "$11"
+    },
+
+    Mars:{
+
+        description:
+            "A finite digital surface inspired by the red planet and its iconic terrain.",
+
+        supply:
+            "591,427",
+
+        available:
+            "591,427",
+
+        price:
+            "$21"
+    }
+};
+
+
+/* =========================================================
+   UI
+========================================================= */
+
+const worldName =
+    document.getElementById(
+        "worldName"
+    );
+
+const worldDescription =
+    document.getElementById(
+        "worldDescription"
+    );
+
+const supply =
+    document.getElementById(
+        "supply"
+    );
+
+const available =
+    document.getElementById(
+        "available"
+    );
+
+const price =
+    document.getElementById(
+        "price"
+    );
+
+const bottomWorld =
+    document.getElementById(
+        "bottomWorld"
+    );
+
+const propertyPanel =
+    document.getElementById(
+        "propertyPanel"
+    );
+
+const propertyClose =
+    document.getElementById(
+        "propertyClose"
+    );
+
+const propertyWorld =
+    document.getElementById(
+        "propertyWorld"
+    );
+
+const propertyId =
+    document.getElementById(
+        "propertyId"
+    );
+
+const propertyLat =
+    document.getElementById(
+        "propertyLat"
+    );
+
+const propertyLon =
+    document.getElementById(
+        "propertyLon"
+    );
+
+const propertyArea =
+    document.getElementById(
+        "propertyArea"
+    );
+
+const propertyStatus =
+    document.getElementById(
+        "propertyStatus"
+    );
+
+const propertyPrice =
+    document.getElementById(
+        "propertyPrice"
+    );
+
+const propertySelect =
+    document.getElementById(
+        "propertySelect"
+    );
+
+const surfaceStatus =
+    document.getElementById(
+        "surfaceStatus"
+    );
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+let surfaceStatusTimer =
+    null;
+
+function setSurfaceStatus(
+    text,
+    visible
+){
+
+    surfaceStatus.textContent =
+        text;
+
+    surfaceStatus.classList.toggle(
+        "visible",
+        visible
+    );
+
+    clearTimeout(
+        surfaceStatusTimer
+    );
+
+    if(visible){
+
+        surfaceStatusTimer =
+            setTimeout(
+                ()=>{
+                    surfaceStatus.classList.remove(
+                        "visible"
+                    );
+                },
+                2200
+            );
+    }
+}
+
+
+/* =========================================================
+   DEM FILE
+========================================================= */
+
+async function getDEMFile(
+    world
+){
+
+    if(
+        TERRAIN.demFiles.has(
+            world
+        )
+    ){
+        return TERRAIN.demFiles.get(
+            world
+        );
+    }
+
+    const config =
+        DEM_CONFIG[world];
+
+    try{
+
+        setSurfaceStatus(
+            "OPENING GLOBAL DEM",
+            true
+        );
+
+        const tiff =
+            await GeoTIFF.fromUrl(
+                config.url,
+                {
+                    allowFullFile:false,
+                    maxRanges:32
+                }
+            );
+
+        const image =
+            await tiff.getImage();
+
+        const file = {
+            tiff,
+            image
+        };
+
+        TERRAIN.demFiles.set(
+            world,
+            file
+        );
+
+        return file;
+
+    }catch(error){
+
+        console.warn(
+            "ASTERRA DEM unavailable:",
+            world,
+            error
+        );
+
+        TERRAIN.demFiles.set(
+            world,
+            null
+        );
+
+        return null;
+    }
+}
+
+
+/* =========================================================
+   DEM WINDOW
+========================================================= */
+
+async function readDEMWindow(
+    world,
+    lonMin,
+    latMin,
+    lonMax,
+    latMax,
+    size,
+    level
+){
+
+    const config =
+        DEM_CONFIG[world];
+
+    const dem =
+        await getDEMFile(
+            world
+        );
+
+    if(!dem){
+        return null;
+    }
+
+    let x0 =
+        (
+            lonMin+180
+        )/
+        360*
+        config.width;
+
+    let x1 =
+        (
+            lonMax+180
+        )/
+        360*
+        config.width;
+
+    let y0 =
+        (
+            90-latMax
+        )/
+        180*
+        config.height;
+
+    let y1 =
+        (
+            90-latMin
+        )/
+        180*
+        config.height;
+
+    x0 =
+        Math.floor(
+            Math.max(
+                0,
+                Math.min(
+                    config.width-1,
+                    x0
+                )
+            )
+        );
+
+    x1 =
+        Math.ceil(
+            Math.max(
+                x0+2,
+                Math.min(
+                    config.width,
+                    x1
+                )
+            )
+        );
+
+    y0 =
+        Math.floor(
+            Math.max(
+                0,
+                Math.min(
+                    config.height-1,
+                    y0
+                )
+            )
+        );
+
+    y1 =
+        Math.ceil(
+            Math.max(
+                y0+2,
+                Math.min(
+                    config.height,
+                    y1
+                )
+            )
+        );
+
+    /*
+        This is the critical change.
+
+        Bilinear interpolation averages neighbouring
+        DEM samples and destroys small craters and
+        sharp local height changes.
+
+        For Moon close LODs we use nearest sampling,
+        preserving the native DEM relief.
+
+        Mars keeps bilinear behaviour.
+    */
+
+    const useNativeMoonSampling =
+        world === "Moon" &&
+        level >= TERRAIN.moonNativeSamplingLevel;
+
+    const resampleMethod =
+        useNativeMoonSampling
+            ? "nearest"
+            : "bilinear";
+
+    try{
+
+        const result =
+            await dem.image.readRasters({
+
+                window:[
+                    x0,
+                    y0,
+                    x1,
+                    y1
+                ],
+
+                width:
+                    size,
+
+                height:
+                    size,
+
+                resampleMethod,
+
+                interleave:
+                    false
+            });
+
+        return {
+
+            values:
+                result[0],
+
+            width:
+                result.width,
+
+            height:
+                result.height,
+
+            sampling:
+                resampleMethod
+
+        };
+
+    }catch(error){
+
+        console.warn(
+            "ASTERRA DEM window failed:",
+            world,
+            level,
+            error
+        );
+
+        return null;
+    }
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>ASTERRA — Own Your World</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
 
 *{
     box-sizing:border-box;
@@ -151,7 +2316,7 @@ body{
         radial-gradient(
             ellipse,
             rgba(58,78,112,.13),
-            transparent 70%
+            transparent 68%
         );
 }
 
@@ -639,8 +2804,13 @@ body{
             <div class="brand-mark"></div>
 
             <div>
-                <div class="brand-name">ASTERRA</div>
-                <div class="brand-sub">OWN YOUR WORLD</div>
+                <div class="brand-name">
+                    ASTERRA
+                </div>
+
+                <div class="brand-sub">
+                    OWN YOUR WORLD
+                </div>
             </div>
 
         </div>
@@ -651,6 +2821,7 @@ body{
         </div>
 
     </div>
+
 
     <section class="hero">
 
@@ -671,11 +2842,17 @@ body{
 
         <div class="hero-buttons">
 
-            <button id="discoverBtn" class="action-btn primary">
+            <button
+                id="discoverBtn"
+                class="action-btn primary"
+            >
                 DISCOVER SURFACE
             </button>
 
-            <button id="exploreBtn" class="action-btn">
+            <button
+                id="exploreBtn"
+                class="action-btn"
+            >
                 EXPLORE
             </button>
 
@@ -683,15 +2860,22 @@ body{
 
     </section>
 
+
     <section class="world-panel">
 
         <div class="world-tabs">
 
-            <button class="world-tab active" data-world="Moon">
+            <button
+                class="world-tab active"
+                data-world="Moon"
+            >
                 MOON
             </button>
 
-            <button class="world-tab" data-world="Mars">
+            <button
+                class="world-tab"
+                data-world="Mars"
+            >
                 MARS
             </button>
 
@@ -699,7 +2883,9 @@ body{
 
         <div class="world-info">
 
-            <h2 id="worldName">MOON</h2>
+            <h2 id="worldName">
+                MOON
+            </h2>
 
             <p id="worldDescription"></p>
 
@@ -731,7 +2917,11 @@ body{
 
     </section>
 
-    <section id="propertyPanel" class="property-panel">
+
+    <section
+        id="propertyPanel"
+        class="property-panel"
+    >
 
         <div class="property-header">
 
@@ -739,17 +2929,26 @@ body{
                 SELECTED LOCATION
             </div>
 
-            <button id="propertyClose" class="property-close">
+            <button
+                id="propertyClose"
+                class="property-close"
+            >
                 ×
             </button>
 
         </div>
 
-        <div id="propertyWorld" class="property-world">
+        <div
+            id="propertyWorld"
+            class="property-world"
+        >
             MOON
         </div>
 
-        <div id="propertyId" class="property-id">
+        <div
+            id="propertyId"
+            class="property-id"
+        >
             —
         </div>
 
@@ -777,19 +2976,30 @@ body{
 
         </div>
 
-        <div id="propertyPrice" class="property-price">
+        <div
+            id="propertyPrice"
+            class="property-price"
+        >
             —
         </div>
 
-        <button id="propertySelect" class="select-plot">
+        <button
+            id="propertySelect"
+            class="select-plot"
+        >
             SELECT PLOT
         </button>
 
     </section>
 
-    <div id="surfaceStatus" class="surface-status">
+
+    <div
+        id="surfaceStatus"
+        class="surface-status"
+    >
         LOADING HIGH RESOLUTION DEM
     </div>
+
 
     <div class="bottom-bar">
 
@@ -820,23 +3030,25 @@ body{
 
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/geotiff@3.0.5/dist-browser/geotiff.min.js"></script>
 
 <script>
-
-"use strict";
-
 
 /* =========================================================
    STARFIELD
 ========================================================= */
 
 const starCanvas =
-    document.getElementById("starfield");
+    document.getElementById(
+        "starfield"
+    );
 
 const starCtx =
-    starCanvas.getContext("2d");
+    starCanvas.getContext(
+        "2d"
+    );
 
 let cosmicStars = [];
 let cosmicDust = [];
@@ -850,16 +3062,16 @@ function resizeStarfield(){
         );
 
     starCanvas.width =
-        window.innerWidth * dpr;
+        window.innerWidth*dpr;
 
     starCanvas.height =
-        window.innerHeight * dpr;
+        window.innerHeight*dpr;
 
     starCanvas.style.width =
-        window.innerWidth + "px";
+        window.innerWidth+"px";
 
     starCanvas.style.height =
-        window.innerHeight + "px";
+        window.innerHeight+"px";
 
     starCtx.setTransform(
         dpr,
@@ -870,58 +3082,80 @@ function resizeStarfield(){
         0
     );
 
-    cosmicStars = [];
-    cosmicDust = [];
+    cosmicStars =
+        [];
+
+    cosmicDust =
+        [];
 
     const count =
         Math.min(
             650,
-            Math.max(
-                300,
-                Math.floor(
-                    window.innerWidth *
-                    window.innerHeight /
-                    2100
-                )
+            Math.floor(
+                window.innerWidth*
+                window.innerHeight/
+                2100
             )
         );
 
-    for(let i=0;i<count;i++){
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
 
         cosmicStars.push({
 
-            x:Math.random()*window.innerWidth,
-            y:Math.random()*window.innerHeight,
+            x:
+                Math.random()*
+                window.innerWidth,
 
-            r:Math.random()*1.15+.15,
-            a:Math.random()*.65+.18,
+            y:
+                Math.random()*
+                window.innerHeight,
+
+            r:
+                Math.random()*
+                1.15+.15,
+
+            a:
+                Math.random()*
+                .65+.18,
 
             tw:
-                Math.random() *
-                Math.PI *
-                2
-
+                Math.random()*
+                Math.PI*2
         });
-
     }
 
-    for(let i=0;i<90;i++){
+    for(
+        let i=0;
+        i<90;
+        i++
+    ){
 
         cosmicDust.push({
 
-            x:Math.random()*window.innerWidth,
-            y:Math.random()*window.innerHeight,
+            x:
+                Math.random()*
+                window.innerWidth,
 
-            r:Math.random()*2+.4,
-            a:Math.random()*.12
+            y:
+                Math.random()*
+                window.innerHeight,
 
+            r:
+                Math.random()*2+.4,
+
+            a:
+                Math.random()*.12
         });
-
     }
-
 }
 
-function renderStarfield(time){
+function renderStarfield(
+    time
+){
 
     starCtx.clearRect(
         0,
@@ -930,18 +3164,23 @@ function renderStarfield(time){
         window.innerHeight
     );
 
-    for(const star of cosmicStars){
+    for(
+        const star of cosmicStars
+    ){
 
         const alpha =
-            star.a +
+            star.a+
             Math.sin(
-                time*.0007 +
+                time*.0007+
                 star.tw
             )*.12;
 
         starCtx.fillStyle =
-            "rgba(255,255,255," +
-            Math.max(.04,alpha) +
+            "rgba(255,255,255,"+
+            Math.max(
+                .04,
+                alpha
+            )+
             ")";
 
         starCtx.beginPath();
@@ -955,14 +3194,15 @@ function renderStarfield(time){
         );
 
         starCtx.fill();
-
     }
 
-    for(const dust of cosmicDust){
+    for(
+        const dust of cosmicDust
+    ){
 
         starCtx.fillStyle =
-            "rgba(170,190,220," +
-            dust.a +
+            "rgba(170,190,220,"+
+            dust.a+
             ")";
 
         starCtx.beginPath();
@@ -976,36 +3216,15 @@ function renderStarfield(time){
         );
 
         starCtx.fill();
-
     }
-
-    requestAnimationFrame(
-        renderStarfield
-    );
 }
 
 resizeStarfield();
-
-requestAnimationFrame(
-    renderStarfield
-);
 
 
 /* =========================================================
    THREE SETUP
 ========================================================= */
-
-if(typeof THREE === "undefined"){
-    throw new Error(
-        "ASTERRA: Three.js failed to load."
-    );
-}
-
-if(typeof GeoTIFF === "undefined"){
-    throw new Error(
-        "ASTERRA: GeoTIFF.js failed to load."
-    );
-}
 
 const scene =
     new THREE.Scene();
@@ -1013,7 +3232,7 @@ const scene =
 const camera =
     new THREE.PerspectiveCamera(
         42,
-        window.innerWidth /
+        window.innerWidth/
         window.innerHeight,
         .05,
         4000
@@ -1029,11 +3248,11 @@ const renderer =
     new THREE.WebGLRenderer({
 
         antialias:true,
+
         alpha:true,
 
         powerPreference:
             "high-performance"
-
     });
 
 renderer.setPixelRatio(
@@ -1048,11 +3267,13 @@ renderer.setSize(
     window.innerHeight
 );
 
-if("outputEncoding" in renderer){
+if(
+    "outputEncoding"
+    in renderer
+){
 
     renderer.outputEncoding =
         THREE.sRGBEncoding;
-
 }
 
 renderer.domElement.style.touchAction =
@@ -1075,7 +3296,7 @@ document
 const ambient =
     new THREE.AmbientLight(
         0xffffff,
-        .20
+        .24
     );
 
 scene.add(
@@ -1085,12 +3306,12 @@ scene.add(
 const keyLight =
     new THREE.DirectionalLight(
         0xffffff,
-        3.10
+        2.75
     );
 
 keyLight.position.set(
     -300,
-    170,
+    180,
     380
 );
 
@@ -1100,13 +3321,13 @@ scene.add(
 
 const secondaryLight =
     new THREE.DirectionalLight(
-        0xbfcce0,
-        .30
+        0xd9e3f4,
+        .38
     );
 
 secondaryLight.position.set(
     280,
-    30,
+    40,
     -300
 );
 
@@ -1117,13 +3338,13 @@ scene.add(
 const grazingLight =
     new THREE.DirectionalLight(
         0xffffff,
-        .95
+        .72
     );
 
 grazingLight.position.set(
-    -120,
-    -260,
-    300
+    -80,
+    -220,
+    320
 );
 
 scene.add(
@@ -1177,91 +3398,57 @@ const MAX_ZOOM =
 
 
 /* =========================================================
-   REAL DEM CONFIGURATION
+   DEM
 ========================================================= */
 
 const DEM_CONFIG = {
 
     Moon:{
 
-        /*
-            NASA LRO / LOLA global 118 m DEM.
-
-            92160 x 46080
-            16-bit signed
-            scaler = 0.5 m
-        */
-
         url:
-            "https://planetarymaps.usgs.gov/mosaic/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif",
+            "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_64.tif",
 
         width:
-            92160,
+            23040,
 
         height:
-            46080,
+            11520,
 
         metersPerUnit:
-            0.5,
-
-        /*
-            Cinematic display enhancement.
-            This changes only vertical display scale,
-            never the actual terrain pattern.
-        */
+            1000,
 
         exaggeration:
-            4.0,
+            3.4,
 
-        radiusKm:
-            1737.4,
-
-        base:{
-            r:.56,
-            g:.57,
-            b:.59
-        }
-
+        fallback:
+            "https://upload.wikimedia.org/wikipedia/commons/2/26/Solarsystemscope_texture_2k_moon.jpg"
     },
 
     Mars:{
 
-        /*
-            Global HRSC/MOLA blended DEM.
-            Approximately 200 m global resolution.
-        */
-
         url:
-            "https://planetarymaps.usgs.gov/mosaic/Mars/HRSC_MOLA_Blend/Mars_HRSC_MOLA_BlendDEM_Global_200mp_v2.tif",
+            "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_MOLA_DEM_mosaic_global_463m.tif",
 
         width:
-            230400,
+            46080,
 
         height:
-            115200,
+            23040,
 
         metersPerUnit:
             1,
 
         exaggeration:
-            3.5,
+            2.8,
 
-        radiusKm:
-            3396.19,
-
-        base:{
-            r:.56,
-            g:.27,
-            b:.17
-        }
-
+        fallback:
+            "https://upload.wikimedia.org/wikipedia/commons/4/46/Solarsystemscope_texture_2k_mars.jpg"
     }
-
 };
 
 
 /* =========================================================
-   TERRAIN CONFIGURATION
+   TERRAIN CONFIG
 ========================================================= */
 
 const TERRAIN = {
@@ -1272,17 +3459,11 @@ const TERRAIN = {
     samplesPerTile:
         97,
 
-    highSamples:
-        129,
-
-    mediumSamples:
-        113,
-
-    nativeSamplingLevel:
+    moonNativeSamplingLevel:
         5,
 
     updateInterval:
-        90,
+        100,
 
     lastUpdate:
         0,
@@ -1301,12 +3482,11 @@ const TERRAIN = {
 
     loading:
         0
-
 };
 
 
 /* =========================================================
-   PLOT SYSTEM
+   PLOT GRID
 ========================================================= */
 
 const PLOT_GRID_LAT =
@@ -1314,18 +3494,6 @@ const PLOT_GRID_LAT =
 
 const PLOT_GRID_LON =
     360;
-
-const raycaster =
-    new THREE.Raycaster();
-
-let selectedPlot =
-    null;
-
-let plotBoundary =
-    null;
-
-let plotMarker =
-    null;
 
 
 /* =========================================================
@@ -1347,7 +3515,6 @@ const worldData = {
 
         price:
             "$11"
-
     },
 
     Mars:{
@@ -1363,14 +3530,29 @@ const worldData = {
 
         price:
             "$21"
-
     }
-
 };
 
 
 /* =========================================================
-   UI REFERENCES
+   RAYCAST
+========================================================= */
+
+const raycaster =
+    new THREE.Raycaster();
+
+let selectedPlot =
+    null;
+
+let plotBoundary =
+    null;
+
+let plotMarker =
+    null;
+
+
+/* =========================================================
+   UI
 ========================================================= */
 
 const worldName =
@@ -1459,13 +3641,6 @@ const surfaceStatus =
     );
 
 
-/* =========================================================
-   STATUS
-========================================================= */
-
-let surfaceStatusTimer =
-    null;
-
 function setSurfaceStatus(
     text,
     visible
@@ -1479,68 +3654,22 @@ function setSurfaceStatus(
         visible
     );
 
-    clearTimeout(
-        surfaceStatusTimer
-    );
-
     if(visible){
 
-        surfaceStatusTimer =
+        clearTimeout(
+            setSurfaceStatus.timer
+        );
+
+        setSurfaceStatus.timer =
             setTimeout(
                 ()=>{
                     surfaceStatus.classList.remove(
                         "visible"
                     );
                 },
-                2400
+                3000
             );
-
     }
-
-}
-
-
-/* =========================================================
-   WORLD UI
-========================================================= */
-
-function updateWorldUI(){
-
-    const data =
-        worldData[currentWorld];
-
-    worldName.textContent =
-        currentWorld.toUpperCase();
-
-    worldDescription.textContent =
-        data.description;
-
-    supply.textContent =
-        data.supply;
-
-    available.textContent =
-        data.available;
-
-    price.textContent =
-        data.price;
-
-    bottomWorld.textContent =
-        currentWorld.toUpperCase();
-
-    document
-        .querySelectorAll(
-            ".world-tab"
-        )
-        .forEach(
-            button=>{
-                button.classList.toggle(
-                    "active",
-                    button.dataset.world ===
-                    currentWorld
-                );
-            }
-        );
-
 }
 
 
@@ -1553,13 +3682,14 @@ async function getDEMFile(
 ){
 
     if(
-        TERRAIN.demFiles.has(world)
+        TERRAIN.demFiles.has(
+            world
+        )
     ){
 
         return TERRAIN.demFiles.get(
             world
         );
-
     }
 
     const config =
@@ -1567,18 +3697,19 @@ async function getDEMFile(
 
     try{
 
-        TERRAIN.loading++;
-
         setSurfaceStatus(
-            "OPENING GLOBAL HIGH RESOLUTION DEM",
+            "OPENING GLOBAL DEM",
             true
         );
 
         const tiff =
             await GeoTIFF.fromUrl(
+
                 config.url,
+
                 {
                     allowFullFile:false,
+
                     maxRanges:64
                 }
             );
@@ -1593,7 +3724,7 @@ async function getDEMFile(
             image.getHeight();
 
         console.log(
-            "ASTERRA REAL DEM",
+            "ASTERRA DEM:",
             world,
             actualWidth,
             actualHeight
@@ -1602,6 +3733,7 @@ async function getDEMFile(
         const file = {
 
             tiff,
+
             image,
 
             width:
@@ -1609,7 +3741,6 @@ async function getDEMFile(
 
             height:
                 actualHeight
-
         };
 
         TERRAIN.demFiles.set(
@@ -1617,15 +3748,11 @@ async function getDEMFile(
             file
         );
 
-        TERRAIN.loading--;
-
         return file;
 
     }catch(error){
 
-        TERRAIN.loading--;
-
-        console.error(
+        console.warn(
             "ASTERRA DEM unavailable:",
             world,
             error
@@ -1636,177 +3763,8 @@ async function getDEMFile(
             null
         );
 
-        setSurfaceStatus(
-            "DEM CONNECTION FAILED",
-            true
-        );
-
         return null;
-
     }
-
-}
-
-
-/* =========================================================
-   TILE GEOGRAPHY
-========================================================= */
-
-function tileDimensions(
-    level
-){
-
-    return {
-
-        cols:
-            Math.pow(2,level),
-
-        rows:
-            Math.pow(2,level-1)
-
-    };
-
-}
-
-function normalizeTileX(
-    x,
-    cols
-){
-
-    x %= cols;
-
-    if(x<0){
-        x += cols;
-    }
-
-    return x;
-
-}
-
-function tileBounds(
-    level,
-    x,
-    y
-){
-
-    const dims =
-        tileDimensions(level);
-
-    const lonSpan =
-        360 / dims.cols;
-
-    const latSpan =
-        180 / dims.rows;
-
-    const lonMin =
-        -180 +
-        x*lonSpan;
-
-    const lonMax =
-        lonMin +
-        lonSpan;
-
-    const latMax =
-        90 -
-        y*latSpan;
-
-    const latMin =
-        latMax -
-        latSpan;
-
-    return {
-
-        lonMin,
-        lonMax,
-        latMin,
-        latMax
-
-    };
-
-}
-
-function tileKey(
-    level,
-    x,
-    y
-){
-
-    const dims =
-        tileDimensions(level);
-
-    x =
-        normalizeTileX(
-            x,
-            dims.cols
-        );
-
-    return (
-        level +
-        ":" +
-        x +
-        ":" +
-        y
-    );
-
-}
-
-
-/* =========================================================
-   LOD SAMPLE COUNT
-========================================================= */
-
-function samplesForLevel(
-    level
-){
-
-    if(level >= 7){
-        return TERRAIN.highSamples;
-    }
-
-    if(level >= 4){
-        return TERRAIN.mediumSamples;
-    }
-
-    return TERRAIN.samplesPerTile;
-
-}
-
-
-/* =========================================================
-   LAT/LON TO SPHERE
-========================================================= */
-
-function latLonToVector(
-    latitude,
-    longitude,
-    radius
-){
-
-    const lat =
-        THREE.MathUtils.degToRad(
-            latitude
-        );
-
-    const lon =
-        THREE.MathUtils.degToRad(
-            longitude
-        );
-
-    return new THREE.Vector3(
-
-        radius *
-        Math.cos(lat) *
-        Math.cos(lon),
-
-        radius *
-        Math.sin(lat),
-
-        radius *
-        Math.cos(lat) *
-        Math.sin(lon)
-
-    );
-
 }
 
 
@@ -1815,13 +3773,18 @@ function latLonToVector(
 ========================================================= */
 
 async function readDEMWindow(
+
     world,
+
     lonMin,
     latMin,
     lonMax,
     latMax,
+
     size,
+
     level
+
 ){
 
     const config =
@@ -1837,41 +3800,39 @@ async function readDEMWindow(
     }
 
     const width =
-        dem.width;
+        dem.width ||
+        config.width;
 
     const height =
-        dem.height;
+        dem.height ||
+        config.height;
 
     let x0 =
         (
-            lonMin +
-            180
-        ) /
-        360 *
+            lonMin+180
+        )/
+        360*
         width;
 
     let x1 =
         (
-            lonMax +
-            180
-        ) /
-        360 *
+            lonMax+180
+        )/
+        360*
         width;
 
     let y0 =
         (
-            90 -
-            latMax
-        ) /
-        180 *
+            90-latMax
+        )/
+        180*
         height;
 
     let y1 =
         (
-            90 -
-            latMin
-        ) /
-        180 *
+            90-latMin
+        )/
+        180*
         height;
 
     x0 =
@@ -1879,7 +3840,7 @@ async function readDEMWindow(
             Math.max(
                 0,
                 Math.min(
-                    width-2,
+                    width-1,
                     x0
                 )
             )
@@ -1901,7 +3862,7 @@ async function readDEMWindow(
             Math.max(
                 0,
                 Math.min(
-                    height-2,
+                    height-1,
                     y0
                 )
             )
@@ -1920,18 +3881,23 @@ async function readDEMWindow(
 
 
     /*
-        High LOD:
-        preserve actual DEM sample structure.
+        At close range we deliberately avoid
+        bilinear smoothing.
 
-        Lower LOD:
-        bilinear sampling prevents large
-        tile-to-tile aliasing.
+        This preserves small craters,
+        crater rims and abrupt terrain
+        transitions from the DEM.
     */
 
+    const useNativeSampling =
+        level >=
+        TERRAIN.moonNativeSamplingLevel;
+
     const resampleMethod =
-        level >= TERRAIN.nativeSamplingLevel
+        useNativeSampling
             ? "nearest"
             : "bilinear";
+
 
     try{
 
@@ -1955,7 +3921,6 @@ async function readDEMWindow(
 
                 interleave:
                     false
-
             });
 
         return {
@@ -1971,12 +3936,11 @@ async function readDEMWindow(
 
             sampling:
                 resampleMethod
-
         };
 
     }catch(error){
 
-        console.error(
+        console.warn(
             "ASTERRA DEM window failed:",
             world,
             level,
@@ -1984,9 +3948,152 @@ async function readDEMWindow(
         );
 
         return null;
+    }
+}
 
+
+/* =========================================================
+   TILE DIMENSIONS
+========================================================= */
+
+function tileDimensions(
+    level
+){
+
+    return {
+
+        cols:
+            Math.pow(
+                2,
+                level
+            ),
+
+        rows:
+            Math.pow(
+                2,
+                level-1
+            )
+    };
+}
+
+function normalizeTileX(
+    x,
+    cols
+){
+
+    x %= cols;
+
+    if(x<0){
+        x += cols;
     }
 
+    return x;
+}
+
+function tileBounds(
+    level,
+    x,
+    y
+){
+
+    const dims =
+        tileDimensions(
+            level
+        );
+
+    const lonSpan =
+        360/
+        dims.cols;
+
+    const latSpan =
+        180/
+        dims.rows;
+
+    const lonMin =
+        -180+
+        x*lonSpan;
+
+    const lonMax =
+        lonMin+
+        lonSpan;
+
+    const latMax =
+        90-
+        y*latSpan;
+
+    const latMin =
+        latMax-
+        latSpan;
+
+    return {
+
+        lonMin,
+        lonMax,
+        latMin,
+        latMax
+    };
+}
+
+function tileKey(
+    level,
+    x,
+    y
+){
+
+    const dims =
+        tileDimensions(
+            level
+        );
+
+    x =
+        normalizeTileX(
+            x,
+            dims.cols
+        );
+
+    return (
+        level+
+        ":"+
+        x+
+        ":"+
+        y
+    );
+}
+
+
+/* =========================================================
+   LAT/LON VECTOR
+========================================================= */
+
+function latLonToVector(
+    latitude,
+    longitude,
+    radius
+){
+
+    const lat =
+        THREE.MathUtils.degToRad(
+            latitude
+        );
+
+    const lon =
+        THREE.MathUtils.degToRad(
+            longitude
+        );
+
+    return new THREE.Vector3(
+
+        radius*
+        Math.cos(lat)*
+        Math.cos(lon),
+
+        radius*
+        Math.sin(lat),
+
+        radius*
+        Math.cos(lat)*
+        Math.sin(lon)
+    );
 }
 
 
@@ -2007,21 +4114,16 @@ function decodeElevation(
         DEM_CONFIG[world];
 
     let meters =
-        raw *
+        raw*
         config.metersPerUnit;
 
     if(!Number.isFinite(meters)){
         meters = 0;
     }
 
-    /*
-        Remove only impossible corrupt raster
-        values. No terrain smoothing.
-    */
-
     meters =
         Math.max(
-            -20000,
+            -15000,
             Math.min(
                 25000,
                 meters
@@ -2029,7 +4131,6 @@ function decodeElevation(
         );
 
     return meters;
-
 }
 
 function metersToScene(
@@ -2037,39 +4138,54 @@ function metersToScene(
     meters
 ){
 
+    const radiusKm =
+        world === "Moon"
+            ? 1737.4
+            : 3396.19;
+
     const config =
         DEM_CONFIG[world];
 
     const scale =
-        PLANET_RADIUS /
-        (
-            config.radiusKm *
-            1000
-        );
+        PLANET_RADIUS/
+        (radiusKm*1000);
 
     return (
-        meters *
-        scale *
+        meters*
+        scale*
         config.exaggeration
     );
-
 }
 
 
 /* =========================================================
-   CINEMATIC TERRAIN MATERIAL
+   DEM HILLSHADE TEXTURE
 ========================================================= */
 
-function createTerrainMaterial(
+function createDEMHillshadeTexture(
     world,
-    values,
-    width,
-    height,
-    bounds
+    dem
 ){
 
-    const config =
-        DEM_CONFIG[world];
+    if(
+        !dem ||
+        !dem.values
+    ){
+        return null;
+    }
+
+    const width =
+        dem.width;
+
+    const height =
+        dem.height;
+
+    if(
+        width<3 ||
+        height<3
+    ){
+        return null;
+    }
 
     const canvas =
         document.createElement(
@@ -2084,51 +4200,106 @@ function createTerrainMaterial(
 
     const ctx =
         canvas.getContext(
-            "2d",
-            {
-                alpha:false
-            }
+            "2d"
         );
 
-    const image =
+    const imageData =
         ctx.createImageData(
             width,
             height
         );
 
-    const radiusMeters =
-        config.radiusKm *
-        1000;
+    const pixels =
+        imageData.data;
 
-    const latStep =
-        Math.abs(
-            bounds.latMax -
-            bounds.latMin
-        ) /
-        Math.max(
-            1,
-            height-1
+    const values =
+        dem.values;
+
+
+    let min =
+        Infinity;
+
+    let max =
+        -Infinity;
+
+    for(
+        let i=0;
+        i<values.length;
+        i++
+    ){
+
+        const raw =
+            values[i];
+
+        if(
+            Number.isFinite(raw)
+        ){
+
+            const meters =
+                decodeElevation(
+                    world,
+                    raw
+                );
+
+            if(meters<min){
+                min=meters;
+            }
+
+            if(meters>max){
+                max=meters;
+            }
+        }
+    }
+
+    if(
+        !Number.isFinite(min) ||
+        !Number.isFinite(max) ||
+        max<=min
+    ){
+        return null;
+    }
+
+
+    /*
+        Strong local relief shading.
+
+        The light direction is intentionally
+        low-angle. This makes crater rims,
+        mountains and canyon walls visible
+        instead of producing a flat sphere.
+    */
+
+    const lightX =
+        -.62;
+
+    const lightY =
+        -.30;
+
+    const lightZ =
+        .72;
+
+    const lightLength =
+        Math.sqrt(
+            lightX*lightX+
+            lightY*lightY+
+            lightZ*lightZ
         );
 
-    const lonStep =
-        Math.abs(
-            bounds.lonMax -
-            bounds.lonMin
-        ) /
-        Math.max(
-            1,
-            width-1
-        );
+    const lx =
+        lightX/lightLength;
 
-    const light =
-        new THREE.Vector3(
-            -0.72,
-            -0.48,
-            0.50
-        ).normalize();
+    const ly =
+        lightY/lightLength;
 
-    const base =
-        config.base;
+    const lz =
+        lightZ/lightLength;
+
+
+    const exaggeration =
+        world === "Moon"
+            ? .9
+            : .72;
+
 
     for(
         let y=0;
@@ -2136,42 +4307,16 @@ function createTerrainMaterial(
         y++
     ){
 
-        const latitude =
-            bounds.latMax -
-            (
-                y /
-                Math.max(
-                    1,
-                    height-1
-                )
-            ) *
-            (
-                bounds.latMax -
-                bounds.latMin
-            );
-
-        const latRad =
-            THREE.MathUtils.degToRad(
-                latitude
-            );
-
-        const dyMeters =
-            radiusMeters *
-            THREE.MathUtils.degToRad(
-                latStep
-            );
-
-        const dxMeters =
+        const ym =
             Math.max(
-                1,
-                radiusMeters *
-                Math.max(
-                    .08,
-                    Math.cos(latRad)
-                ) *
-                THREE.MathUtils.degToRad(
-                    lonStep
-                )
+                0,
+                y-1
+            );
+
+        const yp =
+            Math.min(
+                height-1,
+                y+1
             );
 
         for(
@@ -2180,18 +4325,24 @@ function createTerrainMaterial(
             x++
         ){
 
-            const i =
-                y*width+x;
+            const xm =
+                Math.max(
+                    0,
+                    x-1
+                );
+
+            const xp =
+                Math.min(
+                    width-1,
+                    x+1
+                );
 
             const left =
                 decodeElevation(
                     world,
                     values[
                         y*width+
-                        Math.max(
-                            0,
-                            x-1
-                        )
+                        xm
                     ]
                 );
 
@@ -2200,10 +4351,7 @@ function createTerrainMaterial(
                     world,
                     values[
                         y*width+
-                        Math.min(
-                            width-1,
-                            x+1
-                        )
+                        xp
                     ]
                 );
 
@@ -2211,10 +4359,8 @@ function createTerrainMaterial(
                 decodeElevation(
                     world,
                     values[
-                        Math.max(
-                            0,
-                            y-1
-                        )*width+x
+                        ym*width+
+                        x
                     ]
                 );
 
@@ -2222,341 +4368,177 @@ function createTerrainMaterial(
                 decodeElevation(
                     world,
                     values[
-                        Math.min(
-                            height-1,
-                            y+1
-                        )*width+x
+                        yp*width+
+                        x
                     ]
                 );
 
-            const center =
-                decodeElevation(
-                    world,
-                    values[i]
-                );
-
-
-            /*
-                Real-world slopes.
-            */
-
-            const dzdx =
+            const dx =
                 (
-                    right -
+                    right-
                     left
-                ) /
-                (
-                    2 *
-                    dxMeters
-                );
+                )*
+                .00016*
+                exaggeration;
 
-            const dzdy =
+            const dy =
                 (
-                    down -
+                    down-
                     up
-                ) /
-                (
-                    2 *
-                    dyMeters
+                )*
+                .00016*
+                exaggeration;
+
+            let nx =
+                -dx;
+
+            let ny =
+                -dy;
+
+            let nz =
+                1;
+
+            const len =
+                Math.sqrt(
+                    nx*nx+
+                    ny*ny+
+                    nz*nz
                 );
 
-
-            /*
-                Tangent-space surface normal.
-            */
-
-            const normal =
-                new THREE.Vector3(
-                    -dzdx,
-                    -dzdy,
-                    1
-                ).normalize();
+            nx/=len;
+            ny/=len;
+            nz/=len;
 
             let shade =
-                normal.dot(
-                    light
-                );
+                nx*lx+
+                ny*ly+
+                nz*lz;
 
             shade =
-                THREE.MathUtils.clamp(
-                    shade,
-                    0,
-                    1
-                );
-
-
-            /*
-                Second derivative / curvature.
-                This is derived directly from the DEM
-                and emphasizes real crater rims,
-                canyon edges and ridges.
-            */
-
-            const d2x =
-                (
-                    right -
-                    2*center +
-                    left
-                ) /
-                (
-                    dxMeters *
-                    dxMeters
-                );
-
-            const d2y =
-                (
-                    down -
-                    2*center +
-                    up
-                ) /
-                (
-                    dyMeters *
-                    dyMeters
-                );
-
-            const curvature =
-                d2x+d2y;
-
-            const curvatureSignal =
-                Math.tanh(
-                    curvature *
-                    180
-                );
-
-
-            /*
-                Local relief over one sample.
-            */
-
-            const localRelief =
-                center -
-                (
-                    left +
-                    right +
-                    up +
-                    down
-                )*.25;
-
-            const reliefSignal =
-                Math.tanh(
-                    localRelief /
-                    80
-                );
-
-
-            /*
-                Slope.
-            */
-
-            const slope =
-                Math.atan(
-                    Math.sqrt(
-                        dzdx*dzdx +
-                        dzdy*dzdy
+                Math.max(
+                    -1,
+                    Math.min(
+                        1,
+                        shade
                     )
                 );
 
-            const slopeSignal =
-                THREE.MathUtils.clamp(
-                    slope /
-                    THREE.MathUtils.degToRad(
-                        45
-                    ),
-                    0,
-                    1
-                );
-
-
             /*
-                Strong cinematic contrast.
-
-                This is not artificial terrain.
-                It is a visual interpretation of the
-                actual DEM derivatives.
+                Additional elevation contrast.
+                Kept subtle so the map remains
+                physically readable.
             */
 
-            let tone =
-                .25 +
-                shade*.75;
-
-            tone +=
-                curvatureSignal *
-                .085;
-
-            tone +=
-                reliefSignal *
-                .065;
-
-            tone +=
-                slopeSignal *
-                .055;
-
-            tone =
-                THREE.MathUtils.clamp(
-                    tone,
-                    .08,
-                    1.08
+            const normalized =
+                (
+                    decodeElevation(
+                        world,
+                        values[
+                            y*width+x
+                        ]
+                    )-
+                    min
+                )/
+                (
+                    max-min
                 );
 
+            const relief =
+                (
+                    normalized-
+                    .5
+                )*
+                .18;
 
-            /*
-                Planet-specific surface palette.
-            */
+            shade =
+                shade*.78+
+                relief;
+
+            const base =
+                .56+
+                shade*.34;
+
+            const index =
+                (
+                    y*width+x
+                )*4;
 
             let r;
             let g;
             let b;
 
-            if(world === "Moon"){
+            if(world==="Moon"){
 
                 r =
-                    base.r *
-                    (
-                        .72 +
-                        tone*.46
-                    );
+                    base*
+                    220;
 
                 g =
-                    base.g *
-                    (
-                        .73 +
-                        tone*.45
-                    );
+                    base*
+                    222;
 
                 b =
-                    base.b *
-                    (
-                        .76 +
-                        tone*.42
-                    );
+                    base*
+                    226;
 
             }else{
 
-                /*
-                    Mars:
-                    preserve dark volcanic terrain,
-                    brighter dusty highlands and strong
-                    canyon relief.
-                */
+                const redBase =
+                    base*
+                    205;
+
+                const greenBase =
+                    base*
+                    116;
+
+                const blueBase =
+                    base*
+                    88;
 
                 r =
-                    base.r *
-                    (
-                        .68 +
-                        tone*.55
-                    );
+                    redBase;
 
                 g =
-                    base.g *
-                    (
-                        .64 +
-                        tone*.50
-                    );
+                    greenBase;
 
                 b =
-                    base.b *
-                    (
-                        .60 +
-                        tone*.48
-                    );
-
-                /*
-                    Slight geological tonal variation
-                    based only on real elevation.
-                */
-
-                const elevationTone =
-                    THREE.MathUtils.clamp(
-                        (
-                            center /
-                            7000
-                        )*.5 +
-                        .5,
-                        0,
-                        1
-                    );
-
-                r *=
-                    .94 +
-                    elevationTone*.10;
-
-                g *=
-                    .91 +
-                    elevationTone*.08;
-
+                    blueBase;
             }
 
-
-            /*
-                Additional local crater/canyon contrast.
-            */
-
-            const edge =
-                THREE.MathUtils.clamp(
-                    .5 +
-                    curvatureSignal*.5,
-                    0,
-                    1
-                );
-
-            r *=
-                .91 +
-                edge*.11;
-
-            g *=
-                .91 +
-                edge*.10;
-
-            b *=
-                .91 +
-                edge*.10;
-
-
-            const p =
-                i*4;
-
-            image.data[p] =
+            pixels[index] =
                 Math.max(
                     0,
                     Math.min(
                         255,
-                        Math.round(
-                            r*255
-                        )
+                        r
                     )
                 );
 
-            image.data[p+1] =
+            pixels[index+1] =
                 Math.max(
                     0,
                     Math.min(
                         255,
-                        Math.round(
-                            g*255
-                        )
+                        g
                     )
                 );
 
-            image.data[p+2] =
+            pixels[index+2] =
                 Math.max(
                     0,
                     Math.min(
                         255,
-                        Math.round(
-                            b*255
-                        )
+                        b
                     )
                 );
 
-            image.data[p+3] =
+            pixels[index+3] =
                 255;
-
         }
-
     }
 
     ctx.putImageData(
-        image,
+        imageData,
         0,
         0
     );
@@ -2566,17 +4548,8 @@ function createTerrainMaterial(
             canvas
         );
 
-    texture.needsUpdate =
-        true;
-
-    texture.generateMipmaps =
-        false;
-
-    texture.minFilter =
-        THREE.LinearFilter;
-
-    texture.magFilter =
-        THREE.LinearFilter;
+    texture.encoding =
+        THREE.sRGBEncoding;
 
     texture.wrapS =
         THREE.ClampToEdgeWrapping;
@@ -2584,286 +4557,331 @@ function createTerrainMaterial(
     texture.wrapT =
         THREE.ClampToEdgeWrapping;
 
+    texture.minFilter =
+        THREE.LinearFilter;
+
+    texture.magFilter =
+        THREE.LinearFilter;
+
     texture.anisotropy =
         Math.min(
-            renderer.capabilities.getMaxAnisotropy(),
-            8
+            renderer
+                .capabilities
+                .getMaxAnisotropy(),
+            4
         );
 
-    return texture;
+    texture.needsUpdate =
+        true;
 
+    return texture;
 }
 
 
 /* =========================================================
-   TERRAIN TILE GEOMETRY
+   TERRAIN MATERIAL
 ========================================================= */
 
-function createTerrainTile(
+function createTerrainMaterial(
     world,
-    level,
-    x,
-    y,
-    dem
+    texture
 ){
-
-    const bounds =
-        tileBounds(
-            level,
-            x,
-            y
-        );
-
-    const width =
-        dem.width;
-
-    const height =
-        dem.height;
-
-    const values =
-        dem.values;
-
-    const geometry =
-        new THREE.BufferGeometry();
-
-    const vertexCount =
-        width *
-        height;
-
-    const positions =
-        new Float32Array(
-            vertexCount*3
-        );
-
-    const uvs =
-        new Float32Array(
-            vertexCount*2
-        );
-
-    const indices =
-        [];
-
-    const config =
-        DEM_CONFIG[world];
-
-
-    for(
-        let j=0;
-        j<height;
-        j++
-    ){
-
-        const v =
-            j /
-            Math.max(
-                1,
-                height-1
-            );
-
-        const latitude =
-            bounds.latMax -
-            v *
-            (
-                bounds.latMax -
-                bounds.latMin
-            );
-
-        for(
-            let i=0;
-            i<width;
-            i++
-        ){
-
-            const u =
-                i /
-                Math.max(
-                    1,
-                    width-1
-                );
-
-            const longitude =
-                bounds.lonMin +
-                u *
-                (
-                    bounds.lonMax -
-                    bounds.lonMin
-                );
-
-            const raw =
-                values[
-                    j*width+i
-                ];
-
-            const elevation =
-                decodeElevation(
-                    world,
-                    raw
-                );
-
-            const terrainRadius =
-                PLANET_RADIUS +
-                metersToScene(
-                    world,
-                    elevation
-                );
-
-            const position =
-                latLonToVector(
-                    latitude,
-                    longitude,
-                    terrainRadius
-                );
-
-            const index =
-                j*width+i;
-
-            positions[index*3] =
-                position.x;
-
-            positions[index*3+1] =
-                position.y;
-
-            positions[index*3+2] =
-                position.z;
-
-            uvs[index*2] =
-                u;
-
-            uvs[index*2+1] =
-                1-v;
-
-        }
-
-    }
-
-
-    for(
-        let j=0;
-        j<height-1;
-        j++
-    ){
-
-        for(
-            let i=0;
-            i<width-1;
-            i++
-        ){
-
-            const a =
-                j*width+i;
-
-            const b =
-                j*width+i+1;
-
-            const c =
-                (j+1)*width+i+1;
-
-            const d =
-                (j+1)*width+i;
-
-            indices.push(
-                a,b,d,
-                b,c,d
-            );
-
-        }
-
-    }
-
-    geometry.setAttribute(
-        "position",
-        new THREE.BufferAttribute(
-            positions,
-            3
-        )
-    );
-
-    geometry.setAttribute(
-        "uv",
-        new THREE.BufferAttribute(
-            uvs,
-            2
-        )
-    );
-
-    geometry.setIndex(
-        indices
-    );
-
-    /*
-        High-quality smooth normals are generated from
-        the actual displaced geometry.
-    */
-
-    geometry.computeVertexNormals();
-
-    geometry.computeBoundingSphere();
-
-    const texture =
-        createTerrainMaterial(
-            world,
-            values,
-            width,
-            height,
-            bounds
-        );
 
     const material =
         new THREE.MeshStandardMaterial({
 
             map:
-                texture,
+                texture ||
+                null,
+
+            color:
+                texture
+                    ? 0xffffff
+                    : (
+                        world === "Moon"
+                            ? 0xaaaaaa
+                            : 0xb2573f
+                    ),
 
             roughness:
-                .94,
+                1,
 
             metalness:
                 0,
 
-            color:
-                0xffffff,
-
-            side:
-                THREE.FrontSide,
-
             flatShading:
                 false
-
         });
 
-    const mesh =
+    material.side =
+        THREE.FrontSide;
+
+    return material;
+}
+
+
+/* =========================================================
+   FALLBACK SPHERE
+========================================================= */
+
+let fallbackSphere =
+    null;
+
+function createFallbackSphere(
+    world
+){
+
+    if(fallbackSphere){
+
+        planetGroup.remove(
+            fallbackSphere
+        );
+
+        fallbackSphere.geometry.dispose();
+
+        if(
+            fallbackSphere.material.map
+        ){
+
+            fallbackSphere.material.map.dispose();
+        }
+
+        fallbackSphere.material.dispose();
+
+        fallbackSphere =
+            null;
+    }
+
+    const geometry =
+        new THREE.SphereGeometry(
+            PLANET_RADIUS-.65,
+            128,
+            96
+        );
+
+    const material =
+        new THREE.MeshStandardMaterial({
+
+            color:
+                world === "Moon"
+                    ? 0x858585
+                    : 0x98452f,
+
+            roughness:
+                1,
+
+            metalness:
+                0
+        });
+
+    fallbackSphere =
         new THREE.Mesh(
             geometry,
             material
         );
 
-    mesh.userData =
-        {
+    fallbackSphere.frustumCulled =
+        false;
 
-            terrain:
-                true,
+    planetGroup.add(
+        fallbackSphere
+    );
 
-            world,
+    const loader =
+        new THREE.TextureLoader();
 
-            level,
+    loader.setCrossOrigin(
+        "anonymous"
+    );
 
-            tileX:
-                x,
+    loader.load(
 
-            tileY:
-                y,
+        DEM_CONFIG[world].fallback,
 
-            bounds
+        texture=>{
 
-        };
+            texture.encoding =
+                THREE.sRGBEncoding;
 
-    return mesh;
+            texture.anisotropy =
+                Math.min(
+                    renderer
+                        .capabilities
+                        .getMaxAnisotropy(),
+                    4
+                );
 
+            if(
+                fallbackSphere &&
+                fallbackSphere.material
+            ){
+
+                fallbackSphere.material.map =
+                    texture;
+
+                fallbackSphere.material.needsUpdate =
+                    true;
+            }
+
+        },
+
+        undefined,
+
+        ()=>{}
+    );
 }
 
 
 /* =========================================================
-   TILE LOADING
+   NASA TEXTURE TILES
+========================================================= */
+
+const TEXTURE_TILE_CONFIG = {
+
+    Moon:{
+
+        base:
+            "https://moontrek.jpl.nasa.gov/trektiles/Moon/EQ/LRO_WAC_Mosaic_Global_303ppd_v02/1.0.0/default/default028mm"
+    },
+
+    Mars:{
+
+        base:
+            "https://trek.nasa.gov/tiles/Mars/EQ/Mars_MGS_MOLA_ClrShade_merge_global_463m/1.0.0/default/default028mm"
+    }
+};
+
+function getTextureTileUrl(
+    world,
+    level,
+    x,
+    y
+){
+
+    const dims =
+        tileDimensions(
+            level
+        );
+
+    const nx =
+        normalizeTileX(
+            x,
+            dims.cols
+        );
+
+    if(
+        y<0 ||
+        y>=dims.rows
+    ){
+        return null;
+    }
+
+    return (
+        TEXTURE_TILE_CONFIG[world].base+
+        "/"+
+        level+
+        "/"+
+        y+
+        "/"+
+        nx+
+        ".jpg"
+    );
+}
+
+function loadTileTexture(
+    world,
+    level,
+    x,
+    y
+){
+
+    /*
+        External colour tiles are now optional.
+
+        At high LOD they are deliberately not
+        requested because stretching a low-resolution
+        colour tile over high-resolution DEM geometry
+        was one of the main causes of the blurry look.
+    */
+
+    if(level > 4){
+
+        return Promise.resolve(
+            null
+        );
+    }
+
+    const url =
+        getTextureTileUrl(
+            world,
+            level,
+            x,
+            y
+        );
+
+    if(!url){
+        return Promise.resolve(null);
+    }
+
+    return new Promise(
+        resolve=>{
+
+            const loader =
+                new THREE.TextureLoader();
+
+            loader.setCrossOrigin(
+                "anonymous"
+            );
+
+            loader.load(
+
+                url,
+
+                texture=>{
+
+                    texture.encoding =
+                        THREE.sRGBEncoding;
+
+                    texture.wrapS =
+                        THREE.ClampToEdgeWrapping;
+
+                    texture.wrapT =
+                        THREE.ClampToEdgeWrapping;
+
+                    texture.minFilter =
+                        THREE.LinearMipmapLinearFilter;
+
+                    texture.magFilter =
+                        THREE.LinearFilter;
+
+                    texture.anisotropy =
+                        Math.min(
+                            renderer
+                                .capabilities
+                                .getMaxAnisotropy(),
+                            4
+                        );
+
+                    resolve(
+                        texture
+                    );
+                },
+
+                undefined,
+
+                ()=>{
+                    resolve(
+                        null
+                    );
+                }
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   TERRAIN TILE CREATION
 ========================================================= */
 
 async function loadTerrainTile(
@@ -2874,26 +4892,6 @@ async function loadTerrainTile(
     token
 ){
 
-    const dims =
-        tileDimensions(
-            level
-        );
-
-    if(
-        y < 0 ||
-        y >= dims.rows
-    ){
-
-        return null;
-
-    }
-
-    x =
-        normalizeTileX(
-            x,
-            dims.cols
-        );
-
     const key =
         tileKey(
             level,
@@ -2902,25 +4900,464 @@ async function loadTerrainTile(
         );
 
     if(
-        TERRAIN.tiles.has(key)
+        TERRAIN.tiles.has(
+            key
+        )
     ){
 
-        const cached =
+        const existing =
             TERRAIN.tiles.get(
                 key
             );
 
-        cached.lastUsed =
+        existing.lastUsed =
             performance.now();
 
-        return cached;
-
+        return existing;
     }
 
-    const samples =
-        samplesForLevel(
-            level
+    const record = {
+
+        key,
+
+        world,
+
+        level,
+
+        x:
+            normalizeTileX(
+                x,
+                tileDimensions(level).cols
+            ),
+
+        y,
+
+        mesh:
+            null,
+
+        loaded:
+            false,
+
+        loading:
+            true,
+
+        lastUsed:
+            performance.now()
+    };
+
+    TERRAIN.tiles.set(
+        key,
+        record
+    );
+
+    TERRAIN.loading++;
+
+    const bounds =
+        tileBounds(
+            level,
+            record.x,
+            y
         );
+
+    try{
+
+        /*
+            DEM is the primary source.
+
+            Colour texture is secondary.
+        */
+
+        const dem =
+            await readDEMWindow(
+
+                world,
+
+                bounds.lonMin,
+                bounds.latMin,
+                bounds.lonMax,
+                bounds.latMax,
+
+                TERRAIN.samplesPerTile,
+
+                level
+            );
+
+        if(
+            token !== planetLoadToken ||
+            currentWorld !== world
+        ){
+
+            TERRAIN.tiles.delete(
+                key
+            );
+
+            return null;
+        }
+
+        if(!dem){
+
+            record.loading =
+                false;
+
+            return record;
+        }
+
+
+        /*
+            Generate local hillshade directly
+            from the same DEM used for geometry.
+        */
+
+        let reliefTexture =
+            createDEMHillshadeTexture(
+                world,
+                dem
+            );
+
+
+        /*
+            Use colour tile only for low LOD.
+            High LOD remains DEM-shaded.
+        */
+
+        let colorTexture =
+            null;
+
+        if(level<=4){
+
+            colorTexture =
+                await loadTileTexture(
+                    world,
+                    level,
+                    record.x,
+                    y
+                );
+        }
+
+
+        if(
+            token !== planetLoadToken ||
+            currentWorld !== world
+        ){
+
+            if(reliefTexture){
+                reliefTexture.dispose();
+            }
+
+            if(colorTexture){
+                colorTexture.dispose();
+            }
+
+            TERRAIN.tiles.delete(
+                key
+            );
+
+            return null;
+        }
+
+
+        const size =
+            TERRAIN.samplesPerTile;
+
+        const geometry =
+            new THREE.BufferGeometry();
+
+        const positions =
+            new Float32Array(
+                size*size*3
+            );
+
+        const uvs =
+            new Float32Array(
+                size*size*2
+            );
+
+        const indices =
+            [];
+
+
+        const lonSpan =
+            bounds.lonMax-
+            bounds.lonMin;
+
+        const latSpan =
+            bounds.latMax-
+            bounds.latMin;
+
+
+        for(
+            let j=0;
+            j<size;
+            j++
+        ){
+
+            const v =
+                j/
+                (size-1);
+
+            const latitude =
+                bounds.latMax-
+                v*latSpan;
+
+            for(
+                let i=0;
+                i<size;
+                i++
+            ){
+
+                const u =
+                    i/
+                    (size-1);
+
+                const longitude =
+                    bounds.lonMin+
+                    u*lonSpan;
+
+                const index =
+                    j*size+i;
+
+                const raw =
+                    dem.values[index];
+
+                const meters =
+                    decodeElevation(
+                        world,
+                        raw
+                    );
+
+                const terrainOffset =
+                    metersToScene(
+                        world,
+                        meters
+                    );
+
+                const radius =
+                    PLANET_RADIUS+
+                    terrainOffset;
+
+                const p =
+                    latLonToVector(
+                        latitude,
+                        longitude,
+                        radius
+                    );
+
+                positions[
+                    index*3
+                ] =
+                    p.x;
+
+                positions[
+                    index*3+1
+                ] =
+                    p.y;
+
+                positions[
+                    index*3+2
+                ] =
+                    p.z;
+
+                uvs[
+                    index*2
+                ] =
+                    u;
+
+                uvs[
+                    index*2+1
+                ] =
+                    1-v;
+            }
+        }
+
+
+        for(
+            let j=0;
+            j<size-1;
+            j++
+        ){
+
+            for(
+                let i=0;
+                i<size-1;
+                i++
+            ){
+
+                const a =
+                    j*size+i;
+
+                const b =
+                    a+1;
+
+                const c =
+                    a+size;
+
+                const d =
+                    c+1;
+
+                indices.push(
+                    a,b,d,
+                    a,d,c
+                );
+            }
+        }
+
+
+        geometry.setAttribute(
+            "position",
+            new THREE.BufferAttribute(
+                positions,
+                3
+            )
+        );
+
+        geometry.setAttribute(
+            "uv",
+            new THREE.BufferAttribute(
+                uvs,
+                2
+            )
+        );
+
+        geometry.setIndex(
+            indices
+        );
+
+
+        /*
+            Normals are calculated from the
+            actual displaced surface.
+
+            This is essential for crater walls,
+            rims, mountains and valleys.
+        */
+
+        geometry.computeVertexNormals();
+
+
+        /*
+            DEM hillshade is the default close-range
+            visual surface.
+
+            At low levels the actual NASA colour
+            tile is used if available.
+        */
+
+        const materialTexture =
+            colorTexture ||
+            reliefTexture;
+
+        const material =
+            createTerrainMaterial(
+                world,
+                materialTexture
+            );
+
+
+        /*
+            Add a little more contrast to the actual
+            geometric terrain without using a fake bump map.
+        */
+
+        material.roughness =
+            1;
+
+        const mesh =
+            new THREE.Mesh(
+                geometry,
+                material
+            );
+
+        mesh.frustumCulled =
+            false;
+
+        mesh.userData.asterraTile =
+            record;
+
+        mesh.userData.dem =
+            true;
+
+
+        record.mesh =
+            mesh;
+
+        record.loaded =
+            true;
+
+        record.loading =
+            false;
+
+        record.lastUsed =
+            performance.now();
+
+        record.dem =
+            dem;
+
+        record.reliefTexture =
+            reliefTexture;
+
+        record.colorTexture =
+            colorTexture;
+
+
+        terrainRoot.add(
+            mesh
+        );
+
+
+        setSurfaceStatus(
+            dem.sampling === "nearest"
+                ? "NATIVE HIGH-DETAIL RELIEF ONLINE"
+                : "HIGH RESOLUTION TERRAIN ONLINE",
+            true
+        );
+
+        return record;
+
+    }catch(error){
+
+        console.warn(
+            "ASTERRA terrain tile failed:",
+            key,
+            error
+        );
+
+        record.loading =
+            false;
+
+        return record;
+
+    }finally{
+
+        TERRAIN.loading--;
+    }
+}
+
+
+/* =========================================================
+   CAMERA DIRECTION
+========================================================= */
+
+function getCameraDirectionLocal(){
+
+    const cameraLocal =
+        planetGroup.worldToLocal(
+            camera.position.clone()
+        );
+
+    return cameraLocal.normalize();
+}
+
+
+/* =========================================================
+   TILE ANGULAR DISTANCE
+========================================================= */
+
+function tileAngularDistance(
+    level,
+    x,
+    y,
+    cameraDirection
+){
 
     const bounds =
         tileBounds(
@@ -2929,72 +5366,469 @@ async function loadTerrainTile(
             y
         );
 
-    const dem =
-        await readDEMWindow(
+    const centerLat =
+        (
+            bounds.latMin+
+            bounds.latMax
+        )*.5;
 
-            world,
+    const centerLon =
+        (
+            bounds.lonMin+
+            bounds.lonMax
+        )*.5;
 
-            bounds.lonMin,
-            bounds.latMin,
-            bounds.lonMax,
-            bounds.latMax,
+    const center =
+        latLonToVector(
+            centerLat,
+            centerLon,
+            1
+        ).normalize();
 
-            samples,
-
-            level
-
-        );
-
-    if(
-        token !== planetLoadToken ||
-        !dem
-    ){
-
-        return null;
-
-    }
-
-    const mesh =
-        createTerrainTile(
-            world,
-            level,
-            x,
-            y,
-            dem
-        );
-
-    const record = {
-
-        key,
-
-        mesh,
-
-        level,
-
-        x,
-
-        y,
-
-        lastUsed:
-            performance.now()
-
-    };
-
-    TERRAIN.tiles.set(
-        key,
-        record
+    return Math.acos(
+        THREE.MathUtils.clamp(
+            center.dot(
+                cameraDirection
+            ),
+            -1,
+            1
+        )
     );
-
-    return record;
-
 }
 
 
 /* =========================================================
-   TILE DISPOSAL
+   LOD
 ========================================================= */
 
-function disposeTile(
+function shouldSplitTile(
+    level,
+    x,
+    y,
+    cameraDirection
+){
+
+    if(
+        level >= TERRAIN.maxLevel
+    ){
+        return false;
+    }
+
+    const angle =
+        tileAngularDistance(
+            level,
+            x,
+            y,
+            cameraDirection
+        );
+
+    if(angle > 1.35){
+        return false;
+    }
+
+
+    const distanceFactor =
+        Math.max(
+            0,
+            Math.min(
+                1,
+                (
+                    760-
+                    zoomDistance
+                )/
+                615
+            )
+        );
+
+
+    /*
+        Keep level 8 only for genuinely close
+        inspection. This avoids loading huge numbers
+        of DEM windows on weaker computers.
+    */
+
+    const maxUsefulLevel =
+        Math.min(
+            TERRAIN.maxLevel,
+            Math.floor(
+                2+
+                distanceFactor*6
+            )
+        );
+
+
+    if(
+        level >= maxUsefulLevel
+    ){
+        return false;
+    }
+
+    if(angle < .34){
+        return true;
+    }
+
+    if(
+        angle < .60 &&
+        level < maxUsefulLevel-1
+    ){
+        return true;
+    }
+
+    if(
+        angle < .88 &&
+        level < maxUsefulLevel-2
+    ){
+        return true;
+    }
+
+    if(
+        angle < 1.12 &&
+        level < maxUsefulLevel-3
+    ){
+        return true;
+    }
+
+    return false;
+}
+
+
+/* =========================================================
+   LEAF COLLECTION
+========================================================= */
+
+function collectLeaves(
+    level,
+    x,
+    y,
+    cameraDirection,
+    output
+){
+
+    const split =
+        shouldSplitTile(
+            level,
+            x,
+            y,
+            cameraDirection
+        );
+
+    if(!split){
+
+        output.add(
+            tileKey(
+                level,
+                x,
+                y
+            )
+        );
+
+        return;
+    }
+
+    const childX =
+        x*2;
+
+    const childY =
+        y*2;
+
+    collectLeaves(
+        level+1,
+        childX,
+        childY,
+        cameraDirection,
+        output
+    );
+
+    collectLeaves(
+        level+1,
+        childX+1,
+        childY,
+        cameraDirection,
+        output
+    );
+
+    collectLeaves(
+        level+1,
+        childX,
+        childY+1,
+        cameraDirection,
+        output
+    );
+
+    collectLeaves(
+        level+1,
+        childX+1,
+        childY+1,
+        cameraDirection,
+        output
+    );
+}
+
+
+/* =========================================================
+   TERRAIN LOD UPDATE
+========================================================= */
+
+async function updateTerrainLOD(
+    force
+){
+
+    const now =
+        performance.now();
+
+    if(
+        !force &&
+        now-
+        TERRAIN.lastUpdate <
+        TERRAIN.updateInterval
+    ){
+        return;
+    }
+
+    TERRAIN.lastUpdate =
+        now;
+
+    const token =
+        planetLoadToken;
+
+    const cameraDirection =
+        getCameraDirectionLocal();
+
+    const desired =
+        new Set();
+
+    const rootDims =
+        tileDimensions(1);
+
+    for(
+        let y=0;
+        y<rootDims.rows;
+        y++
+    ){
+
+        for(
+            let x=0;
+            x<rootDims.cols;
+            x++
+        ){
+
+            collectLeaves(
+                1,
+                x,
+                y,
+                cameraDirection,
+                desired
+            );
+        }
+    }
+
+    TERRAIN.visibleKeys =
+        desired;
+
+    const missing =
+        [];
+
+    for(
+        const key of desired
+    ){
+
+        if(
+            !TERRAIN.tiles.has(
+                key
+            )
+        ){
+
+            const parts =
+                key.split(":");
+
+            missing.push({
+
+                level:
+                    Number(parts[0]),
+
+                x:
+                    Number(parts[1]),
+
+                y:
+                    Number(parts[2])
+            });
+        }
+    }
+
+
+    missing.sort(
+        (a,b)=>{
+
+            const da =
+                tileAngularDistance(
+                    a.level,
+                    a.x,
+                    a.y,
+                    cameraDirection
+                );
+
+            const db =
+                tileAngularDistance(
+                    b.level,
+                    b.x,
+                    b.y,
+                    cameraDirection
+                );
+
+            return da-db;
+        }
+    );
+
+
+    const batchSize =
+        3;
+
+
+    for(
+        let i=0;
+        i<missing.length;
+        i+=batchSize
+    ){
+
+        const batch =
+            missing.slice(
+                i,
+                i+batchSize
+            );
+
+        await Promise.allSettled(
+            batch.map(
+                item=>
+                    loadTerrainTile(
+                        currentWorld,
+                        item.level,
+                        item.x,
+                        item.y,
+                        token
+                    )
+            )
+        );
+
+        if(
+            token !==
+            planetLoadToken
+        ){
+            return;
+        }
+
+        updateTerrainVisibility();
+    }
+
+    updateTerrainVisibility();
+
+    pruneTerrainCache();
+}
+
+
+/* =========================================================
+   VISIBILITY
+========================================================= */
+
+function updateTerrainVisibility(){
+
+    for(
+        const [
+            key,
+            record
+        ]
+        of TERRAIN.tiles
+    ){
+
+        if(!record.mesh){
+            continue;
+        }
+
+        record.mesh.visible =
+            TERRAIN.visibleKeys.has(
+                key
+            );
+
+        if(record.mesh.visible){
+
+            record.lastUsed =
+                performance.now();
+        }
+    }
+}
+
+
+/* =========================================================
+   CACHE
+========================================================= */
+
+function pruneTerrainCache(){
+
+    if(
+        TERRAIN.tiles.size <=
+        TERRAIN.cacheLimit
+    ){
+        return;
+    }
+
+    const candidates =
+        [];
+
+    for(
+        const [
+            key,
+            record
+        ]
+        of TERRAIN.tiles
+    ){
+
+        if(
+            TERRAIN.visibleKeys.has(
+                key
+            )
+        ){
+            continue;
+        }
+
+        if(
+            record.loading
+        ){
+            continue;
+        }
+
+        candidates.push(
+            record
+        );
+    }
+
+    candidates.sort(
+        (
+            a,
+            b
+        ) =>
+            a.lastUsed-
+            b.lastUsed
+    );
+
+    while(
+        TERRAIN.tiles.size >
+        TERRAIN.cacheLimit &&
+        candidates.length
+    ){
+
+        const record =
+            candidates.shift();
+
+        disposeTerrainRecord(
+            record
+        );
+
+        TERRAIN.tiles.delete(
+            record.key
+        );
+    }
+}
+
+function disposeTerrainRecord(
     record
 ){
 
@@ -3004,492 +5838,1006 @@ function disposeTile(
 
     if(record.mesh){
 
-        if(record.mesh.geometry){
-
-            record.mesh.geometry.dispose();
-
-        }
-
-        if(record.mesh.material){
-
-            if(record.mesh.material.map){
-
-                record.mesh.material.map.dispose();
-
-            }
-
-            record.mesh.material.dispose();
-
-        }
-
         terrainRoot.remove(
             record.mesh
         );
 
+        if(
+            record.mesh.geometry
+        ){
+
+            record.mesh.geometry.dispose();
+        }
+
+        if(
+            record.mesh.material
+        ){
+
+            if(
+                record.mesh.material.map
+            ){
+
+                record.mesh.material.map.dispose();
+            }
+
+            record.mesh.material.dispose();
+        }
+
+        record.mesh =
+            null;
     }
-
-    TERRAIN.tiles.delete(
-        record.key
-    );
-
 }
 
 
 /* =========================================================
-   CACHE CONTROL
+   DISPOSE
 ========================================================= */
 
-function enforceTerrainCache(){
-
-    if(
-        TERRAIN.tiles.size <=
-        TERRAIN.cacheLimit
-    ){
-
-        return;
-
-    }
-
-    const records =
-        Array.from(
-            TERRAIN.tiles.values()
-        );
-
-    records.sort(
-        (a,b)=>
-            a.lastUsed -
-            b.lastUsed
-    );
+function disposeTerrain(){
 
     for(
-        const record of records
+        const [
+            key,
+            record
+        ]
+        of TERRAIN.tiles
     ){
 
-        if(
-            TERRAIN.visibleKeys.has(
-                record.key
-            )
-        ){
-
-            continue;
-
-        }
-
-        disposeTile(
+        disposeTerrainRecord(
             record
         );
-
-        if(
-            TERRAIN.tiles.size <=
-            TERRAIN.cacheLimit
-        ){
-
-            break;
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   CAMERA / LOD
-========================================================= */
-
-function getCurrentTerrainLevel(){
-
-    const normalized =
-        THREE.MathUtils.clamp(
-            (
-                MAX_ZOOM -
-                zoomDistance
-            ) /
-            (
-                MAX_ZOOM -
-                MIN_ZOOM
-            ),
-            0,
-            1
-        );
-
-    return Math.min(
-        TERRAIN.maxLevel,
-        Math.max(
-            1,
-            Math.floor(
-                2 +
-                normalized*6
-            )
-        )
-    );
-
-}
-
-
-/* =========================================================
-   CAMERA-BASED VISIBLE TILES
-========================================================= */
-
-function getVisibleTileRange(
-    level
-){
-
-    const dims =
-        tileDimensions(
-            level
-        );
-
-    /*
-        Keep the visible set deliberately limited.
-        Terrain remains dense near the camera without
-        loading the entire planet.
-    */
-
-    const center =
-        planetGroup.rotation.y;
-
-    const approximateLongitude =
-        THREE.MathUtils.radToDeg(
-            center
-        );
-
-    let centerX =
-        Math.floor(
-            (
-                approximateLongitude +
-                180
-            ) /
-            360 *
-            dims.cols
-        );
-
-    centerX =
-        normalizeTileX(
-            centerX,
-            dims.cols
-        );
-
-    const rangeX =
-        level >= 7
-            ? 3
-            : level >= 5
-                ? 2
-                : 1;
-
-    const centerY =
-        Math.floor(
-            dims.rows*.5
-        );
-
-    const result =
-        [];
-
-    for(
-        let dy=-1;
-        dy<=1;
-        dy++
-    ){
-
-        const y =
-            centerY +
-            dy;
-
-        if(
-            y < 0 ||
-            y >= dims.rows
-        ){
-
-            continue;
-
-        }
-
-        for(
-            let dx=-rangeX;
-            dx<=rangeX;
-            dx++
-        ){
-
-            const x =
-                normalizeTileX(
-                    centerX+dx,
-                    dims.cols
-                );
-
-            result.push({
-                x,
-                y
-            });
-
-        }
-
-    }
-
-    return result;
-
-}
-
-
-/* =========================================================
-   TERRAIN UPDATE
-========================================================= */
-
-let terrainUpdateBusy =
-    false;
-
-async function updateTerrain(
-    force=false
-){
-
-    const now =
-        performance.now();
-
-    if(
-        !force &&
-        now -
-        TERRAIN.lastUpdate <
-        TERRAIN.updateInterval
-    ){
-
-        return;
-
-    }
-
-    if(
-        terrainUpdateBusy
-    ){
-
-        return;
-
-    }
-
-    TERRAIN.lastUpdate =
-        now;
-
-    terrainUpdateBusy =
-        true;
-
-    const token =
-        planetLoadToken;
-
-    try{
-
-        const level =
-            getCurrentTerrainLevel();
-
-        const tiles =
-            getVisibleTileRange(
-                level
-            );
-
-        const desired =
-            new Set();
-
-        for(
-            const tile of tiles
-        ){
-
-            desired.add(
-                tileKey(
-                    level,
-                    tile.x,
-                    tile.y
-                )
-            );
-
-        }
-
-        TERRAIN.visibleKeys =
-            desired;
-
-        /*
-            Hide stale levels rather than destroying them
-            immediately. This keeps camera transitions
-            smooth.
-        */
-
-        for(
-            const record of
-            TERRAIN.tiles.values()
-        ){
-
-            if(
-                record.level !== level
-            ){
-
-                record.mesh.visible =
-                    false;
-
-            }
-
-        }
-
-        let loaded =
-            0;
-
-        for(
-            const tile of tiles
-        ){
-
-            if(
-                token !== planetLoadToken
-            ){
-
-                return;
-
-            }
-
-            const record =
-                await loadTerrainTile(
-                    currentWorld,
-                    level,
-                    tile.x,
-                    tile.y,
-                    token
-                );
-
-            if(
-                record &&
-                token === planetLoadToken
-            ){
-
-                record.mesh.visible =
-                    true;
-
-                record.lastUsed =
-                    performance.now();
-
-                if(
-                    record.mesh.parent !==
-                    terrainRoot
-                ){
-
-                    terrainRoot.add(
-                        record.mesh
-                    );
-
-                }
-
-                loaded++;
-
-            }
-
-        }
-
-        enforceTerrainCache();
-
-        if(
-            loaded > 0
-        ){
-
-            setSurfaceStatus(
-                "REAL DEM TERRAIN · LOD " +
-                level +
-                " · " +
-                samplesForLevel(level) +
-                "²",
-                true
-            );
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "ASTERRA terrain update:",
-            error
-        );
-
-        setSurfaceStatus(
-            "TERRAIN UPDATE ERROR",
-            true
-        );
-
-    }finally{
-
-        terrainUpdateBusy =
-            false;
-
-    }
-
-}
-
-
-/* =========================================================
-   CLEAR WORLD
-========================================================= */
-
-function clearWorld(){
-
-    terrainRoot.clear();
-
-    for(
-        const record of
-        TERRAIN.tiles.values()
-    ){
-
-        if(
-            record.mesh
-        ){
-
-            if(record.mesh.geometry){
-                record.mesh.geometry.dispose();
-            }
-
-            if(record.mesh.material){
-
-                if(record.mesh.material.map){
-                    record.mesh.material.map.dispose();
-                }
-
-                record.mesh.material.dispose();
-
-            }
-
-        }
-
     }
 
     TERRAIN.tiles.clear();
 
     TERRAIN.visibleKeys.clear();
 
+    terrainRoot.clear();
+
+    TERRAIN.lastUpdate =
+        0;
 }
 
 
 /* =========================================================
-   INITIAL WORLD LOAD
+   PLANET BUILD
 ========================================================= */
 
-async function loadWorld(
+function buildPlanet(
     world
 ){
+
+    if(
+        world !== "Moon" &&
+        world !== "Mars"
+    ){
+
+        world =
+            "Moon";
+    }
 
     currentWorld =
         world;
 
-    updateWorldUI();
-
     planetLoadToken++;
 
-    clearWorld();
+    disposePlotVisuals();
+
+    disposeTerrain();
+
+    createFallbackSphere(
+        world
+    );
+
+    planetGroup.rotation.set(
+        .05,
+        -.5,
+        0
+    );
 
     setSurfaceStatus(
-        "LOADING " +
-        world.toUpperCase() +
-        " REAL TERRAIN",
+        "LOADING HIGH RESOLUTION DEM",
         true
     );
 
-    await updateTerrain(
+    updateTerrainLOD(
         true
-    );
+    ).then(
+        ()=>{
 
+            if(
+                currentWorld === world &&
+                terrainRoot.children.length
+            ){
+
+                if(fallbackSphere){
+
+                    fallbackSphere.visible =
+                        false;
+                }
+            }
+        }
+    );
 }
 
 
 /* =========================================================
-   WORLD SWITCHING
+   SAFE PLANET POSITION
+========================================================= */
+
+function screenToWorld(
+    screenX,
+    screenY,
+    distance
+){
+
+    const ndcX =
+        screenX/
+        window.innerWidth*
+        2-
+        1;
+
+    const ndcY =
+        -(
+            screenY/
+            window.innerHeight*
+            2-
+            1
+        );
+
+    const vFov =
+        THREE.MathUtils.degToRad(
+            camera.fov
+        );
+
+    const visibleHeight =
+        2*
+        Math.tan(
+            vFov/2
+        )*
+        distance;
+
+    const visibleWidth =
+        visibleHeight*
+        camera.aspect;
+
+    return {
+
+        x:
+            ndcX*
+            visibleWidth/2,
+
+        y:
+            ndcY*
+            visibleHeight/2
+    };
+}
+
+function updatePlanetSafePosition(){
+
+    const width =
+        window.innerWidth;
+
+    const height =
+        window.innerHeight;
+
+    const distance =
+        Math.max(
+            MIN_ZOOM,
+            Math.min(
+                MAX_ZOOM,
+                zoomDistance
+            )
+        );
+
+    const vFov =
+        THREE.MathUtils.degToRad(
+            camera.fov
+        );
+
+    const visibleHeight =
+        2*
+        Math.tan(
+            vFov/2
+        )*
+        distance;
+
+    const pixelsPerWorld =
+        height/
+        visibleHeight;
+
+    const projectedRadius =
+        PLANET_RADIUS*
+        pixelsPerWorld;
+
+    let leftBoundary =
+        42+
+        390+
+        35;
+
+    let rightBoundary =
+        width-
+        42-
+        290-
+        35;
+
+    let topBoundary =
+        115;
+
+    let bottomBoundary =
+        height-
+        100;
+
+    const margin =
+        18;
+
+    leftBoundary +=
+        margin;
+
+    rightBoundary -=
+        margin;
+
+    topBoundary +=
+        margin;
+
+    bottomBoundary -=
+        margin;
+
+    let minX =
+        leftBoundary+
+        projectedRadius;
+
+    let maxX =
+        rightBoundary-
+        projectedRadius;
+
+    let minY =
+        topBoundary+
+        projectedRadius;
+
+    let maxY =
+        bottomBoundary-
+        projectedRadius;
+
+    if(minX>maxX){
+
+        const middle =
+            (
+                leftBoundary+
+                rightBoundary
+            )/2;
+
+        minX =
+            middle;
+
+        maxX =
+            middle;
+    }
+
+    if(minY>maxY){
+
+        const middle =
+            (
+                topBoundary+
+                bottomBoundary
+            )/2;
+
+        minY =
+            middle;
+
+        maxY =
+            middle;
+    }
+
+    const preferredX =
+        width*.57;
+
+    const preferredY =
+        height*.48;
+
+    const finalX =
+        Math.max(
+            minX,
+            Math.min(
+                maxX,
+                preferredX
+            )
+        );
+
+    const finalY =
+        Math.max(
+            minY,
+            Math.min(
+                maxY,
+                preferredY
+            )
+        );
+
+    const world =
+        screenToWorld(
+            finalX,
+            finalY,
+            distance
+        );
+
+    planetGroup.position.x =
+        world.x;
+
+    planetGroup.position.y =
+        world.y;
+
+    planetGroup.position.z =
+        0;
+}
+
+
+/* =========================================================
+   PLOT HELPERS
+========================================================= */
+
+function formatCoordinate(
+    value,
+    positive,
+    negative
+){
+
+    return (
+        Math.abs(value).toFixed(3)+
+        "° "+
+        (
+            value>=0
+                ? positive
+                : negative
+        )
+    );
+}
+
+function getWorldRadiusKm(
+    world
+){
+
+    return world === "Moon"
+        ? 1737.4
+        : 3389.5;
+}
+
+function getPlotCell(
+    latitude,
+    longitude
+){
+
+    let latIndex =
+        Math.floor(
+            latitude+90
+        );
+
+    let lonIndex =
+        Math.floor(
+            longitude+180
+        );
+
+    latIndex =
+        Math.max(
+            0,
+            Math.min(
+                PLOT_GRID_LAT-1,
+                latIndex
+            )
+        );
+
+    lonIndex =
+        Math.max(
+            0,
+            Math.min(
+                PLOT_GRID_LON-1,
+                lonIndex
+            )
+        );
+
+    return {
+
+        latIndex,
+
+        lonIndex
+    };
+}
+
+function generatePlotId(
+    world,
+    latIndex,
+    lonIndex
+){
+
+    const code =
+        world === "Moon"
+            ? "MOON"
+            : "MARS";
+
+    const numericId =
+        latIndex*
+        PLOT_GRID_LON+
+        lonIndex+
+        1;
+
+    return (
+        "AST-"+
+        code+
+        "-"+
+        String(
+            numericId
+        ).padStart(
+            6,
+            "0"
+        )
+    );
+}
+
+function getPlotAreaKm2(
+    world,
+    latitude
+){
+
+    const radius =
+        getWorldRadiusKm(
+            world
+        );
+
+    const center =
+        THREE.MathUtils.degToRad(
+            latitude
+        );
+
+    const half =
+        THREE.MathUtils.degToRad(
+            .5
+        );
+
+    const lonWidth =
+        THREE.MathUtils.degToRad(
+            1
+        );
+
+    const area =
+        radius*
+        radius*
+        lonWidth*
+        (
+            Math.sin(
+                center+half
+            )-
+            Math.sin(
+                center-half
+            )
+        );
+
+    return Math.max(
+        0,
+        area
+    );
+}
+
+
+/* =========================================================
+   PLOT VISUALS
+========================================================= */
+
+function disposePlotVisuals(){
+
+    if(plotBoundary){
+
+        planetGroup.remove(
+            plotBoundary
+        );
+
+        plotBoundary.geometry.dispose();
+
+        plotBoundary.material.dispose();
+
+        plotBoundary =
+            null;
+    }
+
+    if(plotMarker){
+
+        planetGroup.remove(
+            plotMarker
+        );
+
+        plotMarker.geometry.dispose();
+
+        plotMarker.material.dispose();
+
+        plotMarker =
+            null;
+    }
+}
+
+function createPlotBoundary(
+    latitude,
+    longitude
+){
+
+    disposePlotVisuals();
+
+    const cell =
+        getPlotCell(
+            latitude,
+            longitude
+        );
+
+    const latMin =
+        cell.latIndex-90;
+
+    const latMax =
+        latMin+1;
+
+    const lonMin =
+        cell.lonIndex-180;
+
+    const lonMax =
+        lonMin+1;
+
+    const points =
+        [];
+
+    const samples =
+        12;
+
+    const radius =
+        PLANET_RADIUS+1.6;
+
+    for(
+        let i=0;
+        i<=samples;
+        i++
+    ){
+
+        const t =
+            i/samples;
+
+        points.push(
+            latLonToVector(
+                latMin,
+                lonMin+
+                (
+                    lonMax-lonMin
+                )*t,
+                radius
+            )
+        );
+    }
+
+    for(
+        let i=1;
+        i<=samples;
+        i++
+    ){
+
+        const t =
+            i/samples;
+
+        points.push(
+            latLonToVector(
+                latMin+
+                (
+                    latMax-latMin
+                )*t,
+                lonMax,
+                radius
+            )
+        );
+    }
+
+    for(
+        let i=1;
+        i<=samples;
+        i++
+    ){
+
+        const t =
+            i/samples;
+
+        points.push(
+            latLonToVector(
+                latMax,
+                lonMax-
+                (
+                    lonMax-lonMin
+                )*t,
+                radius
+            )
+        );
+    }
+
+    for(
+        let i=1;
+        i<=samples;
+        i++
+    ){
+
+        const t =
+            i/samples;
+
+        points.push(
+            latLonToVector(
+                latMax-
+                (
+                    latMax-latMin
+                )*t,
+                lonMin,
+                radius
+            )
+        );
+    }
+
+    const geometry =
+        new THREE.BufferGeometry();
+
+    geometry.setFromPoints(
+        points
+    );
+
+    const material =
+        new THREE.LineBasicMaterial({
+
+            color:
+                0xffffff,
+
+            transparent:
+                true,
+
+            opacity:
+                .9,
+
+            depthTest:
+                true
+        });
+
+    plotBoundary =
+        new THREE.LineLoop(
+            geometry,
+            material
+        );
+
+    planetGroup.add(
+        plotBoundary
+    );
+
+    const center =
+        latLonToVector(
+            latMin+.5,
+            lonMin+.5,
+            PLANET_RADIUS+2
+        );
+
+    const markerGeometry =
+        new THREE.SphereGeometry(
+            1.45,
+            12,
+            8
+        );
+
+    const markerMaterial =
+        new THREE.MeshBasicMaterial({
+            color:0xffffff
+        });
+
+    plotMarker =
+        new THREE.Mesh(
+            markerGeometry,
+            markerMaterial
+        );
+
+    plotMarker.position.copy(
+        center
+    );
+
+    planetGroup.add(
+        plotMarker
+    );
+}
+
+
+/* =========================================================
+   RAYCAST
+========================================================= */
+
+function getSurfaceCoordinates(
+    event
+){
+
+    const rect =
+        renderer.domElement
+            .getBoundingClientRect();
+
+    const ndcX =
+        (
+            event.clientX-
+            rect.left
+        )/
+        rect.width*
+        2-
+        1;
+
+    const ndcY =
+        -(
+            (
+                event.clientY-
+                rect.top
+            )/
+            rect.height*
+            2-
+            1
+        );
+
+    raycaster.setFromCamera(
+        {
+            x:ndcX,
+            y:ndcY
+        },
+        camera
+    );
+
+    const terrainMeshes =
+        [];
+
+    for(
+        const [
+            key,
+            record
+        ]
+        of TERRAIN.tiles
+    ){
+
+        if(
+            record.mesh &&
+            record.mesh.visible
+        ){
+
+            terrainMeshes.push(
+                record.mesh
+            );
+        }
+    }
+
+    if(
+        fallbackSphere &&
+        fallbackSphere.visible
+    ){
+
+        terrainMeshes.push(
+            fallbackSphere
+        );
+    }
+
+    if(
+        !terrainMeshes.length
+    ){
+
+        return null;
+    }
+
+    const hits =
+        raycaster.intersectObjects(
+            terrainMeshes,
+            false
+        );
+
+    if(
+        !hits.length
+    ){
+
+        return null;
+    }
+
+    const point =
+        planetGroup.worldToLocal(
+            hits[0].point.clone()
+        );
+
+    const radius =
+        point.length();
+
+    if(
+        !Number.isFinite(radius) ||
+        radius<=0
+    ){
+
+        return null;
+    }
+
+    const latitude =
+        THREE.MathUtils.radToDeg(
+            Math.asin(
+                THREE.MathUtils.clamp(
+                    point.y/radius,
+                    -1,
+                    1
+                )
+            )
+        );
+
+    let longitude =
+        THREE.MathUtils.radToDeg(
+            Math.atan2(
+                point.z,
+                point.x
+            )
+        );
+
+    if(longitude>180){
+        longitude-=360;
+    }
+
+    if(longitude<-180){
+        longitude+=360;
+    }
+
+    return {
+
+        latitude,
+
+        longitude
+    };
+}
+
+
+/* =========================================================
+   PROPERTY
+========================================================= */
+
+function showProperty(
+    surface
+){
+
+    if(!surface){
+        return;
+    }
+
+    const world =
+        currentWorld;
+
+    const cell =
+        getPlotCell(
+            surface.latitude,
+            surface.longitude
+        );
+
+    const id =
+        generatePlotId(
+            world,
+            cell.latIndex,
+            cell.lonIndex
+        );
+
+    const area =
+        getPlotAreaKm2(
+            world,
+            cell.latIndex-89.5
+        );
+
+    selectedPlot = {
+
+        world,
+
+        id,
+
+        latitude:
+            surface.latitude,
+
+        longitude:
+            surface.longitude,
+
+        latIndex:
+            cell.latIndex,
+
+        lonIndex:
+            cell.lonIndex,
+
+        area
+    };
+
+    createPlotBoundary(
+        surface.latitude,
+        surface.longitude
+    );
+
+    propertyWorld.textContent =
+        world.toUpperCase();
+
+    propertyId.textContent =
+        id;
+
+    propertyLat.textContent =
+        formatCoordinate(
+            surface.latitude,
+            "N",
+            "S"
+        );
+
+    propertyLon.textContent =
+        formatCoordinate(
+            surface.longitude,
+            "E",
+            "W"
+        );
+
+    propertyArea.textContent =
+        Math.round(area)+
+        " km²";
+
+    propertyStatus.textContent =
+        "AVAILABLE";
+
+    propertyPrice.textContent =
+        worldData[
+            world
+        ].price;
+
+    propertyPanel.classList.add(
+        "visible"
+    );
+}
+
+function closeProperty(){
+
+    propertyPanel.classList.remove(
+        "visible"
+    );
+
+    selectedPlot =
+        null;
+
+    disposePlotVisuals();
+}
+
+
+/* =========================================================
+   WORLD UI
+========================================================= */
+
+function updateWorldUI(
+    world
+){
+
+    const data =
+        worldData[world];
+
+    worldName.textContent =
+        world.toUpperCase();
+
+    worldDescription.textContent =
+        data.description;
+
+    supply.textContent =
+        data.supply;
+
+    available.textContent =
+        data.available;
+
+    price.textContent =
+        data.price;
+
+    bottomWorld.textContent =
+        world.toUpperCase();
+}
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+updateWorldUI(
+    "Moon"
+);
+
+buildPlanet(
+    "Moon"
+);
+
+
+/* =========================================================
+   WORLD SWITCH
 ========================================================= */
 
 document
@@ -3512,496 +6860,44 @@ document
                     ){
 
                         return;
-
                     }
 
-                    loadWorld(
+                    document
+                        .querySelectorAll(
+                            ".world-tab"
+                        )
+                        .forEach(
+                            b=>{
+
+                                b.classList.toggle(
+                                    "active",
+                                    b===button
+                                );
+                            }
+                        );
+
+                    closeProperty();
+
+                    updateWorldUI(
                         world
                     );
 
-                }
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   ROTATION
-========================================================= */
-
-let isDragging =
-    false;
-
-let previousPointerX =
-    0;
-
-let previousPointerY =
-    0;
-
-let rotationVelocityX =
-    0;
-
-let rotationVelocityY =
-    0;
-
-let pointerDownTime =
-    0;
-
-renderer.domElement.addEventListener(
-    "pointerdown",
-    event=>{
-
-        isDragging =
-            true;
-
-        pointerDownTime =
-            performance.now();
-
-        previousPointerX =
-            event.clientX;
-
-        previousPointerY =
-            event.clientY;
-
-        renderer.domElement.style.cursor =
-            "grabbing";
-
-        renderer.domElement.setPointerCapture(
-            event.pointerId
-        );
-
-    }
-);
-
-renderer.domElement.addEventListener(
-    "pointermove",
-    event=>{
-
-        if(!isDragging){
-            return;
-        }
-
-        const dx =
-            event.clientX -
-            previousPointerX;
-
-        const dy =
-            event.clientY -
-            previousPointerY;
-
-        previousPointerX =
-            event.clientX;
-
-        previousPointerY =
-            event.clientY;
-
-        rotationVelocityY =
-            dx*.004;
-
-        rotationVelocityX =
-            dy*.004;
-
-        planetGroup.rotation.y +=
-            dx*.004;
-
-        planetGroup.rotation.x +=
-            dy*.003;
-
-        planetGroup.rotation.x =
-            THREE.MathUtils.clamp(
-                planetGroup.rotation.x,
-                -1.35,
-                1.35
-            );
-
-    }
-);
-
-function stopDragging(
-    event
-){
-
-    if(!isDragging){
-        return;
-    }
-
-    isDragging =
-        false;
-
-    renderer.domElement.style.cursor =
-        "grab";
-
-    try{
-
-        renderer.domElement.releasePointerCapture(
-            event.pointerId
-        );
-
-    }catch(error){}
-
-}
-
-renderer.domElement.addEventListener(
-    "pointerup",
-    stopDragging
-);
-
-renderer.domElement.addEventListener(
-    "pointercancel",
-    stopDragging
-);
-
-renderer.domElement.addEventListener(
-    "pointerleave",
-    event=>{
-
-        if(
-            isDragging &&
-            event.buttons === 0
-        ){
-
-            stopDragging(
-                event
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   ZOOM
-========================================================= */
-
-renderer.domElement.addEventListener(
-    "wheel",
-    event=>{
-
-        event.preventDefault();
-
-        targetZoom +=
-            event.deltaY *
-            .42;
-
-        targetZoom =
-            THREE.MathUtils.clamp(
-                targetZoom,
-                MIN_ZOOM,
-                MAX_ZOOM
-            );
-
-    },
-    {
-        passive:false
-    }
-);
-
-
-/* =========================================================
-   PLOT HELPERS
-========================================================= */
-
-function vectorToLatLon(
-    vector
-){
-
-    const v =
-        vector.clone()
-        .normalize();
-
-    const latitude =
-        THREE.MathUtils.radToDeg(
-            Math.asin(
-                v.y
-            )
-        );
-
-    const longitude =
-        THREE.MathUtils.radToDeg(
-            Math.atan2(
-                v.z,
-                v.x
-            )
-        );
-
-    return {
-
-        latitude,
-        longitude
-
-    };
-
-}
-
-function formatCoordinate(
-    value,
-    positive,
-    negative
-){
-
-    const suffix =
-        value >= 0
-            ? positive
-            : negative;
-
-    return (
-        Math.abs(value)
-            .toFixed(3) +
-        "° " +
-        suffix
-    );
-
-}
-
-function createPlotId(
-    world,
-    latitude,
-    longitude
-){
-
-    const latIndex =
-        Math.floor(
-            (
-                latitude+90
-            ) /
-            180 *
-            PLOT_GRID_LAT
-        );
-
-    const lonIndex =
-        Math.floor(
-            (
-                longitude+180
-            ) /
-            360 *
-            PLOT_GRID_LON
-        );
-
-    const prefix =
-        world === "Moon"
-            ? "MOON"
-            : "MARS";
-
-    return (
-        "AST-" +
-        prefix +
-        "-" +
-        String(
-            Math.max(
-                0,
-                latIndex
-            )
-        ).padStart(
-            3,
-            "0"
-        ) +
-        "-" +
-        String(
-            Math.max(
-                0,
-                lonIndex
-            )
-        ).padStart(
-            3,
-            "0"
-        )
-    );
-
-}
-
-function createPlotSelection(
-    intersection
-){
-
-    if(!intersection){
-        return;
-    }
-
-    const point =
-        intersection.point
-            .clone()
-            .applyMatrix4(
-                planetGroup.matrixWorld.clone().invert()
-            );
-
-    const coords =
-        vectorToLatLon(
-            point
-        );
-
-    const latitude =
-        coords.latitude;
-
-    const longitude =
-        coords.longitude;
-
-    const id =
-        createPlotId(
-            currentWorld,
-            latitude,
-            longitude
-        );
-
-    selectedPlot = {
-
-        world:
-            currentWorld,
-
-        latitude,
-
-        longitude,
-
-        id
-
-    };
-
-    propertyWorld.textContent =
-        currentWorld.toUpperCase();
-
-    propertyId.textContent =
-        id;
-
-    propertyLat.textContent =
-        formatCoordinate(
-            latitude,
-            "N",
-            "S"
-        );
-
-    propertyLon.textContent =
-        formatCoordinate(
-            longitude,
-            "E",
-            "W"
-        );
-
-    propertyArea.textContent =
-        "1 DIGITAL PLOT";
-
-    propertyStatus.textContent =
-        "AVAILABLE";
-
-    propertyPrice.textContent =
-        worldData[
-            currentWorld
-        ].price;
-
-    propertyPanel.classList.add(
-        "visible"
-    );
-
-}
-
-
-/* =========================================================
-   RAYCASTING
-========================================================= */
-
-renderer.domElement.addEventListener(
-    "click",
-    event=>{
-
-        const elapsed =
-            performance.now() -
-            pointerDownTime;
-
-        if(
-            elapsed > 350 ||
-            Math.abs(rotationVelocityX) > .01 ||
-            Math.abs(rotationVelocityY) > .01
-        ){
-
-            return;
-
-        }
-
-        const rect =
-            renderer.domElement.getBoundingClientRect();
-
-        const mouse =
-            new THREE.Vector2(
-
-                (
-                    (
-                        event.clientX -
-                        rect.left
-                    ) /
-                    rect.width
-                ) * 2 - 1,
-
-                -(
-                    (
-                        event.clientY -
-                        rect.top
-                    ) /
-                    rect.height
-                ) * 2 + 1
-
-            );
-
-        raycaster.setFromCamera(
-            mouse,
-            camera
-        );
-
-        const objects =
-            [];
-
-        terrainRoot.traverse(
-            object=>{
-
-                if(
-                    object.isMesh &&
-                    object.visible
-                ){
-
-                    objects.push(
-                        object
+                    buildPlanet(
+                        world
                     );
-
                 }
-
-            }
-        );
-
-        const intersections =
-            raycaster.intersectObjects(
-                objects,
-                false
             );
-
-        if(
-            intersections.length
-        ){
-
-            createPlotSelection(
-                intersections[0]
-            );
-
         }
-
-    }
-);
+    );
 
 
 /* =========================================================
-   PROPERTY UI
+   PROPERTY BUTTONS
 ========================================================= */
 
 propertyClose.addEventListener(
     "click",
-    ()=>{
-
-        propertyPanel.classList.remove(
-            "visible"
-        );
-
-        selectedPlot =
-            null;
-
-    }
+    closeProperty
 );
 
 propertySelect.addEventListener(
@@ -4012,18 +6908,254 @@ propertySelect.addEventListener(
             return;
         }
 
-        setSurfaceStatus(
-            "PLOT SELECTED · " +
-            selectedPlot.id,
-            true
-        );
-
+        /*
+            Purchase functionality intentionally
+            remains disabled in this prototype.
+        */
     }
 );
 
 
 /* =========================================================
-   DISCOVER / EXPLORE
+   ROTATION
+========================================================= */
+
+let dragging =
+    false;
+
+let previousX =
+    0;
+
+let previousY =
+    0;
+
+let velocityX =
+    0;
+
+let velocityY =
+    0;
+
+let hasDragged =
+    false;
+
+let pointerStartX =
+    0;
+
+let pointerStartY =
+    0;
+
+
+renderer.domElement.addEventListener(
+    "pointerdown",
+    e=>{
+
+        dragging =
+            true;
+
+        hasDragged =
+            false;
+
+        pointerStartX =
+            e.clientX;
+
+        pointerStartY =
+            e.clientY;
+
+        previousX =
+            e.clientX;
+
+        previousY =
+            e.clientY;
+
+        velocityX =
+            0;
+
+        velocityY =
+            0;
+
+        renderer.domElement.style.cursor =
+            "grabbing";
+
+        try{
+
+            renderer
+                .domElement
+                .setPointerCapture(
+                    e.pointerId
+                );
+
+        }catch(error){}
+    }
+);
+
+
+renderer.domElement.addEventListener(
+    "pointermove",
+    e=>{
+
+        if(!dragging){
+            return;
+        }
+
+        const totalDX =
+            e.clientX-
+            pointerStartX;
+
+        const totalDY =
+            e.clientY-
+            pointerStartY;
+
+        if(
+            Math.hypot(
+                totalDX,
+                totalDY
+            )>5
+        ){
+
+            hasDragged =
+                true;
+        }
+
+        const dx =
+            e.clientX-
+            previousX;
+
+        const dy =
+            e.clientY-
+            previousY;
+
+        previousX =
+            e.clientX;
+
+        previousY =
+            e.clientY;
+
+        velocityX =
+            dx*.004;
+
+        velocityY =
+            dy*.004;
+
+        planetGroup.rotation.y +=
+            dx*.004;
+
+        planetGroup.rotation.x +=
+            dy*.004;
+
+        planetGroup.rotation.x =
+            Math.max(
+                -1.15,
+                Math.min(
+                    1.15,
+                    planetGroup.rotation.x
+                )
+            );
+    }
+);
+
+
+renderer.domElement.addEventListener(
+    "pointerup",
+    e=>{
+
+        dragging =
+            false;
+
+        renderer.domElement.style.cursor =
+            "grab";
+
+        try{
+
+            renderer
+                .domElement
+                .releasePointerCapture(
+                    e.pointerId
+                );
+
+        }catch(error){}
+    }
+);
+
+
+renderer.domElement.addEventListener(
+    "pointercancel",
+    ()=>{
+
+        dragging =
+            false;
+
+        hasDragged =
+            true;
+
+        renderer.domElement.style.cursor =
+            "grab";
+    }
+);
+
+
+/* =========================================================
+   CLICK
+========================================================= */
+
+renderer.domElement.addEventListener(
+    "click",
+    e=>{
+
+        if(hasDragged){
+
+            hasDragged =
+                false;
+
+            return;
+        }
+
+        const surface =
+            getSurfaceCoordinates(
+                e
+            );
+
+        if(!surface){
+            return;
+        }
+
+        showProperty(
+            surface
+        );
+    }
+);
+
+
+/* =========================================================
+   ZOOM
+========================================================= */
+
+renderer.domElement.addEventListener(
+    "wheel",
+    e=>{
+
+        e.preventDefault();
+
+        targetZoom +=
+            e.deltaY*.55;
+
+        targetZoom =
+            Math.max(
+                MIN_ZOOM,
+                Math.min(
+                    MAX_ZOOM,
+                    targetZoom
+                )
+            );
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   BUTTONS
 ========================================================= */
 
 document
@@ -4035,16 +7167,7 @@ document
         ()=>{
 
             targetZoom =
-                Math.max(
-                    MIN_ZOOM+10,
-                    235
-                );
-
-            setSurfaceStatus(
-                "SURFACE DISCOVERY MODE",
-                true
-            );
-
+                MIN_ZOOM;
         }
     );
 
@@ -4057,40 +7180,12 @@ document
         ()=>{
 
             targetZoom =
-                390;
-
-            setSurfaceStatus(
-                "EXPLORATION MODE",
-                true
-            );
-
+                Math.max(
+                    MIN_ZOOM,
+                    targetZoom-45
+                );
         }
     );
-
-
-/* =========================================================
-   RESIZE
-========================================================= */
-
-window.addEventListener(
-    "resize",
-    ()=>{
-
-        camera.aspect =
-            window.innerWidth /
-            window.innerHeight;
-
-        camera.updateProjectionMatrix();
-
-        renderer.setSize(
-            window.innerWidth,
-            window.innerHeight
-        );
-
-        resizeStarfield();
-
-    }
-);
 
 
 /* =========================================================
@@ -4108,108 +7203,103 @@ function animate(
         animate
     );
 
-    const delta =
+    const dt =
         Math.min(
-            .05,
-            (
-                now -
-                lastFrame
-            ) /
-            1000
+            50,
+            now-lastFrame
         );
 
     lastFrame =
         now;
 
-    /*
-        Smooth zoom.
-    */
-
     zoomDistance +=
         (
-            targetZoom -
+            targetZoom-
             zoomDistance
-        ) *
-        Math.min(
-            1,
-            delta*8
-        );
+        )*.08;
 
     camera.position.z =
         zoomDistance;
 
+    updatePlanetSafePosition();
 
-    /*
-        Gentle inertial rotation.
-    */
 
-    if(!isDragging){
+    if(!dragging){
 
         planetGroup.rotation.y +=
-            rotationVelocityY *
-            delta *
-            12;
+            .0008;
 
-        planetGroup.rotation.x +=
-            rotationVelocityX *
-            delta *
-            7;
+        velocityX *=
+            .94;
 
-        planetGroup.rotation.x =
-            THREE.MathUtils.clamp(
-                planetGroup.rotation.x,
-                -1.35,
-                1.35
-            );
-
-        rotationVelocityX *=
-            Math.pow(
-                .035,
-                delta
-            );
-
-        rotationVelocityY *=
-            Math.pow(
-                .035,
-                delta
-            );
-
+        velocityY *=
+            .94;
     }
 
 
-    /*
-        Tiny automatic motion only when the user
-        is not interacting.
-    */
+    planetGroup.rotation.y +=
+        velocityX*.25;
 
-    if(
-        !isDragging &&
-        Math.abs(rotationVelocityY) < .0001
-    ){
+    planetGroup.rotation.x +=
+        velocityY*.25;
 
-        planetGroup.rotation.y +=
-            delta*.018;
+    planetGroup.rotation.x =
+        Math.max(
+            -1.15,
+            Math.min(
+                1.15,
+                planetGroup.rotation.x
+            )
+        );
 
-    }
+
+    updateTerrainLOD(
+        false
+    );
 
 
-    updateTerrain();
+    renderStarfield(
+        now
+    );
+
 
     renderer.render(
         scene,
         camera
     );
-
 }
 
-updateWorldUI();
-
-loadWorld(
-    "Moon"
+requestAnimationFrame(
+    animate
 );
 
-animate(
-    performance.now()
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        camera.aspect =
+            window.innerWidth/
+            window.innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+
+        resizeStarfield();
+
+        updatePlanetSafePosition();
+
+        TERRAIN.lastUpdate =
+            0;
+    }
 );
 
 </script>
