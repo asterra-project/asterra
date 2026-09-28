@@ -1532,7 +1532,7 @@ document
 const ambient =
     new THREE.AmbientLight(
         0xffffff,
-        .24
+        .16
     );
 
 scene.add(ambient);
@@ -1540,13 +1540,13 @@ scene.add(ambient);
 const keyLight =
     new THREE.DirectionalLight(
         0xffffff,
-        2.75
+        3.65
     );
 
 keyLight.position.set(
-    -300,
-    180,
-    380
+    -260,
+    170,
+    430
 );
 
 scene.add(keyLight);
@@ -1554,13 +1554,13 @@ scene.add(keyLight);
 const secondaryLight =
     new THREE.DirectionalLight(
         0xd9e3f4,
-        .38
+        .25
     );
 
 secondaryLight.position.set(
     280,
-    40,
-    -300
+    50,
+    -320
 );
 
 scene.add(secondaryLight);
@@ -1568,13 +1568,13 @@ scene.add(secondaryLight);
 const grazingLight =
     new THREE.DirectionalLight(
         0xffffff,
-        .72
+        1.15
     );
 
 grazingLight.position.set(
-    -80,
-    -220,
-    320
+    -90,
+    -260,
+    350
 );
 
 scene.add(grazingLight);
@@ -1645,16 +1645,14 @@ const DEM_CONFIG = {
         metersPerUnit:
             1000,
 
-        /*
-            Physical lunar relief is subtle at this
-            display scale. Keep the enhancement moderate.
-        */
-
         exaggeration:
-            3.4,
+            5.0,
 
-        fallback:
-            "https://upload.wikimedia.org/wikipedia/commons/2/26/Solarsystemscope_texture_2k_moon.jpg"
+        minMeters:
+            -10500,
+
+        maxMeters:
+            11000
     },
 
     Mars:{
@@ -1672,42 +1670,48 @@ const DEM_CONFIG = {
             1,
 
         exaggeration:
-            2.8,
+            4.2,
 
-        fallback:
-            "https://upload.wikimedia.org/wikipedia/commons/4/46/Solarsystemscope_texture_2k_mars.jpg"
+        minMeters:
+            -8500,
+
+        maxMeters:
+            22000
     }
 };
 
 
 /* =========================================================
-   HIGH DETAIL TERRAIN SETTINGS
+   TERRAIN SETTINGS
 ========================================================= */
 
 const TERRAIN = {
+
+    /*
+        129x129 gives substantially more local geometry
+        than the old 97x97 mesh while remaining practical.
+    */
+
+    samplesPerTile:
+        129,
 
     maxLevel:
         8,
 
     /*
-        Moon LDEM64 contains roughly 64 samples/degree.
-        At close LOD a 97x97 mesh preserves considerably
-        more of the native DEM signal than 65x65.
-    */
-
-    samplesPerTile:
-        97,
-
-    /*
-        Close Moon tiles use native-resolution nearest
-        DEM sampling instead of bilinear averaging.
+        Nearest is deliberately used for the DEM itself.
+        The geometry must preserve the actual sampled height
+        rather than averaging it into a soft surface.
     */
 
     moonNativeSamplingLevel:
-        5,
+        4,
+
+    marsNativeSamplingLevel:
+        3,
 
     updateInterval:
-        100,
+        90,
 
     lastUpdate:
         0,
@@ -1719,7 +1723,7 @@ const TERRAIN = {
         new Set(),
 
     cacheLimit:
-        180,
+        120,
 
     demFiles:
         new Map(),
@@ -1913,7 +1917,7 @@ function setSurfaceStatus(
                         "visible"
                     );
                 },
-                2200
+                2400
             );
     }
 }
@@ -1943,7 +1947,7 @@ async function getDEMFile(
     try{
 
         setSurfaceStatus(
-            "OPENING GLOBAL DEM",
+            "CONNECTING TO GLOBAL TERRAIN DATA",
             true
         );
 
@@ -1952,7 +1956,7 @@ async function getDEMFile(
                 config.url,
                 {
                     allowFullFile:false,
-                    maxRanges:32
+                    maxRanges:64
                 }
             );
 
@@ -2087,25 +2091,24 @@ async function readDEMWindow(
             )
         );
 
+    const nativeSampling =
+        (
+            world === "Moon" &&
+            level >= TERRAIN.moonNativeSamplingLevel
+        ) ||
+        (
+            world === "Mars" &&
+            level >= TERRAIN.marsNativeSamplingLevel
+        );
+
     /*
-        This is the critical change.
-
-        Bilinear interpolation averages neighbouring
-        DEM samples and destroys small craters and
-        sharp local height changes.
-
-        For Moon close LODs we use nearest sampling,
-        preserving the native DEM relief.
-
-        Mars keeps bilinear behaviour.
+        Critical:
+        never blur the source elevation when we are close.
+        The renderer gets the native DEM signal directly.
     */
 
-    const useNativeMoonSampling =
-        world === "Moon" &&
-        level >= TERRAIN.moonNativeSamplingLevel;
-
     const resampleMethod =
-        useNativeMoonSampling
+        nativeSampling
             ? "nearest"
             : "bilinear";
 
@@ -2334,9 +2337,9 @@ function decodeElevation(
 
     meters =
         Math.max(
-            -15000,
+            config.minMeters,
             Math.min(
-                25000,
+                config.maxMeters,
                 meters
             )
         );
@@ -2370,39 +2373,148 @@ function metersToScene(
 
 
 /* =========================================================
+   HEIGHT NORMALIZATION
+========================================================= */
+
+function normalizedElevation(
+    world,
+    meters
+){
+
+    const config =
+        DEM_CONFIG[world];
+
+    return THREE.MathUtils.clamp(
+        (
+            meters-
+            config.minMeters
+        )/
+        (
+            config.maxMeters-
+            config.minMeters
+        ),
+        0,
+        1
+    );
+}
+
+
+/* =========================================================
+   TERRAIN COLOR
+========================================================= */
+
+function terrainColor(
+    world,
+    elevation,
+    slope
+){
+
+    const e =
+        normalizedElevation(
+            world,
+            elevation
+        );
+
+    const s =
+        THREE.MathUtils.clamp(
+            slope,
+            0,
+            1
+        );
+
+    const color =
+        new THREE.Color();
+
+    if(world === "Moon"){
+
+        /*
+            Neutral lunar palette.
+            Darker lowlands, mid-grey plains,
+            brighter highlands and strong crater-wall
+            contrast.
+        */
+
+        let value =
+            0.31+
+            e*.48+
+            s*.18;
+
+        value =
+            THREE.MathUtils.clamp(
+                value,
+                .20,
+                .90
+            );
+
+        color.setRGB(
+            value,
+            value,
+            value*1.015
+        );
+
+    }else{
+
+        /*
+            Mars:
+            elevation stays restrained while slopes
+            receive slightly darker red-brown values.
+        */
+
+        const low =
+            new THREE.Color(
+                0x4d1d14
+            );
+
+        const high =
+            new THREE.Color(
+                0xc96c4a
+            );
+
+        color.copy(
+            low
+        ).lerp(
+            high,
+            THREE.MathUtils.clamp(
+                e*.88+
+                s*.18,
+                0,
+                1
+            )
+        );
+
+        if(s>.52){
+
+            color.lerp(
+                new THREE.Color(
+                    0x32130f
+                ),
+                (s-.52)*.45
+            );
+        }
+    }
+
+    return color;
+}
+
+
+/* =========================================================
    TERRAIN MATERIAL
 ========================================================= */
 
 function createTerrainMaterial(
-    world,
-    texture
+    world
 ){
 
     const material =
         new THREE.MeshStandardMaterial({
 
-            map:
-                texture || null,
-
-            color:
-                texture
-                    ? 0xffffff
-                    : (
-                        world === "Moon"
-                            ? 0x9a9a9a
-                            : 0xa94d36
-                    ),
-
-            /*
-                Moon is intentionally very rough.
-                Lower roughness can visually smear the
-                micro-relief through broad specular highlights.
-            */
+            vertexColors:
+                true,
 
             roughness:
                 world === "Moon"
-                    ? 1.0
-                    : .91,
+                    ? .97
+                    : .93,
 
             metalness:
                 0,
@@ -2461,8 +2573,8 @@ function createFallbackSphere(
 
             color:
                 world === "Moon"
-                    ? 0x858585
-                    : 0x98452f,
+                    ? 0x707070
+                    : 0x8f3929,
 
             roughness:
                 1,
@@ -2482,187 +2594,6 @@ function createFallbackSphere(
 
     planetGroup.add(
         fallbackSphere
-    );
-
-    const loader =
-        new THREE.TextureLoader();
-
-    loader.setCrossOrigin(
-        "anonymous"
-    );
-
-    loader.load(
-
-        DEM_CONFIG[world].fallback,
-
-        texture=>{
-
-            texture.encoding =
-                THREE.sRGBEncoding;
-
-            texture.anisotropy =
-                Math.min(
-                    renderer
-                        .capabilities
-                        .getMaxAnisotropy(),
-                    4
-                );
-
-            if(
-                fallbackSphere &&
-                fallbackSphere.material
-            ){
-
-                fallbackSphere.material.map =
-                    texture;
-
-                fallbackSphere.material.needsUpdate =
-                    true;
-            }
-
-        },
-
-        undefined,
-
-        ()=>{}
-    );
-}
-
-
-/* =========================================================
-   NASA TEXTURE TILES
-========================================================= */
-
-const TEXTURE_TILE_CONFIG = {
-
-    Moon:{
-        base:
-            "https://moontrek.jpl.nasa.gov/trektiles/Moon/EQ/LRO_WAC_Mosaic_Global_303ppd_v02/1.0.0/default/default028mm"
-    },
-
-    Mars:{
-        base:
-            "https://trek.nasa.gov/tiles/Mars/EQ/Mars_MGS_MOLA_ClrShade_merge_global_463m/1.0.0/default/default028mm"
-    }
-};
-
-function getTextureTileUrl(
-    world,
-    level,
-    x,
-    y
-){
-
-    const dims =
-        tileDimensions(
-            level
-        );
-
-    const nx =
-        normalizeTileX(
-            x,
-            dims.cols
-        );
-
-    if(
-        y<0 ||
-        y>=dims.rows
-    ){
-        return null;
-    }
-
-    return (
-        TEXTURE_TILE_CONFIG[world].base+
-        "/"+
-        level+
-        "/"+
-        y+
-        "/"+
-        nx+
-        ".jpg"
-    );
-}
-
-function loadTileTexture(
-    world,
-    level,
-    x,
-    y
-){
-
-    if(level > 6){
-        return Promise.resolve(null);
-    }
-
-    const url =
-        getTextureTileUrl(
-            world,
-            level,
-            x,
-            y
-        );
-
-    if(!url){
-        return Promise.resolve(null);
-    }
-
-    return new Promise(
-        resolve=>{
-
-            const loader =
-                new THREE.TextureLoader();
-
-            loader.setCrossOrigin(
-                "anonymous"
-            );
-
-            loader.load(
-
-                url,
-
-                texture=>{
-
-                    texture.encoding =
-                        THREE.sRGBEncoding;
-
-                    texture.wrapS =
-                        THREE.ClampToEdgeWrapping;
-
-                    texture.wrapT =
-                        THREE.ClampToEdgeWrapping;
-
-                    /*
-                        Keep the color texture smooth,
-                        but DO NOT use it to determine
-                        terrain geometry.
-                    */
-
-                    texture.minFilter =
-                        THREE.LinearMipmapLinearFilter;
-
-                    texture.magFilter =
-                        THREE.LinearFilter;
-
-                    texture.anisotropy =
-                        Math.min(
-                            renderer
-                                .capabilities
-                                .getMaxAnisotropy(),
-                            4
-                        );
-
-                    resolve(
-                        texture
-                    );
-                },
-
-                undefined,
-
-                ()=>{
-                    resolve(null);
-                }
-            );
-        }
     );
 }
 
@@ -2737,42 +2668,25 @@ async function loadTerrainTile(
 
     try{
 
-        const [
-            dem,
-            texture
-        ] =
-            await Promise.all([
+        const dem =
+            await readDEMWindow(
 
-                readDEMWindow(
+                world,
 
-                    world,
+                bounds.lonMin,
+                bounds.latMin,
+                bounds.lonMax,
+                bounds.latMax,
 
-                    bounds.lonMin,
-                    bounds.latMin,
-                    bounds.lonMax,
-                    bounds.latMax,
+                TERRAIN.samplesPerTile,
 
-                    TERRAIN.samplesPerTile,
-
-                    level
-                ),
-
-                loadTileTexture(
-                    world,
-                    level,
-                    record.x,
-                    y
-                )
-            ]);
+                level
+            );
 
         if(
             token !== planetLoadToken ||
             currentWorld !== world
         ){
-
-            if(texture){
-                texture.dispose();
-            }
 
             TERRAIN.tiles.delete(
                 key
@@ -2800,6 +2714,11 @@ async function loadTerrainTile(
                 size*size*3
             );
 
+        const colors =
+            new Float32Array(
+                size*size*3
+            );
+
         const uvs =
             new Float32Array(
                 size*size*2
@@ -2808,6 +2727,11 @@ async function loadTerrainTile(
         const indices =
             [];
 
+        const elevations =
+            new Float32Array(
+                size*size
+            );
+
         const lonSpan =
             bounds.lonMax-
             bounds.lonMin;
@@ -2815,6 +2739,11 @@ async function loadTerrainTile(
         const latSpan =
             bounds.latMax-
             bounds.latMin;
+
+        /*
+            First pass:
+            construct exact displaced positions.
+        */
 
         for(
             let j=0;
@@ -2847,12 +2776,6 @@ async function loadTerrainTile(
                 const index =
                     j*size+i;
 
-                /*
-                    DEM values are now kept as close as
-                    possible to the native source samples.
-                    No additional smoothing is introduced.
-                */
-
                 const raw =
                     dem.values[index];
 
@@ -2861,6 +2784,9 @@ async function loadTerrainTile(
                         world,
                         raw
                     );
+
+                elevations[index] =
+                    meters;
 
                 const terrainOffset =
                     metersToScene(
@@ -2905,6 +2831,10 @@ async function loadTerrainTile(
                     1-v;
             }
         }
+
+        /*
+            Triangle topology.
+        */
 
         for(
             let j=0;
@@ -2953,22 +2883,137 @@ async function loadTerrainTile(
             )
         );
 
+        /*
+            Compute normals from the actual displaced
+            geometry before assigning vertex colors.
+        */
+
         geometry.setIndex(
             indices
         );
 
+        geometry.computeVertexNormals();
+
+        const normalAttribute =
+            geometry.getAttribute(
+                "normal"
+            );
+
         /*
-            Recalculate normals AFTER the displaced
-            geometry exists. This makes crater walls,
-            rims and slopes respond correctly to light.
+            Second pass:
+            use the actual normal orientation to produce
+            slope-aware terrain coloration.
         */
 
-        geometry.computeVertexNormals();
+        for(
+            let j=0;
+            j<size;
+            j++
+        ){
+
+            for(
+                let i=0;
+                i<size;
+                i++
+            ){
+
+                const index =
+                    j*size+i;
+
+                const nx =
+                    normalAttribute.getX(
+                        index
+                    );
+
+                const ny =
+                    normalAttribute.getY(
+                        index
+                    );
+
+                const nz =
+                    normalAttribute.getZ(
+                        index
+                    );
+
+                /*
+                    Dot with local radial direction.
+                    1 = horizontal surface.
+                    0 = extremely steep.
+                */
+
+                const u =
+                    i/
+                    (size-1);
+
+                const v =
+                    j/
+                    (size-1);
+
+                const latitude =
+                    bounds.latMax-
+                    v*latSpan;
+
+                const longitude =
+                    bounds.lonMin+
+                    u*lonSpan;
+
+                const radial =
+                    latLonToVector(
+                        latitude,
+                        longitude,
+                        1
+                    ).normalize();
+
+                const dot =
+                    THREE.MathUtils.clamp(
+                        nx*radial.x+
+                        ny*radial.y+
+                        nz*radial.z,
+                        -1,
+                        1
+                    );
+
+                const slope =
+                    1-
+                    Math.abs(dot);
+
+                const c =
+                    terrainColor(
+                        world,
+                        elevations[index],
+                        slope
+                    );
+
+                colors[
+                    index*3
+                ] =
+                    c.r;
+
+                colors[
+                    index*3+1
+                ] =
+                    c.g;
+
+                colors[
+                    index*3+2
+                ] =
+                    c.b;
+            }
+        }
+
+        geometry.setAttribute(
+            "color",
+            new THREE.BufferAttribute(
+                colors,
+                3
+            )
+        );
+
+        geometry.computeBoundingSphere();
 
         const material =
             createTerrainMaterial(
-                world,
-                texture
+                world
             );
 
         const mesh =
@@ -3001,7 +3046,7 @@ async function loadTerrainTile(
 
         setSurfaceStatus(
             dem.sampling === "nearest"
-                ? "NATIVE LUNAR RELIEF ONLINE"
+                ? "NATIVE TERRAIN RELIEF ONLINE"
                 : "HIGH RESOLUTION TERRAIN ONLINE",
             true
         );
@@ -3117,34 +3162,40 @@ function shouldSplitTile(
             cameraDirection
         );
 
-    if(angle > 1.35){
+    if(angle > 1.25){
         return false;
     }
 
     /*
-        Much stronger progression toward high LOD
-        when the user is actually close to the Moon.
+        145 -> very close
+        760 -> far
     */
 
-    const distanceFactor =
-        Math.max(
+    const proximity =
+        THREE.MathUtils.clamp(
+            (
+                760-
+                zoomDistance
+            )/
+            615,
             0,
-            Math.min(
-                1,
-                (
-                    760-
-                    zoomDistance
-                )/
-                615
-            )
+            1
         );
+
+    /*
+        Keep enough detail even before maximum zoom,
+        but don't explode the number of tiles on load.
+    */
 
     const maxUsefulLevel =
         Math.min(
             TERRAIN.maxLevel,
-            Math.floor(
-                2+
-                distanceFactor*6
+            Math.max(
+                3,
+                Math.floor(
+                    3+
+                    proximity*5
+                )
             )
         );
 
@@ -3154,27 +3205,34 @@ function shouldSplitTile(
         return false;
     }
 
-    if(angle < .34){
+    if(angle < .24){
         return true;
     }
 
     if(
-        angle < .60 &&
+        angle < .43 &&
         level < maxUsefulLevel-1
     ){
         return true;
     }
 
     if(
-        angle < .88 &&
+        angle < .70 &&
         level < maxUsefulLevel-2
     ){
         return true;
     }
 
     if(
-        angle < 1.12 &&
+        angle < .98 &&
         level < maxUsefulLevel-3
+    ){
+        return true;
+    }
+
+    if(
+        angle < 1.16 &&
+        level < maxUsefulLevel-4
     ){
         return true;
     }
@@ -3260,6 +3318,9 @@ function collectLeaves(
    TERRAIN LOD UPDATE
 ========================================================= */
 
+let terrainUpdateRunning =
+    false;
+
 async function updateTerrainLOD(
     force
 ){
@@ -3276,139 +3337,161 @@ async function updateTerrainLOD(
         return;
     }
 
+    if(
+        terrainUpdateRunning
+    ){
+        return;
+    }
+
+    terrainUpdateRunning =
+        true;
+
     TERRAIN.lastUpdate =
         now;
 
     const token =
         planetLoadToken;
 
-    const cameraDirection =
-        getCameraDirectionLocal();
+    try{
 
-    const desired =
-        new Set();
+        const cameraDirection =
+            getCameraDirectionLocal();
 
-    const rootDims =
-        tileDimensions(1);
+        const desired =
+            new Set();
 
-    for(
-        let y=0;
-        y<rootDims.rows;
-        y++
-    ){
+        const rootDims =
+            tileDimensions(1);
 
         for(
-            let x=0;
-            x<rootDims.cols;
-            x++
+            let y=0;
+            y<rootDims.rows;
+            y++
         ){
 
-            collectLeaves(
-                1,
-                x,
-                y,
-                cameraDirection,
-                desired
-            );
+            for(
+                let x=0;
+                x<rootDims.cols;
+                x++
+            ){
+
+                collectLeaves(
+                    1,
+                    x,
+                    y,
+                    cameraDirection,
+                    desired
+                );
+            }
         }
-    }
 
-    TERRAIN.visibleKeys =
-        desired;
+        TERRAIN.visibleKeys =
+            desired;
 
-    const missing =
-        [];
+        const missing =
+            [];
 
-    for(
-        const key of desired
-    ){
-
-        if(
-            !TERRAIN.tiles.has(
-                key
-            )
+        for(
+            const key of desired
         ){
 
-            const parts =
-                key.split(":");
+            if(
+                !TERRAIN.tiles.has(
+                    key
+                )
+            ){
 
-            missing.push({
+                const parts =
+                    key.split(":");
 
-                level:
-                    Number(parts[0]),
+                missing.push({
 
-                x:
-                    Number(parts[1]),
+                    level:
+                        Number(parts[0]),
 
-                y:
-                    Number(parts[2])
-            });
+                    x:
+                        Number(parts[1]),
+
+                    y:
+                        Number(parts[2])
+                });
+            }
         }
-    }
 
-    missing.sort(
-        (a,b)=>{
+        missing.sort(
+            (a,b)=>{
 
-            const da =
-                tileAngularDistance(
-                    a.level,
-                    a.x,
-                    a.y,
-                    cameraDirection
-                );
+                const da =
+                    tileAngularDistance(
+                        a.level,
+                        a.x,
+                        a.y,
+                        cameraDirection
+                    );
 
-            const db =
-                tileAngularDistance(
-                    b.level,
-                    b.x,
-                    b.y,
-                    cameraDirection
-                );
+                const db =
+                    tileAngularDistance(
+                        b.level,
+                        b.x,
+                        b.y,
+                        cameraDirection
+                    );
 
-            return da-db;
-        }
-    );
-
-    const batchSize =
-        4;
-
-    for(
-        let i=0;
-        i<missing.length;
-        i+=batchSize
-    ){
-
-        const batch =
-            missing.slice(
-                i,
-                i+batchSize
-            );
-
-        await Promise.allSettled(
-            batch.map(
-                item=>
-                    loadTerrainTile(
-                        currentWorld,
-                        item.level,
-                        item.x,
-                        item.y,
-                        token
-                    )
-            )
+                return da-db;
+            }
         );
 
-        if(
-            token !== planetLoadToken
+        /*
+            Small batches prevent a large synchronous
+            visual hitch on weaker computers.
+        */
+
+        const batchSize =
+            2;
+
+        for(
+            let i=0;
+            i<missing.length;
+            i+=batchSize
         ){
-            return;
+
+            const batch =
+                missing.slice(
+                    i,
+                    i+batchSize
+                );
+
+            await Promise.allSettled(
+                batch.map(
+                    item=>
+                        loadTerrainTile(
+                            currentWorld,
+                            item.level,
+                            item.x,
+                            item.y,
+                            token
+                        )
+                )
+            );
+
+            if(
+                token !== planetLoadToken
+            ){
+                return;
+            }
+
+            updateTerrainVisibility();
         }
 
         updateTerrainVisibility();
+
+        pruneTerrainCache();
+
+    }finally{
+
+        terrainUpdateRunning =
+            false;
     }
-
-    updateTerrainVisibility();
-
-    pruneTerrainCache();
 }
 
 
@@ -3430,12 +3513,16 @@ function updateTerrainVisibility(){
             continue;
         }
 
-        record.mesh.visible =
+        const visible =
             TERRAIN.visibleKeys.has(
                 key
             );
 
-        if(record.mesh.visible){
+        record.mesh.visible =
+            visible;
+
+        if(visible){
+
             record.lastUsed =
                 performance.now();
         }
@@ -3537,14 +3624,6 @@ function disposeTerrainRecord(
         if(
             record.mesh.material
         ){
-
-            if(
-                record.mesh.material.map
-            ){
-
-                record.mesh.material.map.dispose();
-            }
-
             record.mesh.material.dispose();
         }
 
@@ -3581,6 +3660,9 @@ function disposeTerrain(){
 
     TERRAIN.lastUpdate =
         0;
+
+    terrainUpdateRunning =
+        false;
 }
 
 
@@ -3620,7 +3702,7 @@ function buildPlanet(
     );
 
     setSurfaceStatus(
-        "LOADING HIGH RESOLUTION DEM",
+        "LOADING GLOBAL TERRAIN",
         true
     );
 
