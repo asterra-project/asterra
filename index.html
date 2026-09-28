@@ -1048,11 +1048,6 @@ renderer.setSize(
     window.innerHeight
 );
 
-/* CINEMATIC OUTPUT */
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.12;
-renderer.physicallyCorrectLights = false;
-
 if("outputEncoding" in renderer){
 
     renderer.outputEncoding =
@@ -1080,7 +1075,7 @@ document
 const ambient =
     new THREE.AmbientLight(
         0xffffff,
-        .105
+        .13
     );
 
 scene.add(
@@ -1089,14 +1084,14 @@ scene.add(
 
 const keyLight =
     new THREE.DirectionalLight(
-        0xfff3df,
-        4.35
+        0xfff7eb,
+        3.45
     );
 
 keyLight.position.set(
-    -420,
-    120,
-    330
+    -360,
+    105,
+    300
 );
 
 scene.add(
@@ -1105,8 +1100,8 @@ scene.add(
 
 const secondaryLight =
     new THREE.DirectionalLight(
-        0x9fb9df,
-        .18
+        0xaec8ee,
+        .22
     );
 
 secondaryLight.position.set(
@@ -1122,23 +1117,18 @@ scene.add(
 const grazingLight =
     new THREE.DirectionalLight(
         0xffd8b0,
-        1.55
+        1.18
     );
 
 grazingLight.position.set(
-    210,
-    -310,
+    240,
+    -180,
     120
 );
 
 scene.add(
     grazingLight
 );
-
-/* Cold rim light separates crater rims and canyon walls from space. */
-const rimLight = new THREE.DirectionalLight(0x9fc7ff, .72);
-rimLight.position.set(360, 160, -260);
-scene.add(rimLight);
 
 
 /* =========================================================
@@ -1180,7 +1170,7 @@ let targetZoom =
     520;
 
 const MIN_ZOOM =
-    145;
+    151;
 
 const MAX_ZOOM =
     760;
@@ -1221,7 +1211,7 @@ const DEM_CONFIG = {
         */
 
         exaggeration:
-            6.8,
+            7.2,
 
         radiusKm:
             1737.4,
@@ -1277,10 +1267,10 @@ const DEM_CONFIG = {
 const TERRAIN = {
 
     maxLevel:
-        8,
+        9,
 
     samplesPerTile:
-        113,
+        97,
 
     highSamples:
         161,
@@ -1289,7 +1279,7 @@ const TERRAIN = {
         129,
 
     nativeSamplingLevel:
-        5,
+        6,
 
     updateInterval:
         90,
@@ -1304,7 +1294,7 @@ const TERRAIN = {
         new Set(),
 
     cacheLimit:
-        150,
+        220,
 
     demFiles:
         new Map(),
@@ -2330,7 +2320,7 @@ function createTerrainMaterial(
             const curvatureSignal =
                 Math.tanh(
                     curvature *
-                    180
+                    420
                 );
 
 
@@ -2350,7 +2340,7 @@ function createTerrainMaterial(
             const reliefSignal =
                 Math.tanh(
                     localRelief /
-                    80
+                    42
                 );
 
 
@@ -2386,20 +2376,20 @@ function createTerrainMaterial(
             */
 
             let tone =
-                .14 +
-                Math.pow(shade, .72)*.94;
+                .16 +
+                shade*.92;
 
             tone +=
                 curvatureSignal *
-                .145;
+                .16;
 
             tone +=
                 reliefSignal *
-                .115;
+                .11;
 
             tone +=
                 slopeSignal *
-                .105;
+                .10;
 
             tone =
                 THREE.MathUtils.clamp(
@@ -2580,13 +2570,13 @@ function createTerrainMaterial(
         true;
 
     texture.generateMipmaps =
-        false;
+        true;
 
     texture.minFilter =
-        THREE.LinearFilter;
+        THREE.LinearMipmapLinearFilter;
 
     texture.magFilter =
-        THREE.LinearFilter;
+        THREE.NearestFilter;
 
     texture.wrapS =
         THREE.ClampToEdgeWrapping;
@@ -3129,7 +3119,7 @@ function getCurrentTerrainLevel(){
             1,
             Math.floor(
                 2 +
-                normalized*6
+                normalized*7
             )
         )
     );
@@ -3187,33 +3177,17 @@ function getVisibleTileRange(
                 ? 2
                 : 1;
 
-    const approximateLatitude =
-        THREE.MathUtils.clamp(
-            THREE.MathUtils.radToDeg(planetGroup.rotation.x),
-            -82,
-            82
-        );
-
     const centerY =
-        Math.max(
-            0,
-            Math.min(
-                dims.rows-1,
-                Math.floor(
-                    (90-approximateLatitude)/180*dims.rows
-                )
-            )
+        Math.floor(
+            dims.rows*.5
         );
 
     const result =
         [];
 
-    const rangeY =
-        level >= 7 ? 2 : 1;
-
     for(
-        let dy=-rangeY;
-        dy<=rangeY;
+        let dy=-1;
+        dy<=1;
         dy++
     ){
 
@@ -3409,7 +3383,7 @@ async function updateTerrain(
         ){
 
             setSurfaceStatus(
-                "CINEMATIC REAL DEM · LOD " +
+                "REAL DEM TERRAIN · LOD " +
                 level +
                 " · " +
                 samplesForLevel(level) +
