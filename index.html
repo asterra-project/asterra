@@ -1063,19 +1063,13 @@ h1{
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-
-<!--
-    GeoTIFF.js is used only as a DEM reader.
-    The large planetary files are NOT downloaded in full.
-    Individual raster windows are requested as needed.
--->
 <script src="https://cdn.jsdelivr.net/npm/geotiff@3.0.5/dist-browser/geotiff.min.js"></script>
 
 <script>
 
 /* =========================================================
    ASTERRA
-   TILED DEM + LOD SURFACE ENGINE
+   HIGH DETAIL TILED DEM + ADAPTIVE LOD
 ========================================================= */
 
 if(typeof THREE === "undefined"){
@@ -1202,13 +1196,7 @@ function createCosmicStars(){
                     : (Math.random() < .55 ? 1 : 2),
 
             depth:
-                randomBetween(.15,1),
-
-            halo:
-                Math.random() < .025,
-
-            diffraction:
-                Math.random() < .009
+                randomBetween(.15,1)
         });
     }
 }
@@ -1469,7 +1457,7 @@ requestAnimationFrame(
 
 
 /* =========================================================
-   THREE.JS
+   THREE
 ========================================================= */
 
 const scene =
@@ -1479,7 +1467,7 @@ const camera =
     new THREE.PerspectiveCamera(
         42,
         window.innerWidth/window.innerHeight,
-        .1,
+        .05,
         4000
     );
 
@@ -1525,7 +1513,6 @@ renderer.setSize(
 );
 
 if("outputEncoding" in renderer){
-
     renderer.outputEncoding =
         THREE.sRGBEncoding;
 }
@@ -1550,7 +1537,7 @@ document
 const ambient =
     new THREE.AmbientLight(
         0xffffff,
-        .66
+        .32
     );
 
 scene.add(ambient);
@@ -1558,34 +1545,48 @@ scene.add(ambient);
 const keyLight =
     new THREE.DirectionalLight(
         0xffffff,
-        1.55
+        2.35
     );
 
 keyLight.position.set(
-    -250,
-    170,
-    350
+    -300,
+    180,
+    380
 );
 
 scene.add(keyLight);
 
-const rimLight =
+const secondaryLight =
     new THREE.DirectionalLight(
-        0x8fa9d0,
-        .35
+        0xd9e3f4,
+        .62
     );
 
-rimLight.position.set(
-    250,
-    -100,
-    -250
+secondaryLight.position.set(
+    280,
+    40,
+    -300
 );
 
-scene.add(rimLight);
+scene.add(secondaryLight);
+
+const grazingLight =
+    new THREE.DirectionalLight(
+        0xffffff,
+        .48
+    );
+
+grazingLight.position.set(
+    -80,
+    -220,
+    320
+);
+
+scene.add(grazingLight);
 
 
 /* =========================================================
-   PLANET PARAMETERS
+   PLANET
 ========================================================= */
 
 const PLANET_RADIUS =
@@ -1623,14 +1624,14 @@ let targetZoom =
     520;
 
 const MIN_ZOOM =
-    175;
+    145;
 
 const MAX_ZOOM =
     760;
 
 
 /* =========================================================
-   DEM DATA
+   DEM
 ========================================================= */
 
 const DEM_CONFIG = {
@@ -1646,17 +1647,17 @@ const DEM_CONFIG = {
         height:
             11520,
 
-        /*
-            NASA CGI Moon Kit:
-            floating point kilometers
-            relative to radius 1737.4 km.
-        */
-
         metersPerUnit:
             1000,
 
+        /*
+            Stronger than the previous version.
+            The physical relief is too subtle at
+            ASTERRA's display scale otherwise.
+        */
+
         exaggeration:
-            1.55,
+            3.4,
 
         fallback:
             "https://upload.wikimedia.org/wikipedia/commons/2/26/Solarsystemscope_texture_2k_moon.jpg"
@@ -1673,15 +1674,11 @@ const DEM_CONFIG = {
         height:
             23040,
 
-        /*
-            MOLA global DEM values are meters.
-        */
-
         metersPerUnit:
             1,
 
         exaggeration:
-            1.35,
+            2.8,
 
         fallback:
             "https://upload.wikimedia.org/wikipedia/commons/4/46/Solarsystemscope_texture_2k_mars.jpg"
@@ -1690,24 +1687,39 @@ const DEM_CONFIG = {
 
 
 /* =========================================================
-   TERRAIN LOD
+   HIGH DETAIL TERRAIN SETTINGS
 ========================================================= */
 
 const TERRAIN = {
 
+    /*
+        Previous version:
+        maxLevel 5
+
+        New:
+        maxLevel 8
+
+        At level 8:
+        256 longitude columns
+        128 latitude rows
+
+        A tile covers only about:
+        1.40625° x 1.40625°
+    */
+
     maxLevel:
-        5,
+        8,
 
     /*
-        Global roots:
-        level 1 = 2 longitude tiles x 1 latitude tile
+        More vertices per tile.
+        65 x 65 = 4096 vertices.
     */
 
     samplesPerTile:
-        33,
+        65,
 
     updateInterval:
-        180,
+        120,
 
     lastUpdate:
         0,
@@ -1718,8 +1730,13 @@ const TERRAIN = {
     visibleKeys:
         new Set(),
 
+    /*
+        Larger cache because higher LOD produces
+        more small tiles.
+    */
+
     cacheLimit:
-        110,
+        150,
 
     demFiles:
         new Map(),
@@ -1730,7 +1747,7 @@ const TERRAIN = {
 
 
 /* =========================================================
-   PLOT SYSTEM
+   PLOT
 ========================================================= */
 
 const PLOT_GRID_LAT =
@@ -1791,7 +1808,7 @@ const worldData = {
 
 
 /* =========================================================
-   UI REFERENCES
+   UI
 ========================================================= */
 
 const worldName =
@@ -1881,12 +1898,16 @@ const surfaceStatus =
 
 
 /* =========================================================
-   SURFACE STATUS
+   STATUS
 ========================================================= */
 
-let surfaceStatusTimer = null;
+let surfaceStatusTimer =
+    null;
 
-function setSurfaceStatus(text,visible){
+function setSurfaceStatus(
+    text,
+    visible
+){
 
     surfaceStatus.textContent =
         text;
@@ -1909,22 +1930,28 @@ function setSurfaceStatus(text,visible){
                         "visible"
                     );
                 },
-                1800
+                2200
             );
     }
 }
 
 
 /* =========================================================
-   GEOTIFF CACHE
+   DEM FILE
 ========================================================= */
 
-async function getDEMFile(world){
+async function getDEMFile(
+    world
+){
 
     if(
-        TERRAIN.demFiles.has(world)
+        TERRAIN.demFiles.has(
+            world
+        )
     ){
-        return TERRAIN.demFiles.get(world);
+        return TERRAIN.demFiles.get(
+            world
+        );
     }
 
     const config =
@@ -1933,7 +1960,7 @@ async function getDEMFile(world){
     try{
 
         setSurfaceStatus(
-            "OPENING DEM",
+            "OPENING GLOBAL DEM",
             true
         );
 
@@ -1942,7 +1969,7 @@ async function getDEMFile(world){
                 config.url,
                 {
                     allowFullFile:false,
-                    maxRanges:16
+                    maxRanges:24
                 }
             );
 
@@ -2046,7 +2073,7 @@ async function readDEMWindow(
     x1 =
         Math.ceil(
             Math.max(
-                x0+1,
+                x0+2,
                 Math.min(
                     config.width,
                     x1
@@ -2068,7 +2095,7 @@ async function readDEMWindow(
     y1 =
         Math.ceil(
             Math.max(
-                y0+1,
+                y0+2,
                 Math.min(
                     config.height,
                     y1
@@ -2127,10 +2154,12 @@ async function readDEMWindow(
 
 
 /* =========================================================
-   TILE COORDINATES
+   TILE DIMENSIONS
 ========================================================= */
 
-function tileDimensions(level){
+function tileDimensions(
+    level
+){
 
     return {
 
@@ -2206,11 +2235,6 @@ function tileBounds(
     };
 }
 
-
-/* =========================================================
-   TILE KEY
-========================================================= */
-
 function tileKey(
     level,
     x,
@@ -2239,7 +2263,7 @@ function tileKey(
 
 
 /* =========================================================
-   LAT/LON → VECTOR
+   LAT/LON VECTOR
 ========================================================= */
 
 function latLonToVector(
@@ -2275,7 +2299,7 @@ function latLonToVector(
 
 
 /* =========================================================
-   TERRAIN HEIGHT
+   ELEVATION
 ========================================================= */
 
 function decodeElevation(
@@ -2294,20 +2318,20 @@ function decodeElevation(
         raw*
         config.metersPerUnit;
 
-    /*
-        Defensive protection against
-        invalid / nodata values.
-    */
-
     if(!Number.isFinite(meters)){
         meters = 0;
     }
 
+    /*
+        Keep the useful planetary range but
+        avoid catastrophic bad pixels.
+    */
+
     meters =
         Math.max(
-            -12000,
+            -15000,
             Math.min(
-                22000,
+                25000,
                 meters
             )
         );
@@ -2327,12 +2351,6 @@ function metersToScene(
 
     const config =
         DEM_CONFIG[world];
-
-    /*
-        Planet radius is only 130 world units,
-        so convert real planetary meters into
-        the visual ASTERRA scale.
-    */
 
     const scale =
         PLANET_RADIUS/
@@ -2366,17 +2384,20 @@ function createTerrainMaterial(
                     ? 0xffffff
                     : (
                         world === "Moon"
-                            ? 0x898989
-                            : 0x9b4730
+                            ? 0x9a9a9a
+                            : 0xa94d36
                     ),
 
             roughness:
                 world === "Moon"
-                    ? .98
-                    : .94,
+                    ? .96
+                    : .91,
 
             metalness:
-                0
+                0,
+
+            flatShading:
+                false
         });
 
     material.side =
@@ -2387,7 +2408,7 @@ function createTerrainMaterial(
 
 
 /* =========================================================
-   FALLBACK SPHERE
+   FALLBACK
 ========================================================= */
 
 let fallbackSphere =
@@ -2420,8 +2441,8 @@ function createFallbackSphere(
     const geometry =
         new THREE.SphereGeometry(
             PLANET_RADIUS,
-            96,
-            64
+            128,
+            96
         );
 
     const material =
@@ -2429,8 +2450,8 @@ function createFallbackSphere(
 
             color:
                 world === "Moon"
-                    ? 0x7c7c7c
-                    : 0x8f3e29,
+                    ? 0x858585
+                    : 0x98452f,
 
             roughness:
                 1,
@@ -2476,11 +2497,18 @@ function createFallbackSphere(
                     4
                 );
 
-            fallbackSphere.material.map =
-                texture;
+            if(
+                fallbackSphere &&
+                fallbackSphere.material
+            ){
 
-            fallbackSphere.material.needsUpdate =
-                true;
+                fallbackSphere.material.map =
+                    texture;
+
+                fallbackSphere.material.needsUpdate =
+                    true;
+            }
+
         },
 
         undefined,
@@ -2491,7 +2519,7 @@ function createFallbackSphere(
 
 
 /* =========================================================
-   TILE TEXTURE
+   NASA TEXTURE TILES
 ========================================================= */
 
 const TEXTURE_TILE_CONFIG = {
@@ -2514,15 +2542,6 @@ function getTextureTileUrl(
     y
 ){
 
-    /*
-        Trek WMTS levels start with:
-        2 columns at level 0
-        1 row at level 0
-
-        Our terrain level uses the same
-        2^level x 2^(level-1) structure.
-    */
-
     const dims =
         tileDimensions(
             level
@@ -2535,8 +2554,8 @@ function getTextureTileUrl(
         );
 
     if(
-        y < 0 ||
-        y >= dims.rows
+        y<0 ||
+        y>=dims.rows
     ){
         return null;
     }
@@ -2559,6 +2578,16 @@ function loadTileTexture(
     x,
     y
 ){
+
+    /*
+        At very high DEM levels the texture service
+        may not expose matching levels. The DEM remains
+        the primary source of geometry.
+    */
+
+    if(level > 6){
+        return Promise.resolve(null);
+    }
 
     const url =
         getTextureTileUrl(
@@ -2628,7 +2657,7 @@ function loadTileTexture(
 
 
 /* =========================================================
-   TERRAIN TILE
+   TERRAIN TILE CREATION
 ========================================================= */
 
 async function loadTerrainTile(
@@ -2887,6 +2916,10 @@ async function loadTerrainTile(
                 const d =
                     c+1;
 
+                /*
+                    Consistent winding.
+                */
+
                 indices.push(
                     a,b,d,
                     a,d,c
@@ -2959,7 +2992,7 @@ async function loadTerrainTile(
         );
 
         setSurfaceStatus(
-            "SURFACE DATA ONLINE",
+            "HIGH RESOLUTION TERRAIN ONLINE",
             true
         );
 
@@ -2986,7 +3019,7 @@ async function loadTerrainTile(
 
 
 /* =========================================================
-   CAMERA DIRECTION IN PLANET SPACE
+   CAMERA DIRECTION
 ========================================================= */
 
 function getCameraDirectionLocal(){
@@ -3050,7 +3083,7 @@ function tileAngularDistance(
 
 
 /* =========================================================
-   LOD DECISION
+   LOD
 ========================================================= */
 
 function shouldSplitTile(
@@ -3075,51 +3108,84 @@ function shouldSplitTile(
         );
 
     /*
-        Only refine the visible hemisphere.
-        As the camera approaches, progressively
-        smaller angular regions receive higher LOD.
+        Never spend high detail on the far side.
     */
 
-    if(angle > 1.55){
+    if(angle > 1.35){
         return false;
     }
 
-    const thresholds = {
+    /*
+        The smaller the camera distance,
+        the deeper we go.
 
-        1:470,
-        2:390,
-        3:310,
-        4:230
-    };
+        This is intentionally much more
+        aggressive than the previous version.
+    */
 
-    const threshold =
-        thresholds[level] ||
-        180;
+    const distanceFactor =
+        Math.max(
+            0,
+            Math.min(
+                1,
+                (
+                    760-
+                    zoomDistance
+                )/
+                615
+            )
+        );
+
+    const maxUsefulLevel =
+        Math.min(
+            TERRAIN.maxLevel,
+            Math.floor(
+                2+
+                distanceFactor*6
+            )
+        );
 
     if(
-        zoomDistance >= threshold
+        level >= maxUsefulLevel
     ){
         return false;
     }
 
     /*
-        Near the center of the view we permit
-        one additional LOD level.
+        Central view gets highest detail.
     */
 
+    if(angle < .28){
+        return true;
+    }
+
     if(
-        angle < .70 &&
-        zoomDistance < threshold*1.15
+        angle < .52 &&
+        level < maxUsefulLevel-1
     ){
         return true;
     }
 
-    return angle < 1.05;
+    if(
+        angle < .82 &&
+        level < maxUsefulLevel-2
+    ){
+        return true;
+    }
+
+    if(
+        angle < 1.08 &&
+        level < maxUsefulLevel-3
+    ){
+        return true;
+    }
+
+    return false;
 }
 
 
 /* =========================================================
-   BUILD DESIRED TILE SET
+   LEAF COLLECTION
 ========================================================= */
 
 function collectLeaves(
@@ -3150,11 +3216,6 @@ function collectLeaves(
 
         return;
     }
-
-    const dims =
-        tileDimensions(
-            level+1
-        );
 
     const childX =
         x*2;
@@ -3197,7 +3258,7 @@ function collectLeaves(
 
 
 /* =========================================================
-   TERRAIN UPDATE
+   TERRAIN LOD UPDATE
 ========================================================= */
 
 async function updateTerrainLOD(
@@ -3257,66 +3318,126 @@ async function updateTerrainLOD(
         desired;
 
     /*
-        Load the leaves.
-        Existing lower-resolution terrain remains
-        visible until a child is ready.
+        First load missing leaves.
+
+        Limit simultaneous requests to avoid
+        hammering the DEM server.
     */
 
-    const loadPromises = [];
+    const missing =
+        [];
 
     for(
         const key of desired
     ){
 
-        const parts =
-            key.split(":");
-
-        const level =
-            Number(parts[0]);
-
-        const x =
-            Number(parts[1]);
-
-        const y =
-            Number(parts[2]);
-
-        let record =
-            TERRAIN.tiles.get(
+        if(
+            !TERRAIN.tiles.has(
                 key
-            );
+            )
+        ){
 
-        if(!record){
+            const parts =
+                key.split(":");
 
-            loadPromises.push(
-                loadTerrainTile(
-                    currentWorld,
-                    level,
-                    x,
-                    y,
-                    token
-                )
-            );
+            missing.push({
 
-        }else{
+                level:
+                    Number(parts[0]),
 
-            record.lastUsed =
-                now;
+                x:
+                    Number(parts[1]),
+
+                y:
+                    Number(parts[2])
+            });
         }
     }
 
-    if(
-        loadPromises.length
-    ){
+    /*
+        Prioritize tiles closest to the camera.
+    */
 
-        await Promise.allSettled(
-            loadPromises
-        );
-    }
+    missing.sort(
+        (a,b)=>{
+
+            const da =
+                tileAngularDistance(
+                    a.level,
+                    a.x,
+                    a.y,
+                    cameraDirection
+                );
+
+            const db =
+                tileAngularDistance(
+                    b.level,
+                    b.x,
+                    b.y,
+                    cameraDirection
+                );
+
+            return da-db;
+        }
+    );
 
     /*
-        Hide tiles that are no longer leaves.
-        We keep them cached for fast re-entry.
+        Load in small batches.
+        This keeps the browser responsive.
     */
+
+    const batchSize =
+        5;
+
+    for(
+        let i=0;
+        i<missing.length;
+        i+=batchSize
+    ){
+
+        const batch =
+            missing.slice(
+                i,
+                i+batchSize
+            );
+
+        await Promise.allSettled(
+            batch.map(
+                item=>
+                    loadTerrainTile(
+                        currentWorld,
+                        item.level,
+                        item.x,
+                        item.y,
+                        token
+                    )
+            )
+        );
+
+        if(
+            token !== planetLoadToken
+        ){
+            return;
+        }
+
+        /*
+            Reveal the current set after every batch.
+        */
+
+        updateTerrainVisibility();
+    }
+
+    updateTerrainVisibility();
+
+    pruneTerrainCache();
+}
+
+
+/* =========================================================
+   VISIBILITY
+========================================================= */
+
+function updateTerrainVisibility(){
 
     for(
         const [
@@ -3326,24 +3447,20 @@ async function updateTerrainLOD(
         of TERRAIN.tiles
     ){
 
-        if(
-            record.mesh
-        ){
-
-            const shouldShow =
-                desired.has(key);
-
-            record.mesh.visible =
-                shouldShow;
+        if(!record.mesh){
+            continue;
         }
-    }
 
-    pruneTerrainCache();
+        record.mesh.visible =
+            TERRAIN.visibleKeys.has(
+                key
+            );
+    }
 }
 
 
 /* =========================================================
-   TERRAIN CACHE
+   CACHE
 ========================================================= */
 
 function pruneTerrainCache(){
@@ -3454,7 +3571,7 @@ function disposeTerrainRecord(
 
 
 /* =========================================================
-   DISPOSE TERRAIN
+   DISPOSE
 ========================================================= */
 
 function disposeTerrain(){
@@ -3484,7 +3601,7 @@ function disposeTerrain(){
 
 
 /* =========================================================
-   INITIAL PLANET BUILD
+   PLANET BUILD
 ========================================================= */
 
 function buildPlanet(
@@ -3519,14 +3636,9 @@ function buildPlanet(
     );
 
     setSurfaceStatus(
-        "LOADING TILED DEM",
+        "LOADING HIGH RESOLUTION DEM",
         true
     );
-
-    /*
-        The fallback sphere is hidden only after
-        actual terrain begins appearing.
-    */
 
     updateTerrainLOD(
         true
@@ -3961,7 +4073,7 @@ function createPlotBoundary(
         12;
 
     const radius =
-        PLANET_RADIUS+1.1;
+        PLANET_RADIUS+1.6;
 
     for(
         let i=0;
@@ -4112,7 +4224,7 @@ function createPlotBoundary(
 
 
 /* =========================================================
-   SURFACE RAYCAST
+   RAYCAST
 ========================================================= */
 
 function getSurfaceCoordinates(
@@ -4251,7 +4363,7 @@ function getSurfaceCoordinates(
 
 
 /* =========================================================
-   PROPERTY PANEL
+   PROPERTY
 ========================================================= */
 
 function showProperty(
@@ -4392,7 +4504,7 @@ function updateWorldUI(
 
 
 /* =========================================================
-   INITIAL PLANET
+   INITIAL
 ========================================================= */
 
 updateWorldUI(
@@ -4656,7 +4768,7 @@ renderer.domElement.addEventListener(
 
 
 /* =========================================================
-   SURFACE CLICK
+   CLICK
 ========================================================= */
 
 renderer.domElement.addEventListener(
@@ -4744,7 +4856,7 @@ document
             targetZoom =
                 Math.max(
                     MIN_ZOOM,
-                    targetZoom-35
+                    targetZoom-45
                 );
         }
     );
@@ -4809,11 +4921,6 @@ function animate(now){
                 planetGroup.rotation.x
             )
         );
-
-    /*
-        Terrain LOD updates are throttled.
-        We do not rebuild the quadtree every frame.
-    */
 
     updateTerrainLOD(
         false
