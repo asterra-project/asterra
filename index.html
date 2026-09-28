@@ -2166,15 +2166,7 @@ function createPlanetMaterial(
                     : .96,
 
             metalness:
-                0,
-
-            bumpMap:
-                texture,
-
-            bumpScale:
-                world === "Moon"
-                    ? 1.15
-                    : .72
+                0
         });
 
     material.needsUpdate =
@@ -2233,7 +2225,6 @@ function buildPlanet(world) {
         planetLoadToken;
 
     disposePlotVisuals();
-
     disposePlanet();
 
     const geometry =
@@ -2243,7 +2234,7 @@ function buildPlanet(world) {
             96
         );
 
-    const initialMaterial =
+    const fallbackMaterial =
         createFallbackPlanetMaterial(
             world
         );
@@ -2251,18 +2242,21 @@ function buildPlanet(world) {
     planetMesh =
         new THREE.Mesh(
             geometry,
-            initialMaterial
+            fallbackMaterial
         );
-
-    planetMesh.frustumCulled =
-        false;
 
     planetMesh.visible =
         true;
 
+    planetMesh.frustumCulled =
+        false;
+
     planetGroup.add(
         planetMesh
     );
+
+    planetGroup.visible =
+        true;
 
     planetGroup.rotation.set(
         .05,
@@ -2271,6 +2265,19 @@ function buildPlanet(world) {
     );
 
     updatePlanetSafePosition();
+
+    const textureURL =
+        WORLD_TEXTURES[world];
+
+    if (!textureURL) {
+
+        console.warn(
+            "ASTERRA: No texture URL for",
+            world
+        );
+
+        return;
+    }
 
     const loader =
         new THREE.TextureLoader();
@@ -2281,7 +2288,7 @@ function buildPlanet(world) {
 
     loader.load(
 
-        WORLD_TEXTURES[world],
+        textureURL,
 
         function(texture) {
 
@@ -2306,14 +2313,6 @@ function buildPlanet(world) {
             texture.encoding =
                 THREE.sRGBEncoding;
 
-            texture.anisotropy =
-                Math.min(
-                    renderer
-                        .capabilities
-                        .getMaxAnisotropy(),
-                    8
-                );
-
             texture.wrapS =
                 THREE.ClampToEdgeWrapping;
 
@@ -2326,47 +2325,78 @@ function buildPlanet(world) {
             texture.magFilter =
                 THREE.LinearFilter;
 
+            if (
+                renderer &&
+                renderer.capabilities
+            ) {
+
+                texture.anisotropy =
+                    Math.min(
+                        renderer
+                            .capabilities
+                            .getMaxAnisotropy(),
+                        4
+                    );
+            }
+
             texture.needsUpdate =
                 true;
 
-            const oldMaterial =
-                planetMesh.material;
-
-            const newMaterial =
+            const texturedMaterial =
                 createPlanetMaterial(
                     world,
                     texture
                 );
 
+            const oldMaterial =
+                planetMesh.material;
+
             planetMesh.material =
-                newMaterial;
+                texturedMaterial;
+
+            planetMesh.visible =
+                true;
+
+            planetGroup.visible =
+                true;
 
             if (oldMaterial) {
                 oldMaterial.dispose();
             }
 
+            console.log(
+                "ASTERRA:",
+                world,
+                "surface loaded successfully."
+            );
         },
 
-        function() {
+        function(xhr) {
             /*
                 Loading progress intentionally
-                does not affect the fallback planet.
+                does not affect planet visibility.
             */
         },
 
         function(error) {
 
             console.warn(
-                "ASTERRA: surface texture could not be loaded.",
+                "ASTERRA: Could not load surface texture for",
                 world,
                 error
             );
 
-            /*
-                IMPORTANT:
-                The planet remains visible using
-                the fallback material.
-            */
+            if (
+                planetMesh &&
+                currentWorld === world
+            ) {
+
+                planetMesh.visible =
+                    true;
+
+                planetGroup.visible =
+                    true;
+            }
         }
     );
 }
