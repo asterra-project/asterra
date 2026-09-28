@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ASTERRA — Own Your World</title>
 
@@ -11,29 +11,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#010204;
-    color:#f5f7fa;
-    font-family:Inter,Arial,sans-serif;
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #010204;
+    color: #f5f7fa;
+    font-family: Inter, Arial, sans-serif;
 }
 
-body{
-    user-select:none;
+body {
+    user-select: none;
 }
 
-#space{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
+#space {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
 
     background:
         radial-gradient(
@@ -49,19 +50,19 @@ body{
         #010204;
 }
 
-.nebula{
-    position:absolute;
-    pointer-events:none;
-    z-index:1;
-    border-radius:50%;
-    mix-blend-mode:screen;
+.nebula {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 50%;
+    mix-blend-mode: screen;
 }
 
-.nebula-main{
-    width:1100px;
-    height:570px;
-    right:-100px;
-    top:3%;
+.nebula-main {
+    width: 1100px;
+    height: 570px;
+    right: -100px;
+    top: 3%;
 
     background:
         radial-gradient(
@@ -72,17 +73,17 @@ body{
             transparent 72%
         );
 
-    filter:blur(48px);
-    opacity:.9;
-    transform:rotate(-14deg);
-    animation:nebulaDrift1 30s ease-in-out infinite alternate;
+    filter: blur(48px);
+    opacity: .9;
+    transform: rotate(-14deg);
+    animation: nebulaDrift1 30s ease-in-out infinite alternate;
 }
 
-.nebula-secondary{
-    width:850px;
-    height:330px;
-    right:4%;
-    top:37%;
+.nebula-secondary {
+    width: 850px;
+    height: 330px;
+    right: 4%;
+    top: 37%;
 
     background:
         radial-gradient(
@@ -92,17 +93,17 @@ body{
             transparent 70%
         );
 
-    filter:blur(42px);
-    opacity:.75;
-    transform:rotate(-22deg);
-    animation:nebulaDrift2 38s ease-in-out infinite alternate;
+    filter: blur(42px);
+    opacity: .75;
+    transform: rotate(-22deg);
+    animation: nebulaDrift2 38s ease-in-out infinite alternate;
 }
 
-.nebula-far{
-    width:1400px;
-    height:400px;
-    right:-350px;
-    top:8%;
+.nebula-far {
+    width: 1400px;
+    height: 400px;
+    right: -350px;
+    top: 8%;
 
     background:
         radial-gradient(
@@ -112,16 +113,16 @@ body{
             transparent 70%
         );
 
-    filter:blur(65px);
-    opacity:.75;
-    transform:rotate(8deg);
+    filter: blur(65px);
+    opacity: .75;
+    transform: rotate(8deg);
 }
 
-.nebula-ribbon{
-    width:1400px;
-    height:220px;
-    right:-250px;
-    top:52%;
+.nebula-ribbon {
+    width: 1400px;
+    height: 220px;
+    right: -250px;
+    top: 52%;
 
     background:
         radial-gradient(
@@ -131,17 +132,17 @@ body{
             transparent 70%
         );
 
-    filter:blur(36px);
-    transform:rotate(-17deg);
-    opacity:.7;
-    animation:nebulaDrift3 44s ease-in-out infinite alternate;
+    filter: blur(36px);
+    transform: rotate(-17deg);
+    opacity: .7;
+    animation: nebulaDrift3 44s ease-in-out infinite alternate;
 }
 
-.nebula-cloud-a{
-    width:500px;
-    height:300px;
-    right:24%;
-    top:18%;
+.nebula-cloud-a {
+    width: 500px;
+    height: 300px;
+    right: 24%;
+    top: 18%;
 
     background:
         radial-gradient(
@@ -151,16 +152,16 @@ body{
             transparent 72%
         );
 
-    filter:blur(38px);
-    opacity:.65;
-    transform:rotate(-30deg);
+    filter: blur(38px);
+    opacity: .65;
+    transform: rotate(-30deg);
 }
 
-.nebula-cloud-b{
-    width:600px;
-    height:230px;
-    right:6%;
-    bottom:11%;
+.nebula-cloud-b {
+    width: 600px;
+    height: 230px;
+    right: 6%;
+    bottom: 11%;
 
     background:
         radial-gradient(
@@ -170,408 +171,411 @@ body{
             transparent 72%
         );
 
-    filter:blur(40px);
-    opacity:.65;
-    transform:rotate(13deg);
+    filter: blur(40px);
+    opacity: .65;
+    transform: rotate(13deg);
 }
 
-@keyframes nebulaDrift1{
-    from{
-        transform:translate3d(0,0,0) rotate(-14deg) scale(1);
+@keyframes nebulaDrift1 {
+    from {
+        transform: translate3d(0,0,0) rotate(-14deg) scale(1);
     }
-    to{
-        transform:translate3d(-30px,14px,0) rotate(-10deg) scale(1.035);
-    }
-}
 
-@keyframes nebulaDrift2{
-    from{
-        transform:translate3d(0,0,0) rotate(-22deg);
-    }
-    to{
-        transform:translate3d(22px,-14px,0) rotate(-18deg);
+    to {
+        transform: translate3d(-30px,14px,0) rotate(-10deg) scale(1.035);
     }
 }
 
-@keyframes nebulaDrift3{
-    from{
-        transform:translate3d(0,0,0) rotate(-17deg);
-    }
-    to{
-        transform:translate3d(-28px,13px,0) rotate(-13deg);
-    }
-}
-
-#starfield{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:3;
-    pointer-events:none;
-}
-
-#scene{
-    position:fixed;
-    inset:0;
-    z-index:4;
-}
-
-canvas{
-    display:block;
-}
-
-.ui{
-    position:fixed;
-    inset:0;
-    z-index:10;
-    pointer-events:none;
-}
-
-.topbar{
-    position:absolute;
-    top:32px;
-    left:42px;
-    right:42px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-}
-
-.brand{
-    font-family:Manrope,sans-serif;
-    font-size:18px;
-    font-weight:800;
-    letter-spacing:.18em;
-}
-
-.brand-sub{
-    margin-top:7px;
-    font-size:9px;
-    letter-spacing:.26em;
-    color:rgba(255,255,255,.42);
-}
-
-.top-right{
-    display:flex;
-    align-items:center;
-    gap:22px;
-}
-
-.status{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    font-size:9px;
-    letter-spacing:.16em;
-    color:rgba(255,255,255,.48);
-}
-
-.status-dot{
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:#fff;
-    box-shadow:0 0 12px rgba(255,255,255,.7);
-}
-
-.hero{
-    position:absolute;
-    left:42px;
-    top:50%;
-    transform:translateY(-52%);
-    width:370px;
-}
-
-.kicker{
-    font-size:10px;
-    font-weight:600;
-    letter-spacing:.28em;
-    color:rgba(255,255,255,.42);
-    margin-bottom:17px;
-}
-
-h1{
-    font-family:Manrope,sans-serif;
-    font-size:58px;
-    line-height:.98;
-    letter-spacing:-.055em;
-    font-weight:700;
-    margin-bottom:24px;
-}
-
-.hero-text{
-    width:330px;
-    color:rgba(255,255,255,.56);
-    font-size:13px;
-    line-height:1.75;
-}
-
-.actions{
-    display:flex;
-    gap:10px;
-    margin-top:30px;
-    pointer-events:auto;
-}
-
-.btn{
-    height:42px;
-    padding:0 18px;
-
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.035);
-    color:#fff;
-
-    font-family:Inter,sans-serif;
-    font-size:9px;
-    font-weight:600;
-    letter-spacing:.16em;
-
-    cursor:pointer;
-    transition:.2s ease;
-}
-
-.btn:hover{
-    background:rgba(255,255,255,.09);
-    border-color:rgba(255,255,255,.28);
-}
-
-.btn.primary{
-    background:#fff;
-    color:#050608;
-    border-color:#fff;
-}
-
-.btn.primary:hover{
-    background:#e9edf2;
-}
-
-.world-panel{
-    position:absolute;
-    top:50%;
-    right:42px;
-    transform:translateY(-50%);
-    width:290px;
-}
-
-.panel-label{
-    font-size:9px;
-    letter-spacing:.24em;
-    color:rgba(255,255,255,.38);
-    margin-bottom:13px;
-}
-
-.world-tabs{
-    display:flex;
-    border-bottom:1px solid rgba(255,255,255,.12);
-    pointer-events:auto;
-}
-
-.world-tab{
-    padding:0 0 13px;
-    margin-right:25px;
-
-    border:0;
-    background:none;
-
-    color:rgba(255,255,255,.35);
-
-    font-family:Inter,sans-serif;
-    font-size:10px;
-    font-weight:600;
-    letter-spacing:.17em;
-
-    cursor:pointer;
-    position:relative;
-}
-
-.world-tab.active{
-    color:#fff;
-}
-
-.world-tab.active::after{
-    content:"";
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:-1px;
-    height:1px;
-    background:#fff;
-}
-
-.world-info{
-    padding-top:23px;
-}
-
-.world-name{
-    font-family:Manrope,sans-serif;
-    font-size:31px;
-    font-weight:700;
-    letter-spacing:-.035em;
-}
-
-.world-description{
-    margin-top:9px;
-    font-size:11px;
-    line-height:1.65;
-    color:rgba(255,255,255,.42);
-}
-
-.stats{
-    margin-top:28px;
-    border-top:1px solid rgba(255,255,255,.08);
-}
-
-.stat{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    min-height:43px;
-
-    border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.stat-label{
-    font-size:9px;
-    letter-spacing:.13em;
-    color:rgba(255,255,255,.36);
-}
-
-.stat-value{
-    font-size:10px;
-    font-weight:600;
-    letter-spacing:.06em;
-}
-
-.status-live{
-    display:flex;
-    align-items:center;
-    gap:7px;
-}
-
-.status-live::before{
-    content:"";
-    width:5px;
-    height:5px;
-    border-radius:50%;
-    background:#fff;
-    box-shadow:0 0 9px rgba(255,255,255,.7);
-}
-
-.bottom{
-    position:absolute;
-    left:42px;
-    right:42px;
-    bottom:28px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-}
-
-.bottom-left{
-    font-size:8px;
-    letter-spacing:.22em;
-    color:rgba(255,255,255,.30);
-}
-
-.bottom-right{
-    display:flex;
-    gap:30px;
-}
-
-.metric{
-    text-align:right;
-}
-
-.metric-label{
-    font-size:7px;
-    letter-spacing:.18em;
-    color:rgba(255,255,255,.28);
-    margin-bottom:5px;
-}
-
-.metric-value{
-    font-size:9px;
-    letter-spacing:.1em;
-    color:rgba(255,255,255,.58);
-}
-
-.drag-hint{
-    position:absolute;
-    left:50%;
-    bottom:31px;
-    transform:translateX(-50%);
-
-    font-size:7px;
-    letter-spacing:.2em;
-    color:rgba(255,255,255,.23);
-}
-
-@media(max-width:1000px){
-
-    .hero{
-        width:320px;
+@keyframes nebulaDrift2 {
+    from {
+        transform: translate3d(0,0,0) rotate(-22deg);
     }
 
-    h1{
-        font-size:46px;
+    to {
+        transform: translate3d(22px,-14px,0) rotate(-18deg);
+    }
+}
+
+@keyframes nebulaDrift3 {
+    from {
+        transform: translate3d(0,0,0) rotate(-17deg);
     }
 
-    .world-panel{
-        right:28px;
-        width:245px;
+    to {
+        transform: translate3d(-28px,13px,0) rotate(-13deg);
+    }
+}
+
+#starfield {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+#scene {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+}
+
+canvas {
+    display: block;
+}
+
+.ui {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.topbar {
+    position: absolute;
+    top: 32px;
+    left: 42px;
+    right: 42px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.brand {
+    font-family: Manrope, sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: .18em;
+}
+
+.brand-sub {
+    margin-top: 7px;
+    font-size: 9px;
+    letter-spacing: .26em;
+    color: rgba(255,255,255,.42);
+}
+
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 9px;
+    letter-spacing: .16em;
+    color: rgba(255,255,255,.48);
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 12px rgba(255,255,255,.7);
+}
+
+.hero {
+    position: absolute;
+    left: 42px;
+    top: 50%;
+    transform: translateY(-52%);
+    width: 370px;
+}
+
+.kicker {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .28em;
+    color: rgba(255,255,255,.42);
+    margin-bottom: 17px;
+}
+
+h1 {
+    font-family: Manrope, sans-serif;
+    font-size: 58px;
+    line-height: .98;
+    letter-spacing: -.055em;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.hero-text {
+    width: 330px;
+    color: rgba(255,255,255,.56);
+    font-size: 13px;
+    line-height: 1.75;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+    pointer-events: auto;
+}
+
+.btn {
+    height: 42px;
+    padding: 0 18px;
+
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.035);
+    color: #fff;
+
+    font-family: Inter, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .16em;
+
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.btn:hover {
+    background: rgba(255,255,255,.09);
+    border-color: rgba(255,255,255,.28);
+}
+
+.btn.primary {
+    background: #fff;
+    color: #050608;
+    border-color: #fff;
+}
+
+.btn.primary:hover {
+    background: #e9edf2;
+}
+
+.world-panel {
+    position: absolute;
+    top: 50%;
+    right: 42px;
+    transform: translateY(-50%);
+    width: 290px;
+}
+
+.panel-label {
+    font-size: 9px;
+    letter-spacing: .24em;
+    color: rgba(255,255,255,.38);
+    margin-bottom: 13px;
+}
+
+.world-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+    pointer-events: auto;
+}
+
+.world-tab {
+    padding: 0 0 13px;
+    margin-right: 25px;
+
+    border: 0;
+    background: none;
+
+    color: rgba(255,255,255,.35);
+
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .17em;
+
+    cursor: pointer;
+    position: relative;
+}
+
+.world-tab.active {
+    color: #fff;
+}
+
+.world-tab.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: #fff;
+}
+
+.world-info {
+    padding-top: 23px;
+}
+
+.world-name {
+    font-family: Manrope, sans-serif;
+    font-size: 31px;
+    font-weight: 700;
+    letter-spacing: -.035em;
+}
+
+.world-description {
+    margin-top: 9px;
+    font-size: 11px;
+    line-height: 1.65;
+    color: rgba(255,255,255,.42);
+}
+
+.stats {
+    margin-top: 28px;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    min-height: 43px;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.stat-label {
+    font-size: 9px;
+    letter-spacing: .13em;
+    color: rgba(255,255,255,.36);
+}
+
+.stat-value {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .06em;
+}
+
+.status-live {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.status-live::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 9px rgba(255,255,255,.7);
+}
+
+.bottom {
+    position: absolute;
+    left: 42px;
+    right: 42px;
+    bottom: 28px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.bottom-left {
+    font-size: 8px;
+    letter-spacing: .22em;
+    color: rgba(255,255,255,.30);
+}
+
+.bottom-right {
+    display: flex;
+    gap: 30px;
+}
+
+.metric {
+    text-align: right;
+}
+
+.metric-label {
+    font-size: 7px;
+    letter-spacing: .18em;
+    color: rgba(255,255,255,.28);
+    margin-bottom: 5px;
+}
+
+.metric-value {
+    font-size: 9px;
+    letter-spacing: .1em;
+    color: rgba(255,255,255,.58);
+}
+
+.drag-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 31px;
+    transform: translateX(-50%);
+
+    font-size: 7px;
+    letter-spacing: .2em;
+    color: rgba(255,255,255,.23);
+}
+
+@media (max-width: 1000px) {
+
+    .hero {
+        width: 320px;
+    }
+
+    h1 {
+        font-size: 46px;
+    }
+
+    .world-panel {
+        right: 28px;
+        width: 245px;
     }
 
     .topbar,
-    .bottom{
-        left:28px;
-        right:28px;
+    .bottom {
+        left: 28px;
+        right: 28px;
     }
 
-    .hero{
-        left:28px;
+    .hero {
+        left: 28px;
     }
 }
 
-@media(max-width:760px){
+@media (max-width: 760px) {
 
-    .hero{
-        top:42%;
-        width:280px;
+    .hero {
+        top: 42%;
+        width: 280px;
     }
 
-    h1{
-        font-size:38px;
+    h1 {
+        font-size: 38px;
     }
 
-    .hero-text{
-        width:260px;
+    .hero-text {
+        width: 260px;
     }
 
-    .world-panel{
-        top:auto;
-        bottom:100px;
-        right:20px;
-        width:210px;
-        transform:none;
+    .world-panel {
+        top: auto;
+        bottom: 100px;
+        right: 20px;
+        width: 210px;
+        transform: none;
     }
 
-    .topbar{
-        left:20px;
-        right:20px;
+    .topbar {
+        left: 20px;
+        right: 20px;
     }
 
-    .bottom{
-        left:20px;
-        right:20px;
+    .bottom {
+        left: 20px;
+        right: 20px;
     }
 
-    .bottom-right{
-        display:none;
+    .bottom-right {
+        display: none;
     }
 }
 </style>
@@ -787,167 +791,162 @@ const starCanvas =
     document.getElementById("starfield");
 
 const starCtx =
-    starCanvas.getContext("2d",{alpha:true});
+    starCanvas.getContext("2d", { alpha: true });
 
-let starWidth=0;
-let starHeight=0;
-let starDpr=1;
+let starWidth = 0;
+let starHeight = 0;
+let starDpr = 1;
 
-const cosmicStars=[];
-const cosmicDust=[];
+const cosmicStars = [];
+const cosmicDust = [];
 
-function randomBetween(a,b){
-    return a+Math.random()*(b-a);
+function randomBetween(a, b) {
+    return a + Math.random() * (b - a);
 }
 
-function stellarColor(type,alpha){
+function stellarColor(type, alpha) {
 
-    if(type===0)
+    if (type === 0) {
         return `rgba(255,255,255,${alpha})`;
+    }
 
-    if(type===1)
+    if (type === 1) {
         return `rgba(214,228,255,${alpha})`;
+    }
 
-    if(type===2)
+    if (type === 2) {
         return `rgba(255,244,224,${alpha})`;
+    }
 
     return `rgba(238,242,255,${alpha})`;
 }
 
-function createCosmicStars(){
+function createCosmicStars() {
 
-    cosmicStars.length=0;
+    cosmicStars.length = 0;
 
-    const count=
+    const count =
         Math.min(
             620,
             Math.max(
                 360,
                 Math.floor(
-                    window.innerWidth*
-                    window.innerHeight/
+                    window.innerWidth *
+                    window.innerHeight /
                     2500
                 )
             )
         );
 
-    for(
-        let i=0;
-        i<count;
-        i++
-    ){
+    for (let i = 0; i < count; i++) {
 
-        const layer=Math.random();
+        const layer = Math.random();
 
         let radius;
         let brightness;
 
-        if(layer<.76){
+        if (layer < .76) {
 
-            radius=randomBetween(.28,.72);
-            brightness=randomBetween(.12,.38);
+            radius = randomBetween(.28, .72);
+            brightness = randomBetween(.12, .38);
 
-        }else if(layer<.96){
+        } else if (layer < .96) {
 
-            radius=randomBetween(.65,1.15);
-            brightness=randomBetween(.28,.68);
+            radius = randomBetween(.65, 1.15);
+            brightness = randomBetween(.28, .68);
 
-        }else{
+        } else {
 
-            radius=randomBetween(1.05,1.9);
-            brightness=randomBetween(.55,.95);
+            radius = randomBetween(1.05, 1.9);
+            brightness = randomBetween(.55, .95);
         }
 
         cosmicStars.push({
 
-            x:Math.random(),
-            y:Math.random(),
+            x: Math.random(),
+            y: Math.random(),
 
             radius,
             brightness,
 
             phase:
-                Math.random()*
-                Math.PI*
+                Math.random() *
+                Math.PI *
                 2,
 
             speed:
-                randomBetween(.18,1.15),
+                randomBetween(.18, 1.15),
 
             pulse:
-                randomBetween(.025,.22),
+                randomBetween(.025, .22),
 
             type:
-                Math.random()<.84
-                ?0
-                :(Math.random()<.55?1:2),
+                Math.random() < .84
+                    ? 0
+                    : (Math.random() < .55 ? 1 : 2),
 
             depth:
-                randomBetween(.15,1),
+                randomBetween(.15, 1),
 
             halo:
-                Math.random()<.025,
+                Math.random() < .025,
 
             diffraction:
-                Math.random()<.009
+                Math.random() < .009
         });
     }
 }
 
-function createCosmicDust(){
+function createCosmicDust() {
 
-    cosmicDust.length=0;
+    cosmicDust.length = 0;
 
-    for(
-        let i=0;
-        i<85;
-        i++
-    ){
+    for (let i = 0; i < 85; i++) {
 
         cosmicDust.push({
 
-            x:Math.random(),
-            y:Math.random(),
+            x: Math.random(),
+            y: Math.random(),
 
             radius:
-                randomBetween(.25,1.1),
+                randomBetween(.25, 1.1),
 
             alpha:
-                randomBetween(.018,.075),
+                randomBetween(.018, .075),
 
             phase:
-                Math.random()*
-                Math.PI*
+                Math.random() *
+                Math.PI *
                 2,
 
             speed:
-                randomBetween(.01,.035)
+                randomBetween(.01, .035)
         });
     }
 }
 
-function resizeStarfield(){
+function resizeStarfield() {
 
-    starDpr=
+    starDpr =
         Math.min(
-            window.devicePixelRatio||1,
+            window.devicePixelRatio || 1,
             2
         );
 
-    starWidth=window.innerWidth;
-    starHeight=window.innerHeight;
+    starWidth = window.innerWidth;
+    starHeight = window.innerHeight;
 
-    starCanvas.width=
-        starWidth*starDpr;
+    starCanvas.width =
+        starWidth * starDpr;
 
-    starCanvas.height=
-        starHeight*starDpr;
+    starCanvas.height =
+        starHeight * starDpr;
 
-    starCanvas.style.width=
-        starWidth+"px";
+    starCanvas.style.width =
+        starWidth + "px";
 
-    starCanvas.style.height=
-        starHeight+"px";
+    starCanvas.style.height =
+        starHeight + "px";
 
     starCtx.setTransform(
         starDpr,
@@ -964,54 +963,56 @@ function resizeStarfield(){
 
 resizeStarfield();
 
-function drawStar(star,time){
+function drawStar(star, time) {
 
-    const twinkle=
+    const twinkle =
         Math.sin(
-            time*star.speed+
+            time * star.speed +
             star.phase
         );
 
-    const secondary=
+    const secondary =
         Math.sin(
-            time*star.speed*.37+
-            star.phase*1.71
+            time * star.speed * .37 +
+            star.phase * 1.71
         );
 
-    let intensity=
-        star.brightness*
+    let intensity =
+        star.brightness *
         (
-            1+
-            twinkle*star.pulse+
-            secondary*star.pulse*.28
+            1 +
+            twinkle * star.pulse +
+            secondary * star.pulse * .28
         );
 
-    intensity=
+    intensity =
         Math.max(
             .025,
-            Math.min(1,intensity)
+            Math.min(1, intensity)
         );
 
-    const driftX=
+    const driftX =
         Math.sin(
-            time*.008+
+            time * .008 +
             star.phase
-        )*
-        star.depth*.35;
+        ) *
+        star.depth *
+        .35;
 
-    const driftY=
+    const driftY =
         Math.cos(
-            time*.006+
+            time * .006 +
             star.phase
-        )*
-        star.depth*.22;
+        ) *
+        star.depth *
+        .22;
 
-    const x=
-        star.x*starWidth+
+    const x =
+        star.x * starWidth +
         driftX;
 
-    const y=
-        star.y*starHeight+
+    const y =
+        star.y * starHeight +
         driftY;
 
     starCtx.beginPath();
@@ -1021,10 +1022,10 @@ function drawStar(star,time){
         y,
         star.radius,
         0,
-        Math.PI*2
+        Math.PI * 2
     );
 
-    starCtx.fillStyle=
+    starCtx.fillStyle =
         stellarColor(
             star.type,
             intensity
@@ -1032,23 +1033,23 @@ function drawStar(star,time){
 
     starCtx.fill();
 
-    if(star.halo&&intensity>.52){
+    if (star.halo && intensity > .52) {
 
-        const glow=
+        const glow =
             starCtx.createRadialGradient(
                 x,
                 y,
                 0,
                 x,
                 y,
-                star.radius*7
+                star.radius * 7
             );
 
         glow.addColorStop(
             0,
             stellarColor(
                 star.type,
-                intensity*.32
+                intensity * .32
             )
         );
 
@@ -1056,7 +1057,7 @@ function drawStar(star,time){
             .22,
             stellarColor(
                 star.type,
-                intensity*.10
+                intensity * .10
             )
         );
 
@@ -1073,127 +1074,125 @@ function drawStar(star,time){
         starCtx.arc(
             x,
             y,
-            star.radius*7,
+            star.radius * 7,
             0,
-            Math.PI*2
+            Math.PI * 2
         );
 
-        starCtx.fillStyle=glow;
+        starCtx.fillStyle = glow;
         starCtx.fill();
     }
 
-    if(star.diffraction&&intensity>.58){
+    if (star.diffraction && intensity > .58) {
 
-        const ray=
-            star.radius*
-            7*
+        const ray =
+            star.radius *
+            7 *
             intensity;
 
-        const rayGradient=
+        const rayGradient =
             starCtx.createLinearGradient(
-                x-ray,
+                x - ray,
                 y,
-                x+ray,
+                x + ray,
                 y
             );
 
         rayGradient.addColorStop(
             0,
-            stellarColor(star.type,0)
+            stellarColor(star.type, 0)
         );
 
         rayGradient.addColorStop(
             .5,
             stellarColor(
                 star.type,
-                intensity*.24
+                intensity * .24
             )
         );
 
         rayGradient.addColorStop(
             1,
-            stellarColor(star.type,0)
+            stellarColor(star.type, 0)
         );
 
-        starCtx.fillStyle=rayGradient;
+        starCtx.fillStyle = rayGradient;
 
         starCtx.fillRect(
-            x-ray,
-            y-.35,
-            ray*2,
+            x - ray,
+            y - .35,
+            ray * 2,
             .7
         );
 
-        const verticalGradient=
+        const verticalGradient =
             starCtx.createLinearGradient(
                 x,
-                y-ray,
+                y - ray,
                 x,
-                y+ray
+                y + ray
             );
 
         verticalGradient.addColorStop(
             0,
-            stellarColor(star.type,0)
+            stellarColor(star.type, 0)
         );
 
         verticalGradient.addColorStop(
             .5,
             stellarColor(
                 star.type,
-                intensity*.18
+                intensity * .18
             )
         );
 
         verticalGradient.addColorStop(
             1,
-            stellarColor(star.type,0)
+            stellarColor(star.type, 0)
         );
 
-        starCtx.fillStyle=verticalGradient;
+        starCtx.fillStyle =
+            verticalGradient;
 
         starCtx.fillRect(
-            x-.35,
-            y-ray,
+            x - .35,
+            y - ray,
             .7,
-            ray*2
+            ray * 2
         );
     }
 }
 
-function drawDust(time){
+function drawDust(time) {
 
-    for(
-        const dust of cosmicDust
-    ){
+    for (const dust of cosmicDust) {
 
-        const x=
-            dust.x*starWidth;
+        const x =
+            dust.x * starWidth;
 
-        const y=
-            dust.y*starHeight;
+        const y =
+            dust.y * starHeight;
 
-        const pulse=
+        const pulse =
             (
                 Math.sin(
-                    time*dust.speed+
+                    time * dust.speed +
                     dust.phase
-                )+
-                1
-            )*.5;
+                ) + 1
+            ) * .5;
 
-        const alpha=
-            dust.alpha*
-            (.72+pulse*.28);
+        const alpha =
+            dust.alpha *
+            (.72 + pulse * .28);
 
-        const gradient=
+        const gradient =
             starCtx.createRadialGradient(
                 x,
                 y,
                 0,
                 x,
                 y,
-                dust.radius*4
+                dust.radius * 4
             );
 
         gradient.addColorStop(
@@ -1206,29 +1205,29 @@ function drawDust(time){
             "rgba(220,230,245,0)"
         );
 
-        starCtx.fillStyle=gradient;
+        starCtx.fillStyle = gradient;
 
         starCtx.beginPath();
 
         starCtx.arc(
             x,
             y,
-            dust.radius*4,
+            dust.radius * 4,
             0,
-            Math.PI*2
+            Math.PI * 2
         );
 
         starCtx.fill();
     }
 }
 
-const cosmicClock=
+const cosmicClock =
     performance.now();
 
-function renderStarfield(now){
+function renderStarfield(now) {
 
-    const time=
-        (now-cosmicClock)/1000;
+    const time =
+        (now - cosmicClock) / 1000;
 
     starCtx.clearRect(
         0,
@@ -1237,17 +1236,17 @@ function renderStarfield(now){
         starHeight
     );
 
-    const haze=
+    const haze =
         starCtx.createRadialGradient(
-            starWidth*.72,
-            starHeight*.48,
+            starWidth * .72,
+            starHeight * .48,
             0,
-            starWidth*.72,
-            starHeight*.48,
+            starWidth * .72,
+            starHeight * .48,
             Math.max(
                 starWidth,
                 starHeight
-            )*.72
+            ) * .72
         );
 
     haze.addColorStop(
@@ -1265,7 +1264,7 @@ function renderStarfield(now){
         "rgba(0,0,0,0)"
     );
 
-    starCtx.fillStyle=haze;
+    starCtx.fillStyle = haze;
 
     starCtx.fillRect(
         0,
@@ -1276,10 +1275,8 @@ function renderStarfield(now){
 
     drawDust(time);
 
-    for(
-        const star of cosmicStars
-    ){
-        drawStar(star,time);
+    for (const star of cosmicStars) {
+        drawStar(star, time);
     }
 
     requestAnimationFrame(
@@ -1296,13 +1293,13 @@ requestAnimationFrame(
    THREE.JS
 ========================================================= */
 
-const scene=
+const scene =
     new THREE.Scene();
 
-const camera=
+const camera =
     new THREE.PerspectiveCamera(
         42,
-        window.innerWidth/
+        window.innerWidth /
         window.innerHeight,
         .1,
         4000
@@ -1320,17 +1317,17 @@ camera.lookAt(
     0
 );
 
-const renderer=
+const renderer =
     new THREE.WebGLRenderer({
 
-        antialias:true,
-        alpha:true,
-        powerPreference:"high-performance"
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance"
     });
 
 renderer.setPixelRatio(
     Math.min(
-        window.devicePixelRatio||1,
+        window.devicePixelRatio || 1,
         2
     )
 );
@@ -1340,10 +1337,10 @@ renderer.setSize(
     window.innerHeight
 );
 
-renderer.outputEncoding=
+renderer.outputEncoding =
     THREE.sRGBEncoding;
 
-renderer.domElement.style.touchAction=
+renderer.domElement.style.touchAction =
     "none";
 
 document
@@ -1357,7 +1354,7 @@ document
    LIGHTING
 ========================================================= */
 
-const ambient=
+const ambient =
     new THREE.AmbientLight(
         0xffffff,
         .72
@@ -1365,7 +1362,7 @@ const ambient=
 
 scene.add(ambient);
 
-const keyLight=
+const keyLight =
     new THREE.DirectionalLight(
         0xffffff,
         1.45
@@ -1379,7 +1376,7 @@ keyLight.position.set(
 
 scene.add(keyLight);
 
-const rimLight=
+const rimLight =
     new THREE.DirectionalLight(
         0x8fa9d0,
         .38
@@ -1398,42 +1395,31 @@ scene.add(rimLight);
    PLANET
 ========================================================= */
 
-const PLANET_RADIUS=
+const PLANET_RADIUS =
     130;
 
-const planetGroup=
+const planetGroup =
     new THREE.Group();
 
 scene.add(
     planetGroup
 );
 
-let currentWorld=
+let currentWorld =
     "Moon";
 
-let planetMesh=
+let planetMesh =
     null;
 
-let planetLoadToken=
+let planetLoadToken =
     0;
 
 
 /* =========================================================
    REAL EQUIRECTANGULAR SURFACE MAPS
-=========================================================
-
-   These are real global planetary surface maps.
-
-   Moon:
-   Solar System Scope map based on NASA imagery/elevation.
-
-   Mars:
-   Solar System Scope map based on NASA imagery/elevation.
-
-   Both are equirectangular 2048x1024 maps.
 ========================================================= */
 
-const WORLD_TEXTURES={
+const WORLD_TEXTURES = {
 
     Moon:
         "https://upload.wikimedia.org/wikipedia/commons/2/26/Solarsystemscope_texture_2k_moon.jpg",
@@ -1447,9 +1433,9 @@ const WORLD_TEXTURES={
    PLANET DISPOSAL
 ========================================================= */
 
-function disposePlanet(){
+function disposePlanet() {
 
-    if(!planetMesh){
+    if (!planetMesh) {
         return;
     }
 
@@ -1457,27 +1443,24 @@ function disposePlanet(){
         planetMesh
     );
 
-    if(planetMesh.geometry){
-
+    if (planetMesh.geometry) {
         planetMesh.geometry.dispose();
     }
 
-    if(planetMesh.material){
+    if (planetMesh.material) {
 
-        if(planetMesh.material.map){
-
+        if (planetMesh.material.map) {
             planetMesh.material.map.dispose();
         }
 
-        if(planetMesh.material.bumpMap){
-
+        if (planetMesh.material.bumpMap) {
             planetMesh.material.bumpMap.dispose();
         }
 
         planetMesh.material.dispose();
     }
 
-    planetMesh=null;
+    planetMesh = null;
 }
 
 
@@ -1488,43 +1471,26 @@ function disposePlanet(){
 function createPlanetMaterial(
     world,
     texture
-){
+) {
 
-    /*
-       The actual geographical map is the
-       material map.
+    return new THREE.MeshStandardMaterial({
 
-       A subtle bump layer is also created
-       from the same real surface image.
+        map: texture,
 
-       This gives the sphere visual surface
-       relief without inventing artificial
-       crater positions.
-    */
+        roughness:
+            world === "Moon"
+                ? 1.0
+                : .96,
 
-    const material=
-        new THREE.MeshStandardMaterial({
+        metalness: 0,
 
-            map:texture,
+        bumpMap: texture,
 
-            roughness:
-                world==="Moon"
-                ?1.0
-                :.96,
-
-            metalness:
-                0,
-
-            bumpMap:
-                texture,
-
-            bumpScale:
-                world==="Moon"
-                ?1.15
-                :.72
-        });
-
-    return material;
+        bumpScale:
+            world === "Moon"
+                ? 1.15
+                : .72
+    });
 }
 
 
@@ -1532,61 +1498,48 @@ function createPlanetMaterial(
    BUILD PLANET
 ========================================================= */
 
-function buildPlanet(world){
+function buildPlanet(world) {
 
-    currentWorld=
+    currentWorld =
         world;
 
     planetLoadToken++;
 
-    const thisLoadToken=
+    const thisLoadToken =
         planetLoadToken;
 
     disposePlanet();
 
-    /*
-       Dense sphere so the geographical map
-       remains smooth at the current zoom.
-    */
-
-    const geometry=
+    const geometry =
         new THREE.SphereGeometry(
             PLANET_RADIUS,
             192,
             128
         );
 
-    /*
-       Start with a neutral material.
-
-       This means the planet is still visible
-       while the real map is downloading.
-    */
-
-    const initialMaterial=
+    const initialMaterial =
         new THREE.MeshStandardMaterial({
 
             color:
-                world==="Moon"
-                ?0x777777
-                :0x8f3b25,
+                world === "Moon"
+                    ? 0x777777
+                    : 0x8f3b25,
 
             roughness:
-                world==="Moon"
-                ?1
-                :.96,
+                world === "Moon"
+                    ? 1
+                    : .96,
 
-            metalness:
-                0
+            metalness: 0
         });
 
-    planetMesh=
+    planetMesh =
         new THREE.Mesh(
             geometry,
             initialMaterial
         );
 
-    planetMesh.frustumCulled=
+    planetMesh.frustumCulled =
         true;
 
     planetGroup.add(
@@ -1599,12 +1552,7 @@ function buildPlanet(world){
         0
     );
 
-
-    /* =====================================================
-       LOAD REAL SURFACE MAP
-    ===================================================== */
-
-    const loader=
+    const loader =
         new THREE.TextureLoader();
 
     loader.setCrossOrigin(
@@ -1615,107 +1563,69 @@ function buildPlanet(world){
 
         WORLD_TEXTURES[world],
 
-        function(texture){
+        function(texture) {
 
-            /*
-               Ignore an old asynchronous load
-               if the user switched worlds.
-            */
-
-            if(
-                thisLoadToken!==
+            if (
+                thisLoadToken !==
                 planetLoadToken
-            ){
+            ) {
 
                 texture.dispose();
-
                 return;
             }
 
-            if(
-                !planetMesh||
-                currentWorld!==world
-            ){
+            if (
+                !planetMesh ||
+                currentWorld !== world
+            ) {
 
                 texture.dispose();
-
                 return;
             }
 
-
-            /* ---------------------------------------------
-               Texture settings
-            --------------------------------------------- */
-
-            texture.encoding=
+            texture.encoding =
                 THREE.sRGBEncoding;
 
-            texture.anisotropy=
+            texture.anisotropy =
                 renderer
                     .capabilities
                     .getMaxAnisotropy();
 
-            texture.wrapS=
+            texture.wrapS =
                 THREE.ClampToEdgeWrapping;
 
-            texture.wrapT=
+            texture.wrapT =
                 THREE.ClampToEdgeWrapping;
 
-            texture.minFilter=
+            texture.minFilter =
                 THREE.LinearMipmapLinearFilter;
 
-            texture.magFilter=
+            texture.magFilter =
                 THREE.LinearFilter;
 
-
-            /* ---------------------------------------------
-               Replace neutral material
-            --------------------------------------------- */
-
-            const oldMaterial=
+            const oldMaterial =
                 planetMesh.material;
 
-            const newMaterial=
+            const newMaterial =
                 createPlanetMaterial(
                     world,
                     texture
                 );
 
-            planetMesh.material=
+            planetMesh.material =
                 newMaterial;
 
             oldMaterial.dispose();
 
-
-            /*
-               Important:
-
-               The geographical map itself is now
-               wrapped directly around SphereGeometry
-               through its UV coordinates.
-            */
-
-            planetMesh.material.needsUpdate=
+            planetMesh.material.needsUpdate =
                 true;
         },
 
-        function(xhr){
-
-            /*
-               Loading progress intentionally omitted.
-               The page remains responsive.
-            */
+        function(xhr) {
+            /* Texture loading in progress */
         },
 
-        function(error){
-
-            /*
-               Keep the planet visible if the external
-               texture provider is unavailable.
-
-               The neutral sphere is not allowed to
-               crash the application.
-            */
+        function(error) {
 
             console.warn(
                 "Surface map could not be loaded:",
@@ -1724,6 +1634,14 @@ function buildPlanet(world){
             );
         }
     );
+
+    /*
+       FIX:
+       Position the planet immediately after
+       creating it instead of waiting for resize.
+    */
+
+    updatePlanetSafePosition();
 }
 
 
@@ -1738,9 +1656,9 @@ buildPlanet("Moon");
    WORLD DATA
 ========================================================= */
 
-const worldData={
+const worldData = {
 
-    Moon:{
+    Moon: {
 
         description:
             "A finite digital surface inspired by Earth's closest celestial neighbour.",
@@ -1755,7 +1673,7 @@ const worldData={
             "$11"
     },
 
-    Mars:{
+    Mars: {
 
         description:
             "A finite digital surface inspired by the red planet and its iconic terrain.",
@@ -1776,32 +1694,32 @@ const worldData={
    UI
 ========================================================= */
 
-const worldName=
+const worldName =
     document.getElementById(
         "worldName"
     );
 
-const worldDescription=
+const worldDescription =
     document.getElementById(
         "worldDescription"
     );
 
-const supply=
+const supply =
     document.getElementById(
         "supply"
     );
 
-const available=
+const available =
     document.getElementById(
         "available"
     );
 
-const price=
+const price =
     document.getElementById(
         "price"
     );
 
-const bottomWorld=
+const bottomWorld =
     document.getElementById(
         "bottomWorld"
     );
@@ -1813,20 +1731,19 @@ const bottomWorld=
 
 document
     .querySelectorAll(".world-tab")
-    .forEach(button=>{
+    .forEach(button => {
 
         button.addEventListener(
             "click",
-            ()=>{
+            () => {
 
-                const world=
+                const world =
                     button.dataset.world;
 
-                if(
-                    world===
+                if (
+                    world ===
                     currentWorld
-                ){
-
+                ) {
                     return;
                 }
 
@@ -1834,33 +1751,33 @@ document
                     .querySelectorAll(
                         ".world-tab"
                     )
-                    .forEach(b=>{
+                    .forEach(b => {
 
                         b.classList.toggle(
                             "active",
-                            b===button
+                            b === button
                         );
                     });
 
-                const data=
+                const data =
                     worldData[world];
 
-                worldName.textContent=
+                worldName.textContent =
                     world.toUpperCase();
 
-                worldDescription.textContent=
+                worldDescription.textContent =
                     data.description;
 
-                supply.textContent=
+                supply.textContent =
                     data.supply;
 
-                available.textContent=
+                available.textContent =
                     data.available;
 
-                price.textContent=
+                price.textContent =
                     data.price;
 
-                bottomWorld.textContent=
+                bottomWorld.textContent =
                     world.toUpperCase();
 
                 buildPlanet(
@@ -1875,39 +1792,38 @@ document
    ROTATION
 ========================================================= */
 
-let dragging=
+let dragging =
     false;
 
-let previousX=
+let previousX =
     0;
 
-let previousY=
+let previousY =
     0;
 
-let velocityX=
+let velocityX =
     0;
 
-let velocityY=
+let velocityY =
     0;
-
 
 renderer.domElement.addEventListener(
     "pointerdown",
-    e=>{
+    e => {
 
-        dragging=
+        dragging =
             true;
 
-        previousX=
+        previousX =
             e.clientX;
 
-        previousY=
+        previousY =
             e.clientY;
 
-        velocityX=
+        velocityX =
             0;
 
-        velocityY=
+        velocityY =
             0;
 
         renderer
@@ -1918,42 +1834,41 @@ renderer.domElement.addEventListener(
     }
 );
 
-
 renderer.domElement.addEventListener(
     "pointermove",
-    e=>{
+    e => {
 
-        if(!dragging){
+        if (!dragging) {
             return;
         }
 
-        const dx=
-            e.clientX-
+        const dx =
+            e.clientX -
             previousX;
 
-        const dy=
-            e.clientY-
+        const dy =
+            e.clientY -
             previousY;
 
-        previousX=
+        previousX =
             e.clientX;
 
-        previousY=
+        previousY =
             e.clientY;
 
-        velocityX=
-            dx*.004;
+        velocityX =
+            dx * .004;
 
-        velocityY=
-            dy*.004;
+        velocityY =
+            dy * .004;
 
-        planetGroup.rotation.y+=
-            dx*.004;
+        planetGroup.rotation.y +=
+            dx * .004;
 
-        planetGroup.rotation.x+=
-            dy*.004;
+        planetGroup.rotation.x +=
+            dy * .004;
 
-        planetGroup.rotation.x=
+        planetGroup.rotation.x =
             Math.max(
                 -1.15,
                 Math.min(
@@ -1964,15 +1879,14 @@ renderer.domElement.addEventListener(
     }
 );
 
-
 renderer.domElement.addEventListener(
     "pointerup",
-    e=>{
+    e => {
 
-        dragging=
+        dragging =
             false;
 
-        try{
+        try {
 
             renderer
                 .domElement
@@ -1980,16 +1894,15 @@ renderer.domElement.addEventListener(
                     e.pointerId
                 );
 
-        }catch(err){}
+        } catch (err) {}
     }
 );
 
-
 renderer.domElement.addEventListener(
     "pointercancel",
-    ()=>{
+    () => {
 
-        dragging=
+        dragging =
             false;
     }
 );
@@ -1999,29 +1912,28 @@ renderer.domElement.addEventListener(
    ZOOM
 ========================================================= */
 
-let zoomDistance=
+let zoomDistance =
     520;
 
-let targetZoom=
+let targetZoom =
     520;
 
-const MIN_ZOOM=
+const MIN_ZOOM =
     175;
 
-const MAX_ZOOM=
+const MAX_ZOOM =
     760;
-
 
 renderer.domElement.addEventListener(
     "wheel",
-    e=>{
+    e => {
 
         e.preventDefault();
 
-        targetZoom+=
-            e.deltaY*.55;
+        targetZoom +=
+            e.deltaY * .55;
 
-        targetZoom=
+        targetZoom =
             Math.max(
                 MIN_ZOOM,
                 Math.min(
@@ -2032,7 +1944,7 @@ renderer.domElement.addEventListener(
 
     },
     {
-        passive:false
+        passive: false
     }
 );
 
@@ -2045,46 +1957,46 @@ function screenToWorld(
     screenX,
     screenY,
     distance
-){
+) {
 
-    const ndcX=
-        screenX/
-        window.innerWidth*
-        2-
+    const ndcX =
+        screenX /
+        window.innerWidth *
+        2 -
         1;
 
-    const ndcY=
+    const ndcY =
         -(
-            screenY/
-            window.innerHeight*
-            2-
+            screenY /
+            window.innerHeight *
+            2 -
             1
         );
 
-    const vFov=
+    const vFov =
         THREE.MathUtils.degToRad(
             camera.fov
         );
 
-    const visibleHeight=
-        2*
-        Math.tan(vFov/2)*
+    const visibleHeight =
+        2 *
+        Math.tan(vFov / 2) *
         distance;
 
-    const visibleWidth=
-        visibleHeight*
+    const visibleWidth =
+        visibleHeight *
         camera.aspect;
 
-    return{
+    return {
 
         x:
-            ndcX*
-            visibleWidth/
+            ndcX *
+            visibleWidth /
             2,
 
         y:
-            ndcY*
-            visibleHeight/
+            ndcY *
+            visibleHeight /
             2
     };
 }
@@ -2094,123 +2006,121 @@ function screenToWorld(
    SAFE PLANET POSITION
 ========================================================= */
 
-function updatePlanetSafePosition(){
+function updatePlanetSafePosition() {
 
-    const width=
+    const width =
         window.innerWidth;
 
-    const height=
+    const height =
         window.innerHeight;
 
-    const distance=
+    const distance =
         zoomDistance;
 
-    const vFov=
+    const vFov =
         THREE.MathUtils.degToRad(
             camera.fov
         );
 
-    const visibleHeight=
-        2*
-        Math.tan(vFov/2)*
+    const visibleHeight =
+        2 *
+        Math.tan(vFov / 2) *
         distance;
 
-    const pixelsPerWorld=
-        height/
+    const pixelsPerWorld =
+        height /
         visibleHeight;
 
-    const projectedRadius=
-        PLANET_RADIUS*
+    const projectedRadius =
+        PLANET_RADIUS *
         pixelsPerWorld;
 
-    let leftBoundary=
-        42+
-        390+
+    let leftBoundary =
+        42 +
+        390 +
         35;
 
-    let rightBoundary=
-        width-
-        42-
-        290-
+    let rightBoundary =
+        width -
+        42 -
+        290 -
         35;
 
-    let topBoundary=
+    let topBoundary =
         115;
 
-    let bottomBoundary=
-        height-
+    let bottomBoundary =
+        height -
         100;
 
-    const margin=
+    const margin =
         18;
 
-    leftBoundary+=
+    leftBoundary +=
         margin;
 
-    rightBoundary-=
+    rightBoundary -=
         margin;
 
-    topBoundary+=
+    topBoundary +=
         margin;
 
-    bottomBoundary-=
+    bottomBoundary -=
         margin;
 
-    let minX=
-        leftBoundary+
+    let minX =
+        leftBoundary +
         projectedRadius;
 
-    let maxX=
-        rightBoundary-
+    let maxX =
+        rightBoundary -
         projectedRadius;
 
-    let minY=
-        topBoundary+
+    let minY =
+        topBoundary +
         projectedRadius;
 
-    let maxY=
-        bottomBoundary-
+    let maxY =
+        bottomBoundary -
         projectedRadius;
 
-    if(minX>maxX){
+    if (minX > maxX) {
 
-        const middle=
+        const middle =
             (
-                leftBoundary+
+                leftBoundary +
                 rightBoundary
-            )/
-            2;
+            ) / 2;
 
-        minX=
+        minX =
             middle;
 
-        maxX=
+        maxX =
             middle;
     }
 
-    if(minY>maxY){
+    if (minY > maxY) {
 
-        const middle=
+        const middle =
             (
-                topBoundary+
+                topBoundary +
                 bottomBoundary
-            )/
-            2;
+            ) / 2;
 
-        minY=
+        minY =
             middle;
 
-        maxY=
+        maxY =
             middle;
     }
 
-    const preferredX=
-        width*.57;
+    const preferredX =
+        width * .57;
 
-    const preferredY=
-        height*.48;
+    const preferredY =
+        height * .48;
 
-    const finalX=
+    const finalX =
         Math.max(
             minX,
             Math.min(
@@ -2219,7 +2129,7 @@ function updatePlanetSafePosition(){
             )
         );
 
-    const finalY=
+    const finalY =
         Math.max(
             minY,
             Math.min(
@@ -2228,20 +2138,20 @@ function updatePlanetSafePosition(){
             )
         );
 
-    const world=
+    const world =
         screenToWorld(
             finalX,
             finalY,
             distance
         );
 
-    planetGroup.position.x=
+    planetGroup.position.x =
         world.x;
 
-    planetGroup.position.y=
+    planetGroup.position.y =
         world.y;
 
-    planetGroup.position.z=
+    planetGroup.position.z =
         0;
 }
 
@@ -2254,24 +2164,23 @@ document
     .getElementById("discoverBtn")
     .addEventListener(
         "click",
-        ()=>{
+        () => {
 
-            targetZoom=
+            targetZoom =
                 MIN_ZOOM;
         }
     );
-
 
 document
     .getElementById("exploreBtn")
     .addEventListener(
         "click",
-        ()=>{
+        () => {
 
-            targetZoom=
+            targetZoom =
                 Math.max(
                     MIN_ZOOM,
-                    targetZoom-35
+                    targetZoom - 35
                 );
         }
     );
@@ -2281,37 +2190,47 @@ document
    ANIMATION
 ========================================================= */
 
-function animate(){
+function animate() {
 
     requestAnimationFrame(
         animate
     );
 
-    zoomDistance+=
+    zoomDistance +=
         (
-            targetZoom-
+            targetZoom -
             zoomDistance
-        )*.08;
+        ) * .08;
 
-    camera.position.z=
+    camera.position.z =
         zoomDistance;
 
-    if(!dragging){
+    /*
+       IMPORTANT FIX:
+       The old code reset planetGroup.position
+       to (0,0,0) on every animation frame.
 
-        planetGroup.rotation.y+=
+       That cancelled updatePlanetSafePosition().
+
+       The position is now preserved.
+    */
+
+    if (!dragging) {
+
+        planetGroup.rotation.y +=
             .0008;
 
-        velocityX*=.94;
-        velocityY*=.94;
+        velocityX *= .94;
+        velocityY *= .94;
     }
 
-    planetGroup.rotation.y+=
-        velocityX*.25;
+    planetGroup.rotation.y +=
+        velocityX * .25;
 
-    planetGroup.rotation.x+=
-        velocityY*.25;
+    planetGroup.rotation.x +=
+        velocityY * .25;
 
-    planetGroup.rotation.x=
+    planetGroup.rotation.x =
         Math.max(
             -1.15,
             Math.min(
@@ -2319,12 +2238,6 @@ function animate(){
                 planetGroup.rotation.x
             )
         );
-
-    planetGroup.position.set(
-        0,
-        0,
-        0
-    );
 
     renderer.render(
         scene,
@@ -2341,10 +2254,10 @@ animate();
 
 window.addEventListener(
     "resize",
-    ()=>{
+    () => {
 
-        camera.aspect=
-            window.innerWidth/
+        camera.aspect =
+            window.innerWidth /
             window.innerHeight;
 
         camera.updateProjectionMatrix();
