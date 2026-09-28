@@ -3038,6 +3038,20 @@ function showProperty(
     propertyPanel.classList.add(
         "visible"
     );
+
+    /*
+        NEW:
+        Selecting a surface location stops
+        automatic planetary rotation.
+    */
+    rotationLocked =
+        true;
+
+    velocityX =
+        0;
+
+    velocityY =
+        0;
 }
 
 
@@ -3132,6 +3146,13 @@ document
 
                 closeProperty();
 
+                /*
+                    New world starts with normal
+                    automatic rotation.
+                */
+                rotationLocked =
+                    false;
+
                 buildPlanet(
                     world
                 );
@@ -3195,6 +3216,14 @@ let pointerStartX =
 
 let pointerStartY =
     0;
+
+/*
+    NEW:
+    Automatic rotation is locked after
+    a location is selected.
+*/
+let rotationLocked =
+    false;
 
 
 renderer.domElement.addEventListener(
@@ -3361,6 +3390,69 @@ renderer.domElement.addEventListener(
             return;
         }
 
+        /*
+            NEW:
+            Clicking directly on the selected
+            marker releases the rotation lock.
+        */
+        if (plotMarker) {
+
+            const rect =
+                renderer
+                    .domElement
+                    .getBoundingClientRect();
+
+            const ndcX =
+                (
+                    e.clientX -
+                    rect.left
+                ) /
+                rect.width *
+                2 -
+                1;
+
+            const ndcY =
+                -(
+                    (
+                        e.clientY -
+                        rect.top
+                    ) /
+                    rect.height *
+                    2 -
+                    1
+                );
+
+            raycaster.setFromCamera(
+                {
+                    x: ndcX,
+                    y: ndcY
+                },
+                camera
+            );
+
+            const markerIntersections =
+                raycaster.intersectObject(
+                    plotMarker,
+                    false
+                );
+
+            if (
+                markerIntersections.length > 0
+            ) {
+
+                rotationLocked =
+                    false;
+
+                velocityX =
+                    0;
+
+                velocityY =
+                    0;
+
+                return;
+            }
+        }
+
         const surface =
             getSurfaceCoordinates(
                 e
@@ -3460,21 +3552,44 @@ function animate() {
 
     if (!dragging) {
 
-        planetGroup.rotation.y +=
-            .0008;
+        /*
+            NEW:
+            Automatic rotation stops while
+            a plot is selected.
+        */
+        if (!rotationLocked) {
 
-        velocityX *=
-            .94;
+            planetGroup.rotation.y +=
+                .0008;
 
-        velocityY *=
-            .94;
+            velocityX *=
+                .94;
+
+            velocityY *=
+                .94;
+
+        } else {
+
+            velocityX =
+                0;
+
+            velocityY =
+                0;
+        }
     }
 
-    planetGroup.rotation.y +=
-        velocityX * .25;
+    /*
+        Manual drag rotation remains available.
+        Only automatic rotation is locked.
+    */
+    if (!rotationLocked || dragging) {
 
-    planetGroup.rotation.x +=
-        velocityY * .25;
+        planetGroup.rotation.y +=
+            velocityX * .25;
+
+        planetGroup.rotation.x +=
+            velocityY * .25;
+    }
 
     planetGroup.rotation.x =
         Math.max(
