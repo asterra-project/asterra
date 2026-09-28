@@ -219,6 +219,7 @@ body {
     position: fixed;
     inset: 0;
     z-index: 4;
+    pointer-events: auto;
 }
 
 canvas {
@@ -889,7 +890,6 @@ h1 {
 
         </aside>
 
-
         <aside
             class="property-panel"
             id="propertyPanel"
@@ -940,7 +940,7 @@ h1 {
                         class="property-value"
                         id="propertyLat"
                     >
-                        0.000°
+                        0.000° N
                     </span>
                 </div>
 
@@ -953,7 +953,7 @@ h1 {
                         class="property-value"
                         id="propertyLon"
                     >
-                        0.000°
+                        0.000° E
                     </span>
                 </div>
 
@@ -1007,7 +1007,6 @@ h1 {
 
         </aside>
 
-
         <div class="drag-hint">
             DRAG TO ROTATE · SCROLL TO ZOOM
         </div>
@@ -1060,11 +1059,8 @@ h1 {
    STARFIELD
 ========================================================= */
 
-const starCanvas =
-    document.getElementById("starfield");
-
-const starCtx =
-    starCanvas.getContext("2d", { alpha: true });
+const starCanvas = document.getElementById("starfield");
+const starCtx = starCanvas.getContext("2d", { alpha: true });
 
 let starWidth = 0;
 let starHeight = 0;
@@ -1098,18 +1094,17 @@ function createCosmicStars() {
 
     cosmicStars.length = 0;
 
-    const count =
-        Math.min(
-            620,
-            Math.max(
-                360,
-                Math.floor(
-                    window.innerWidth *
-                    window.innerHeight /
-                    2500
-                )
+    const count = Math.min(
+        620,
+        Math.max(
+            360,
+            Math.floor(
+                window.innerWidth *
+                window.innerHeight /
+                2500
             )
-        );
+        )
+    );
 
     for (let i = 0; i < count; i++) {
 
@@ -1200,11 +1195,10 @@ function createCosmicDust() {
 
 function resizeStarfield() {
 
-    starDpr =
-        Math.min(
-            window.devicePixelRatio || 1,
-            2
-        );
+    starDpr = Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
 
     starWidth = window.innerWidth;
     starHeight = window.innerHeight;
@@ -1494,8 +1488,7 @@ function drawDust(time) {
     }
 }
 
-const cosmicClock =
-    performance.now();
+const cosmicClock = performance.now();
 
 function renderStarfield(now) {
 
@@ -1563,6 +1556,18 @@ requestAnimationFrame(
 
 
 /* =========================================================
+   THREE.JS SAFETY CHECK
+========================================================= */
+
+if (typeof THREE === "undefined") {
+
+    throw new Error(
+        "ASTERRA: Three.js failed to load."
+    );
+}
+
+
+/* =========================================================
    THREE.JS
 ========================================================= */
 
@@ -1590,13 +1595,29 @@ camera.lookAt(
     0
 );
 
-const renderer =
-    new THREE.WebGLRenderer({
+let renderer;
 
-        antialias: true,
-        alpha: true,
-        powerPreference: "high-performance"
-    });
+try {
+
+    renderer =
+        new THREE.WebGLRenderer({
+
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance"
+        });
+
+} catch (error) {
+
+    console.error(
+        "ASTERRA WebGL initialization failed:",
+        error
+    );
+
+    throw new Error(
+        "ASTERRA requires WebGL support."
+    );
+}
 
 renderer.setPixelRatio(
     Math.min(
@@ -1610,11 +1631,17 @@ renderer.setSize(
     window.innerHeight
 );
 
-renderer.outputEncoding =
-    THREE.sRGBEncoding;
+if ("outputEncoding" in renderer) {
+
+    renderer.outputEncoding =
+        THREE.sRGBEncoding;
+}
 
 renderer.domElement.style.touchAction =
     "none";
+
+renderer.domElement.style.cursor =
+    "grab";
 
 document
     .getElementById("scene")
@@ -1690,9 +1717,6 @@ let planetLoadToken =
 
 /* =========================================================
    ZOOM
-   IMPORTANT:
-   These variables MUST exist before the first
-   buildPlanet("Moon") call.
 ========================================================= */
 
 let zoomDistance =
@@ -1732,7 +1756,7 @@ let plotMarker =
 
 
 /* =========================================================
-   REAL EQUIRECTANGULAR SURFACE MAPS
+   TEXTURES
 ========================================================= */
 
 const WORLD_TEXTURES = {
@@ -1927,6 +1951,10 @@ function screenToWorld(
 
 function updatePlanetSafePosition() {
 
+    if (!planetMesh) {
+        return;
+    }
+
     const width =
         window.innerWidth;
 
@@ -1934,7 +1962,13 @@ function updatePlanetSafePosition() {
         window.innerHeight;
 
     const distance =
-        zoomDistance;
+        Math.max(
+            MIN_ZOOM,
+            Math.min(
+                MAX_ZOOM,
+                zoomDistance
+            )
+        );
 
     const vFov =
         THREE.MathUtils.degToRad(
@@ -2106,7 +2140,8 @@ function disposePlanet() {
         planetMesh.material.dispose();
     }
 
-    planetMesh = null;
+    planetMesh =
+        null;
 }
 
 
@@ -2119,23 +2154,58 @@ function createPlanetMaterial(
     texture
 ) {
 
+    const material =
+        new THREE.MeshStandardMaterial({
+
+            map:
+                texture,
+
+            roughness:
+                world === "Moon"
+                    ? 1.0
+                    : .96,
+
+            metalness:
+                0,
+
+            bumpMap:
+                texture,
+
+            bumpScale:
+                world === "Moon"
+                    ? 1.15
+                    : .72
+        });
+
+    material.needsUpdate =
+        true;
+
+    return material;
+}
+
+
+/* =========================================================
+   FALLBACK PLANET MATERIAL
+========================================================= */
+
+function createFallbackPlanetMaterial(
+    world
+) {
+
     return new THREE.MeshStandardMaterial({
 
-        map: texture,
+        color:
+            world === "Moon"
+                ? 0x858585
+                : 0x9a432c,
 
         roughness:
             world === "Moon"
-                ? 1.0
+                ? 1
                 : .96,
 
-        metalness: 0,
-
-        bumpMap: texture,
-
-        bumpScale:
-            world === "Moon"
-                ? 1.15
-                : .72
+        metalness:
+            0
     });
 }
 
@@ -2146,6 +2216,14 @@ function createPlanetMaterial(
 
 function buildPlanet(world) {
 
+    if (
+        world !== "Moon" &&
+        world !== "Mars"
+    ) {
+        world =
+            "Moon";
+    }
+
     currentWorld =
         world;
 
@@ -2154,30 +2232,21 @@ function buildPlanet(world) {
     const thisLoadToken =
         planetLoadToken;
 
+    disposePlotVisuals();
+
     disposePlanet();
 
     const geometry =
         new THREE.SphereGeometry(
             PLANET_RADIUS,
-            192,
-            128
+            128,
+            96
         );
 
     const initialMaterial =
-        new THREE.MeshStandardMaterial({
-
-            color:
-                world === "Moon"
-                    ? 0x777777
-                    : 0x8f3b25,
-
-            roughness:
-                world === "Moon"
-                    ? 1
-                    : .96,
-
-            metalness: 0
-        });
+        createFallbackPlanetMaterial(
+            world
+        );
 
     planetMesh =
         new THREE.Mesh(
@@ -2186,6 +2255,9 @@ function buildPlanet(world) {
         );
 
     planetMesh.frustumCulled =
+        false;
+
+    planetMesh.visible =
         true;
 
     planetGroup.add(
@@ -2197,6 +2269,8 @@ function buildPlanet(world) {
         -.5,
         0
     );
+
+    updatePlanetSafePosition();
 
     const loader =
         new THREE.TextureLoader();
@@ -2233,9 +2307,12 @@ function buildPlanet(world) {
                 THREE.sRGBEncoding;
 
             texture.anisotropy =
-                renderer
-                    .capabilities
-                    .getMaxAnisotropy();
+                Math.min(
+                    renderer
+                        .capabilities
+                        .getMaxAnisotropy(),
+                    8
+                );
 
             texture.wrapS =
                 THREE.ClampToEdgeWrapping;
@@ -2249,6 +2326,9 @@ function buildPlanet(world) {
             texture.magFilter =
                 THREE.LinearFilter;
 
+            texture.needsUpdate =
+                true;
+
             const oldMaterial =
                 planetMesh.material;
 
@@ -2261,27 +2341,34 @@ function buildPlanet(world) {
             planetMesh.material =
                 newMaterial;
 
-            oldMaterial.dispose();
+            if (oldMaterial) {
+                oldMaterial.dispose();
+            }
 
-            planetMesh.material.needsUpdate =
-                true;
         },
 
-        function(xhr) {
-            /* Texture loading in progress */
+        function() {
+            /*
+                Loading progress intentionally
+                does not affect the fallback planet.
+            */
         },
 
         function(error) {
 
             console.warn(
-                "Surface map could not be loaded:",
+                "ASTERRA: surface texture could not be loaded.",
                 world,
                 error
             );
+
+            /*
+                IMPORTANT:
+                The planet remains visible using
+                the fallback material.
+            */
         }
     );
-
-    updatePlanetSafePosition();
 }
 
 
@@ -2301,17 +2388,16 @@ function formatCoordinate(
             : negative;
 
     return (
-        Math.abs(value)
-            .toFixed(3)
-        +
-        "° "
-        +
+        Math.abs(value).toFixed(3) +
+        "° " +
         direction
     );
 }
 
 
-function getWorldRadiusKm(world) {
+function getWorldRadiusKm(
+    world
+) {
 
     return world === "Moon"
         ? 1737.4
@@ -2455,7 +2541,8 @@ function disposePlotVisuals() {
             plotBoundary.material.dispose();
         }
 
-        plotBoundary = null;
+        plotBoundary =
+            null;
     }
 
     if (plotMarker) {
@@ -2472,7 +2559,8 @@ function disposePlotVisuals() {
             plotMarker.material.dispose();
         }
 
-        plotMarker = null;
+        plotMarker =
+            null;
     }
 }
 
@@ -2635,13 +2723,17 @@ function createPlotBoundary(
     const material =
         new THREE.LineBasicMaterial({
 
-            color: 0xffffff,
+            color:
+                0xffffff,
 
-            transparent: true,
+            transparent:
+                true,
 
-            opacity: .9,
+            opacity:
+                .9,
 
-            depthTest: true
+            depthTest:
+                true
         });
 
     plotBoundary =
@@ -2653,7 +2745,6 @@ function createPlotBoundary(
     planetGroup.add(
         plotBoundary
     );
-
 
     const centerLatitude =
         latMin + .5;
@@ -2677,7 +2768,8 @@ function createPlotBoundary(
 
     const markerMaterial =
         new THREE.MeshBasicMaterial({
-            color: 0xffffff
+            color:
+                0xffffff
         });
 
     plotMarker =
@@ -2704,7 +2796,10 @@ function getSurfaceCoordinates(
     event
 ) {
 
-    if (!planetMesh) {
+    if (
+        !planetMesh ||
+        !planetMesh.visible
+    ) {
         return null;
     }
 
@@ -2712,6 +2807,13 @@ function getSurfaceCoordinates(
         renderer
             .domElement
             .getBoundingClientRect();
+
+    if (
+        rect.width <= 0 ||
+        rect.height <= 0
+    ) {
+        return null;
+    }
 
     const ndcX =
         (
@@ -2763,25 +2865,40 @@ function getSurfaceCoordinates(
     const radius =
         localPoint.length();
 
-    if (radius <= 0) {
+    if (
+        !Number.isFinite(radius) ||
+        radius <= 0
+    ) {
         return null;
     }
 
     const latitude =
         THREE.MathUtils.radToDeg(
             Math.asin(
-                localPoint.y /
-                radius
+                THREE.MathUtils.clamp(
+                    localPoint.y /
+                    radius,
+                    -1,
+                    1
+                )
             )
         );
 
-    const longitude =
+    let longitude =
         THREE.MathUtils.radToDeg(
             Math.atan2(
                 localPoint.z,
                 localPoint.x
             )
         );
+
+    if (longitude > 180) {
+        longitude -= 360;
+    }
+
+    if (longitude < -180) {
+        longitude += 360;
+    }
 
     return {
         latitude,
@@ -2797,6 +2914,10 @@ function getSurfaceCoordinates(
 function showProperty(
     surface
 ) {
+
+    if (!surface) {
+        return;
+    }
 
     const world =
         currentWorld;
@@ -2896,9 +3017,12 @@ function showProperty(
 
 function closeProperty() {
 
-    propertyPanel.classList.remove(
-        "visible"
-    );
+    if (propertyPanel) {
+
+        propertyPanel.classList.remove(
+            "visible"
+        );
+    }
 
     selectedPlot =
         null;
@@ -2909,8 +3033,6 @@ function closeProperty() {
 
 /* =========================================================
    INITIAL MOON
-   IMPORTANT:
-   This is AFTER zoomDistance exists.
 ========================================================= */
 
 buildPlanet("Moon");
@@ -2930,6 +3052,13 @@ document
 
                 const world =
                     button.dataset.world;
+
+                if (
+                    world !== "Moon" &&
+                    world !== "Mars"
+                ) {
+                    return;
+                }
 
                 if (
                     world ===
@@ -3002,8 +3131,8 @@ propertySelect.addEventListener(
         }
 
         /*
-           Purchase functionality intentionally
-           not implemented yet.
+            Purchase functionality intentionally
+            not implemented yet.
         */
     }
 );
@@ -3066,11 +3195,18 @@ renderer.domElement.addEventListener(
         velocityY =
             0;
 
-        renderer
-            .domElement
-            .setPointerCapture(
-                e.pointerId
-            );
+        renderer.domElement.style.cursor =
+            "grabbing";
+
+        try {
+
+            renderer
+                .domElement
+                .setPointerCapture(
+                    e.pointerId
+                );
+
+        } catch (error) {}
     }
 );
 
@@ -3147,6 +3283,9 @@ renderer.domElement.addEventListener(
         dragging =
             false;
 
+        renderer.domElement.style.cursor =
+            "grab";
+
         try {
 
             renderer
@@ -3155,7 +3294,7 @@ renderer.domElement.addEventListener(
                     e.pointerId
                 );
 
-        } catch (err) {}
+        } catch (error) {}
     }
 );
 
@@ -3169,6 +3308,9 @@ renderer.domElement.addEventListener(
 
         hasDragged =
             true;
+
+        renderer.domElement.style.cursor =
+            "grab";
     }
 );
 
@@ -3284,13 +3426,18 @@ function animate() {
     camera.position.z =
         zoomDistance;
 
+    updatePlanetSafePosition();
+
     if (!dragging) {
 
         planetGroup.rotation.y +=
             .0008;
 
-        velocityX *= .94;
-        velocityY *= .94;
+        velocityX *=
+            .94;
+
+        velocityY *=
+            .94;
     }
 
     planetGroup.rotation.y +=
