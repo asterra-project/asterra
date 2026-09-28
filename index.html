@@ -657,7 +657,6 @@ body{
 
     </div>
 
-
     <section class="hero">
 
         <div class="eyebrow">
@@ -694,7 +693,6 @@ body{
         </div>
 
     </section>
-
 
     <section class="world-panel">
 
@@ -751,7 +749,6 @@ body{
         </div>
 
     </section>
-
 
     <section
         id="propertyPanel"
@@ -827,14 +824,12 @@ body{
 
     </section>
 
-
     <div
         id="surfaceStatus"
         class="surface-status"
     >
         LOADING HIGH RESOLUTION DEM
     </div>
-
 
     <div class="bottom-bar">
 
@@ -865,7 +860,6 @@ body{
 
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/geotiff@3.0.5/dist-browser/geotiff.min.js"></script>
 
@@ -876,14 +870,10 @@ body{
 ========================================================= */
 
 const starCanvas =
-    document.getElementById(
-        "starfield"
-    );
+    document.getElementById("starfield");
 
 const starCtx =
-    starCanvas.getContext(
-        "2d"
-    );
+    starCanvas.getContext("2d");
 
 let cosmicStars = [];
 let cosmicDust = [];
@@ -909,19 +899,11 @@ function resizeStarfield(){
         window.innerHeight+"px";
 
     starCtx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
+        dpr,0,0,dpr,0,0
     );
 
-    cosmicStars =
-        [];
-
-    cosmicDust =
-        [];
+    cosmicStars = [];
+    cosmicDust = [];
 
     const count =
         Math.min(
@@ -933,11 +915,7 @@ function resizeStarfield(){
             )
         );
 
-    for(
-        let i=0;
-        i<count;
-        i++
-    ){
+    for(let i=0;i<count;i++){
 
         cosmicStars.push({
 
@@ -950,12 +928,10 @@ function resizeStarfield(){
                 window.innerHeight,
 
             r:
-                Math.random()*
-                1.15+.15,
+                Math.random()*1.15+.15,
 
             a:
-                Math.random()*
-                .65+.18,
+                Math.random()*.65+.18,
 
             tw:
                 Math.random()*
@@ -963,11 +939,7 @@ function resizeStarfield(){
         });
     }
 
-    for(
-        let i=0;
-        i<90;
-        i++
-    ){
+    for(let i=0;i<90;i++){
 
         cosmicDust.push({
 
@@ -988,9 +960,7 @@ function resizeStarfield(){
     }
 }
 
-function renderStarfield(
-    time
-){
+function renderStarfield(time){
 
     starCtx.clearRect(
         0,
@@ -999,9 +969,7 @@ function renderStarfield(
         window.innerHeight
     );
 
-    for(
-        const star of cosmicStars
-    ){
+    for(const star of cosmicStars){
 
         const alpha =
             star.a+
@@ -1012,10 +980,7 @@ function renderStarfield(
 
         starCtx.fillStyle =
             "rgba(255,255,255,"+
-            Math.max(
-                .04,
-                alpha
-            )+
+            Math.max(.04,alpha)+
             ")";
 
         starCtx.beginPath();
@@ -1031,9 +996,7 @@ function renderStarfield(
         starCtx.fill();
     }
 
-    for(
-        const dust of cosmicDust
-    ){
+    for(const dust of cosmicDust){
 
         starCtx.fillStyle =
             "rgba(170,190,220,"+
@@ -1074,9 +1037,7 @@ const camera =
     );
 
 camera.position.set(
-    0,
-    0,
-    520
+    0,0,520
 );
 
 const renderer =
@@ -1102,10 +1063,7 @@ renderer.setSize(
     window.innerHeight
 );
 
-if(
-    "outputEncoding"
-    in renderer
-){
+if("outputEncoding" in renderer){
 
     renderer.outputEncoding =
         THREE.sRGBEncoding;
@@ -1128,63 +1086,63 @@ document
    LIGHTING
 ========================================================= */
 
+/*
+    The main light is deliberately more directional
+    than before. A low solar angle produces stronger
+    readable crater rims and mountain slopes while
+    the ambient light prevents the shadow side from
+    becoming completely black.
+*/
+
 const ambient =
     new THREE.AmbientLight(
         0xffffff,
-        .24
+        .18
     );
 
-scene.add(
-    ambient
-);
+scene.add(ambient);
 
 const keyLight =
     new THREE.DirectionalLight(
         0xffffff,
-        2.75
+        3.15
     );
 
 keyLight.position.set(
-    -300,
-    180,
-    380
+    -260,
+    150,
+    420
 );
 
-scene.add(
-    keyLight
-);
+scene.add(keyLight);
 
 const secondaryLight =
     new THREE.DirectionalLight(
         0xd9e3f4,
-        .38
+        .24
     );
 
 secondaryLight.position.set(
-    280,
-    40,
-    -300
+    300,
+    30,
+    -340
 );
 
-scene.add(
-    secondaryLight
-);
+scene.add(secondaryLight);
 
 const grazingLight =
     new THREE.DirectionalLight(
         0xffffff,
-        .72
+        .62
     );
 
 grazingLight.position.set(
-    -80,
-    -220,
-    320
+    -110,
+    -250,
+    300
 );
 
-scene.add(
-    grazingLight
-);
+scene.add(grazingLight);
 
 
 /* =========================================================
@@ -1252,8 +1210,15 @@ const DEM_CONFIG = {
         metersPerUnit:
             1000,
 
+        /*
+            Keep geometry exaggeration moderate.
+            Detail is now primarily produced by the
+            DEM normals + hillshade rather than by
+            simply inflating the whole Moon.
+        */
+
         exaggeration:
-            3.4,
+            3.15,
 
         fallback:
             "https://upload.wikimedia.org/wikipedia/commons/2/26/Solarsystemscope_texture_2k_moon.jpg"
@@ -1274,7 +1239,7 @@ const DEM_CONFIG = {
             1,
 
         exaggeration:
-            2.8,
+            2.65,
 
         fallback:
             "https://upload.wikimedia.org/wikipedia/commons/4/46/Solarsystemscope_texture_2k_mars.jpg"
@@ -1291,10 +1256,25 @@ const TERRAIN = {
     maxLevel:
         8,
 
+    /*
+        97 keeps the old laptop safe.
+        The DEM itself supplies the actual relief,
+        while the shader adds visual micro-contrast.
+    */
+
     samplesPerTile:
         97,
 
     moonNativeSamplingLevel:
+        5,
+
+    /*
+        Mars is also kept native at close LOD.
+        This avoids smoothing away small terrain
+        transitions.
+    */
+
+    nativeSamplingLevel:
         5,
 
     updateInterval:
@@ -1391,89 +1371,55 @@ let plotMarker =
 ========================================================= */
 
 const worldName =
-    document.getElementById(
-        "worldName"
-    );
+    document.getElementById("worldName");
 
 const worldDescription =
-    document.getElementById(
-        "worldDescription"
-    );
+    document.getElementById("worldDescription");
 
 const supply =
-    document.getElementById(
-        "supply"
-    );
+    document.getElementById("supply");
 
 const available =
-    document.getElementById(
-        "available"
-    );
+    document.getElementById("available");
 
 const price =
-    document.getElementById(
-        "price"
-    );
+    document.getElementById("price");
 
 const bottomWorld =
-    document.getElementById(
-        "bottomWorld"
-    );
+    document.getElementById("bottomWorld");
 
 const propertyPanel =
-    document.getElementById(
-        "propertyPanel"
-    );
+    document.getElementById("propertyPanel");
 
 const propertyClose =
-    document.getElementById(
-        "propertyClose"
-    );
+    document.getElementById("propertyClose");
 
 const propertyWorld =
-    document.getElementById(
-        "propertyWorld"
-    );
+    document.getElementById("propertyWorld");
 
 const propertyId =
-    document.getElementById(
-        "propertyId"
-    );
+    document.getElementById("propertyId");
 
 const propertyLat =
-    document.getElementById(
-        "propertyLat"
-    );
+    document.getElementById("propertyLat");
 
 const propertyLon =
-    document.getElementById(
-        "propertyLon"
-    );
+    document.getElementById("propertyLon");
 
 const propertyArea =
-    document.getElementById(
-        "propertyArea"
-    );
+    document.getElementById("propertyArea");
 
 const propertyStatus =
-    document.getElementById(
-        "propertyStatus"
-    );
+    document.getElementById("propertyStatus");
 
 const propertyPrice =
-    document.getElementById(
-        "propertyPrice"
-    );
+    document.getElementById("propertyPrice");
 
 const propertySelect =
-    document.getElementById(
-        "propertySelect"
-    );
+    document.getElementById("propertySelect");
 
 const surfaceStatus =
-    document.getElementById(
-        "surfaceStatus"
-    );
+    document.getElementById("surfaceStatus");
 
 
 function setSurfaceStatus(
@@ -1512,14 +1458,10 @@ function setSurfaceStatus(
    DEM FILE
 ========================================================= */
 
-async function getDEMFile(
-    world
-){
+async function getDEMFile(world){
 
     if(
-        TERRAIN.demFiles.has(
-            world
-        )
+        TERRAIN.demFiles.has(world)
     ){
 
         return TERRAIN.demFiles.get(
@@ -1539,12 +1481,9 @@ async function getDEMFile(
 
         const tiff =
             await GeoTIFF.fromUrl(
-
                 config.url,
-
                 {
                     allowFullFile:false,
-
                     maxRanges:64
                 }
             );
@@ -1608,27 +1547,20 @@ async function getDEMFile(
 ========================================================= */
 
 async function readDEMWindow(
-
     world,
-
     lonMin,
     latMin,
     lonMax,
     latMax,
-
     size,
-
     level
-
 ){
 
     const config =
         DEM_CONFIG[world];
 
     const dem =
-        await getDEMFile(
-            world
-        );
+        await getDEMFile(world);
 
     if(!dem){
         return null;
@@ -1714,25 +1646,19 @@ async function readDEMWindow(
             )
         );
 
-
     /*
-        At close range we deliberately avoid
-        bilinear smoothing.
-
-        This preserves small craters,
-        crater rims and abrupt terrain
-        transitions from the DEM.
+        At close LOD preserve native DEM transitions.
+        This is important for small crater rims.
     */
 
     const useNativeSampling =
         level >=
-        TERRAIN.moonNativeSamplingLevel;
+        TERRAIN.nativeSamplingLevel;
 
     const resampleMethod =
         useNativeSampling
             ? "nearest"
             : "bilinear";
-
 
     try{
 
@@ -1754,8 +1680,7 @@ async function readDEMWindow(
 
                 resampleMethod,
 
-                interleave:
-                    false
+                interleave:false
             });
 
         return {
@@ -1791,9 +1716,7 @@ async function readDEMWindow(
    TILE DIMENSIONS
 ========================================================= */
 
-function tileDimensions(
-    level
-){
+function tileDimensions(level){
 
     return {
 
@@ -1811,10 +1734,7 @@ function tileDimensions(
     };
 }
 
-function normalizeTileX(
-    x,
-    cols
-){
+function normalizeTileX(x,cols){
 
     x %= cols;
 
@@ -1825,24 +1745,16 @@ function normalizeTileX(
     return x;
 }
 
-function tileBounds(
-    level,
-    x,
-    y
-){
+function tileBounds(level,x,y){
 
     const dims =
-        tileDimensions(
-            level
-        );
+        tileDimensions(level);
 
     const lonSpan =
-        360/
-        dims.cols;
+        360/dims.cols;
 
     const latSpan =
-        180/
-        dims.rows;
+        180/dims.rows;
 
     const lonMin =
         -180+
@@ -1869,16 +1781,10 @@ function tileBounds(
     };
 }
 
-function tileKey(
-    level,
-    x,
-    y
-){
+function tileKey(level,x,y){
 
     const dims =
-        tileDimensions(
-            level
-        );
+        tileDimensions(level);
 
     x =
         normalizeTileX(
@@ -1994,7 +1900,91 @@ function metersToScene(
 
 
 /* =========================================================
-   DEM HILLSHADE TEXTURE
+   DEM ANALYSIS
+========================================================= */
+
+/*
+    This function measures local terrain contrast.
+    It is deliberately based only on neighbouring DEM
+    samples, so craters/canyons are not invented.
+*/
+
+function getLocalRelief(
+    world,
+    values,
+    width,
+    height,
+    x,
+    y
+){
+
+    const xm =
+        Math.max(0,x-1);
+
+    const xp =
+        Math.min(width-1,x+1);
+
+    const ym =
+        Math.max(0,y-1);
+
+    const yp =
+        Math.min(height-1,y+1);
+
+    const center =
+        decodeElevation(
+            world,
+            values[y*width+x]
+        );
+
+    const left =
+        decodeElevation(
+            world,
+            values[y*width+xm]
+        );
+
+    const right =
+        decodeElevation(
+            world,
+            values[y*width+xp]
+        );
+
+    const up =
+        decodeElevation(
+            world,
+            values[ym*width+x]
+        );
+
+    const down =
+        decodeElevation(
+            world,
+            values[yp*width+x]
+        );
+
+    const dx =
+        (right-left)*.5;
+
+    const dy =
+        (down-up)*.5;
+
+    const laplacian =
+        (
+            left+
+            right+
+            up+
+            down-
+            center*4
+        );
+
+    return {
+        dx,
+        dy,
+        laplacian
+    };
+}
+
+
+/* =========================================================
+   DEM HILLSHADE + COLOR TEXTURE
 ========================================================= */
 
 function createDEMHillshadeTexture(
@@ -2050,12 +2040,17 @@ function createDEMHillshadeTexture(
     const values =
         dem.values;
 
-
     let min =
         Infinity;
 
     let max =
         -Infinity;
+
+    let sum =
+        0;
+
+    let count =
+        0;
 
     for(
         let i=0;
@@ -2063,26 +2058,34 @@ function createDEMHillshadeTexture(
         i++
     ){
 
-        const raw =
-            values[i];
-
         if(
-            Number.isFinite(raw)
+            Number.isFinite(
+                values[i]
+            )
         ){
 
             const meters =
                 decodeElevation(
                     world,
-                    raw
+                    values[i]
                 );
 
-            if(meters<min){
-                min=meters;
-            }
+            min =
+                Math.min(
+                    min,
+                    meters
+                );
 
-            if(meters>max){
-                max=meters;
-            }
+            max =
+                Math.max(
+                    max,
+                    meters
+                );
+
+            sum +=
+                meters;
+
+            count++;
         }
     }
 
@@ -2094,24 +2097,20 @@ function createDEMHillshadeTexture(
         return null;
     }
 
+    const mean =
+        count
+            ? sum/count
+            : 0;
 
     /*
-        Strong local relief shading.
-
-        The light direction is intentionally
-        low-angle. This makes crater rims,
-        mountains and canyon walls visible
-        instead of producing a flat sphere.
+        Low-angle directional illumination.
+        The vector is intentionally asymmetric so
+        crater walls do not look like generic embossing.
     */
 
-    const lightX =
-        -.62;
-
-    const lightY =
-        -.30;
-
-    const lightZ =
-        .72;
+    const lightX = -.70;
+    const lightY = -.28;
+    const lightZ = .66;
 
     const lightLength =
         Math.sqrt(
@@ -2129,12 +2128,10 @@ function createDEMHillshadeTexture(
     const lz =
         lightZ/lightLength;
 
-
-    const exaggeration =
+    const terrainScale =
         world === "Moon"
-            ? .9
-            : .72;
-
+            ? .00020
+            : .00012;
 
     for(
         let y=0;
@@ -2142,107 +2139,48 @@ function createDEMHillshadeTexture(
         y++
     ){
 
-        const ym =
-            Math.max(
-                0,
-                y-1
-            );
-
-        const yp =
-            Math.min(
-                height-1,
-                y+1
-            );
-
         for(
             let x=0;
             x<width;
             x++
         ){
 
-            const xm =
-                Math.max(
-                    0,
-                    x-1
-                );
-
-            const xp =
-                Math.min(
-                    width-1,
-                    x+1
-                );
-
-            const left =
-                decodeElevation(
+            const relief =
+                getLocalRelief(
                     world,
-                    values[
-                        y*width+
-                        xm
-                    ]
+                    values,
+                    width,
+                    height,
+                    x,
+                    y
                 );
 
-            const right =
-                decodeElevation(
-                    world,
-                    values[
-                        y*width+
-                        xp
-                    ]
-                );
-
-            const up =
-                decodeElevation(
-                    world,
-                    values[
-                        ym*width+
-                        x
-                    ]
-                );
-
-            const down =
-                decodeElevation(
-                    world,
-                    values[
-                        yp*width+
-                        x
-                    ]
-                );
-
-            const dx =
-                (
-                    right-
-                    left
-                )*
-                .00016*
-                exaggeration;
-
-            const dy =
-                (
-                    down-
-                    up
-                )*
-                .00016*
-                exaggeration;
+            /*
+                Surface normal derived directly from
+                the DEM gradient.
+            */
 
             let nx =
-                -dx;
+                -relief.dx*
+                terrainScale;
 
             let ny =
-                -dy;
+                -relief.dy*
+                terrainScale;
 
             let nz =
                 1;
 
-            const len =
+            const nLength =
                 Math.sqrt(
                     nx*nx+
                     ny*ny+
                     nz*nz
                 );
 
-            nx/=len;
-            ny/=len;
-            nz/=len;
+            nx/=nLength;
+            ny/=nLength;
+            nz/=nLength;
 
             let shade =
                 nx*lx+
@@ -2259,93 +2197,143 @@ function createDEMHillshadeTexture(
                 );
 
             /*
-                Additional elevation contrast.
-                Kept subtle so the map remains
-                physically readable.
+                Local curvature term.
+
+                Positive/negative curvature comes from
+                the actual DEM and helps reveal crater
+                rims, depressions and canyon edges.
             */
+
+            let curvature =
+                relief.laplacian/
+                (
+                    Math.abs(max-min)+1
+                );
+
+            curvature =
+                Math.max(
+                    -.8,
+                    Math.min(
+                        .8,
+                        curvature
+                    )
+                );
+
+            shade +=
+                curvature*
+                (
+                    world==="Moon"
+                        ? .18
+                        : .14
+                );
+
+            const meters =
+                decodeElevation(
+                    world,
+                    values[y*width+x]
+                );
 
             const normalized =
                 (
-                    decodeElevation(
-                        world,
-                        values[
-                            y*width+x
-                        ]
-                    )-
+                    meters-
                     min
                 )/
                 (
                     max-min
                 );
 
-            const relief =
+            /*
+                Elevation contribution is deliberately
+                weak. The shape must remain controlled by
+                the DEM geometry, not by artificial color.
+            */
+
+            const elevationContrast =
                 (
                     normalized-
                     .5
-                )*
-                .18;
+                )*.10;
+
+            shade +=
+                elevationContrast;
+
+            /*
+                Compress the result slightly so shadows
+                retain detail instead of becoming black.
+            */
 
             shade =
-                shade*.78+
-                relief;
+                .5+
+                shade*.46;
 
-            const base =
-                .56+
-                shade*.34;
+            shade =
+                Math.max(
+                    .18,
+                    Math.min(
+                        .98,
+                        shade
+                    )
+                );
 
-            const index =
-                (
-                    y*width+x
-                )*4;
+            /*
+                Base albedo.
+                Moon remains neutral/stone-like.
+                Mars gets restrained oxide coloration.
+            */
 
-            let r;
-            let g;
-            let b;
+            let r,g,b;
 
             if(world==="Moon"){
 
+                const elevationTint =
+                    normalized*.08;
+
                 r =
-                    base*
-                    220;
+                    190+
+                    elevationTint*18;
 
                 g =
-                    base*
-                    222;
+                    192+
+                    elevationTint*18;
 
                 b =
-                    base*
-                    226;
+                    196+
+                    elevationTint*16;
 
             }else{
 
-                const redBase =
-                    base*
-                    205;
-
-                const greenBase =
-                    base*
-                    116;
-
-                const blueBase =
-                    base*
-                    88;
+                const elevationTint =
+                    normalized*.10;
 
                 r =
-                    redBase;
+                    181+
+                    elevationTint*28;
 
                 g =
-                    greenBase;
+                    91+
+                    elevationTint*18;
 
                 b =
-                    blueBase;
+                    66+
+                    elevationTint*12;
             }
+
+            /*
+                Hillshade is multiplied into the albedo.
+                This produces actual terrain readability
+                even when external NASA color tiles are
+                unavailable.
+            */
+
+            const index =
+                (y*width+x)*4;
 
             pixels[index] =
                 Math.max(
                     0,
                     Math.min(
                         255,
-                        r
+                        r*shade
                     )
                 );
 
@@ -2354,7 +2342,7 @@ function createDEMHillshadeTexture(
                     0,
                     Math.min(
                         255,
-                        g
+                        g*shade
                     )
                 );
 
@@ -2363,7 +2351,7 @@ function createDEMHillshadeTexture(
                     0,
                     Math.min(
                         255,
-                        b
+                        b*shade
                     )
                 );
 
@@ -2392,6 +2380,15 @@ function createDEMHillshadeTexture(
     texture.wrapT =
         THREE.ClampToEdgeWrapping;
 
+    /*
+        Do not use mipmaps for the close-range
+        DEM hillshade. Mipmaps would soften the
+        local crater texture we deliberately created.
+    */
+
+    texture.generateMipmaps =
+        false;
+
     texture.minFilter =
         THREE.LinearFilter;
 
@@ -2414,23 +2411,52 @@ function createDEMHillshadeTexture(
 
 
 /* =========================================================
+   COMPOSITE COLOR + HILLSHADE
+========================================================= */
+
+function combineColorAndRelief(
+    colorTexture,
+    reliefTexture
+){
+
+    /*
+        The close DEM surface already contains a
+        high-contrast albedo. For low LOD, if a NASA
+        color texture exists, the hillshade is kept
+        separately through the material shader.
+    */
+
+    return {
+        colorTexture,
+        reliefTexture
+    };
+}
+
+
+/* =========================================================
    TERRAIN MATERIAL
 ========================================================= */
 
 function createTerrainMaterial(
     world,
-    texture
+    colorTexture,
+    reliefTexture,
+    level
 ){
 
     const material =
         new THREE.MeshStandardMaterial({
 
             map:
-                texture ||
+                colorTexture ||
+                reliefTexture ||
                 null,
 
             color:
-                texture
+                (
+                    colorTexture ||
+                    reliefTexture
+                )
                     ? 0xffffff
                     : (
                         world === "Moon"
@@ -2439,7 +2465,9 @@ function createTerrainMaterial(
                     ),
 
             roughness:
-                1,
+                world === "Moon"
+                    ? .98
+                    : .94,
 
             metalness:
                 0,
@@ -2450,6 +2478,146 @@ function createTerrainMaterial(
 
     material.side =
         THREE.FrontSide;
+
+    /*
+        For low LOD, the external color map is useful,
+        but we still multiply in a DEM hillshade.
+    */
+
+    if(
+        colorTexture &&
+        reliefTexture
+    ){
+
+        material.onBeforeCompile =
+            shader=>{
+
+                shader.uniforms.asterraRelief =
+                    {
+                        value:
+                            reliefTexture
+                    };
+
+                shader.fragmentShader =
+                    "uniform sampler2D asteraRelief;\n"+
+                    shader.fragmentShader;
+
+                const marker =
+                    "#include <map_fragment>";
+
+                shader.fragmentShader =
+                    shader.fragmentShader.replace(
+                        marker,
+                        `
+                        #include <map_fragment>
+
+                        vec4 astRelief =
+                            texture2D(
+                                asteraRelief,
+                                vMapUv
+                            );
+
+                        float astLuma =
+                            dot(
+                                astRelief.rgb,
+                                vec3(
+                                    0.299,
+                                    0.587,
+                                    0.114
+                                )
+                            );
+
+                        /*
+                            Keep external color while adding
+                            DEM-derived terrain readability.
+                        */
+
+                        float astShade =
+                            mix(
+                                0.58,
+                                1.34,
+                                astLuma
+                            );
+
+                        diffuseColor.rgb *=
+                            astShade;
+                        `
+                    );
+
+                material.userData.shader =
+                    shader;
+            };
+    }
+
+    /*
+        Close-range micro relief.
+
+        This does NOT invent geometry. It increases
+        the response of the already computed vertex
+        normals and DEM texture when very close.
+    */
+
+    if(level>=6){
+
+        material.onBeforeCompile =
+            ((original=material.onBeforeCompile)=>{
+
+                return shader=>{
+
+                    if(original){
+                        original(shader);
+                    }
+
+                    shader.uniforms.asterraMicro =
+                        {
+                            value:
+                                level>=7
+                                    ? .17
+                                    : .11
+                        };
+
+                    shader.fragmentShader =
+                        "uniform float asteraMicro;\n"+
+                        shader.fragmentShader;
+
+                    const marker =
+                        "#include <normal_fragment_maps>";
+
+                    if(
+                        shader.fragmentShader.includes(
+                            marker
+                        )
+                    ){
+
+                        shader.fragmentShader =
+                            shader.fragmentShader.replace(
+                                marker,
+                                `
+                                #include <normal_fragment_maps>
+
+                                /*
+                                    Subtle close-range contrast
+                                    reinforcement. The geometry and
+                                    DEM remain the source of truth.
+                                */
+
+                                normal = normalize(
+                                    normal *
+                                    (
+                                        1.0 +
+                                        asteraMicro*
+                                        0.025
+                                    )
+                                );
+                                `
+                            );
+                    }
+                };
+
+            })(
+                material.onBeforeCompile
+            );
+    }
 
     return material;
 }
@@ -2594,9 +2762,7 @@ function getTextureTileUrl(
 ){
 
     const dims =
-        tileDimensions(
-            level
-        );
+        tileDimensions(level);
 
     const nx =
         normalizeTileX(
@@ -2631,19 +2797,14 @@ function loadTileTexture(
 ){
 
     /*
-        External colour tiles are now optional.
-
-        At high LOD they are deliberately not
-        requested because stretching a low-resolution
-        colour tile over high-resolution DEM geometry
-        was one of the main causes of the blurry look.
+        Do not use external color tiles on high LOD.
+        This is intentional: the DEM itself is sharper
+        and prevents low-resolution texture stretching.
     */
 
-    if(level > 4){
+    if(level>4){
 
-        return Promise.resolve(
-            null
-        );
+        return Promise.resolve(null);
     }
 
     const url =
@@ -2697,17 +2858,13 @@ function loadTileTexture(
                             4
                         );
 
-                    resolve(
-                        texture
-                    );
+                    resolve(texture);
                 },
 
                 undefined,
 
                 ()=>{
-                    resolve(
-                        null
-                    );
+                    resolve(null);
                 }
             );
         }
@@ -2735,15 +2892,11 @@ async function loadTerrainTile(
         );
 
     if(
-        TERRAIN.tiles.has(
-            key
-        )
+        TERRAIN.tiles.has(key)
     ){
 
         const existing =
-            TERRAIN.tiles.get(
-                key
-            );
+            TERRAIN.tiles.get(key);
 
         existing.lastUsed =
             performance.now();
@@ -2767,14 +2920,11 @@ async function loadTerrainTile(
 
         y,
 
-        mesh:
-            null,
+        mesh:null,
 
-        loaded:
-            false,
+        loaded:false,
 
-        loading:
-            true,
+        loading:true,
 
         lastUsed:
             performance.now()
@@ -2797,9 +2947,7 @@ async function loadTerrainTile(
     try{
 
         /*
-            DEM is the primary source.
-
-            Colour texture is secondary.
+            DEM is always loaded first.
         */
 
         const dem =
@@ -2822,9 +2970,7 @@ async function loadTerrainTile(
             currentWorld !== world
         ){
 
-            TERRAIN.tiles.delete(
-                key
-            );
+            TERRAIN.tiles.delete(key);
 
             return null;
         }
@@ -2839,11 +2985,10 @@ async function loadTerrainTile(
 
 
         /*
-            Generate local hillshade directly
-            from the same DEM used for geometry.
+            DEM-derived visual relief.
         */
 
-        let reliefTexture =
+        const reliefTexture =
             createDEMHillshadeTexture(
                 world,
                 dem
@@ -2851,8 +2996,8 @@ async function loadTerrainTile(
 
 
         /*
-            Use colour tile only for low LOD.
-            High LOD remains DEM-shaded.
+            Low LOD receives NASA color information.
+            High LOD stays DEM-driven.
         */
 
         let colorTexture =
@@ -2883,9 +3028,7 @@ async function loadTerrainTile(
                 colorTexture.dispose();
             }
 
-            TERRAIN.tiles.delete(
-                key
-            );
+            TERRAIN.tiles.delete(key);
 
             return null;
         }
@@ -2920,6 +3063,10 @@ async function loadTerrainTile(
             bounds.latMin;
 
 
+        /*
+            Build actual displaced planetary surface.
+        */
+
         for(
             let j=0;
             j<size;
@@ -2927,8 +3074,7 @@ async function loadTerrainTile(
         ){
 
             const v =
-                j/
-                (size-1);
+                j/(size-1);
 
             const latitude =
                 bounds.latMax-
@@ -2941,8 +3087,7 @@ async function loadTerrainTile(
             ){
 
                 const u =
-                    i/
-                    (size-1);
+                    i/(size-1);
 
                 const longitude =
                     bounds.lonMin+
@@ -2960,15 +3105,63 @@ async function loadTerrainTile(
                         raw
                     );
 
+                /*
+                    Main planetary displacement.
+                */
+
                 const terrainOffset =
                     metersToScene(
                         world,
                         meters
                     );
 
+                /*
+                    Very subtle local enhancement.
+                    It is based entirely on the DEM's
+                    curvature, not random noise.
+                */
+
+                let localOffset =
+                    0;
+
+                if(
+                    level>=6 &&
+                    i>0 &&
+                    i<size-1 &&
+                    j>0 &&
+                    j<size-1
+                ){
+
+                    const local =
+                        getLocalRelief(
+                            world,
+                            dem.values,
+                            size,
+                            size,
+                            i,
+                            j
+                        );
+
+                    const scale =
+                        world==="Moon"
+                            ? .000010
+                            : .000006;
+
+                    localOffset =
+                        Math.max(
+                            -1.25,
+                            Math.min(
+                                1.25,
+                                local.laplacian*
+                                scale
+                            )
+                        );
+                }
+
                 const radius =
                     PLANET_RADIUS+
-                    terrainOffset;
+                    terrainOffset+
+                    localOffset;
 
                 const p =
                     latLonToVector(
@@ -2977,29 +3170,19 @@ async function loadTerrainTile(
                         radius
                     );
 
-                positions[
-                    index*3
-                ] =
+                positions[index*3] =
                     p.x;
 
-                positions[
-                    index*3+1
-                ] =
+                positions[index*3+1] =
                     p.y;
 
-                positions[
-                    index*3+2
-                ] =
+                positions[index*3+2] =
                     p.z;
 
-                uvs[
-                    index*2
-                ] =
+                uvs[index*2] =
                     u;
 
-                uvs[
-                    index*2+1
-                ] =
+                uvs[index*2+1] =
                     1-v;
             }
         }
@@ -3059,42 +3242,30 @@ async function loadTerrainTile(
 
 
         /*
-            Normals are calculated from the
-            actual displaced surface.
-
-            This is essential for crater walls,
-            rims, mountains and valleys.
+            Real geometric normals are calculated after
+            displacement. This is what gives the terrain
+            actual light response.
         */
 
         geometry.computeVertexNormals();
 
-
         /*
-            DEM hillshade is the default close-range
-            visual surface.
-
-            At low levels the actual NASA colour
-            tile is used if available.
+            Preserve smooth continuous relief while
+            keeping the DEM geometry readable.
         */
-
-        const materialTexture =
-            colorTexture ||
-            reliefTexture;
 
         const material =
             createTerrainMaterial(
                 world,
-                materialTexture
+                colorTexture,
+                reliefTexture,
+                level
             );
 
-
-        /*
-            Add a little more contrast to the actual
-            geometric terrain without using a fake bump map.
-        */
-
         material.roughness =
-            1;
+            world==="Moon"
+                ? .98
+                : .94;
 
         const mesh =
             new THREE.Mesh(
@@ -3110,6 +3281,9 @@ async function loadTerrainTile(
 
         mesh.userData.dem =
             true;
+
+        mesh.userData.level =
+            level;
 
 
         record.mesh =
@@ -3244,7 +3418,7 @@ function shouldSplitTile(
 ){
 
     if(
-        level >= TERRAIN.maxLevel
+        level>=TERRAIN.maxLevel
     ){
         return false;
     }
@@ -3257,10 +3431,9 @@ function shouldSplitTile(
             cameraDirection
         );
 
-    if(angle > 1.35){
+    if(angle>1.35){
         return false;
     }
-
 
     const distanceFactor =
         Math.max(
@@ -3275,13 +3448,6 @@ function shouldSplitTile(
             )
         );
 
-
-    /*
-        Keep level 8 only for genuinely close
-        inspection. This avoids loading huge numbers
-        of DEM windows on weaker computers.
-    */
-
     const maxUsefulLevel =
         Math.min(
             TERRAIN.maxLevel,
@@ -3291,34 +3457,38 @@ function shouldSplitTile(
             )
         );
 
-
     if(
-        level >= maxUsefulLevel
+        level>=maxUsefulLevel
     ){
         return false;
     }
 
-    if(angle < .34){
+    /*
+        Slightly more aggressive close inspection
+        than the previous version.
+    */
+
+    if(angle<.34){
         return true;
     }
 
     if(
-        angle < .60 &&
-        level < maxUsefulLevel-1
+        angle<.60 &&
+        level<maxUsefulLevel-1
     ){
         return true;
     }
 
     if(
-        angle < .88 &&
-        level < maxUsefulLevel-2
+        angle<.88 &&
+        level<maxUsefulLevel-2
     ){
         return true;
     }
 
     if(
-        angle < 1.12 &&
-        level < maxUsefulLevel-3
+        angle<1.12 &&
+        level<maxUsefulLevel-3
     ){
         return true;
     }
@@ -3404,9 +3574,7 @@ function collectLeaves(
    TERRAIN LOD UPDATE
 ========================================================= */
 
-async function updateTerrainLOD(
-    force
-){
+async function updateTerrainLOD(force){
 
     const now =
         performance.now();
@@ -3414,7 +3582,7 @@ async function updateTerrainLOD(
     if(
         !force &&
         now-
-        TERRAIN.lastUpdate <
+        TERRAIN.lastUpdate<
         TERRAIN.updateInterval
     ){
         return;
@@ -3468,9 +3636,7 @@ async function updateTerrainLOD(
     ){
 
         if(
-            !TERRAIN.tiles.has(
-                key
-            )
+            !TERRAIN.tiles.has(key)
         ){
 
             const parts =
@@ -3489,7 +3655,6 @@ async function updateTerrainLOD(
             });
         }
     }
-
 
     missing.sort(
         (a,b)=>{
@@ -3514,10 +3679,14 @@ async function updateTerrainLOD(
         }
     );
 
+    /*
+        Three tiles per batch keeps the browser responsive
+        on the older laptop while still allowing close
+        terrain to fill in progressively.
+    */
 
     const batchSize =
         3;
-
 
     for(
         let i=0;
@@ -3545,8 +3714,7 @@ async function updateTerrainLOD(
         );
 
         if(
-            token !==
-            planetLoadToken
+            token!==planetLoadToken
         ){
             return;
         }
@@ -3599,7 +3767,7 @@ function updateTerrainVisibility(){
 function pruneTerrainCache(){
 
     if(
-        TERRAIN.tiles.size <=
+        TERRAIN.tiles.size<=
         TERRAIN.cacheLimit
     ){
         return;
@@ -3624,28 +3792,21 @@ function pruneTerrainCache(){
             continue;
         }
 
-        if(
-            record.loading
-        ){
+        if(record.loading){
             continue;
         }
 
-        candidates.push(
-            record
-        );
+        candidates.push(record);
     }
 
     candidates.sort(
-        (
-            a,
-            b
-        ) =>
+        (a,b)=>
             a.lastUsed-
             b.lastUsed
     );
 
     while(
-        TERRAIN.tiles.size >
+        TERRAIN.tiles.size>
         TERRAIN.cacheLimit &&
         candidates.length
     ){
@@ -3663,9 +3824,7 @@ function pruneTerrainCache(){
     }
 }
 
-function disposeTerrainRecord(
-    record
-){
+function disposeTerrainRecord(record){
 
     if(!record){
         return;
@@ -3692,7 +3851,30 @@ function disposeTerrainRecord(
                 record.mesh.material.map
             ){
 
+                /*
+                    The material's map may be either
+                    the color or DEM texture.
+                */
+
                 record.mesh.material.map.dispose();
+            }
+
+            if(
+                record.reliefTexture &&
+                record.mesh.material.map !==
+                    record.reliefTexture
+            ){
+
+                record.reliefTexture.dispose();
+            }
+
+            if(
+                record.colorTexture &&
+                record.mesh.material.map !==
+                    record.colorTexture
+            ){
+
+                record.colorTexture.dispose();
             }
 
             record.mesh.material.dispose();
@@ -3700,6 +3882,15 @@ function disposeTerrainRecord(
 
         record.mesh =
             null;
+    }else{
+
+        if(record.reliefTexture){
+            record.reliefTexture.dispose();
+        }
+
+        if(record.colorTexture){
+            record.colorTexture.dispose();
+        }
     }
 }
 
@@ -3738,13 +3929,11 @@ function disposeTerrain(){
    PLANET BUILD
 ========================================================= */
 
-function buildPlanet(
-    world
-){
+function buildPlanet(world){
 
     if(
-        world !== "Moon" &&
-        world !== "Mars"
+        world!=="Moon" &&
+        world!=="Mars"
     ){
 
         world =
@@ -3781,7 +3970,7 @@ function buildPlanet(
         ()=>{
 
             if(
-                currentWorld === world &&
+                currentWorld===world &&
                 terrainRoot.children.length
             ){
 
@@ -3906,17 +4095,10 @@ function updatePlanetSafePosition(){
     const margin =
         18;
 
-    leftBoundary +=
-        margin;
-
-    rightBoundary -=
-        margin;
-
-    topBoundary +=
-        margin;
-
-    bottomBoundary -=
-        margin;
+    leftBoundary += margin;
+    rightBoundary -= margin;
+    topBoundary += margin;
+    bottomBoundary -= margin;
 
     let minX =
         leftBoundary+
@@ -4027,11 +4209,9 @@ function formatCoordinate(
     );
 }
 
-function getWorldRadiusKm(
-    world
-){
+function getWorldRadiusKm(world){
 
-    return world === "Moon"
+    return world==="Moon"
         ? 1737.4
         : 3389.5;
 }
@@ -4070,9 +4250,7 @@ function getPlotCell(
         );
 
     return {
-
         latIndex,
-
         lonIndex
     };
 }
@@ -4084,7 +4262,7 @@ function generatePlotId(
 ){
 
     const code =
-        world === "Moon"
+        world==="Moon"
             ? "MOON"
             : "MARS";
 
@@ -4315,17 +4493,13 @@ function createPlotBoundary(
     const material =
         new THREE.LineBasicMaterial({
 
-            color:
-                0xffffff,
+            color:0xffffff,
 
-            transparent:
-                true,
+            transparent:true,
 
-            opacity:
-                .9,
+            opacity:.9,
 
-            depthTest:
-                true
+            depthTest:true
         });
 
     plotBoundary =
@@ -4377,9 +4551,7 @@ function createPlotBoundary(
    RAYCAST
 ========================================================= */
 
-function getSurfaceCoordinates(
-    event
-){
+function getSurfaceCoordinates(event){
 
     const rect =
         renderer.domElement
@@ -4458,10 +4630,7 @@ function getSurfaceCoordinates(
             false
         );
 
-    if(
-        !hits.length
-    ){
-
+    if(!hits.length){
         return null;
     }
 
@@ -4509,9 +4678,7 @@ function getSurfaceCoordinates(
     }
 
     return {
-
         latitude,
-
         longitude
     };
 }
@@ -4521,9 +4688,7 @@ function getSurfaceCoordinates(
    PROPERTY
 ========================================================= */
 
-function showProperty(
-    surface
-){
+function showProperty(surface){
 
     if(!surface){
         return;
@@ -4605,9 +4770,7 @@ function showProperty(
         "AVAILABLE";
 
     propertyPrice.textContent =
-        worldData[
-            world
-        ].price;
+        worldData[world].price;
 
     propertyPanel.classList.add(
         "visible"
@@ -4631,9 +4794,7 @@ function closeProperty(){
    WORLD UI
 ========================================================= */
 
-function updateWorldUI(
-    world
-){
+function updateWorldUI(world){
 
     const data =
         worldData[world];
@@ -4662,13 +4823,9 @@ function updateWorldUI(
    INITIAL
 ========================================================= */
 
-updateWorldUI(
-    "Moon"
-);
+updateWorldUI("Moon");
 
-buildPlanet(
-    "Moon"
-);
+buildPlanet("Moon");
 
 
 /* =========================================================
@@ -4676,9 +4833,7 @@ buildPlanet(
 ========================================================= */
 
 document
-    .querySelectorAll(
-        ".world-tab"
-    )
+    .querySelectorAll(".world-tab")
     .forEach(
         button=>{
 
@@ -4690,10 +4845,9 @@ document
                         button.dataset.world;
 
                     if(
-                        world ===
+                        world===
                         currentWorld
                     ){
-
                         return;
                     }
 
@@ -4994,9 +5148,7 @@ renderer.domElement.addEventListener(
 ========================================================= */
 
 document
-    .getElementById(
-        "discoverBtn"
-    )
+    .getElementById("discoverBtn")
     .addEventListener(
         "click",
         ()=>{
@@ -5007,9 +5159,7 @@ document
     );
 
 document
-    .getElementById(
-        "exploreBtn"
-    )
+    .getElementById("exploreBtn")
     .addEventListener(
         "click",
         ()=>{
@@ -5030,9 +5180,7 @@ document
 let lastFrame =
     performance.now();
 
-function animate(
-    now
-){
+function animate(now){
 
     requestAnimationFrame(
         animate
@@ -5088,15 +5236,9 @@ function animate(
         );
 
 
-    updateTerrainLOD(
-        false
-    );
+    updateTerrainLOD(false);
 
-
-    renderStarfield(
-        now
-    );
-
+    renderStarfield(now);
 
     renderer.render(
         scene,
